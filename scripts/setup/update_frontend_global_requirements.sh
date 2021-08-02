@@ -12,8 +12,5 @@ then
     exit 1
 fi
 
-#"$EXTRACT_CMD" "$INSTANCE_TYPE" npm-global-requirements > autogen-npm-global-requirements.txt
-
 echo '>>> Installing NPM global requirements'
 "$XARGS_CMD" -a autogen-npm-global-requirements.txt npm install -g
-#rm autogen-npm-global-requirements.txt

@@ -18,9 +18,6 @@ then
     exit 1
 fi
 
-# preinstalling PyYAML/jinja2 (required for extract_deployment_data.py)
-pip install PyYAML jinja2
-
 if [ "$NPM_PATH" == "${VIRTUAL_ENV}/bin/npm" ]
 then
     echo "NPM detected, nothing to do here"

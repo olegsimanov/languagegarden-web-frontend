@@ -9,8 +9,5 @@ set -u
 
 $SCRIPT_DIR/update_frontend_global_requirements.sh        # installs dependencies from autogen-npm-global-requirements.txt
 
-#cd "$FRONTEND_DIR"
-#$SCRIPT_DIR/update_frontend_local_requirements.sh         # npm install, bower install
-
 cd "$COMPONENTS_DIR"
 $SCRIPT_DIR/update_frontend_local_requirements.sh

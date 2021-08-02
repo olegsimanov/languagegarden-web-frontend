@@ -11,9 +11,5 @@ if ! command -v brew > /dev/null; then
     exit 1
 fi
 
-#"$EXTRACT_CMD" "$INSTANCE_TYPE" brewfile-requirements > autogen-brewfile.txt
-
 echo '>>> Installing Mac OS requirements'
 brew bundle install --file=autogen-brewfile.txt
-#rm autogen-brewfile.txt
-rm autogen-brewfile.txt.lock.json
