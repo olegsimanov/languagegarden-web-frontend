@@ -1,0 +1,7 @@
+brew "findutils"
+brew "libyaml"
+brew "libpq"
+brew "wget"
+brew "curl"
+brew "jpeg"
+brew "gettext"
