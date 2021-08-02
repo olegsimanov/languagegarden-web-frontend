@@ -1,0 +1,98 @@
+/* -------------------------------------------------------
+    Selection Color
+   -------------------------------------------------------*/
+::-moz-selection {
+    background: @selectionColor;
+}
+::selection {
+    background: @selectionColor;
+}
+
+/* -------------------------------------------------------
+    Helpers
+   -------------------------------------------------------*/
+/*  No Selection
+ */
+[unselectable=on] {
+    .no-selection();
+}
+[unselectable=off] {
+    .has-selection();
+}
+
+/*  Dragging cursor
+ */
+.in-dragging {
+    .cursor-dragging();
+}
+
+/*  Vertical/Horizontal Align Helper
+ */
+.centering-outer {
+    display: table;
+    width: 100%;
+    height: 100%;
+}
+.centering-inner {
+    display: table-cell;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+/*  Gradien Redraw Hack [Full description in .coffee file]
+ */
+.forced-redraw {
+    opacity: 0.5;
+}
+
+/*  Lg - Label
+ */
+.lg-label {
+    font-family: @textFontFamily;
+    color: #231f20;
+    font-size: 28px;
+    line-height: 1.15;
+}
+
+
+/* -------------------------------------------------------
+    Reset Bootstrap
+   -------------------------------------------------------*/
+.no-bs {
+    form {margin: 0;}
+
+    input {
+        .transition(none);
+        .box-shadow(none);
+        .border-radius(none);
+        margin: 0;
+        padding: 0;
+        width: auto;
+        height: auto;
+        font-size: inherit;
+        line-height: inherit;
+        color: inherit;
+
+        &:focus {
+            .box-shadow(none);
+        }
+    }
+}
+
+/*  TODO: This is bootstrap override, based on:
+ *
+ *  https://github.com/twbs/bootstrap/commit/6bd5dc7d9fefd6d936def8a224bf38c6beeac234
+ *
+ *  Remove it after upgrade to bootstrap 3!!
+ */
+.hide {
+    display: none !important;
+}
+.show {
+    display: block !important;
+}
+.modal {
+    display: none;
+}

@@ -1,0 +1,58 @@
+<div class="<%= view.panelDivClass %>">
+    <h4>Editor theme</h4>
+    <hr>
+    <div class="row-fluid">
+        <div class="span12">
+            <div id="font_panel_word_preview" class="font-panel-word-preview">
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="row-fluid">
+        <div class="span12">
+            <form id="font_panel_settings"
+                  class="form-horizontal font-panel-settings">
+
+                <div class="control-group">
+                    <label class="control-label" for="inputTheme">
+                        Theme
+                    </label>
+                    <div class="controls">
+                        <select type="select" disabled id="inputTheme">
+                            <option>Light</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="inputBgColor">
+                        Background color
+                    </label>
+                    <div class="controls font-panel-bgpicker"
+                         id="font_panel_bgpicker">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="inputFont">
+                        Choose font
+                    </label>
+                    <div class="controls">
+                        <select type="select" disabled id="inputFont">
+                            <option>Sinclair</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="inputFont">
+                        Default font size
+                    </label>
+                    <div class="controls font-panel-slider-container">
+                        <div id="font_panel_slider"
+                             class="font-panel-slider">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

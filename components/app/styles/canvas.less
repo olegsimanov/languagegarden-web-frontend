@@ -1,0 +1,353 @@
+/* -------------------------------------------------------
+    Canvas
+   -------------------------------------------------------*/
+.canvas-container {
+    overflow: hidden;
+    color: #000;
+}
+
+/*  Helper for editing text on canvas
+ */
+input.language-plant-editbox {
+  font-size:1px;
+  border: none;
+  color: rgba(0,0,0,0);
+  opacity: 0.0;
+  background: none;
+  position: absolute;
+  outline: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+
+  &__rtl {
+      direction: rtl;
+      unicode-bidi: bidi-override;
+  }
+
+  &::-moz-selection {
+      /* Mozilla based browsers */
+      background-color: none;
+      color: rgba(0,0,0,0);
+  }
+
+  &::selection {
+      /* Works in Safari */
+      background-color: none;
+      color: rgba(0,0,0,0);
+  }
+
+  &::-webkit-selection {
+      /* Works in Chrome */
+      background-color: none;
+      color: rgba(0,0,0,0);
+  }
+}
+
+.canvas, .metrics-measuring-div {
+  font-family: @plantFontFamily;
+}
+
+.canvas {
+
+  .element tspan {
+    cursor: default;
+  }
+
+  .note-medium-content {
+    display: block;
+    text-align: left;
+    min-width: 160px;
+    outline: none; /* Global outline none? */
+    border: 1px solid #d8d8d8;
+
+    .gradient(#fff, #fff, #efefef);
+    .border-radius(5px);
+    .box-shadow(0 2px 2px 0 rgba(0, 0, 0, .25));
+
+    &:hover,
+    &:focus {
+      outline: none;
+    }
+    p {
+        &:hover,
+        &:focus {
+          outline: none;
+        }
+        display:block;
+        white-space: nowrap;
+        @horizontalPadding: 10px;
+        @leftBorderImageWidth: 31px;
+        margin: 0px;
+        line-height: 29px;
+        height: 29px;
+        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAACCAYAAACg5gd8AAAAJ0lEQVR42mNggABeImheEtTipKdMmSL7dV77TBBmoDf4//+/IMxyAHxeEGrO+dV0AAAAAElFTkSuQmCC) repeat-y left center;
+        padding:0 @horizontalPadding 0 @leftBorderImageWidth+@horizontalPadding;
+        border-bottom: 1px solid #e7e7e4;
+        border-bottom: 1px solid rgba(173, 173, 173, .2);
+        &:last-of-type {
+          border-bottom:none;
+        }
+    }
+
+    &.text-size-tiny {
+      @noteHeight: 33px;
+      &[contenteditable=false] p,
+      &:not([contenteditable]) p{
+          height: @noteHeight !important;
+      }
+      min-height: @noteHeight;
+      p {
+        height: @noteHeight;
+        line-height: @noteHeight;
+        font-size: 18px;
+      }
+    }
+
+    &.text-size-small {
+      @noteHeight: 43px;
+      &[contenteditable=false] p,
+      &:not([contenteditable]) p{
+          // this ugly blocks fixes IE when dragging
+          height: @noteHeight !important;
+      }
+      min-height: @noteHeight;
+      p {
+        height: @noteHeight;
+        line-height: @noteHeight;
+        font-size: 28px;
+      }
+    }
+
+    &.text-size-normal {
+      @noteHeight: 66px;
+      &[contenteditable=false] p,
+      &:not([contenteditable]) p{
+          height: @noteHeight !important;
+      }
+      min-height: @noteHeight;
+      p {
+        height: @noteHeight;
+        line-height: @noteHeight;
+        font-size: 50px;
+      }
+    }
+
+    &.text-size-big {
+      @noteHeight: 86px;
+      &[contenteditable=false] p,
+      &:not([contenteditable]) p{
+          height: @noteHeight !important;
+      }
+      min-height: @noteHeight;
+      p {
+        height: @noteHeight;
+        line-height: @noteHeight;
+        font-size: 80px;
+      }
+    }
+
+    &.text-size-huge {
+      @noteHeight: 107px;
+      &[contenteditable=false] p,
+      &:not([contenteditable]) p{
+          height: @noteHeight !important;
+      }
+      min-height: @noteHeight;
+      p {
+        line-height: @noteHeight;
+        height: @noteHeight;
+        font-size: 91px;
+      }
+    }
+  }
+
+}
+
+/*  Canvas Rendering Stuff
+ */
+/*  This selector won't work for player
+ */
+.canvas:not(.noop-mode) {
+  .letter-area,
+  .medium {
+      cursor: pointer;
+
+      &.selected {
+          cursor: move;
+      }
+  }
+}
+
+/*  Canvas Edit Stuff
+ */
+.canvas.editor {
+  &.color-mode {
+    &.selections-present {
+      .element tspan {
+        opacity: 1;
+      }
+    }
+
+    .html-media-float,
+    .medium {
+      opacity: 0.2;
+      cursor: default;
+    }
+    .image-medium-handle {
+      cursor: default;
+    }
+  }
+}
+
+.canvas.editor {
+  .html-media-float {
+    position: absolute;
+  }
+
+  .element.faded tspan,
+  .medium.faded,
+  div.html-media-float.faded,
+  .element.plant-to-text-faded tspan,
+  .medium.plant-to-text-faded,
+  div.html-media-float.plant-to-text-faded
+  {
+    opacity: 0.5;
+  }
+
+  &.edit-mode, .image-edit, .text-edit {
+    .element tspan,
+    .html-media-float,
+    .medium
+    {
+      opacity: 0.2;
+    }
+  }
+  &.selections-present {
+    .element tspan,
+    .html-media-float,
+    .medium
+    {
+      opacity: 0.2;
+    }
+  }
+  &.mark-mode {
+    .element tspan,
+    .html-media-float,
+    .medium
+    {
+      opacity: 0.2;
+    }
+  }
+
+  &.edit-mode, .image-edit, .text-edit {
+    .element.edited tspan,
+    div.html-media-float.selected,
+    {
+      opacity: 1.0;
+    }
+  }
+
+  &.selections-present {
+    .element.selected tspan,
+    div.html-media-float.selected,
+    .medium.selected
+    {
+      opacity: 1.0;
+    }
+  }
+
+  &.mark-mode {
+    .element.marked tspan,
+    {
+      opacity: 1.0;
+    }
+  }
+
+  .element.out-of-bounds {
+    opacity: 0.5;
+  }
+
+  .element.selected,
+  .element.edited {
+    tspan.out-of-bounds {
+        opacity: 0.5;
+        fill: red !important;
+    }
+  }
+
+  .note-medium-margin, .image-medium-handle {
+    .cursor-hand();
+    &.selected {
+        .cursor-drag();
+    }
+  }
+
+  .plant-to-text-note {
+    &.text-unselectable {
+      .cursor-hand();
+    }
+    &.in-plant-to-text-mode {
+      .cursor-drag();
+    }
+  }
+}
+
+.canvas.editor.in-dragging {
+  p {
+    .no-selection();
+  }
+
+  .cursor-dragging();
+
+  svg,
+  .letter-area,
+  .letter-area.selected,
+  .note-medium,
+  .note-medium.selected,
+  .note-medium-margin,
+  .text-medium,
+  .image-medium-handle,
+  .medium,
+  .cke_editable {
+    .cursor-dragging();
+  }
+
+  &.in-bg-dragging,
+  &.in-bg-dragging svg{
+    cursor: move !important;
+
+    svg,
+    .letter-area,
+    .letter-area.selected,
+    .note-medium,
+    .note-medium.selected,
+    .note-medium-margin,
+    .text-medium,
+    .image-medium-handle,
+    .medium,
+    .cke_editable
+    {
+      cursor: move !important;
+    }
+  }
+
+  .container-colors {
+    > div {
+      .cursor-dragging();
+    }
+  }
+}
+
+/*  Canvas Player
+ */
+.canvas.player .note-medium-content {
+  margin-left: 31px;
+  min-width: 0;
+}
+.canvas.player .note-medium-content p {
+  padding-left: 10px;
+  background: none;
+}

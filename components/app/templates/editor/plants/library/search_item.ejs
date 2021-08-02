@@ -1,0 +1,10 @@
+<% if (!!view.model) { %>
+    <td>
+        (<%= view.model.get('Id') %>)
+    </td>
+    <td><%= view.model.get('Name') %></td>
+    <td><i class="icon-cog"></i></td>
+    <td><i class="icon-arrow-right file-select"></i></td>
+<% } else { %>
+    <td>No media found.<td>
+<% } %>

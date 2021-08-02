@@ -1,0 +1,39 @@
+/* -------------------------------------------------------
+    Buttons
+   -------------------------------------------------------*/
+.button {
+    cursor: pointer;
+    display: inline-block;
+    font-size: 0;
+    vertical-align: middle;
+    text-align: left;
+    position: relative;
+    .no-selection();
+
+    &.disabled { opacity: 0.5;}
+}
+.button__caption,
+.button .icon {
+    vertical-align: middle;
+    display: inline-block;
+}
+.button__caption {
+    font-family: @textFontFamily;
+    color: #231f20;
+    font-size: 14px;
+    line-height: 1.15;
+    margin: 0 0 0 10px;
+}
+
+/*  Disabled Button
+ */
+.button.disabled {
+    cursor: default;
+}
+
+/*  Buttons Group
+ */
+.buttons-group {
+    display: inline-block;
+    vertical-align: middle;
+}

@@ -1,0 +1,6 @@
+.DS_Store
+Vagrantfile
+.vagrant/
+.idea/
+autogen-brewfile.txt.lock.json
+/staticpages-demo/static/

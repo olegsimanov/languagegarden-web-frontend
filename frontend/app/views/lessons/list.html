@@ -1,0 +1,23 @@
+<div ng-include="'/views/lessons/_breadcrumbs.html'"></div>
+
+<div class="row">
+  <div class="col-lg-3 data-actions-panel">
+    <div class="list-group">
+      <a class="list-group-item"
+         ui-sref="lessons.list({category_id: year_category.id})"
+         ui-sref-active="active">
+        All
+      </a>
+      <a class="list-group-item"
+         ng-repeat="category in categories"
+         ui-sref="lessons.list({category_id: category.id})"
+         ui-sref-active="active">
+        {{ category.name }}
+      </a>
+    </div>
+  </div> <!-- .col-lg-3 -->
+
+  <div class="col-lg-9">
+    <div ng-include="'/views/lessons/_data-table.html'"></div>
+  </div>
+</div> <!-- .row -->

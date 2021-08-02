@@ -1,0 +1,277 @@
+.sidebar {
+    position: relative;
+    width: 100px;
+
+    &--disabled {
+        opacity: 0.5;
+    }
+
+    &__logo {
+        font-size: 0px; // ugly hack required for IE9
+        color: transparent;
+        display: block;
+        width: 48px;
+        height: 56px;
+        background: url(../img/logo-with-bottom-text.svg) no-repeat;
+        background-size: cover;
+        margin: 7px 0 18px 12px;
+    }
+
+    &__title-page-image {
+        cursor: pointer;
+        width: 70px;
+        height: 70px;
+        background-color: #fff;
+        border-radius: 50%;
+        margin-bottom: 15px;
+        overflow: hidden;
+
+        img {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    &__tiles-outer {
+        position: relative;
+    }
+
+    &__tiles-container {
+        position: relative;
+        height: 486px;
+        width: 100%;
+        overflow: auto;
+
+        &:before,
+        &:after {
+            position: absolute;
+            left: 0;
+            content: '';
+            display: block;
+            width: 70px;
+            height: 15px;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        &:before {
+            top: 0;
+            -webkit-box-shadow: inset 0 15px 10px -10px #ECEBEB;
+            box-shadow: inset 0 15px 10px -10px #ECEBEB;
+        }
+
+        &:after {
+            bottom: 0;
+            -webkit-box-shadow: inset 0px -15px 10px -10px #ECEBEB;
+            box-shadow: inset 0px -15px 10px -10px #ECEBEB;
+        }
+
+        .jspPane {
+            padding: 4px 0 !important;
+        }
+        .jspTrack,
+        .jspVerticalBar {
+            background: transparent;
+        }
+        .jspDrag {
+            padding: 4px 0;
+            background: transparent;
+        }
+        .jspDragTop {
+            height: 100%;
+            width: 14px;
+            background: #fff url(../img/v5/jspDrag.gif) no-repeat 50% 50%;
+            -webkit-border-radius: 14px;
+            border-radius: 14px;
+            -webkit-box-shadow: 1px 1px 4px rgba(0, 0, 0, .25);
+            box-shadow: 1px 1px 4px rgba(0, 0, 0, .25);
+        }
+
+    }
+
+    &__tile {
+        width: 70px;
+        border: 1px solid #bbb;
+        -webkit-border-radius: 5px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        &--as-tile-element:last-child {
+            margin-bottom: 10px;
+        }
+
+        &--active {
+            .tile__elements-container {
+                display: block;
+            }
+        }
+
+        &--active, :hover {
+            .tile__number {
+                background: #80b214;
+                color: #fff;
+                border: none;
+                text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+            }
+        }
+
+        &--add {
+            margin-top: 10px;
+        }
+
+    }
+
+    &__tile--disabled {
+        position: relative;
+
+        &:before {
+            .block-overlay()
+        }
+        .tile__number {
+            color: #dddddd;
+        }
+    }
+
+    &__tile--locked {
+        border: none;
+        overflow: hidden;
+        position: relative;
+
+        &:before {
+            .block-overlay();
+            background: #cbcbcb;
+            z-index: 1;
+        }
+        &:after {
+            content: '';
+            position: absolute;
+            z-index: 2;
+            left: 50%;
+            top: 50%;
+            margin: -21px 0 0 -14.5px;
+            &:extend(.icon, .icon_lock-gray);
+        }
+    }
+
+    &__overlay {
+        display: none;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        right: 0px;
+        bottom: 0px;
+        z-index: 10;
+        overflow: auto;
+    }
+
+    &__overlay--visible {
+        display: block;
+    }
+}
+
+.tile {
+
+    &--active {
+        border-color: #f00;
+    }
+
+    &--disabled {
+        border-style: dashed;
+    }
+
+    &__number-container, &__plus-container, &__elements-container {
+        padding-left: 9px;
+        padding-right: 9px;
+        text-align: center;
+    }
+
+    &__number-container {
+        padding-top: 9px;
+        padding-bottom: 9px;
+    }
+
+    &__plus-container {
+        padding-top: 9px;
+    }
+
+    &__elements-container {
+        display: none;
+    }
+
+    &__number, &__element, &__plus {
+        text-align: center;
+        vertical-align: middle;
+
+        cursor: pointer;
+        font-size: 24px;
+        -webkit-border-radius: 4px;
+        border-radius: 4px;
+        -webkit-transition: border-color 0.2s ease-out;
+        transition: border-color 0.2s ease-out;
+    }
+
+    &__number {
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        font-size: 36px;
+        color: #bbbab9;
+
+        -webkit-border-radius: 4px;
+        border-radius: 4px;
+        -webkit-transition: background 0.2s ease-out;
+        transition: background 0.2s ease-out;
+    }
+
+    &__element, &__plus {
+        width: 46px;
+        height: 46px;
+        line-height: 46px;
+        border: 2px solid transparent;
+        margin-bottom: 10px;
+        color: #808080;
+    }
+
+    &__element--active, &__element:hover {
+        border-color: #80b214;
+    }
+
+    &__element--disabled {
+        color: #dddddd;
+    }
+}
+
+.element {
+
+}
+
+
+/*  Player Sidebar
+ */
+.sidebar_in-player .sidebar__title-page-image {
+    margin-bottom: 20px;
+}
+.sidebar_in-player .sidebar__tiles-container {
+    height: 445px;
+}
+
+
+/*  Blocked
+ */
+.sidebar_blocked .sidebar__tiles-outer {
+    opacity: 0.6;
+}
+.sidebar_blocked .sidebar__tiles-outer:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+}

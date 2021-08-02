@@ -1,0 +1,17 @@
+<% if (!!view.model) { %>
+    <td>
+        <% if (view.model.get('type') == 'image') { %>
+            <img src="<%= view.model.get('url') %>"
+               alt="<%= view.model.get('name') %>"
+               class="image-thumbnail" >
+            </img>
+        <% } else if (view.model.get('type') == 'sound') { %>
+            <div href="#" class="sound-thumbnail"></div>
+        <% } %>
+    </td>
+    <td><%= view.model.get('name') %></td>
+    <td><i class="icon-cog"></i></td>
+    <td><i class="icon-arrow-right file-select"></i></td>
+<% } else { %>
+    <td>No media found.<td>
+<% } %>

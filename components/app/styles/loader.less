@@ -1,0 +1,38 @@
+.loader {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #FFF;
+    width: 100%;
+    height: 100%;
+    z-index: 3000; //over any bootstrap element.we may consider to show bootstrap menu over loader
+}
+
+@keyframes spinner {
+    to {transform: rotate(360deg);}
+}
+
+@-webkit-keyframes spinner {
+    to {-webkit-transform: rotate(360deg);}
+}
+
+.loader:before {
+    content: 'Loading…';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 64px;
+    height: 64px;
+    margin-top: -40px;
+    margin-left: -40px;
+}
+
+.loader:not(:required):before {
+    content: '';
+    border-radius: 50%;
+    border: 5px solid rgba(0, 0, 0, .3);
+    border-top-color: rgba(0, 0, 0, .6);
+    animation: spinner .6s linear infinite;
+    -webkit-animation: spinner .6s linear infinite;
+}

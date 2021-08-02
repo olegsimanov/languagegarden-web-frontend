@@ -1,0 +1,102 @@
+<ul class="nav nav-tabs">
+  <li>
+    <a ui-sref="users.sign_in">Log In</a>
+  </li>
+  <li class="active">
+    <a ui-sref="users.sign_up">Sign up</a>
+  </li>
+</ul>
+
+<form class="tab-content" ng-submit="sendForm()">
+  <div class="alert alert-success"
+       ng-if="success">
+    Success! Confirmation link has been sent to your email.
+  </div>
+
+  <div class="alert alert-danger"
+       ng-if="error_msg"
+       ng-bind="error_msg">
+  </div>
+
+  <div class="form-group"
+       ng-class="{'has-error': errors.username}">
+    <label class="control-label">Username</label>
+    <input type="text"
+           class="form-control"
+           placeholder="Username"
+           ng-model="form.username"
+           required />
+  </div>
+
+  <div class="form-group"
+       ng-class="{'has-error': errors.email}">
+    <label class="control-label">Email</label>
+    <input type="email"
+           class="form-control"
+           placeholder="E-mail"
+           ng-model="form.email"
+           required />
+  </div>
+
+  <div class="row">
+    <div class="col-xs-6">
+      <div class="form-group"
+           ng-class="{'has-error': errors.first_name}">
+        <label class="control-label">First Name</label>
+        <input type="text"
+               class="form-control"
+               placeholder="First Name"
+               ng-model="form.first_name"
+               required />
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <div class="form-group"
+           ng-class="{'has-error': errors.last_name}">
+        <label class="control-label">Last Name</label>
+        <input type="text"
+               class="form-control"
+               placeholder="Last Name"
+               ng-model="form.last_name"
+               required />
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group"
+       ng-class="{'has-error': errors.password1}">
+    <label class="control-label">Password</label>
+    <input type="password"
+           class="form-control"
+           placeholder="Password"
+           ng-model="form.password1"
+           required />
+  </div>
+
+  <div class="form-group"
+       ng-class="{'has-error': errors.password2}">
+    <label class="control-label">Re-enter Password</label>
+    <input type="password"
+           class="form-control"
+           placeholder="Re-enter Password"
+           ng-model="form.password2"
+           required />
+  </div>
+
+  <div class="form-group">
+    <div class="checkbox clearfix">
+      <label class="pull-left">
+        <input type="checkbox"
+               ng-model="form.terms_of_usage_confirmation"
+               required />
+        I agree to the <a ui-sref="terms_of_service" target="_blank">Terms of Usage</a>
+      </label>
+    </div>
+  </div>
+
+  <button type="submit"
+          class="auth-form__submit btn btn-success btn-block btn-lg"
+          ng-class="{'disabled': sending}">
+    Sign Up<span ng-if="sending">..</span>
+  </button>
+</form>

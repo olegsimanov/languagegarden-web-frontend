@@ -1,0 +1,26 @@
+<div ng-include="'/views/lessons/_breadcrumbs.html'"></div>
+
+<div class="row">
+  <div class="col-md-3">
+    <h5>Select language</h5>
+    <div class="list-group">
+      <a class="list-group-item"
+         ng-repeat="category in categories"
+         ui-sref="lessons.categories({category_id: category.id})"
+         ui-sref-active="active">
+        {{ category.name }}
+      </a>
+    </div>
+  </div> <!-- .col-md-3 -->
+
+  <div class="col-md-3" ng-if="current_category">
+    <h5>Select Year</h5>
+    <div class="list-group">
+      <a class="list-group-item"
+         ng-repeat="category in current_category.children"
+         ui-sref="lessons.list({category_id: category.id})">
+        {{ category.name }}
+      </a>
+    </div>
+  </div> <!-- .col-md-3 -->
+</div> <!-- .row -->

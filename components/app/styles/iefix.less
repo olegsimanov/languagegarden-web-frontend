@@ -1,0 +1,31 @@
+.browser-is-ie {
+  .note-medium-content {
+    p,
+    &.text-size-tiny p,
+    &.text-size-small p,
+    &.text-size-normal p,
+    &.text-size-big p,
+    &.text-size-huge p {
+      /*
+        contentEditable in IE requires haslayout to be turned off, so we reset
+        following properties
+          display: inline-block
+          height: (any value except auto)
+          float: (left or right)
+          position: absolute
+          width: (any value except auto)
+          writing-mode: tb-rl
+          zoom: (any value except normal)
+
+        why: http://reference.sitepoint.com/css/haslayout
+      */
+      display: block;
+      height: auto;
+      float: none;
+      position: relative;
+      width: auto;
+      writing-mode: lr-tb;
+      zoom: normal;
+    }
+  }
+}

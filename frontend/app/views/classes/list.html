@@ -1,0 +1,64 @@
+<div class="data-actions-panel">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="search-field-container form-group">
+        <input type="text"
+               placeholder="Search for keyword"
+               class="form-control search-field"
+               ng-model="search_query" />
+        <div class="glyphicon glyphicon-search"></div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="data-actions-panel__right form-group">
+        <div class="btn btn-success"
+             ng-click="addClass()">
+          <i class="glyphicon glyphicon-plus"></i>  Add Class
+        </div>
+      </div>
+    </div>
+  </div>
+</div> <!-- .data-actions-panel -->
+
+
+<div ng-if="classes && classes.length"
+     class="table-responsive">
+  <table class="table table-striped data-table data-table_hoverable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th class="text-center">Number of Students</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="class in classes | filter: {name: search_query}">
+        <td ng-click="showStudents(class.id)"
+            class="clickable">
+          {{ class.name }}
+        </td>
+        <td ng-click="showStudents(class.id)"
+            class="clickable text-center">
+          {{ class.num_of_students }}
+        </td>
+        <td class="action-cell">
+          <div class="btn btn-primary"
+               ng-click="editClass(class)">
+            <i class="glyphicon glyphicon-pencil"></i>
+          </div>
+          &nbsp;
+          <div class="btn btn-danger"
+               ng-click="deleteClass(class.id, $index)">
+            <i class="glyphicon glyphicon-trash"></i>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<div class="text-center"
+     ng-if="classes && !classes.length">
+  <b>No Results</b>
+</div>

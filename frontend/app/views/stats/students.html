@@ -1,0 +1,82 @@
+<div class="text-center">
+    <a ui-sref="stats.lessons">lessons</a>
+    <span>Students</span>
+    <a ui-sref="stats.classes">classes</a>
+</div>
+
+<div class="data-actions-panel">
+  <div class="text-center row">
+    <div class="col-md-3">
+      <select class="form-control form-group"
+              ng-model="search_options.class_id"
+              ng-change="switchClass()">
+        <option value="">All Classes</option>
+        <option ng-repeat="class in classes | orderBy:'name'"
+                ng-selected="class.id == search_options.class_id"
+                value="{{ class.id }}">
+          {{ class.name }}
+        </option>
+      </select>
+    </div>
+  </div>
+</div> <!-- .data-actions-panel -->
+
+<div ng-if="students && students.length"
+     ng-class="{'disabled-block': data_loading}"
+     class="table-responsive">
+  <table class="table table-striped data-table">
+    <thead>
+      <tr>
+        <th>
+          Name
+        </th>
+        <th class="text-center">
+          Number of lessons
+        </th>
+        <th class="text-center">
+          Initial accuracy
+        </th>
+        <th class="text-center">
+          Final accuracy
+        </th>
+        <th class="text-center">
+          Last login
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="(key, act) in users_activities" ng-if="act.user && (act.user.class_name == class_filter || !class_filter)">
+        <td>{{act.user.first_name}} {{act.user.last_name}}</td>
+        <td class="text-center" width="150">
+          {{ act.total }}
+        </td>
+        <td class="text-center students__table-date-cell">
+          {{ act.initial*100 | number:0 }}%
+        </td>
+        <td class="text-center students__table-date-cell">
+          {{ act.final*100 | number:0 }}%
+        </td>
+        <td class="action-cell">
+          {{ act.user.last_login | date:'mediumDate' }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- <div class="text-center"
+       ng-if="totalItems > itemsPerPage">
+    <pagination items-per-page="itemsPerPage"
+                total-items="totalItems"
+                ng-model="pagination.currPage"
+                ng-change="pageChanged()">
+    </pagination>
+  </div> -->
+</div>
+
+
+<div class="text-center"
+     ng-if="students && !students.length">
+  <b>No results</b>
+</div>
+
+<div ui-view></div>

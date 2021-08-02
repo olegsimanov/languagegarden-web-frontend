@@ -1,0 +1,64 @@
+<div class="table-responsive"
+     ng-if="lessons && lessons.length"
+     ng-class="{'disabled-block': data_loading}">
+  <table class="table table-striped data-table data-table_hoverable"
+         ng-if="lessons && lessons.length">
+    <thead>
+      <tr>
+        <th width="1"></th>
+        <th>
+          Name
+        </th>
+        <th class="text-center">
+          Description
+        </th>
+        <th class="text-center">
+          Score
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="lesson in lessons">
+        <td class="text-center clickable"
+            open-url="/player/{{ lesson.id }}/">
+          <img ng-if="lesson.cover_image_url" ng-src="{{ (lesson.cover_image_url | thumbnail:'small' ) }}">
+          <img ng-if="!lesson.cover_image_url" src="/img/lg_img_placeholder.png">
+        </td>
+        <td class="clickable"
+            open-url="/player/{{ lesson.id }}/">
+          {{ lesson.title }}
+        </td>
+        <td class="text-center clickable"
+            open-url="/player/{{ lesson.id }}/">
+          {{ lesson.description }}
+        </td>
+        <td class="text-center clickable"
+            open-url="/player/{{ lesson.id }}/">
+          <span ng-if="lesson.score"
+                ng-class="{
+                  'status-color-green':  lesson.score >= 0.9,
+                  'status-color-orange': lesson.score < 0.9 && lesson.score >= 0.6,
+                  'status-color-red':    lesson.score < 0.6
+                }">
+            {{ (lesson.score * 100).toFixed() }}%
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="text-center"
+       ng-if="totalItems > itemsPerPage">
+    <pagination items-per-page="itemsPerPage"
+                total-items="totalItems"
+                ng-model="pagination.currPage"
+                ng-change="pageChanged()">
+    </pagination>
+  </div>
+</div>
+
+
+<div class="text-center"
+     ng-if="lessons && !lessons.length">
+  <b>No results</b>
+</div>

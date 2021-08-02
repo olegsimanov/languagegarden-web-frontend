@@ -1,0 +1,128 @@
+/* -------------------------------------------------------
+    Plant Overlay
+   -------------------------------------------------------*/
+.plant-overlay {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow: auto;
+}
+.plant-overlay_visible {
+    display: block;
+}
+
+
+/* -------------------------------------------------------
+    Plant Overlay - Activities List
+   -------------------------------------------------------*/
+.activities__centering-outer {
+    display: table;
+    width: 100%;
+    height: 100%;
+}
+.activities__centering {
+    width: 100%;
+    height: 100%;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+
+/*  No Activities Caption
+ */
+.activities__none {
+    font-size: 36px;
+    text-shadow: 0 1px 0 #000;
+}
+
+/*  Icons
+ */
+.activity-icon_dictionary {.icon('activity/icon_dictionary.png', 33.5, 39.75)}
+.activity-icon_p2t        {.icon('activity/icon_p2t.png', 29.5, 40.75)}
+.activity-icon_media      {.icon('activity/icon_media.png', 38.5, 35.75)}
+.activity-icon_remove     {.icon('activity/icon_remove.png', 20, 23)}
+
+
+/*  Activities List
+ */
+.activities__list {
+    display: inline-block;
+    text-align: left;
+}
+.activities__item {
+    width: 600px;
+    height: 60px;
+    margin: 10px 0;
+    position: relative;
+    font-style: italic;
+    overflow: hidden;
+    text-decoration: none;
+    color: #9c9c9c;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, .75);
+    .gradient(#e5e5e5, #fff, #e5e5e5);
+    .border-radius(4px);
+    .box-shadow(0 1px 4px 0 rgba(0, 0, 0, 0.5));
+}
+.activities__item-draggable-box {
+    width: 50px;
+    height: 60px;
+    float: left;
+    cursor: move;
+    margin: 0 10px 0 0;
+}
+.activities__item-draggable-icon {
+    width: 30px;
+    height: 40px;
+    margin: 10px 0 0 10px;
+    background: url(../img/v4/activity/activities__item-draggable-box.png);
+    background-size: 6px 6px;
+    opacity: 0.5;
+}
+.activities__item-name-container {
+    display: table;
+    height: 60px;
+    width: 450px;
+}
+.activities__item-type-icon,
+.activities__item-name {
+    display: table-cell;
+    vertical-align: middle;
+}
+.activities__item-type-icon {
+    width: 45px;
+    font-size: 0;
+    text-align: center;
+    padding: 0 10px 0 0;
+}
+.activities__item-name {
+    font-size: 18px;
+    line-height: 20px;
+}
+.activities__item-actions {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 12px;
+}
+.activities__item-action {
+    float: left;
+    width: 60px;
+    margin: 0 5px;
+    text-align: center;
+    position: relative;
+    height: 60px;
+}
+.activities__item-action .icon {
+    margin: 13px auto 0;
+}
+.activities__item-action-name {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 6px;
+}

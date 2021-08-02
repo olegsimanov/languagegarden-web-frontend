@@ -1,0 +1,126 @@
+@import "loader";
+
+
+/* -----------------------------------------------
+    Search Field with Icon
+   ----------------------------------------------- */
+.search-field-container {
+  position: relative;
+}
+.search-field-container .search-field {
+  padding: 0 0 0 30px;
+}
+.search-field-container .glyphicon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  font-size: 14px;
+  margin-top: -7px;
+  color: #ccc;
+  z-index: 10;
+}
+
+
+/* -----------------------------------------------
+    User Profile
+   ----------------------------------------------- */
+.user-profile__nav {
+  margin: 15px 0 0 0;
+}
+.user-profile__title {
+  margin: 15px 0 20px 0;
+}
+
+
+/* -----------------------------------------------
+    Lessons
+   ----------------------------------------------- */
+/*  Search Filter
+ *
+ *  w/ Little hack, to fix element autowidth inside table-cell
+ */
+.categories-filter-container {
+  width: 500px;
+  position: absolute;
+  right: 0;
+}
+.open .categories-filter-container .dropdown-menu {
+  display: block;
+}
+.categories-filter {
+  padding: 0 13px;
+  max-width: 500px;
+}
+.categories-filter__heading {
+  font-weight: bold;
+  margin: 10px 0 4px 0;
+  text-transform: uppercase;
+  color: #555;
+}
+.categories-filter__category {
+  font-size: 12px;
+  cursor: pointer;
+  float: left;
+  margin: 0 0.4em 0.4em 0;
+  padding: 0.3em 0.6em 0.35em;
+}
+.categories-filter__items {
+  margin-bottom: 10px;
+}
+.categories-filter__category-level {
+  padding: 0;
+  line-height: 30px;
+  width: 30px;
+  text-align: center;
+  color: #fff;
+  float:  left;
+  font-weight: bold;
+  -webkit-border-radius: 100%;
+          border-radius: 100%;
+}
+
+/*  Data Table
+ */
+.table.data-table th,
+.table.data-table td {
+  vertical-align: middle;
+}
+.table.data-table_hoverable tr:hover td {
+  background: #E3E3E3;
+}
+.table.data-table .sort-cell {
+  white-space: nowrap;
+  cursor: pointer;
+}
+.table.data-table .sort-cell .glyphicon {
+  cursor: pointer;
+  font-weight: normal;
+  font-size: 10px;
+  color: #555;
+}
+.table.data-table .action-cell {
+  width: 1px;
+  white-space: nowrap;
+}
+
+
+/* -----------------------------------------------
+    Data Actions
+   ----------------------------------------------- */
+.data-actions-panel {
+  margin-bottom: 30px;
+}
+
+/*  Responsive action buttons. Expect -md grid
+ */
+.data-actions-panel__right {
+  float: right;
+}
+@media (max-width: 992px) {
+  .data-actions-panel__right {
+    float: none;
+  }
+  .data-actions-panel__right .btn {
+    display: block;
+  }
+}

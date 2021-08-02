@@ -1,0 +1,15 @@
+<div class="row-fluid">
+    <div class="span12">
+        <ul id="id_add_image_nav" class="nav nav-tabs">
+            <% _.each(view.panelDataOrdered, function (panelData) { %>
+                <li>
+                    <a class="nav-item <%= panelData.view.panelNavClass %>"
+                       id="<%= panelData.view.cid %>" href="#">
+                        <%= panelData.view.menuName %>
+                    </a>
+                </li>
+            <% }); %>
+        </ul>
+    </div>
+    <div class="panel-content"></div>
+</div>

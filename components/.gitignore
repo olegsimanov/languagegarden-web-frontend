@@ -1,0 +1,41 @@
+*.py[co]
+*~
+# Packages
+*.egg
+*.egg-info
+node_modules
+bower_components
+dist
+build
+eggs
+parts
+bin
+var
+sdist
+collected_static
+reports
+develop-eggs
+.installed.cfg
+.pip-cache/
+.tmp/
+webpack-instance-config.js
+aws-keys.json
+
+# Sqlite databases
+*.sqlite3.db
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage reports
+.coverage
+.tox
+*.log
+
+#Translations
+*.mo
+
+#Mr Developer
+.mr.developer.cfg
+
+legacy_selenium_tests/languagegarden/settings/local.py

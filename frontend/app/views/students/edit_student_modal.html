@@ -1,0 +1,144 @@
+<div class="modal-header">
+  <h3 class="modal-title">
+    Edit Student
+
+    <span class="close no-selection"
+          ng-click="$dismiss()">
+      &times;
+    </span>
+  </h3>
+</div>
+<div class="modal-body" ng-controller="Students.EditCtrl">
+  <form ng-submit="sendForm()">
+    <div class="alert alert-danger"
+       ng-if="error_msg"
+       ng-bind="error_msg">
+    </div>
+
+    <div class="row">
+      <div class="col-xs-6">
+        <div class="form-group"
+             ng-class="{'has-error': errors.first_name}">
+          <label class="control-label">First Name</label>
+          <input type="text"
+                 class="form-control"
+                 placeholder="First Name"
+                 ng-model="form.first_name"
+                 autofocus
+                 required />
+        </div>
+      </div>
+      <div class="col-xs-6">
+        <div class="form-group"
+             ng-class="{'has-error': errors.last_name}">
+          <label class="control-label">Last Name</label>
+          <input type="text"
+                 class="form-control"
+                 placeholder="Last Name"
+                 ng-model="form.last_name"
+                 required />
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group"
+         ng-class="{'has-error': errors.single_class}">
+      <label class="control-label">Class</label>
+      <select class="form-control"
+              ng-model="form.single_class">
+        <option value="">Select Class</option>
+        <option ng-repeat="class in classes | orderBy:'name'"
+                value="{{ class.id }}"
+                ng-selected="class.id == form.single_class">
+          {{ class.name }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group"
+         ng-class="{'has-error': errors.username}">
+      <label class="control-label">Username</label>
+      <input type="text"
+             class="form-control"
+             placeholder="Username"
+             ng-model="form.username"
+             required />
+    </div>
+
+    <div class="form-group"
+         ng-class="{'has-error': errors.email}">
+         <label class="control-label">E-mail</label>
+         <input type="email"
+                class="form-control"
+                placeholder="E-mail"
+                ng-model="form.email"
+                />
+    </div>
+
+    <div class="clearfix">
+      <div class="pull-right">
+        <button type="submit"
+                class="btn btn-primary"
+                ng-class="{'disabled': sending}">
+          Update<span ng-if="sending">..</span>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+
+<div class="modal-header">
+  <h3 class="modal-title">
+    Change Password
+  </h3>
+</div>
+<div class="modal-body" ng-controller="Students.ChangePassCtrl">
+  <form ng-submit="sendForm()" autocomplete="off">
+    <div class="alert alert-danger"
+       ng-if="error_msg"
+       ng-bind="error_msg">
+    </div>
+
+    <div ng-if="success"
+       class="alert alert-success">
+      Password has been changed!
+    </div>
+
+    <div class="row">
+      <div class="col-xs-6">
+        <div class="form-group"
+             ng-class="{'has-error': errors.new_password1}">
+          <label class="control-label">New Password</label>
+          <input type="password"
+                 class="form-control"
+                 placeholder="New Password"
+                 ng-model="form.new_password1"
+                 required />
+        </div>
+      </div>
+      <div class="col-xs-6">
+        <div class="form-group"
+             ng-class="{'has-error': errors.new_password2}">
+          <label class="control-label">Re-type password</label>
+          <input type="password"
+                 class="form-control"
+                 placeholder="Re-type password"
+                 ng-model="form.new_password2"
+                 required />
+        </div>
+      </div>
+    </div>
+
+    <div class="clearfix">
+      <div class="pull-right">
+        <button type="submit"
+                class="btn btn-primary"
+                ng-class="{'disabled': sending}">
+          Change Password<span ng-if="sending">..</span>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

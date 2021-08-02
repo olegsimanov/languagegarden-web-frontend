@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col-md-3">
+    <ul class="nav nav-pills nav-stacked user-profile__nav">
+      <li ui-sref-active="active">
+        <a ui-sref="profile.edit">Profile</a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="profile.change_password">Change Password</a>
+      </li>
+      <li ui-sref-active="active" ng-if='USER.is_admin || USER.organisation'>
+        <a ui-sref="profile.parse_xls">Upload students</a>
+      </li>
+    </ul>
+  </div>
+  <div class="col-md-9">
+    <div ui-view=""></div>
+  </div> <!-- .col-md-9 -->
+</div> <!-- .row -->

@@ -1,0 +1,214 @@
+@import "reset.less";
+@import "prefixer.less";
+@import "variables.less";
+@import "mixins.less";
+
+// General
+@import "globals.less";
+@import "icons.less";
+@import "buttons.less";
+@import "progressbars.less";
+
+// Blocks
+@import "modals.less";
+@import "canvas.less";
+@import "toolbars.less";
+@import "sidebars.less";
+@import "plant-overlays.less";
+@import "titlepages.less";
+
+// Player
+@import "player.less";
+
+
+/* -------------------------------------------------------
+    Layout
+   -------------------------------------------------------*/
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+body {
+    background: #ECEBEB;
+    .background-size(cover);
+}
+.page-wrapper {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    .no-selection();
+}
+.page-container {
+    width: 1004px;
+    height: 652px;
+    padding: 10px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: table;
+}
+.page-container,
+.page-container input,
+.page-container textarea {
+    font-family: @plantFontFamily;
+    line-height: 1.28;
+}
+.page-container-inner {
+    position: relative;
+    padding: 0;
+    display: table-cell;
+    height: 100%;
+}
+.sidebar-container {
+    display: table-cell;
+    vertical-align: top;
+    width: 120px;
+}
+.plant-container {
+    .border-radius(3px);
+    position: relative;
+    overflow: hidden;
+    height: 462px + 105px;
+}
+
+/* -------------------------------------------------------
+    Plants List
+   -------------------------------------------------------*/
+.demo-welcome-container,
+.demo-summary-container,
+.list-container {
+    .border-radius(3px);
+    position: relative;
+    overflow: hidden;
+    background-color: #fff;
+    height: 652px;
+}
+.list-container .list{
+  .plant-element,
+  .plant-element .lead
+  {
+    margin-bottom: 0px;
+  }
+}
+
+.demo-welcome-container,
+.demo-summary-container {
+    color: #000;
+}
+
+/* -------------------------------------------------------
+    Plant Name
+   -------------------------------------------------------*/
+.plant-name-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 8;
+}
+.plant-name {
+    .border-radius(0 0 3px 3px);
+    display: inline-block;
+    overflow: hidden;
+    padding: 0 14px;
+    min-width: 100px;
+    max-width: 80%;
+    height: 28px;
+    background: rgba(0, 0, 0, 0.5);
+    text-transform: uppercase;
+    white-space: nowrap;
+    font-size: 16px;
+    line-height: 28px;
+}
+
+
+/* -------------------------------------------------------
+    Text 2 Plant
+   -------------------------------------------------------*/
+.text-to-plant-container, .instructions-box {
+    font-size: 40px;
+    line-height: 50px;
+    background: #ffffff;
+    height: 105px;
+    margin: 5px 0 0 0;
+}
+
+
+.text-to-plant-container {
+    &.plant-to-text-mode,
+    &.in-plant-to-text-mode {
+        .text-to-plant-box, .instructions-box {
+            display: none;
+        }
+    }
+
+    &.instructions-mode {
+        .text-to-plant-box, .plant-to-text-box {
+            display: none;
+        }
+    }
+}
+
+
+.text-to-plant-box,
+.plant-to-text-box,
+.instructions-box {
+    overflow: auto;
+    padding: 0 10px 5px;
+    height: 100px;
+    width: 864px;
+
+    &__hidden {
+        color: none;
+        background: #fff;
+    }
+
+    &__rtl {
+        direction: rtl;
+        unicode-bidi: bidi-override;
+    }
+}
+
+
+.text-to-plant-box {
+    .line {
+      .element {
+        &:last-child:after {
+          /* this hack is used for empty lines to work in chrome */
+          content:'\a0';
+        }
+        &.dragged-out {
+          opacity: 0.5;
+        }
+        &.marked {
+          color: #ff0000;
+        }
+      }
+    }
+}
+
+.instructions-box  {
+    color: #747474;
+}
+textarea.instructions-box {
+    margin: 0;
+    border-radius: 0;
+    border-width: 0;
+    border-image: none !important;
+    box-shadow: none;
+    resize: none;
+}
+
+.text-to-plant-helper {
+    font-family: @plantFontFamily;
+    position: absolute;
+    line-height: normal;
+}
+.text-to-plant-helper.out-of-bounds {
+    opacity: 0.5;
+}

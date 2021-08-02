@@ -1,0 +1,30 @@
+<% if (title) { %>
+    <div class="modal-header">
+        <div class="row-fluid">
+            <div class="span4">
+                <h3 class="modal-title"><%= title %></h3>
+            </div>
+            <div class="span8 pull-right">
+                <div class="modal-top-bar"></div>
+            </div>
+        </div>
+    </div>
+<% } %>
+<div class="modal-body"><%= content %></div>
+<div class="modal-footer">
+<% if (typeof allowOK !== 'undefined' && allowOK) { %>
+    <% if (okText) { %>
+        <a href="#" class="btn ok btn-success btn-primary"><%= okText %></a>
+    <% } %>
+<% } %>
+<% if (typeof allowRemove !== 'undefined' && allowRemove) { %>
+    <% if (removeText) { %>
+        <a href="#" class="btn remove btn-danger"><%= removeText %></a>
+    <% } %>
+<% } %>
+<% if (allowCancel) { %>
+    <% if (cancelText) { %>
+        <a href="#" class="btn cancel"><%= cancelText %></a>
+    <% } %>
+<% } %>
+</div>

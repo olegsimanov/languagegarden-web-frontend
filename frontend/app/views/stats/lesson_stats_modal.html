@@ -1,0 +1,45 @@
+<div class="modal-header">
+  <h3 class="modal-title">
+    {{current_lesson.name}}
+
+    <span class="close no-selection"
+          ng-click="$dismiss()">
+      &times;
+    </span>
+  </h3>
+</div>
+<div class="modal-body" ng-controller="StatsLessonsModal">
+  <table class="table table-striped data-table">
+    <thead>
+      <tr>
+        <th>
+          Student
+        </th>
+        <th class="text-center" ng-repeat="i in getNumber(fake_number) track by $index">
+          {{$index+1}}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="act in one_lesson">
+        <td>{{act.user.first_name}} {{act.user.last_name}}</td>
+        <td class="text-center" ng-repeat="single_act in act">
+          <table class="table table-striped data-table">
+            <thead>
+              <tr>
+                <td>Success</td>
+                <td>Fails</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td ng-class="{'greener': single_act.tries == 0}">{{ single_act.counter }}</td> 
+                <td ng-class="{'redder': single_act.tries > 0}">{{ single_act.tries }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

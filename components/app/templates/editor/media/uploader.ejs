@@ -1,0 +1,38 @@
+<div class="<%= view.panelDivClass %>">
+    <div class="row-fluid">
+        <div class="span12">
+
+<%  if (fileUploading) {
+        var progress = 0;
+        var total = 1;
+        var msg = 'Uploading...';
+        if (uploadInfo) {
+            progress = uploadInfo.bytesUploaded;
+            total = uploadInfo.fileSize;
+            msg = 'Uploading file ' + uploadInfo.originalLocation;
+        }
+%>
+            <p><%= _.escape(msg) %></p>
+            <div class="progress progress-striped active">
+                <div class="bar" style="width: <%= Math.floor(progress*100.0/total) %>%;"></div>
+            </div>
+<%  } else { %>
+<%      if (errorOccured) {
+            if(uploadInfo) { %>
+            <p>Error occured when file <%= _.escape(uploadInfo.originalLocation) %> was being uploaded:</p>
+<%          } else { %>
+            <p>Error occured:</p>
+<%          }
+%>
+            <p><%= _.escape(errorMessage) %></p>
+<%
+        } else if (fileUploaded && uploadInfo) { %>
+            <p>File <%= _.escape(uploadInfo.originalLocation) %> uploaded successfully.</p>
+<%      } %>
+            <form>
+                <input type="file" name="file" class="file">
+            </form>
+<%  } %>
+        </div>
+    </div>
+</div>

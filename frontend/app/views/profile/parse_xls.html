@@ -1,0 +1,31 @@
+<h2 class="user-profile__title">Upload students list</h2>
+
+
+<form class="row col-md-6" id="upload_students" method="POST" action="/api/v2/accounts/parse_xls/" enctype="multipart/form-data">
+  <div class="alert alert-success"
+       ng-if="success">
+    Success!
+  </div>
+
+  <div class="alert alert-danger"
+       ng-if="error_msg"
+       ng-bind="error_msg">
+  </div>
+  <div class="row">
+    <div class="col-xs-6">
+      <div class="form-group"
+           ng-class="{'has-error': errors.xls_file}">
+          <input ng-hide='sending' type='file'
+           name='xls_file'
+           id='id_xls_file'
+           ng-model='xls_file'
+           required>
+      </div>
+    </div>
+  </div>
+  <button type="submit"
+          class="auth-form__submit btn btn-primary"
+          ng-class="{'disabled': sending}">
+    Upload<span ng-if="sending">..</span>
+  </button>
+</form>

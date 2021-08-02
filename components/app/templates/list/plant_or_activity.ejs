@@ -1,0 +1,26 @@
+<ul class="nav clearfix plant-element">
+    <li class="pull-left">
+        <p class="lead">
+            <a href="#" class="nav-controller" data-nav-type="nav-plant" data-nav-plant-id="<%= id %>">
+                <%= _.escape(title) %>
+            </a>
+        </p>
+    </li>
+    <li class="pull-right dropdown">
+        <a href="#" id="options-drop-<%= id %>" class="btn dropdown-toggle" role="button" data-toggle="dropdown">Options</a>
+        <ul class="dropdown-menu" aria-labelledby="options-drop-<%= id %>" role="menu">
+            <li role="presentation">
+                <a href="#" class="nav-controller" data-nav-type="play-plant" data-nav-plant-id="<%= id %>" role="menuitem">
+                    Play
+                </a>
+            </li>
+            <% if (typeof data !== 'undefined') { %>
+            <li role="presentation">
+                <a href="data:application/octet-stream;base64,<%= btoa(data) %>" download="<%= title %>.json" role="menuitem">
+                    Download
+                </a>
+            </li>
+            <% } %>
+        </ul>
+    </li>
+</ul>

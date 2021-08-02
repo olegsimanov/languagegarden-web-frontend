@@ -1,0 +1,34 @@
+<form ng-submit="sendForm()" autocomplete="off">
+  <div class="modal-header">
+    <h3 class="modal-title">
+      <span ng-if="!edit_state">Add</span>
+      <span ng-if="edit_state">Edit</span> Class
+
+      <span class="close no-selection"
+            ng-click="$dismiss()">
+        &times;
+      </span>
+    </h3>
+  </div>
+
+  <div class="modal-body">
+    <input type="text"
+           class="form-control"
+           placeholder="Enter Class Name"
+           ng-model="form.name"
+           autofocus
+           required />
+  </div>
+
+  <div class="modal-footer">
+    <button type="submit"
+            class="btn btn-primary">
+      <span ng-if="!edit_state">Add</span>
+      <span ng-if="edit_state">Edit</span>
+    </button>
+    <button class="btn btn-danger"
+            ng-click="$dismiss()">
+      Cancel
+    </button>
+  </div>
+</form>

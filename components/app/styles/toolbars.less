@@ -1,0 +1,235 @@
+/* -------------------------------------------------------
+    Toolbar - Layout
+   -------------------------------------------------------*/
+.toolbar {
+    display: none;
+}
+.toolbar_active {
+    display: block;
+}
+
+/*  Table Layout
+ */
+.toolbar__table-container {
+    width: 100%;
+    display: table;
+}
+
+/*  Toolbar section
+ */
+.toolbar__section {
+    display: table-cell;
+    height: 80px;
+    vertical-align: middle;
+    white-space: nowrap;
+    font-size: 0;
+}
+.toolbar__section_mw {
+    width: 1px;
+}
+.toolbar__section_left {
+    padding: 0 25px 0 17px;
+}
+.toolbar__section_right {
+    padding: 0 17px 0 25px;
+    text-align: right;
+}
+
+/*  Centered Tollbar
+ */
+.toolbar-centered {
+    position: relative;
+}
+.toolbar-centered__left-col,
+.toolbar-centered__right-col {
+    position: absolute;
+}
+.toolbar-centered__left-col {
+    left: 0;
+    top: 0;
+}
+.toolbar-centered__right-col {
+    right: 0;
+    top: 0;
+}
+.toolbar-centered__mid-col .toolbar__section {
+    text-align: center;
+}
+
+
+/* -------------------------------------------------------
+    Toolbar - Buttons
+   -------------------------------------------------------*/
+.toolbar .button {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.toolbar__section > .button:first-child {
+    margin-left: 0;
+}
+.toolbar__section > .button:last-child {
+    margin-right: 0;
+}
+
+/*  Proper Align For Icons With Shadow
+ */
+.toolbar .button.icon,
+.toolbar .button .icon {
+    position: relative;
+    top: 5px;
+}
+
+/*  Custom Buttons
+ */
+.toolbar .punctuation-button {
+    margin-left: 6px;
+    margin-right: 6px;
+}
+
+
+/* -------------------------------------------------------
+    Tollbar Item - Station Navigator
+   -------------------------------------------------------*/
+.station-navigator .button {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.station-navigator .station-form {
+    display: inline-block;
+    vertical-align: middle;
+}
+.station-navigator .station-number {
+    text-align: center;
+    width: 49px;
+    font-size: 34px;
+    text-shadow: 0 3px 5px #000;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    text-shadow: 0 3px 5px #000;
+    border: none;
+    .border-radius(6px);
+    .box-shadow(none);
+}
+
+
+/* -------------------------------------------------------
+    Tollbar Item - Color Picker (Palette)
+   -------------------------------------------------------*/
+/*  Coloring Mode
+ */
+.color-picker .color-mode-button {
+    position: relative;
+
+    &:after {
+        color: #4c6293;
+        font-size: 16px;
+        line-height: 16px;
+        position: absolute;
+        left: 2px;
+        top: 50%;
+        width: 100%;
+        text-align: center;
+        margin-top: -11px;
+    }
+
+    &.button-state-word:after {content: 'Abc';}
+    &.button-state-letter:after {content: '-b-';}
+}
+
+/*  Color Button
+ */
+.color-picker .color-palette__color-btn {
+    width: 40px;
+    height: 43px;
+    margin: 0 3px;
+    top: 4px;
+
+    &.active:before {
+        &:extend(.icon, .icon_check-small-blue);
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin: -13.875px 0 0 -16.375px;
+    }
+
+    &.split-color:before {
+        &:extend(.icon, .icon_plus-small);
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin: -13.875px 0 0 -16.375px;
+    }
+}
+
+/*  Split Color Mode
+ */
+.color-picker .split-color-mode-button {
+    width: 40px;
+    margin: 0 0 0 5px;
+}
+.color-picker .split-editor-color-preview_done {
+    position: relative;
+
+    &:before {
+        &:extend(.icon, .icon_thumb-up);
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin: -15.75px 0 0 -16.375px;
+    }
+}
+
+
+/* -------------------------------------------------------
+    Tollbar Element - Player P2T Btns
+   -------------------------------------------------------*/
+.buttons-group_plant-to-text_in-player {
+    margin-right: 20px;
+}
+.buttons-group_plant-to-text_in-player .button {
+    margin-left: 6px;
+    margin-right: 6px;
+}
+
+
+/* -------------------------------------------------------
+    Tollbar Element - Punctuation Btns
+   -------------------------------------------------------*/
+.tooltip-p2t-add-comma .icon {
+    font-size: 50px;
+    line-height: 20px;
+}
+.tooltip-p2t-add-period .icon {
+    font-size: 50px;
+    line-height: 24px;
+}
+.tooltip-p2t-add-semicolon .icon {
+    font-size: 30px;
+    line-height: 44px;
+}
+.tooltip-p2t-add-colon .icon {
+    font-size: 30px;
+    line-height: 45px;
+}
+.tooltip-p2t-add-quotation-mark .icon {
+    font-size: 30px;
+    line-height: 65px;
+}
+
+
+/* -------------------------------------------------------
+    Tollbar Element - Activity Progress Labels
+   -------------------------------------------------------*/
+.activity-progress-label {
+    font-family: @plantFontFamily;
+    font-size: 40px;
+}
+.activity-progress-label_green {
+    color: #80b214;
+}
+.activity-progress-label_red {
+    color: #b21414;
+}
