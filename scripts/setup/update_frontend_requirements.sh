@@ -7,7 +7,19 @@ set -e
 set -u
 
 
-$SCRIPT_DIR/update_frontend_global_requirements.sh        # installs dependencies from autogen-npm-global-requirements.txt
+echo '>>> Installing NPM global requirements'
+"$XARGS_CMD" -a autogen-npm-global-requirements.txt npm install -g
 
 cd "$COMPONENTS_DIR"
-$SCRIPT_DIR/update_frontend_local_requirements.sh
+if [ ! -f "package.json" ]
+then
+    echo "ERROR: please execute this script from frontend/components directory."
+    exit 1
+fi
+
+echo '>>> Installing NPM local requirements'
+npm install
+
+echo '>>> Installing Bower dependencies'
+bower install
+
