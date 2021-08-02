@@ -1,6 +1,0 @@
-/node_modules/
-/app/bower_components/
-/dist/
-/.tmp/
-GruntConfig.coffee
-/autogen_requirements.txt

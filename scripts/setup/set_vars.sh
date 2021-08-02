@@ -1,6 +1,5 @@
 # shellcheck shell=bash
 ROOT_DIR=$( dirname $( dirname "$SCRIPT_DIR" ) )
-BACKEND_DIR="$ROOT_DIR/backend"
 FRONTEND_DIR="$ROOT_DIR/frontend"
 COMPONENTS_DIR="$ROOT_DIR/components"
 EXTRACT_CMD="$ROOT_DIR/scripts/setup/extract_deployment_data.py"

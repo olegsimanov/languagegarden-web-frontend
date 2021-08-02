@@ -7,5 +7,5 @@ set -e
 set -u
 
 
-$SCRIPT_DIR/update_backend_requirements.sh
+#$SCRIPT_DIR/update_backend_requirements.sh
 $SCRIPT_DIR/update_frontend_requirements.sh
