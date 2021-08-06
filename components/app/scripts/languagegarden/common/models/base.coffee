@@ -214,8 +214,7 @@
             model
 
 
-    class BaseModelWithSubCollections extends BaseModel
-            .extend(SubCollectionPrototype)
+    class BaseModelWithSubCollections extends BaseModel.extend(SubCollectionPrototype)
 
         constructor: ->
             @createSubCollections()
