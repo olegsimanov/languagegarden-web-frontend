@@ -435,7 +435,7 @@
 
             attrPrefix = if startLetterStretched then 'start' else 'end'
             attrs["#{attrPrefix}Point"] = stretchPoint
-            console.log('attrs', attrs)
+#            console.log('attrs', attrs)
             @set(attrs)
 
 
