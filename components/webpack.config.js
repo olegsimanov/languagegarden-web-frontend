@@ -46,8 +46,7 @@
                 },
                 {
                     test: /\.less$/,
-                    loader: ExtractTextPlugin.extract('style-loader',
-                                                      'css-loader!less-loader')
+                    loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader')
                 },
                 {
                     test: /\.ejs$/,
@@ -77,25 +76,28 @@
                 jQuery: 'jquery',
                 Backbone: 'backbone'
             }),
-            new webpack.ResolverPlugin(
-                new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin(
-                    'bower.json', ['main']
-                )
+            new webpack.ResolverPlugin(new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin('bower.json', ['main'])
             )
         ],
         resolve: {
             root: [
                 bowerComponentsDir,
-                path.join(bowerComponentsDir, 'jquery.cookie'),
-                path.join(bowerComponentsDir, 'backbone.bootstrap-modal', 'src'),
-                path.join(bowerComponentsDir, 'jscrollpane', 'script'),
+
                 path.join(bowerComponentsDir, 'bootstrap-modal', 'js'),
                 path.join(bowerComponentsDir, 'bootstrap', 'js'),
+                path.join(bowerComponentsDir, 'brandimint-xediatable-bootstrap', 'js'),
+
+                path.join(bowerComponentsDir, 'backbone.localstorage'),
+                path.join(bowerComponentsDir, 'backbone.bootstrap-modal', 'src'),
+
+                path.join(bowerComponentsDir, 'jquery.cookie'),
                 path.join(bowerComponentsDir, 'jquery-simplecolorpicker'),
                 path.join(bowerComponentsDir, 'jquery-ui', 'ui'),
-                path.join(bowerComponentsDir, 'brandimint-xediatable-bootstrap', 'js'),
-                path.join(bowerComponentsDir, 'swfobject-amd'),
-                path.join(bowerComponentsDir, 'backbone.localstorage')
+
+                path.join(bowerComponentsDir, 'jscrollpane', 'script'),
+
+                path.join(bowerComponentsDir, 'swfobject-amd'),               // could be removed
+
             ],
             extensions: ['', '.js', '.coffee', '.json']
         }
