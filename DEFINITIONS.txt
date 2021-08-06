@@ -14,3 +14,8 @@ webpack     is an open-source JavaScript module bundler.
 
             provides code on demand using the moniker code splitting. The Technical Committee 39 for ECMAScript is
             working on standardization of a function that loads additional code: "proposal-dynamic-import".
+
+
+components/package.json
+
+    less -  The dynamic stylesheet language. http://lesscss.org.
