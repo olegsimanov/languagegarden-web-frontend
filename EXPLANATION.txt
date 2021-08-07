@@ -7,17 +7,20 @@ components
     app                         source code of the editor and the player
     bower.json                  libraries used by the source code are listed here
     web_modules                 custom libraries used by the source code
+    bower_components            after you run `bower install bower.json` this folder is generated
+                                contains library files used by the source code
 
 
     webpack.config.js           defines how to build and assemble the project
     webpack-instance-config.js  was used by the python IAAS configuration framework (should be merged with previous file later)
     package.json                dependencies used by webpack are defined here
 
-    bower_components            after you run `bower install bower.json` this folder is generated
-                                contains library files used by the source code
-
     node_modules                after you run `npm install package.json` this folder is generated
                                 contains library files used by the webpack
 
     build                       this is the output of the `webpack` command
 
+
+components/package.json
+
+    less -  The dynamic stylesheet language. http://lesscss.org.

@@ -1,3 +1,7 @@
+------------------------------------------------------------------------------------------------------------------------
+build related libraries
+------------------------------------------------------------------------------------------------------------------------
+
 webpack     is an open-source JavaScript module bundler.
 
             It is made primarily for JavaScript, but it can transform front-end assets such as HTML, CSS, and images if
@@ -15,7 +19,12 @@ webpack     is an open-source JavaScript module bundler.
             provides code on demand using the moniker code splitting. The Technical Committee 39 for ECMAScript is
             working on standardization of a function that loads additional code: "proposal-dynamic-import".
 
+bower       A package manager for the web
 
-components/package.json
+------------------------------------------------------------------------------------------------------------------------
+app related libraries
+------------------------------------------------------------------------------------------------------------------------
 
-    less -  The dynamic stylesheet language. http://lesscss.org.
+
+bootstrap       Sleek, intuitive, and powerful front-end framework for faster and easier web development.
+bootstrap-modal Bootstrap Modal (w/ animation) addon for Ember CLI
