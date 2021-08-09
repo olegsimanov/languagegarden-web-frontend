@@ -4,7 +4,7 @@ build related libraries
 
 autogen-npm-global-requirements.txt
 
-    webpack         is an open-source JavaScript module bundler.
+    webpack         is an open-source JavaScript module bundler.        http://www.apimirror.com/webpack~1/troubleshooting
                     Node.js is required for using webpack.
 
     bower           A package manager for the web
@@ -29,7 +29,8 @@ components/bower.json
 
 bootstrap       Sleek, intuitive, and powerful front-end framework for faster and easier web development.
 
-bootstrap.      https://github.com/jeromegn/Backbone.localStorage/tree/2e6d192038d8384b0e15995d17edf5fbb23eb20c
+backbone        https://devdocs.io/backbone/index#Model-extend
+backbone.       https://github.com/jeromegn/Backbone.localStorage/tree/2e6d192038d8384b0e15995d17edf5fbb23eb20c
 localstorage
 
 bootstrap-modal for modal dialogs?
