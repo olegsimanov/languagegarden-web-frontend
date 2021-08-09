@@ -29,6 +29,9 @@ components/bower.json
 
 bootstrap       Sleek, intuitive, and powerful front-end framework for faster and easier web development.
 
+bootstrap.      https://github.com/jeromegn/Backbone.localStorage/tree/2e6d192038d8384b0e15995d17edf5fbb23eb20c
+localstorage
+
 bootstrap-modal for modal dialogs?
 
 underscore      Underscore is a JavaScript library that provides a whole mess of useful functional programming helpers
