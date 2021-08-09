@@ -1,7 +1,7 @@
 ------------------------------------------------------------------------------------------------------------------------
 Syntax
 ------------------------------------------------------------------------------------------------------------------------
-https://coffeescript.org/#operators
+https://coffeescript.org/v1/
 
 CoffeeScript	JavaScript
 
@@ -13,9 +13,8 @@ or	            ||
 true, yes, on	true
 false, no, off	false
 @, this	        this
-a in b	        [].indexOf.call(b, a) >= 0
-a of b	        a in b
-for a from b	for (a of b)
-a ** b	        a ** b
+of	            in
+in	            no JS equivalent
+a ** b	        Math.pow(a, b)
 a // b	        Math.floor(a / b)
 a %% b	        (a % b + b) % b
