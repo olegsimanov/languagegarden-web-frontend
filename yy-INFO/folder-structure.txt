@@ -2,14 +2,16 @@ python is used only to setup virtual environment
 its handy to use virtual environment because all the installation files are stored in one folder and are not
 spread across the system. You can have as many virtual environments as you want
 
-components
+autogen-npm-global-
+    requirements.txt            binaries from here are used to build the project (bower and webpack)
+
+./components/
 
     app                         source code of the editor and the player
-    bower.json                  libraries used by the source code are listed here
     web_modules                 custom libraries used by the source code
+    bower.json                  libraries used by the source code are listed here
     bower_components            after you run `bower install bower.json` this folder is generated
                                 contains library files used by the source code
-
 
     webpack.config.js           defines how to build and assemble the project
     webpack-instance-config.js  was used by the python IAAS configuration framework (should be merged with previous file later)
@@ -20,7 +22,19 @@ components
 
     build                       this is the output of the `webpack` command
 
+./scripts/setup
 
-components/package.json
+    install.sh                  call this from a virtual environment to install all the necessary dependencies
+                                to build the project
 
-    less -  The dynamic stylesheet language. http://lesscss.org.
+    ...                         other scripts are used by install.sh
+
+./staticpages-demo
+
+    nginx                       nginx configuration files
+
+      nginx/start-nginx.sh      simple run script to serve static, editor.html and player.html pages
+
+    static                      a symlink to the ./components/build folder (listed above)
+    editor.html                 example how to embed language garden editor in an html page
+    player.html                 example how to embed language garden player in an html page

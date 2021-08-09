@@ -1,0 +1,5 @@
+How backend API is called:
+
+it invokes the 'sync' method on the Backbone.Model which in turn invokes Backbone.ajax function
+the url is passed from the config file, e.g.:  urlRoot: -> config.getUrlRoot(settings.apiResourceNames.lessons)
+

@@ -1,0 +1,41 @@
+------------------------------------------------------------------------------------------------------------------------
+build related libraries
+------------------------------------------------------------------------------------------------------------------------
+
+autogen-npm-global-requirements.txt
+
+    webpack         is an open-source JavaScript module bundler.
+                    Node.js is required for using webpack.
+
+    bower           A package manager for the web
+
+components/package.json
+
+    coffeescript    used to run the webpack.config.js and webpack-instance-config.js script
+    jquery          used to run the webpack.config.js and webpack-instance-config.js script
+
+
+    *-loader        source code loader for the webpack
+    less            The dynamic stylesheet language (used by webpack as a loader)
+    extract-text-   a special source code loader
+    webpack-plugin
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+components/bower.json
+------------------------------------------------------------------------------------------------------------------------
+
+bootstrap       Sleek, intuitive, and powerful front-end framework for faster and easier web development.
+
+bootstrap-modal for modal dialogs?
+
+underscore      Underscore is a JavaScript library that provides a whole mess of useful functional programming helpers
+                without extending any built-in objects.
+
+                Underscore provides over 100 functions that support both your favorite workaday functional helpers:
+                map, filter, invoke — as well as more specialized goodies: function binding, javascript templating,
+                creating quick indexes, deep equality testing, and so on.
+
+
