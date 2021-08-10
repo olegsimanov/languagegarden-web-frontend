@@ -36,7 +36,7 @@ localstorage
 bootstrap-modal for modal dialogs?
 
 underscore      Underscore is a JavaScript library that provides a whole mess of useful functional programming helpers
-                without extending any built-in objects.
+                without extending any built-in objects. (https://underscorejs.org)
 
                 Underscore provides over 100 functions that support both your favorite workaday functional helpers:
                 map, filter, invoke — as well as more specialized goodies: function binding, javascript templating,
