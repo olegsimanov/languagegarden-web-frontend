@@ -1,0 +1,18 @@
+Functional overview
+
+The Cross-Origin Resource Sharing standard works by adding new HTTP headers that let servers describe which origins
+are permitted to read that information from a web browser. Additionally, for HTTP request methods that can cause
+side-effects on server data (in particular, HTTP methods other than GET, or POST with certain MIME types), the
+specification mandates that browsers "preflight" the request, soliciting supported methods from the server with the
+HTTP OPTIONS request method, and then, upon "approval" from the server, sending the actual request. Servers can also
+inform clients whether "credentials" (such as Cookies and HTTP Authentication) should be sent with requests.
+
+CORS failures result in errors, but for security reasons, specifics about the error are not available to JavaScript.
+All the code knows is that an error occurred. The only way to determine what specifically went wrong is to look at
+the browser's console for details.
+
+Subsequent sections discuss scenarios, as well as provide a breakdown of the HTTP headers used.
+
+https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Headers
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin
