@@ -23,7 +23,12 @@
     {BaseModelWithSubCollections} = require('./base')
     {MediumType, ActivityType, VisibilityType} = require('./../constants')
     {UnitDataCache} = require('../datacache')
+#    require('backbone.localStorage')
 
+#    Backbone.sync = (method, model, options) ->
+#        console.log('calling: (' + method + ', ' + model + ', ' + options)
+#        syncDfd = Backbone.$.Deferred()
+#        syncDfd.resolve()
 
     # This is based on IPad I resolution
     SIDEBAR_WIDTH = 120
@@ -243,12 +248,12 @@
 
             options.unparse = true
 
-            if method != 'read'
-                originalBeforeSend = options.beforeSend
-                options.beforeSend = (xhr) ->
-                    csrftoken = $.cookie('csrftoken')
-                    xhr.setRequestHeader('X-CSRFToken', csrftoken);
-                    originalBeforeSend?(xhr)
+#            if method != 'read'
+#                originalBeforeSend = options.beforeSend
+#                options.beforeSend = (xhr) ->
+#                    csrftoken = $.cookie('csrftoken')
+#                    xhr.setRequestHeader('X-CSRFToken', csrftoken);
+#                    originalBeforeSend?(xhr)
 
             super
 
@@ -457,6 +462,7 @@
 
 
     class LessonData extends UnitData
+#        localStorage: new Backbone.LocalStorage("LessonData")
         urlRoot: -> config.getUrlRoot(settings.apiResourceNames.lessons)
         forwardedAttrsMap: _.extend({}, UnitData::forwardedAttrsMap,
             'categories': 'categories'
@@ -473,6 +479,7 @@
             cache.getLessonPayload(id)
 
     class ActivityData extends UnitData
+#        localStorage: new Backbone.LocalStorage("ActivityData")
         urlRoot: -> config.getUrlRoot(settings.apiResourceNames.activities)
         forwardedAttrsMap: _.extend({}, UnitData::forwardedAttrsMap,
             'type': 'activityType'

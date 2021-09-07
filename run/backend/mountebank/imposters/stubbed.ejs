@@ -1,0 +1,27 @@
+{
+    "port": 3001,
+    "protocol": "http",
+    "stubs":
+    [{
+        "predicates": [{
+            "contains": {
+                "path": "/api/v2/lessons/"
+            }
+        }],
+
+        "responses": [{
+            "is": {
+                "statusCode": 200,
+                "headers": {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Headers": "*",
+                    "Access-Control-Allow-Origin": "*"
+                },
+                "body": {
+                    "data": "{ \"id\": \"e1977c9e\", \"name\": \"Fishtank Amore\", \"description\": \"Show your fish some love\" }"
+                }
+            }
+
+        }]
+    }]
+}
