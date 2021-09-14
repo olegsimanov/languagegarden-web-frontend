@@ -35,9 +35,7 @@
     {ToolbarEnum} = require('./../common/views/toolbars/constants')
     {StationTimeline} = require('./../common/viewmodels/stationprogress')
     {BaseCollection} = require('./../common/models/base')
-    {PlantTitleView} = require('./../common/views/page/plant_title')
     {SidebarTimeline} = require('./../common/viewmodels/sidebars')
-    {EditorSidebarView} = require('./views/sidebars')
     {TitlePageOverlay} = require('./views/overlays/titlepages')
 
 
@@ -122,11 +120,6 @@
                 letterMetrics: @letterMetrics
 
             @initializeSidebarTimeline(options)
-            @sidebarState = @sidebarTimeline.getSidebarState()
-
-            @sidebarView = new EditorSidebarView
-                controller: this
-                sidebarTimeline: @sidebarTimeline
 
             if not settings.isMobile
                 #TODO: handle optional dependencies
@@ -152,7 +145,6 @@
 
             @canvasView.setParentView(@view)
             @textBoxView.setParentView(@view)
-            @sidebarView.setParentView(@view)
 
             @modelId = options.modelId
             @listenTo(@dataModel, 'sync', @onModelSync)
@@ -170,7 +162,6 @@
             '.toolbar-container': @toolbarView
             '.canvas-container': [@canvasView]
             '.text-to-plant-container': @textBoxView
-            '.sidebar-container': [@sidebarView]
 
         ###
         This method is used for 'carving out' model data from controller,
@@ -209,7 +200,6 @@
             @view.render()
             # reinitialize scroll after the sidebar view (the subview of
             # this.view) is added to document body
-            @sidebarView.reinitializeScroll()
 
         onModelSync: ->
             @renderViews()
