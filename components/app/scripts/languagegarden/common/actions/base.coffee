@@ -51,10 +51,9 @@
             else
                 @getHelpTextFromId()
 
-        storeMetric: => @getMetric().append()
-
-        getMetric: ->
-            @controller.getMetric().subMetric("actions.#{@id}")
+        storeMetric: =>
+            # suppress storing metrics of mode switch actions
+            # this is much better done in the editor
 
 
     class UnitAction extends Action

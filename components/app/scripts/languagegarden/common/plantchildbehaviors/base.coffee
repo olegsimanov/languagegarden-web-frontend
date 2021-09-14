@@ -25,17 +25,10 @@
             @handlers ?= {}
             @initializeHandlers() if @initializeHandlers?
 
-        # METRICS
-        getMetricName: -> "#{@id}"
-        storeMetric: -> @getMetric().append()
-        getMetric: ->  @parentView.getMetric().subMetric(@metricName)
-
-
     class MouseBehaviorBase extends PlantChildBehavior
 
         # HANDLERS
         mouseHandlerBase: (view, event) ->
-            @storeMetric()
             event.preventDefault()
             event.srcEvent.stopPropagation()
 

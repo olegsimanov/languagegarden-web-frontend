@@ -35,7 +35,6 @@
         CanvasMode
     } = require('./../constants')
     {Settings} = require('./../models/settings')
-    {Metrics} = require('./../../metrics/models/metrics')
     {TextToPlantView} = require('./media/text_to_plant')
     {
         isElementSplitDiff
@@ -94,8 +93,6 @@
             @setupEventForwarding(@parentView, eventNames)
 
         metricKey: => "plant-#{@model.id or 'new'}"
-
-        getMetric: => Metrics.getMetric(@metricKey())
 
         settingsKey: -> 'plant-view'
 

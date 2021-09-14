@@ -22,27 +22,23 @@
     <script type="text/javascript" src="/static/js/lg-starter.js" charset="utf-8"></script>
     <script type="text/javascript">
     (function () {
-      function getQueryVariable(variable) {
-        var query = window.location.search.substring(1);
-        var vars = query.split('&');
-        for (var i = 0; i < vars.length; i++) {
-          var pair = vars[i].split('=');
-          if (decodeURIComponent(pair[0]) == variable) {
-              return decodeURIComponent(pair[1]);
-          }
-        }
-        return null;
-      }
 
-      var lessonId = getQueryVariable('lessonId')
-
-      languagegarden.configure({
+      PlantConfig.configure({
         apiBaseUrl: 'http://localhost:8000/api/v2/'
       });
-      languagegarden.object(null, {
-        type: 'nav-plant',
-        backURL: '/',
+
+      // let type = 'nav-plant';
+      // let type = 'play-plant';
+      let type = 'edit-plant';
+      // let type = 'play-activity-passive';
+      // let type = null;
+
+      let lessonId = null;
+
+      PlantStarter.load(document.body, {
+        type: type,
         plantId: lessonId,
+        backURL: '/',
         userId: null,
         useURL: false
       });

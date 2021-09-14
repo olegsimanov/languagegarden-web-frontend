@@ -19,7 +19,6 @@
     {EditorTextBoxView} = require('./views/textboxes')
     {BaseController} = require('./../common/controllers')
     {History} = require('./history')
-    {KeyListener, MouseListener} = require('./../metrics/listeners')
     {ActivityType} = require('./../common/constants')
     {EditorPageView} = require('./views/page/base')
     {NavigationToolbar} = require('./views/toolbars/navigator')
@@ -38,7 +37,6 @@
     {BaseCollection} = require('./../common/models/base')
     {PlantTitleView} = require('./../common/views/page/plant_title')
     {SidebarTimeline} = require('./../common/viewmodels/sidebars')
-    {Metrics} = require('./../metrics/models/metrics')
     {EditorSidebarView} = require('./views/sidebars')
     {TitlePageOverlay} = require('./views/overlays/titlepages')
 
@@ -161,10 +159,6 @@
             for evObj in @getEventObjects()
                 @listenTo(evObj, 'navigate', @onObjectNavigate)
 
-            getMetric = _.bind(@getMetric, this)
-            @keyListener = new KeyListener(document, getMetric)
-            @mouseListener = new MouseListener(document, getMetric)
-
         initializeSidebarTimeline: (options) ->
 
             @sidebarTimeline = new SidebarTimeline
@@ -207,17 +201,9 @@
             @dataModel = null
             @canvasView = null
             @view = null
-            @keyListener.remove()
-            @keyListener = null
-            @mouseListener.remove()
-            @mouseListener = null
             @letterMetrics.remove()
             @letterMetrics = null
             super
-
-        getMetricKey: -> "plant-#{@dataModel.id or 'new'}"
-
-        getMetric: -> Metrics.getMetric(@getMetricKey())
 
         renderViews: ->
             @view.render()
@@ -418,8 +404,8 @@
 
 
     module.exports =
-        PlantEditorController: PlantEditorController
-        PlantNavigatorController: PlantNavigatorController
-        ActivityEditorController: ActivityEditorController
-        ActivityIntroEditorController: ActivityIntroEditorController
-        ActivityModeEditorController: ActivityModeEditorController
+        PlantEditorController:          PlantEditorController
+        PlantNavigatorController:       PlantNavigatorController
+        ActivityEditorController:       ActivityEditorController
+        ActivityIntroEditorController:  ActivityIntroEditorController
+        ActivityModeEditorController:   ActivityModeEditorController

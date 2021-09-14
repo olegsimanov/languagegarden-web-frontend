@@ -1,51 +1,36 @@
 require('../polyfills/console')
 require('../ravenconfig')
 require('../../styles/loader.less')
-{configure} = require('./config')
+PlantConfig = require('./config')
+{Router} = require('./router/base')
 
-loader =  (element, options={}) ->
-
-    useHashes = options.useHashes
-    useHashes ?= false
-    useURL = options.useURL
-    useURL ?= true
-    rootURL = options.rootURL or '/'
-
-    element ?= document.body
+createLoaderElement = () =>
     loaderElement = document.createElement('div')
     loaderElement.className = 'loader'
-    element.appendChild(loaderElement)
+    return loaderElement
 
+createRouterOptions = (loaderElement, containerElement, options = {}) =>
     routerOptions = {}
     for key of options
         routerOptions[key] = options[key]
 
-    routerOptions.containerElement ?= element
-    routerOptions.loaderElement ?= loaderElement
-    routerOptions.useURL ?= useURL
+    routerOptions.containerElement  ?= containerElement
+    routerOptions.loaderElement     ?= loaderElement
+    return routerOptions
 
-    navInfo =
-        type: options.type
-        plantId: options.plantId
+load = (containerElement, options={}) ->
 
-    {Router} = require('./router/base')
-    Backbone = require('backbone')
-    do ->
-        router = new Router(routerOptions)
+    loaderElement = createLoaderElement();
+    containerElement.appendChild(loaderElement)
 
-        if useURL
-            Backbone.history.start
-                pushState: useURL and not useHashes
-                hashChange: useURL and useHashes
-                root: rootURL
-            if navInfo.type?
-                router.navigateToController(navInfo)
-        else
-            router.navigateToController(navInfo)
+    router = new Router(createRouterOptions(loaderElement, containerElement))
+    router.navigateToController(
+        type:       options.type
+        plantId:    options.plantId
+    )
 
-root = window or global
+Starter = {}
+Starter.load = load
 
-module.exports = loader
-root.languagegarden ?= {}
-root.languagegarden.object = loader
-root.languagegarden.configure = configure
+window.PlantConfig = PlantConfig
+window.PlantStarter = Starter

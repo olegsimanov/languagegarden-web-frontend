@@ -172,8 +172,6 @@
                 else
                     @getPlantEditorModeConfig()
 
-        metricKey: -> "editor-#{super}"
-
         settingsKey: -> "editor-#{super}"
 
         initializeSelectionRect: =>
@@ -291,9 +289,6 @@
         ###
 
         onModeChange: =>
-            @getMetric().subMetric(
-                "mode.#{@mode.replace(/\s/g,"-")}"
-            ).append()
 
         restoreDefaultMode: =>
             @deselectAll()
