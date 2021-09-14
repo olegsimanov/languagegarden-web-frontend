@@ -16,7 +16,7 @@ components/package.json
 
 
     *-loader        source code loader for the webpack
-    less            The dynamic stylesheet language (used by webpack as a loader)
+    less            The dynamic stylesheet language
     extract-text-   a special source code loader
     webpack-plugin
 
@@ -41,5 +41,11 @@ underscore      Underscore is a JavaScript library that provides a whole mess of
                 Underscore provides over 100 functions that support both your favorite workaday functional helpers:
                 map, filter, invoke — as well as more specialized goodies: function binding, javascript templating,
                 creating quick indexes, deep equality testing, and so on.
+
+raven.js        Raven.js is the (legacy) browser JavaScript SDK for Sentry. (https://ravenjs.com)
+                Sentry is a performance monitoring library. You can trace performance issues to poor-performing api
+                calls and slow database queries. (https://sentry.io)
+
+less            It's CSS, with just a little more. (https://lesscss.org)
 
 
