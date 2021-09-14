@@ -18,7 +18,6 @@
     {NoteView} = require('./../../common/views/media/note')
     {EditorDummyMediumView} = require('./media/base')
     {EditorImageView} = require('./media/images')
-    {EditorSoundView} = require('./media/sounds')
     {EditorNoteView} = require('./media/note')
     {EditorPlantLinkView} = require('./media/links')
     {EditorElementView, EditedElementView} = require('./elements')

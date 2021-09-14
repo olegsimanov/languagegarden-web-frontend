@@ -14,7 +14,6 @@
     {NoOpBehavior} = require('./../modebehaviors/noop')
     {MediumViewBase, DummyMediumView} = require('./media/base')
     {ImageView} = require('./media/images')
-    {SoundView} = require('./media/sounds')
     {NoteView} = require('./media/note')
     {ElementView} = require('./elements')
     {interpolateColor} = require('./../interpolations/colors')
