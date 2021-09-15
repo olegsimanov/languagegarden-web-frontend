@@ -29,11 +29,17 @@ components/bower.json
 
 bootstrap       Sleek, intuitive, and powerful front-end framework for faster and easier web development.
 
-backbone        https://devdocs.io/backbone/index#Model-extend
+bootstrap-modal for modal dialogs?
+
+backbone        is a JavaScript library with a RESTful JSON interface and is based on the model–view–controller
+                application design paradigm. Backbone is known for being lightweight, as its only hard dependency is
+                on one JavaScript library,[2] Underscore.js, plus jQuery for use of the full library.[3] It is
+                designed for developing single-page web applications,[4] and for keeping various parts of web
+                applications (e.g. multiple clients and the server) synchronized.[5]
+                https://devdocs.io/backbone/index
+
 backbone.       https://github.com/jeromegn/Backbone.localStorage/tree/2e6d192038d8384b0e15995d17edf5fbb23eb20c
 localstorage
-
-bootstrap-modal for modal dialogs?
 
 underscore      Underscore is a JavaScript library that provides a whole mess of useful functional programming helpers
                 without extending any built-in objects. (https://underscorejs.org)
@@ -47,5 +53,8 @@ raven.js        Raven.js is the (legacy) browser JavaScript SDK for Sentry. (htt
                 calls and slow database queries. (https://sentry.io)
 
 less            It's CSS, with just a little more. (https://lesscss.org)
+
+hammer.js       is a open-source library that can recognize gestures made by touch, mouse and pointerEvents.
+                It doesn’t have any dependencies, and it’s small
 
 
