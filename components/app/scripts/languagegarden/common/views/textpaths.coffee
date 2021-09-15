@@ -1,6 +1,6 @@
     'use strict'
 
-    __raphael = require('raphael')
+    require('raphael')
     _ = require('underscore')
     settings = require('./../../settings')
     {Point} = require('./../../math/points')

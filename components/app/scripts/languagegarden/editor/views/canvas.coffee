@@ -1,6 +1,6 @@
     'use strict'
 
-    __raphael = require('raphael')
+    require('raphael')
     _ = require('underscore')
     $ = require('jquery')
     {isDarkColor} = require('./../../common/utils')
@@ -43,8 +43,6 @@
     {interpolateValue} = require('./../../common/interpolations/base')
     {OperationType} = require('./../../common/diffs/operations')
     {splitDiff} = require('./../../common/diffs/utils')
-    {Animation} = require('./../../common/animations/animations')
-    {getAnimations} = require('./../../common/animations/utils')
     {Point} = require('./../../math/points')
     {BBox} = require('./../../math/bboxes')
     {PlantElement} = require('./../../common/models/elements')

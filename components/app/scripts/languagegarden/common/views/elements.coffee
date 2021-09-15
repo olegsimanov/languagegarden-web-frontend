@@ -23,8 +23,6 @@
     {LetterMetrics} = require('./../svgmetrics')
     {TSpanMultiColorGradient} = require('./../svggradient')
     {exponentialInterpolateValue} = require('./../interpolations/base')
-    {Animation} = require('./../animations/animations')
-    {getAnimations} = require('./../animations/utils')
     {splitDiff} = require('./../diffs/utils')
     {
         getLetterAreaPathStringAndPoints
@@ -718,70 +716,6 @@
             @textPath
             .setOpacity(opacity)
             .updateOpacity()
-
-        @getAnimations: (diff, viewSelector, options={}) ->
-            parentForceStep = options.forceStep
-            splittedDiff = splitDiff(diff, false)
-            rootAttributes = _.map(splittedDiff, (x) -> x[0])
-            elementTextChanged = _.all(['text', 'endPoint', 'controlPoints'], (x) -> x in rootAttributes)
-            transformRender = isSubset(rootAttributes, ['startPoint', 'endPoint', 'controlPoints', 'fontSize'])
-            forceStep = elementTextChanged or parentForceStep
-            opts =
-                forceStep: forceStep
-                callRender: false
-                helpers: options.helpers
-
-            animations = getAnimations(diff, viewSelector, opts)
-
-            if transformRender
-                renderUpdate = (t) ->
-                    # we update only the path and the span, because
-                    # using the render slows everything down
-                    view = viewSelector()
-                    view.textPath.setPath(view.getPath())
-                    view.textPath.setFontSize(view.getFontSize())
-                    view.textPath.setLettersLengths(view.getLettersLengths())
-                    view.textPath.updateGradients()
-                    view.textPath.updatePath()
-                    view.textPath.updateFontSize()
-                    view.textPath.updateSpan()
-                    view.textPath.updateEachTime()
-            else
-                renderUpdate = (t) ->
-                    view = viewSelector()
-                    view.render()
-
-            # we use special animation which will be run in parallel
-            # and cause the element to re-render()
-            anim = new Animation
-                transitionsEnabled: not forceStep
-                startCallback: ->
-                    view = viewSelector()
-                    view.render()
-                    @oldUseLetterAreas = view.useLetterAreas
-                    view.useLetterAreas = false
-                update: renderUpdate
-                endCallback: ->
-                    view = viewSelector()
-                    view.useLetterAreas = @oldUseLetterAreas
-                    view.render()
-                debugInfo:
-                    info: 'render element animation'
-                    diff: diff
-            animations.push(anim)
-
-            if elementTextChanged and not parentForceStep
-                anim = new Animation
-                    update: (t) ->
-                        # when the element text changes, we discard the
-                        # stretch animation and do a nice fade-in instead
-                        viewSelector().setAnimOpacity(t)
-                    debugInfo:
-                        info: 'visibility element animation'
-                        diff: diff
-                animations.push(anim)
-
-            animations
 
 
     class SettingsElementView extends ElementView

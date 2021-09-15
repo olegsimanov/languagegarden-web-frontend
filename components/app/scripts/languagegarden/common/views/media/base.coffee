@@ -1,10 +1,9 @@
     'use strict'
 
-    __raphael = require('raphael')
+    require('raphael')
     _ = require('underscore')
     $ = require('jquery')
     {BBox} = require('./../../../math/bboxes')
-    {getTextAnimation, getAnimations} = require('./../../animations/utils')
     {OperationType} = require('./../../diffs/operations')
     {PlantChildView} = require('./../base')
     {VisibilityType, PlacementType} = require('./../../constants')
@@ -42,21 +41,6 @@
 
             opGroups.push(lastGroup) if lastGroup.length > 0
             opGroups
-
-        @getAnimations: (diff, viewSelector) ->
-            animations = []
-
-            for opGroup in @groupOperations(diff)
-                # buffered text medium (typing animation)
-                if opGroup[0].type == OperationType.TEXT_REPLACE
-                    anim = [getTextAnimation(opGroup[0], viewSelector)]
-                else
-                    anim = getAnimations(
-                        opGroup, viewSelector, callRender: true)
-                animations.push(anim) if anim?.length > 0
-
-            _.flatten(animations)
-
 
     class DummyMediumView extends MediumViewBase
 

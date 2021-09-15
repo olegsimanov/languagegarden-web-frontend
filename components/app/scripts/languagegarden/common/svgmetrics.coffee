@@ -1,6 +1,6 @@
     'use strict'
 
-    __raphael = require('raphael')
+    require('raphael')
     _ = require('underscore')
     $ = require('jquery')
     {Point} = require('./../math/points')

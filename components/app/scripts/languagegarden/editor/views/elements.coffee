@@ -1,6 +1,6 @@
     'use strict'
 
-    __raphael = require('raphael')
+    require('raphael')
     _ = require('underscore')
     jQuery = require('jquery')
     $ = require('jquery')
