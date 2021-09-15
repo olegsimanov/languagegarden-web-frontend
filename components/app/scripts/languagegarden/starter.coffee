@@ -1,5 +1,4 @@
 require('../polyfills/console')
-require('../ravenconfig')
 require('../../styles/loader.less')
 PlantConfig = require('./config')
 {Router} = require('./router/base')
