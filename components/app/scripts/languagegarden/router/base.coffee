@@ -177,18 +177,6 @@
             @navigateToController
                 type: cfg.navInfoTypes[0]
 
-        sendAnalyticsStats: ->
-            ### overriding page according to:
-
-            https://developers.google.com/analytics/devguides/collection/analyticsjs/pages
-
-            ###
-            page = window.location.pathname + window.location.search
-            options = _.extend({},
-                               @controller.getAnalyticsData() or {},
-                               'page': page)
-            ga?('send', 'pageview', options)
-
         onControllerNavigate: (source, navInfo) ->
             @navigateToController(navInfo)
 
@@ -197,7 +185,6 @@
                 return
             @destroyDemotedController()
             @hideLoader()
-            @sendAnalyticsStats()
 
         onWindowBeforeUnload: (e) =>
             if not @isModelSaved() and not @disableUnloadConfirm
