@@ -23,13 +23,6 @@
     {EditorPageView} = require('./views/page/base')
     {NavigationToolbar} = require('./views/toolbars/navigator')
     {BuilderToolbar} = require('./views/toolbars/builder')
-    {
-        P2TActivityEditorToolbar
-        ClickActivityEditorToolbar
-        DictionaryActivityEditorToolbar
-        ActivityIntroEditorToolbar
-        ActivityModeEditorToolbar
-    } = require('./views/toolbars/activities')
     {Settings} = require('./../common/models/settings')
     {LetterMetrics} = require('./../common/svgmetrics')
     {ToolbarEnum} = require('./../common/views/toolbars/constants')

@@ -6,7 +6,6 @@
     buttons = require('./../buttons')
     settings = require('./../../../settings')
     {ToolbarEnum} = require('./../../../common/views/toolbars/constants')
-    {ActivityEditionToolbar} = require('./activities')
     {GoToStationCreator} = require('./../../actions/navigation')
     {DuplicateStationDropDown} = require('./../dropdowns')
 
@@ -76,7 +75,6 @@
         toolbarClasses: [
             TitlePageToolbar
             NavigationSubToolbar
-            ActivityEditionToolbar
             StationCreationToolbar
         ]
 
