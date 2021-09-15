@@ -28,8 +28,7 @@
     module.exports = {
         context: path.join(__dirname, 'app'),
         entry: {
-            'starter': path.join(srcScriptsDir, 'languagegarden', 'starter.coffee'),
-            'old-player':  path.join(srcScriptsDir, 'languagegarden', 'old-player.coffee')
+            'starter': path.join(srcScriptsDir, 'languagegarden', 'starter.coffee')
         },
         output: {
             path: targetDir,
