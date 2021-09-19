@@ -1,0 +1,11 @@
+AMD => Asynchronous Module Definition (AMD) API
+https://github.com/amdjs/amdjs-api/wiki/AMD
+
+WHY WEB MODULES?
+https://requirejs.org/docs/why.html
+
+WHY AMD?
+https://requirejs.org/docs/whyamd.html
+
+the MODULE pattern:
+http://www.adequatelygood.com/JavaScript-Module-Pattern-In-Depth.html
