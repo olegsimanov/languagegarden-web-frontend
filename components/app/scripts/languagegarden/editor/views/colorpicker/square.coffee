@@ -3,7 +3,6 @@
     _ = require('underscore')
     $ = require('jquery')
     {template} = require('./../../../common/templates')
-    {applyGradientColor} = require('./drawing')
     {BBox} = require('./../../../math/bboxes')
     {Point} = require('./../../../math/points')
     {EditorMode, ColorMode} = require('./../../constants')
