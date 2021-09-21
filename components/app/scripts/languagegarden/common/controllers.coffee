@@ -10,7 +10,6 @@
     require('bootstrap-dropdown')
 
     require('../../../../bower_components/bootstrap/less/bootstrap.less')
-    require('../../../../bower_components/jscrollpane/style/jquery.jscrollpane.css')
     require('../../../styles/layout.less')
     require('../../../font/languagegarden-regular-webfont.css')
     require('../../../font/eskorte-arabic-regular-webfont.css')

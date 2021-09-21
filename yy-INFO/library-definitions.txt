@@ -57,4 +57,8 @@ less            It's CSS, with just a little more. (https://lesscss.org)
 hammer.js       is a open-source library that can recognize gestures made by touch, mouse and pointerEvents.
                 It doesn’t have any dependencies, and it’s small
 
+jquery.browser  is used in iefix.coffee to identify browser version
+
+jquery.cookie   is used in common/models/plants.coffee to get csrftoken from the cookie when sending model to the server
+
 
