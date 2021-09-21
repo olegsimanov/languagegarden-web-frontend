@@ -45,28 +45,6 @@
 
             data
 
-        # CHANGE TYPES
-        _isStationInsertOp: (op) =>
-            ctxNames = op.getContextNames()
-            ctxNames.length == 2 and
-            op.getFirstContextName() == 'stations'
-
-        _isActivityInsertOp: (op) =>
-            if op.type != OperationType.INSERT
-                return false
-            contextNames = op.getContextNames()
-            contextNames.length == 4 and contextNames[2] == 'activityLinks'
-
-        _isActivityOp: (op) =>
-            'activityLinks' in op.getContextNames()
-
-        isStationInsert: -> _.any(@get('operations'), @_isStationInsertOp)
-
-        isActivityInsert: -> _.any(@get('operations'), @_isActivityInsertOp)
-
-        isActivityChange: -> _.any(@get('operations'), @_isActivityOp)
-
-
     class UnitChanges extends BaseCollection
         model: UnitChange
 

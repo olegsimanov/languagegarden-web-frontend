@@ -1,7 +1,7 @@
     'use strict'
 
     _ = require('underscore')
-    {MediumType, PlacementType, ActivityType} = require('./../constants')
+    {MediumType, PlacementType} = require('./../constants')
     {BaseView} = require('./base')
     {DummyMediumView} = require('./media/base')
     {TextToPlantView} = require('./media/text_to_plant')
@@ -63,10 +63,6 @@
                 switch model.get('type')
                     when MediumType.TEXT_TO_PLANT
                         TextToPlantView
-                    when MediumType.PLANT_TO_TEXT_NOTE
-                        PlantToTextNote
-                    when MediumType.INSTRUCTIONS_NOTE
-                        InstructionsView
                     else
                         null
 
@@ -113,15 +109,7 @@
             false
 
         updateNotesMode: ->
-            activityType = @controller.dataModel.get('activityType')
-            inPlantToTextMode = (
-                @model.get('inPlantToTextMode') or
-                activityType in [
-                    ActivityType.PLANT_TO_TEXT,
-                    ActivityType.PLANT_TO_TEXT_MEMO])
             instructionsMode = @hasInstructionsNote()
-
-            @$el.toggleClass('in-plant-to-text-mode', inPlantToTextMode)
             @$el.toggleClass('instructions-mode', instructionsMode)
 
         updateTextDirection: ->

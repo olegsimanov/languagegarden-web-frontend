@@ -72,9 +72,6 @@
             @setPropertyFromOptions(options, 'dataModel',
                                     default: @controller.dataModel
                                     required: true)
-            @setPropertyFromOptions(options, 'timeline',
-                                    default: @controller.timeline
-                                    required: true)
             # for deprecated usage
             @parentView = @canvasView
 

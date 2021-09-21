@@ -3,8 +3,6 @@
     _ = require('underscore')
     settings = require('./../../settings')
     {disableSelection} = require('./../../common/domutils')
-    historyActions = require('./../actions/history')
-    mediaActions = require('./../actions/media')
     {Point} = require('./../../math/points')
     {BaseView} = require('./../../common/views/base')
     {EditorMode, ColorMode} = require('./../constants')
@@ -14,8 +12,6 @@
         TooltipButton
     } = require('./../../common/views/buttons')
     navigationActions = require('./../actions/navigation')
-    activityActions = require('./../actions/activities')
-    stationsActions = require('./../actions/stations')
 
 
     class EditorDivButton extends DivButton
@@ -99,61 +95,6 @@
             super
 
 
-    class BaseSelectedActivityButton extends MenuActionButton
-
-        initialize: (options) ->
-            super
-            @setPropertyFromOptions(options, 'sidebarTimeline',
-                                    default: @controller.sidebarTimeline
-                                    required: true)
-            @listenTo(@sidebarTimeline.getSidebarState(), 'all',
-                      @onChange)
-
-        remove: ->
-            @stopListening(@sidebarTimeline.getSidebarState())
-            super
-
-
-    class AddMediaButton extends MenuActionButton
-
-        onClick: =>
-            dataModel = @controller.dataModel
-            insertPoint = new Point(dataModel.get('canvasWidth') / 2,
-                                    dataModel.get('canvasHeight') / 2)
-            @action.setPoint(insertPoint)
-            super
-
-
-    class AddOrEditMediaButton extends MenuActionButton
-
-        mediaChosenClass: 'active'
-
-        initialize: (options) ->
-            super
-            @listenTo(@model.media, 'add remove change reset', @render)
-
-        isMediumChosen: -> @action.getMediumToEdit()?
-
-        render: ->
-            super
-            @$el.toggleClass(@mediaChosenClass, @isMediumChosen())
-            this
-
-
-    class OpenModalButton extends MenuButton
-
-        initialize: (options) =>
-            super
-            @modalView ?= options.modalView
-
-        isEnabled: -> true
-
-        onClick: (event) =>
-            if not @isEnabled()
-                return true
-            @modalView.show()
-
-
     # mode buttons
     class EditorColorModeButton extends EditorDivToggleButton
 
@@ -184,46 +125,6 @@
             super
             @model.set('colorMode', @currentState)
 
-
-    class SettingsButton extends OpenModalButton
-        customClassName: 'icon icon_cogwheel'
-
-
-    # media buttons
-    class AddImageButton extends AddMediaButton
-        actionClass: mediaActions.AddImage
-        customClassName: 'icon icon_image'
-
-
-    class AddSoundButton extends AddMediaButton
-        actionClass: mediaActions.AddSound
-
-
-    class AddPlantLinkButton extends AddMediaButton
-        actionClass: mediaActions.AddPlantLink
-
-
-    class AddTextButton extends AddMediaButton
-        actionClass: mediaActions.AddText
-        customClassName: 'add-text-button'
-
-
-    class AddNoteButton extends AddMediaButton
-        actionClass: mediaActions.AddNote
-        customClassName: 'add-note-button'
-        customClassName: 'icon icon_note'
-
-
-    class AddTextToPlantNoteButton extends AddMediaButton
-        actionClass: mediaActions.AddTextToPlantNote
-        customClassName: 'add-text-to-plant-note-button'
-
-
-    class AddPlantToTextNoteButton extends AddMediaButton
-        actionClass: mediaActions.AddPlantToTextNote
-        customClassName: 'add-plant-to-text-note-button'
-
-
     # navigation buttons
 
     class GoToPlantsListButton extends MenuActionButton
@@ -244,32 +145,6 @@
     class GoToStationEditorButton extends GoToEditorActionButton
         actionClass: navigationActions.GoToStationEditor
 
-
-    class RemoveSelectedActivityButton extends BaseSelectedActivityButton
-        actionClass: activityActions.RemoveSelectedActivity
-
-
-    class MoveSelectedActivityUpButton extends BaseSelectedActivityButton
-        actionClass: activityActions.MoveSelectedActivityUp
-
-
-    class MoveSelectedActivityDownButton extends BaseSelectedActivityButton
-        actionClass: activityActions.MoveSelectedActivityDown
-
-
-    class GoToSelectedActivityFromNavigatorButton extends BaseSelectedActivityButton
-        actionClass: activityActions.GoToSelectedActivityFromNavigator
-
-
-    class DeleteLastStationButton extends MenuActionButton
-        actionClass: stationsActions.DeleteLastStation
-        modelListenEventName: 'diffpositionchange'
-
-        isHidden: -> not @isEnabled()
-
-        help: -> 'Delete current station'
-
-
     module.exports =
         ImageButton: EditorDivButton
         TooltipButton: TooltipButton
@@ -281,17 +156,4 @@
         EditorDivButton: EditorDivButton
         EditorDivToggleButton: EditorDivToggleButton
         EditorColorModeButton: EditorColorModeButton
-        SettingsButton: SettingsButton
-        AddTextButton: AddTextButton
-        AddImageButton: AddImageButton
-        AddSoundButton: AddSoundButton
-        AddPlantLinkButton: AddPlantLinkButton
-        AddNoteButton: AddNoteButton
-        AddTextToPlantNoteButton: AddTextToPlantNoteButton
-        AddPlantToTextNoteButton: AddPlantToTextNoteButton
         GoToStationEditorButton: GoToStationEditorButton
-        RemoveSelectedActivityButton: RemoveSelectedActivityButton
-        MoveSelectedActivityUpButton: MoveSelectedActivityUpButton
-        MoveSelectedActivityDownButton: MoveSelectedActivityDownButton
-        GoToSelectedActivityFromNavigatorButton: GoToSelectedActivityFromNavigatorButton
-        DeleteLastStationButton: DeleteLastStationButton

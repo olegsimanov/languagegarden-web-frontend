@@ -31,7 +31,6 @@
 
             super
             @setPropertyFromOptions(options, 'canvasView', required: true)
-            @setPropertyFromOptions(options, 'timeline', required: true)
 
             @initializePanels(options)
             @initializeNav(options)
@@ -69,7 +68,6 @@
             delete @panelData
             delete @panelDataByName
             delete @panelDataOrdered
-            delete @timeline
             delete @canvasView
             super
 

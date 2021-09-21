@@ -35,7 +35,6 @@ settings =
 
     apiResourceNames:
         'lessons': "lessons"
-        'activities': "activities"
         'blobs': "media"
 
     sentry:

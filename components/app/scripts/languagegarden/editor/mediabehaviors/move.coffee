@@ -7,9 +7,7 @@
     } = require('./../../common/mediabehaviors/base')
 
 
-    class MoveBehavior extends MoveBehaviorBase
-            .extend(MediaBehaviorPrototype)
-            .extend(MediaDragBehaviorPrototype)
+    class MoveBehavior extends MoveBehaviorBase.extend(MediaBehaviorPrototype).extend(MediaDragBehaviorPrototype)
 
         id: 'move-media'
         plantChildType: 'medium'

@@ -16,17 +16,8 @@
             '.toolbar__section_right': 'controlButtonsMenu'
 
         desktopInit: ->
-            if @controller.getShowSettings()
-                {SettingsMenu} = require('../settings')
-                @settingsView = new SettingsMenu
-                    controller: @controller
-                    canvasView: @controller.canvasView
-                    model: @controller.model
-                    dataModel: @controller.dataModel
-                    timeline: @controller.timeline
 
         remove: ->
-            @removeSubview('settingsView')
             super
 
 

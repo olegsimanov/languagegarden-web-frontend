@@ -44,9 +44,6 @@
 
         initialize: (options) ->
             super
-            @setPropertyFromOptions(options, 'timeline', required: true)
-            @listenTo(@timeline, 'progresschange', @onTimelineProgressChange)
-            @listenTo(@timeline, 'playbackchange', @onTimelinePlaybackChange)
 
             @titleView = new @titleViewClass
                 controller: @controller

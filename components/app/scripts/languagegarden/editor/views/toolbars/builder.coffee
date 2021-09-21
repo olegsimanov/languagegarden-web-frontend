@@ -6,13 +6,6 @@
     {SquarePicker} = require('./../colorpicker/square')
     {SelectionButtonGroup} = require('./../buttongroups/selection')
     {
-        SettingsButton
-        AddImageButton
-        AddNoteButton
-    } = require('./../buttons')
-
-    {Undo, Redo} = require('./../../actions/history')
-    {
         DiscardAndGoToNavigator
         SaveAndGoToNavigator
     } = require('./../../actions/navigation')
@@ -58,24 +51,6 @@
             viewType: 'button'
             context:
                 customClassName: 'icon icon_back'
-        ,
-            actionClass: Undo
-            viewType: 'button'
-            context:
-                customClassName: 'icon icon_spin-left'
-        ,
-            actionClass: Redo
-            viewType: 'button'
-            context:
-                customClassName: 'icon icon_spin-right'
-        ,
-            {
-                viewClass: SettingsButton
-                viewType: 'button'
-                getContext: (p) -> {modalView: p.settingsView}
-                show: (p) ->
-                    not settings.isMobile and p.controller.getShowSettings()
-            }
         ]
         contentMenu: [
             {viewClass: SelectionButtonGroup, viewType: 'buttongroup'}
@@ -87,8 +62,6 @@
                 context:
                     navTarget: ToolbarEnum.COLOR
             }
-            {viewClass: AddImageButton, viewType: 'button'}
-            {viewClass: AddNoteButton, viewType: 'button'}
         ,
             actionClass: SaveAndGoToNavigator
             viewType: 'button'

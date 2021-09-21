@@ -75,11 +75,6 @@
         getSubviewOptions: (viewData) =>
 
             switch viewData.viewType
-                when 'timeline'
-                    args =
-                        controller: @controller
-                        parentView: @controller.canvasView
-                        model: @controller.timeline
                 when 'navbutton'
                     args =
                         controller: @controller
@@ -88,21 +83,6 @@
                     args =
                         controller: @controller
                         editor: @controller.canvasView
-                when 'timelineButton'
-                    args =
-                        parentView: @controller.canvasView
-                        controller: @controller
-                        model: @controller.timeline
-                when 'viewWithTimeline'
-                    args =
-                        parentView: @controller.canvasView
-                        controller: @controller
-                        model: @controller.model
-                        timeline: @controller.timeline
-                when 'stationTimelineButton'
-                    args =
-                        controller: @controller
-                        model: @controller.stationTimeline
                 when 'buttongroup'
                     args =
                         controller: @controller

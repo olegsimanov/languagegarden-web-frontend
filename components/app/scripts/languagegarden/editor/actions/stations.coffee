@@ -8,12 +8,8 @@
 
         initialize: (options) ->
             super
-            @setPropertyFromOptions(options, 'history',
-                                    default: @controller.history
-                                    required: true)
 
         remove: ->
-            delete @history
             super
 
 

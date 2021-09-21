@@ -1,9 +1,8 @@
     'use strict'
 
     _ = require('underscore')
-    {MediumType, ActivityType} = require('./../../common/constants')
+    {MediumType} = require('./../../common/constants')
     {TextBoxView} = require('./../../common/views/textboxes')
-    {EditorDummyMediumView} = require('./media/base')
     {
         EditorTextToPlantView
         MarkableTextToPlantView
@@ -26,14 +25,7 @@
         getMediumViewClass: (model) ->
             switch model.get('type')
                 when MediumType.TEXT_TO_PLANT
-                    if @model.get('activityType') == ActivityType.MEDIA
-                        MarkableTextToPlantView
-                    else
-                        EditorTextToPlantView
-                when MediumType.INSTRUCTIONS_NOTE
-                    EditorInstructionsView
-                when MediumType.PLANT_TO_TEXT_NOTE
-                    EditorPlantToTextNote
+                    EditorTextToPlantView
                 else
                     super
 

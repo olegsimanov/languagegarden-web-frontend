@@ -3,8 +3,6 @@
     _ = require('underscore')
     {Action, ToolbarStateAction} = require('./base')
     {EditorMode} = require('./../constants')
-    {Save} = require('./history')
-    {DeleteLastStation} = require('./stations')
     {ToolbarEnum} = require('./../../common/views/toolbars/constants')
 
 
@@ -85,22 +83,6 @@
     class DiscardAndGoToNavigator extends GoToNavigatorBase
         id: 'go-to-navigator'
 
-        perform: ->
-            history = @controller.history
-            if not history.isAtSavedPosition()
-                if not window.confirm(
-                    'There are unsaved changes that will be lost!
-                    \n\nAre your sure you want to continue?')
-                    return
-
-            while not history.isAtSavedPosition()
-                if not history.undo()
-                    return false
-            @navigateToController()
-
-        isAvailable: -> @controller.history.canUndoToSavedPosition()
-
-
     class SaveAndGoToNavigator extends GoToNavigatorBase
         id: 'save-and-go-to-navigator'
 
@@ -110,22 +92,12 @@
                 onSaveSuccess: =>
                     @navigateToController()
                 allowSaveWithoutChanges: true
-            @saveAction = new Save(saveActionOptions)
 
         initializeListeners: ->
             super
-            @listenTo(@saveAction, 'change:available', @triggerAvailableChange)
 
         remove: ->
-            @saveAction.remove()
-            @saveAction = null
             super
-
-        perform: ->
-            @saveAction.fullPerform()
-
-        isAvailable: ->
-            @saveAction.isAvailable()
 
 
     class GoToStationEditor extends GoToBuilderBase
@@ -133,7 +105,7 @@
         newStation: false
 
         isAvailable: ->
-            super and @timeline.getCurrentActivityLinks().length == 0
+            super
 
         getHelpText: -> 'Edit current station'
 

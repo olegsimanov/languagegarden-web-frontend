@@ -10,16 +10,13 @@
         LETTER: 'letter'
 
     class EditorCanvasMode extends CanvasMode
-        @MEDIA_MOVE = 'media move'
         @STRETCH = 'stretch'
         @SCALE = 'scale'
         @GROUP_SCALE = 'group scale'
         @EDIT = 'edit'
         @COLOR = 'color'
-        @IMAGE_EDIT = 'image edit'
         @TEXT_EDIT = 'text edit'
         @ROTATE = 'rotate'
-        @MARK = 'mark'
 
         @DEFAULT = @MOVE
 

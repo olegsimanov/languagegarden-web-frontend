@@ -7,7 +7,6 @@
         TitleImageView
         TitlePageOverlay
     } = require('./../../../common/views/overlays/titlepages')
-    {EditTitleImage} = require('./../../actions/media')
 
 
     class EditorTitleView extends RenderableView
@@ -63,27 +62,8 @@
             @setModelTitle(newTitle)
 
 
-    class EditorTitleImageView extends TitleImageView
-        events:
-            'click .title-page__image': 'onImageClick'
-            'click .title-page__image-placeholder': 'onImageClick'
-
-        initialize: (options) ->
-            super
-            @action = new EditTitleImage
-                controller: @controller
-                dataModel: @model
-
-        onImageClick: (event) ->
-            event.preventDefault()
-            if not @action.isAvailable()
-                return
-            @action.fullPerform()
-
-
     class EditorTitlePageOverlay extends TitlePageOverlay
         titleViewClass: EditorTitleView
-        imageViewClass: EditorTitleImageView
 
 
     module.exports =

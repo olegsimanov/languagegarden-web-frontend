@@ -3,7 +3,6 @@
     require('raphael')
     _ = require('underscore')
     $ = require('jquery')
-    require('../settings-dependencies')
     {
         createColorPicker
         ColorSelectView
@@ -380,7 +379,6 @@
 
         onValueSelected: =>
             @model.set 'bgColor', @$picker.val()
-            @editor.history.makeSnapshot()
 
         render: =>
             @initial = @model.get 'bgColor'

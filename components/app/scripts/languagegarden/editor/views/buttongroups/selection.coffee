@@ -13,14 +13,6 @@
     } = require('./../../actions/modeswitch')
     {StartUpdating, EditElementHRef} = require('./../../actions/edit')
     StartUpdatingText = require('./../../actions/edittext').StartUpdating
-    {
-        EditSound
-        EditImage
-        EditPlantLink
-        PlaySound
-        PauseSound
-        StopSound
-    } = require('./../../actions/media')
 
 
     class SelectionButtonGroup extends ButtonGroup
@@ -70,36 +62,6 @@
         ,
             id: 'edittext'
             actionClass: StartUpdatingText
-            className: 'tooltip-edit'
-            help: 'Edit'
-        ,
-            id: 'editimage'
-            actionClass: EditImage
-            className: 'tooltip-edit'
-            help: 'Edit'
-        ,
-            id: 'play'
-            actionClass: PlaySound
-            className: 'tooltip-play'
-            help: 'Play'
-        ,
-            id: 'pause'
-            actionClass: PauseSound
-            className: 'tooltip-pause'
-            help: 'Pause'
-        ,
-            id: 'stop'
-            actionClass: StopSound
-            className: 'tooltip-stop'
-            help: 'Stop'
-        ,
-            id: 'editsound'
-            actionClass: EditSound
-            className: 'tooltip-edit'
-            help: 'Edit'
-        ,
-            id: 'editplantlink'
-            actionClass: EditPlantLink
             className: 'tooltip-edit'
             help: 'Edit'
         ,

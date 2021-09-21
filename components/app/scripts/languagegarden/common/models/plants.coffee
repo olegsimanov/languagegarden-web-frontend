@@ -19,9 +19,8 @@
     {PlantElements} = require('./elements')
     {PlantMedium, PlantMedia} = require('./media')
     {PlantChanges, UnitChange} = require('./changes')
-    {Stations} = require('./stations')
     {BaseModelWithSubCollections} = require('./base')
-    {MediumType, ActivityType, VisibilityType} = require('./../constants')
+    {MediumType} = require('./../constants')
     {UnitDataCache} = require('../datacache')
 #    require('backbone.localStorage')
 
@@ -50,9 +49,6 @@
         ,
             name: 'media'
             collectionClass: PlantMedia
-        ,
-            name: 'stations'
-            collectionClass: Stations
         ]
 
         # add childchange to support nesting in stations collection
@@ -106,41 +102,6 @@
             super
             @trigger('childchange', sender, this, ctx)
 
-        setupActivity: (options={}) ->
-            switch options.activityType
-                when ActivityType.PLANT_TO_TEXT
-                    @_setupPlantToTextActivity()
-                when ActivityType.PLANT_TO_TEXT_MEMO
-                    @_setupPlantToTextActivity()
-                when ActivityType.DICTIONARY
-                    @_setupDictionaryActivity()
-                when ActivityType.CLICK
-                    @_setupClickActivity()
-
-        _setupPlantToTextActivity: ->
-            p2tNoteData =
-                type: MediumType.PLANT_TO_TEXT_NOTE
-                inPlantToTextMode: true
-            @media.add(p2tNoteData, silent: true)
-            for element in @elements.models
-                element.set('visibilityType', VisibilityType.PLANT_TO_TEXT_FADED,
-                            silent: true)
-            @trigger('change', this)
-            return
-
-        _setupDictionaryActivity: ->
-
-        _setupClickActivity: ->
-            instructionNoteData =
-                type: MediumType.INSTRUCTIONS_NOTE
-                text: ''
-            @media.add(instructionNoteData, silent: true)
-
-            for element in @elements.models
-                element.set('marked', false, silent: true)
-            @trigger('change', this)
-            return
-
 
     class UnitData extends BaseModelWithSubCollections
         subCollectionConfig: [
@@ -182,7 +143,6 @@
             @setDefaultValue('version', '0.7')
             @setDefaultValue('canvasWidth', DEFAULT_CANVAS_WIDTH)
             @setDefaultValue('canvasHeight', DEFAULT_CANVAS_HEIGHT)
-            @setDefaultValue('activityType', ActivityType.MOVIE)
             @setDefaultValue('textDirection', 'ltr')
 
         validate: (attrs, options) ->
@@ -389,23 +349,6 @@
 
             positions
 
-        cloneActivityTemplate: (options) ->
-            modelCopy = @deepClone(ActivityData)
-
-            # remove the plant id
-            modelCopy.unset(@idAttribute)
-
-            # remove changes
-            modelCopy.squash(options)
-
-            activityType = options.activityType or ActivityType.DICTIONARY
-
-            modelCopy.set('parentId', @id)
-            modelCopy.set('activityType', activityType)
-            modelCopy.set('description', '')
-            modelCopy.set('title', 'Unnamed Activity')
-            modelCopy
-
         deepClone: (constructor) ->
             constructor ?= @constructor
             modelCopy = new constructor(@toJSON())
@@ -478,21 +421,7 @@
             cache = UnitDataCache.getInstance()
             cache.getLessonPayload(id)
 
-    class ActivityData extends UnitData
-#        localStorage: new Backbone.LocalStorage("ActivityData")
-        urlRoot: -> config.getUrlRoot(settings.apiResourceNames.activities)
-        forwardedAttrsMap: _.extend({}, UnitData::forwardedAttrsMap,
-            'type': 'activityType'
-            'lesson': 'parentId'
-        )
-
-        getCachePayload: (id) ->
-            cache = UnitDataCache.getInstance()
-            cache.getActivityPayload(id)
-
-
     module.exports =
         UnitState: UnitState
         LessonData: LessonData
-        ActivityData: ActivityData
         SIDEBAR_WIDTH: SIDEBAR_WIDTH

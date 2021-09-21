@@ -28,10 +28,6 @@
     {ScaleBehavior} = require('./../modebehaviors/scale')
     {GroupScaleBehavior} = require('./../modebehaviors/groupscale')
     {EditBehavior} = require('./../modebehaviors/edit')
-    {
-        ImageEditBehavior
-        LimitedImageEditBehavior
-    } = require('./../modebehaviors/imageedit')
     {TextEditBehavior} = require('./../modebehaviors/textedit')
     {PlantToTextBehavior} = require('./../modebehaviors/planttotext')
     {RotateBehavior} = require('./../modebehaviors/rotate')
@@ -47,11 +43,8 @@
     {BBox} = require('./../../math/bboxes')
     {PlantElement} = require('./../../common/models/elements')
     {
-        MediumType
-        ActivityType
         PlacementType
     } = require('./../../common/constants')
-    {History} = require('./../history')
     {CanvasView} = require('./../../common/views/canvas')
     {backgroundColorChoices} = require('./../colors')
 
@@ -68,12 +61,6 @@
             @dragging = false
             @bgDragging = false
             @initializeBackgroundColors()
-
-            # history
-            @history = options.history
-
-            # listening on history events (propagate upwards)
-            @listenTo(@history, 'selectchange', @selectChange)
 
             # listening on own events
             @listenTo(this, 'selectchange', @onSelectChange)
@@ -108,9 +95,6 @@
                 mode: EditorMode.EDIT
                 behaviorClass: EditBehavior
             ,
-                mode: EditorMode.IMAGE_EDIT
-                behaviorClass: ImageEditBehavior
-            ,
                 mode: EditorMode.TEXT_EDIT
                 behaviorClass: TextEditBehavior
             ,
@@ -118,56 +102,9 @@
                 behaviorClass: PlantToTextBehavior
             ]
 
-        getActivityPlantToTextModeConfig: ->
-            startMode: EditorMode.NOOP  # we switch to p2t mode in the initializer
-            defaultMode: EditorMode.PLANT_TO_TEXT
-            modeSpecs: [
-                mode: EditorMode.PLANT_TO_TEXT
-                behaviorClass: PlantToTextBehavior
-            ]
-            initializer: ->
-                p2tMediums = @model.media.filter((medium) ->
-                    medium.get('type') == MediumType.PLANT_TO_TEXT_NOTE)
-                p2tMedium = p2tMediums[p2tMediums.length - 1]
-                @startPlantToTextMode(p2tMedium)
-                #TODO: use event system to follow the mode of the canvas
-                _.defer =>
-                    @controller.textBoxView.startPlantToTextMode(p2tMedium)
-
-        getActivityMediaModeConfig: ->
-            startMode: EditorMode.MARK
-            defaultMode: EditorMode.MARK
-            modeSpecs: [
-                mode: EditorMode.MARK
-                behaviorClass: MarkBehavior
-            ]
-
-        getActivityClickModeConfig: ->
-            startMode: EditorMode.MARK
-            defaultMode: EditorMode.MARK
-            modeSpecs: [
-                mode: EditorMode.MARK
-                behaviorClass: MarkBehavior
-            ]
-
-        getActivityDictionaryModeConfig: -> @getPlantEditorModeConfig()
-
-        getActivityIntroModeConfig: -> @getPlantEditorModeConfig()
-
         getModeConfig: ->
-            switch @dataModel.get('activityType')
-                when ActivityType.PLANT_TO_TEXT
-                    @getActivityPlantToTextModeConfig()
-                when ActivityType.PLANT_TO_TEXT_MEMO
-                    @getActivityPlantToTextModeConfig()
-                when ActivityType.MEDIA
-                    @getActivityMediaModeConfig()
-                when ActivityType.CLICK
-                    @getActivityClickModeConfig()
-                when ActivityType.DICTIONARY
-                    @getActivityDictionaryModeConfig()
-                else
-                    @getPlantEditorModeConfig()
+            @getPlantEditorModeConfig()
+
 
         settingsKey: -> "editor-#{super}"
 
@@ -190,10 +127,8 @@
 
         remove: =>
             @selectionRectObj.remove()
-            @stopListening(@history)
             @stopListening(this)
             @stopListening(@model)
-            delete @history
             super
 
         ###
@@ -256,15 +191,7 @@
             if model.get('placementType') == PlacementType.HIDDEN
                 null
             else
-                switch model.get('type')
-                    when MediumType.IMAGE then EditorImageView
-                    when MediumType.SOUND then EditorSoundView
-                    when MediumType.PLANT_LINK then EditorPlantLinkView
-                    # note medium backwards compatibility
-                    when MediumType.TEXT_TO_PLANT_NOTE then EditorTextToPlantNote
-                    when MediumType.DICTIONARY_NOTE then EditorNoteView
-                    else super
-
+                super
         getMediumViewConstructor: (model) ->
             viewCls = @getMediumViewClass(model) or EditorDummyMediumView
             (options) -> new viewCls(options)
@@ -508,7 +435,6 @@
                 return
 
             @deselectAll()
-            @history.rewindModel(position)
 
         rewindModelNext: ->
             if @model.hasNextPosition()
@@ -519,25 +445,13 @@
                 @rewindModel(@model.getDiffPosition() - 1)
 
         rebaseModelDiffs: ->
-            @history.rebaseModelDiffs()
 
         deletePreviousModelDiff: ->
-            @history.deletePreviousModelDiff()
 
-        toggleKeyFrame: -> @history.toggleKeyFrame()
+        toggleKeyFrame: ->
 
 
     class EditorCanvasView extends BaseEditorCanvasView
-
-
-    class ActivityIntroEditorCanvasView extends BaseEditorCanvasView
-
-        getModeConfig: -> @getActivityIntroModeConfig()
-
-
-    class ActivityModeEditorCanvasView extends BaseEditorCanvasView
-
-        getModeConfig: -> @getNoOpModeConfig()
 
 
     class NavigatorCanvasView extends BaseEditorCanvasView
@@ -560,6 +474,4 @@
 
     module.exports =
         EditorCanvasView: EditorCanvasView
-        ActivityIntroEditorCanvasView: ActivityIntroEditorCanvasView
-        ActivityModeEditorCanvasView: ActivityModeEditorCanvasView
         NavigatorCanvasView: NavigatorCanvasView

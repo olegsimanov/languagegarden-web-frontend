@@ -91,9 +91,7 @@
 
         isModelSaved: ->
             cfg = @getControllerConfig(@controllerType)
-            if cfg?.hasHistory
-                @controller.history.isModelSaved() or @controller.model.getDiffsLength() == 0
-            else if cfg?.hasEditorModelsObjects
+            if cfg?.hasEditorModelsObjects
                 if @editorModelObjects?
                     @editorModelObjects.history.isModelSaved() or @editorModelObjects.model.getDiffsLength() == 0
                 else

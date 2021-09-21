@@ -10,14 +10,6 @@
         @PLANT_BUILDER = 'plant-builder'
         @PLANT_NAVIGATOR = 'plant-navigator'
 
-        @ACTIVITY_INTRO_CREATOR = 'activity-intro-creator'
-        @ACTIVITY_CREATOR = 'activity-creator'
-        @ACTIVITY_MODE_CREATOR = 'activity-mode-creator'
-
-        @PLANT_PLAYER = 'plant-player'
-        @PASSIVE_ACTIVITY_PLAYER = 'passive-activity-player'
-        @ACTIVE_ACTIVITY_PLAYER = 'active-activity-player'
-
         @DEFAULT = @PLANT_LIST
 
 
@@ -38,41 +30,11 @@
     ###
     tapStateChanges = (controller, dataModel, callback) ->
         stateModel = new controller.modelClass()
-        history = new controller.historyClass
-            model: stateModel
-
-        timeline = new controller.timelineClass
-            controller: controller
-            stateModel: stateModel
-            dataModel: dataModel
-            history: history
 
         result = callback(stateModel, timeline)
 
-        timeline.remove()
-        history.remove()
         stateModel.remove()
         result
-
-
-    ###
-    Add newly created activity to given dataModel at (optional) diffPosition
-    if it was saved.
-    ###
-    addSavedActivity = (controller, dataModel, activityData, diffPosition) ->
-        if not activityData.id?
-            return
-
-        tapStateChanges controller, dataModel, (stateModel, timeline) ->
-
-            if diffPosition?
-                timeline.rewind(diffPosition)
-
-            timeline.addActivityLink
-                activityId: activityData.id
-
-            timeline.saveModel()
-
 
     editorRequireDependency = (cb) -> require.ensure([], ((require) ->
         cb(require('../editor/controllers'))
@@ -84,7 +46,6 @@
         requireDependency: editorRequireDependency
         controllerName: 'PlantEditorController'
         templatePack: 'editor'
-        hasHistory: true
         navInfoTypes: ['edit-plant']
         urlGenerator: (navInfo) ->
             plantId = navInfo.plantId or 'unsaved'
