@@ -13,29 +13,6 @@
         @DEFAULT = @PLANT_LIST
 
 
-    toPosition = (str) ->
-        if str?
-            parseInt(str, 10)
-        else
-            str
-
-    ###
-    Introduces the changes in given dataModel by constructing temporary
-    state model (and timeline object).
-
-    The given callback receives the state model, which can be manipulated
-    freely and all changes on it will be tracked in the given data model.
-    the callback receives also the timeline object so the data model can
-    be saved correctly.
-    ###
-    tapStateChanges = (controller, dataModel, callback) ->
-        stateModel = new controller.modelClass()
-
-        result = callback(stateModel, timeline)
-
-        stateModel.remove()
-        result
-
     editorRequireDependency = (cb) -> require.ensure([], ((require) ->
         cb(require('../editor/controllers'))
     ), 'editor')

@@ -86,11 +86,6 @@
         subCollectionConfig: [
             name: 'initialState'
             modelClass: UnitState
-        ,
-            name: 'titleImage'
-            modelConstructor: ->
-                PlantMedium.fromJSON
-                    type: MediumType.IMAGE
         ]
 
         # add childchange to support nesting in stations collection
@@ -100,7 +95,6 @@
 
         forwardedAttrsMap:
             'id': 'id'
-            'title': 'title'
             'description': 'description'
             'color_palette': 'colorPalette'
             'active': 'public'
@@ -111,7 +105,6 @@
             @setDefaultAttributes()
 
         setDefaultAttributes: ->
-            @setDefaultValue('title', '')
             @setDefaultValue('description', '')
             @setDefaultValue('language', 'English')
             @setDefaultValue('colorPalette', 'default')

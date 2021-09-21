@@ -54,7 +54,6 @@
         @LETTER_AREAS = 'letterAreas'
 
     class CanvasMode
-        @NOOP = 'noop'
         @MOVE = 'move'
         @PLANT_TO_TEXT = 'plant to text'
 

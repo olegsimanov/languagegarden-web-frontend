@@ -8,8 +8,6 @@
     {VisibilityType, CanvasLayers} = require('./../../common/constants')
     {EditorMode} = require('./../constants')
     {Point} = require('./../../math/points')
-    {linFunctionCoeffs, coordsAtDistanceOnLine} = require('./../../math/lines')
-    {enumerate} = require('./../../common/utils')
     {
         addSVGElementClass
         removeSVGElementClass
@@ -166,9 +164,6 @@
                 return
             @trigger(eventName, this)
 
-        isPlantToTextSelected: =>
-            @model.get('visibilityType') == VisibilityType.PLANT_TO_TEXT_FADED
-
         setVisibilityType: (value=VisibilityType.VISIBLE, options) =>
             @model.set('visibilityType', value, options)
 
@@ -196,7 +191,6 @@
             # - this causes proper scroll to place with the plant element
             # in ipad safari when the virtual keyboard pops up
             inputPoint = transform(@model.get('startPoint'))
-            fontSize = @model.get('fontSize')
 
             $input = $('<input type="text">')
             $input
@@ -225,7 +219,6 @@
             setTimeout(@setCaretAtEnd, 0)
 
         setCaretAtEnd: =>
-            $input = $(@inputEl)
             setCaretPosition(@inputEl, @model.get('text').length)
             if @textPath?
                 @updateCaret()
@@ -283,7 +276,6 @@
                 normal = new Point(0, -1)
 
             fontSize = @model.get('fontSize')
-            transformMatrix = @model.get('transformMatrix')
             height = @getMaxLetterHeight() or fontSize
 
             s = caretCenterPoint.add(normal.mul(height / 2))
@@ -396,11 +388,11 @@
                 @updateModelTextFromInput()
                 @updateCaret()
 
-        onInputKeyUp: (event) =>
+        onInputKeyUp: () =>
             @updateModelTextFromInput()
             @updateCaret()
 
-        onInputBlur: (event) =>
+        onInputBlur: () =>
             @finishEditing(blur: true)
 
         finishEditing: (options) =>

@@ -4,7 +4,6 @@
     {Point} = require('./../../math/points')
     {BBox} = require('./../../math/bboxes')
     {
-        PlantChildBehavior
         DragBehaviorBase
         ClickBehaviorBase
         DblClickBehaviorBase

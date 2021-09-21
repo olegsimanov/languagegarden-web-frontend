@@ -2,7 +2,6 @@
 
     _ = require('underscore')
     settings = require('./../../settings')
-    {disableSelection} = require('./../../common/domutils')
     {Point} = require('./../../math/points')
     {BaseView} = require('./../../common/views/base')
     {EditorMode, ColorMode} = require('./../constants')
@@ -79,21 +78,6 @@
                 return true
             event.preventDefault()
             @action.fullPerform()
-
-
-    class TimelineActionButton extends MenuActionButton
-
-        initialize: (options) ->
-            super
-            model = @getEditor().model
-            @listenTo(model, 'diffpositionchange', @onChange)
-            @listenTo(model.changes, 'change', @onChange)
-
-        remove: ->
-            model = @getEditor().model
-            @stopListening(model.changes)
-            super
-
 
     # mode buttons
     class EditorColorModeButton extends EditorDivToggleButton

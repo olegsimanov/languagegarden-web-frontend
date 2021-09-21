@@ -9,7 +9,6 @@
     {EditorPalette} = require('./models/palette')
     {
         EditorCanvasView
-        NavigatorCanvasView
     } = require('./views/canvas')
     {EditorTextBoxView} = require('./views/textboxes')
     {BaseController} = require('./../common/controllers')

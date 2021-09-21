@@ -10,7 +10,6 @@
         addSVGElementClass
     } = require('./../domutils')
     {LetterMetrics} = require('./../svgmetrics')
-    {NoOpBehavior} = require('./../modebehaviors/noop')
     {DummyMediumView} = require('./media/base')
     {ElementView} = require('./elements')
     {Point} = require('./../../math/points')
@@ -174,7 +173,6 @@
             @modeBehaviors = {}
             @mode = cfg.startMode
             @defaultMode = cfg.defaultMode or cfg.startMode
-            @addModeBehavior(CanvasMode.NOOP, NoOpBehavior)
             for modeSpec in cfg.modeSpecs
                 @addModeBehavior(modeSpec.mode, modeSpec.behaviorClass)
             cfg.initializer?.call(this)

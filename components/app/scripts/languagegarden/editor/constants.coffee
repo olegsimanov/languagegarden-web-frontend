@@ -21,17 +21,6 @@
         @DEFAULT = @MOVE
 
 
-    EditorLayers =
-        BACKGROUND: 'background'
-        SELECTION_RECT: 'selectionRect'
-        IMAGES: 'images'
-        IMAGE_AREAS: 'imageAreas'
-        LETTERS: 'letters'
-        LETTER_AREAS: 'letterAreas'
-        SELECTION_TOOLTIP: 'selectionTooltip'
-        MENU: 'menu'
-
-
     module.exports =
         ColorMode: ColorMode
         EditorCanvasMode: EditorCanvasMode

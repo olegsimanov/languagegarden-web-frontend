@@ -59,9 +59,5 @@
                     return view
             return null
 
-        unsetActivePlantToTextView: ->
-            delete @activePlantToTextObjectId
-
-
     module.exports =
         EditorTextBoxView: EditorTextBoxView

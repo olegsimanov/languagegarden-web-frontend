@@ -5,7 +5,6 @@
     _ = require('underscore')
     {Point} = require('./../../math/points')
     {
-        LinearTransformation
         AffineTransformation
     } = require('./../../math/transformations')
     {Path} = require('./../../math/bezier')

@@ -9,7 +9,6 @@
         getOffsetRect
         addSVGElementClass
     } = require('./../../common/domutils')
-    {LetterMetrics} = require('./../../common/svgmetrics')
     {
         ColorAction
         RemoveColorAction
@@ -17,8 +16,7 @@
     } = require('./../actions/color')
     {EditorDummyMediumView} = require('./media/base')
     {EditorElementView, EditedElementView} = require('./elements')
-    {ElementView} = require('./../../common/views/elements')
-    {MoveBehavior, MediaMoveBehavior} = require('./../modebehaviors/move')
+    {MoveBehavior} = require('./../modebehaviors/move')
     {ColorBehavior} = require('./../modebehaviors/color')
     {StretchBehavior} = require('./../modebehaviors/stretch')
     {ScaleBehavior} = require('./../modebehaviors/scale')
@@ -27,12 +25,7 @@
     {TextEditBehavior} = require('./../modebehaviors/textedit')
     {PlantToTextBehavior} = require('./../modebehaviors/planttotext')
     {RotateBehavior} = require('./../modebehaviors/rotate')
-    {
-        MarkBehavior
-    } = require('./../../common/modebehaviors/mark')
     {EditorMode, EditorLayers, ColorMode} = require('./../constants')
-    {interpolateColor} = require('./../../common/interpolations/colors')
-    {interpolateValue} = require('./../../common/interpolations/base')
     {Point} = require('./../../math/points')
     {BBox} = require('./../../math/bboxes')
     {PlantElement} = require('./../../common/models/elements')
