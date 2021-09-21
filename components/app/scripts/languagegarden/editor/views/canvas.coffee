@@ -15,7 +15,6 @@
         RemoveColorAction
         SplitColorAction
     } = require('./../actions/color')
-    {NoteView} = require('./../../common/views/media/note')
     {EditorDummyMediumView} = require('./media/base')
     {EditorElementView, EditedElementView} = require('./elements')
     {ElementView} = require('./../../common/views/elements')
@@ -464,9 +463,7 @@
             if model.get('placementType') == PlacementType.HIDDEN
                 null
             else
-                switch model.get('type')
-                    when MediumType.DICTIONARY_NOTE then NoteView
-                    else super
+                super
 
 
     module.exports =

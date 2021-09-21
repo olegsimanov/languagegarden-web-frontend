@@ -19,26 +19,6 @@
              @parentView.getSelectedViews().length == 1)
 
 
-    class EditElementHRef extends Action
-        id: 'edit-element-href'
-
-        perform: ->
-            {
-                ElementEditHRefView
-            } = require('../views/mediamodals/medialibrary/plants')
-            selectedElement = @parentView.getSelectedElements()[0]
-            editHRefView = new ElementEditHRefView
-                editor: @parentView
-                model: selectedElement
-
-            editHRefView.show()
-            false
-
-        isAvailable: ->
-            (@parentView.getSelectedElements().length == 1 and
-             @parentView.getSelectedViews().length == 1)
-
 
     module.exports =
         StartUpdating: StartUpdating
-        EditElementHRef: EditElementHRef

@@ -11,17 +11,13 @@
         EditorCanvasView
         NavigatorCanvasView
     } = require('./views/canvas')
-    {TextBoxView} = require('./../common/views/textboxes')
     {EditorTextBoxView} = require('./views/textboxes')
     {BaseController} = require('./../common/controllers')
     {EditorPageView} = require('./views/page/base')
-    {NavigationToolbar} = require('./views/toolbars/navigator')
     {BuilderToolbar} = require('./views/toolbars/builder')
     {Settings} = require('./../common/models/settings')
     {LetterMetrics} = require('./../common/svgmetrics')
     {ToolbarEnum} = require('./../common/views/toolbars/constants')
-    {BaseCollection} = require('./../common/models/base')
-    {TitlePageOverlay} = require('./views/overlays/titlepages')
 
 
     class BaseEditorController extends BaseController
@@ -199,40 +195,5 @@
     class PlantEditorController extends BaseEditorController
         toolbarViewClass: BuilderToolbar
 
-    class PlantNavigatorController extends PlantEditorController
-        canvasViewClass: NavigatorCanvasView
-        textBoxViewClass: TextBoxView
-        toolbarViewClass: NavigationToolbar
-
-        initialize: (options)->
-            super
-
-        remove: ->
-            @stopListening(@toolbarView)
-            super
-
-        onModelSync: ->
-            navInfo =
-                trigger: false
-                type: 'nav-plant'
-                plantId: @dataModel.id
-
-            @trigger('navigate', this, navInfo)
-            @renderViews()
-
-        getPageViewSubviews: =>
-            @titlePageView = new TitlePageOverlay
-                controller: this
-
-            views = super
-            # we place the title page view at the level of plant container
-            # because we need access to the toolbar (unlike the player)
-            views['.plant-container'] = [
-                @titlePageView
-            ].concat(views['.plant-container'] or [])
-
-            views
-
     module.exports =
         PlantEditorController:          PlantEditorController
-        PlantNavigatorController:       PlantNavigatorController

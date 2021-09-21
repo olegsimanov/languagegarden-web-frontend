@@ -3,12 +3,6 @@
     _ = require('underscore')
     {Action, ToolbarStateAction} = require('./base')
     {EditorMode} = require('./../constants')
-    {ToolbarEnum} = require('./../../common/views/toolbars/constants')
-
-
-    class GoToStationCreationMenu extends ToolbarStateAction
-        state: ToolbarEnum.STATION_CREATION
-
 
     ###
     Action that allows navigating to player, prompting to save the plant in
@@ -134,7 +128,6 @@
 
 
     module.exports =
-        GoToStationCreationMenu: GoToStationCreationMenu
         GoToPlantsList: GoToPlantsList
         DiscardAndGoToNavigator: DiscardAndGoToNavigator
         SaveAndGoToNavigator: SaveAndGoToNavigator
