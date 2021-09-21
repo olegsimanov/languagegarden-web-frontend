@@ -30,7 +30,6 @@
                             msg = "called missing #{methodName} method!"
                             child.prototype[methodName] = ->
                                 console.error(msg)
-                                Raven?.captureMessage(msg)
 
 
         child.__super__ = parent.prototype

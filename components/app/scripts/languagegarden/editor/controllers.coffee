@@ -71,9 +71,6 @@
             @listenTo(@canvasView, 'change:bgDragging',
                       @onCanvasBgDraggingChange)
 
-            # for deprecated usage
-            @editorView = @canvasView
-
             @textBoxView = new @textBoxViewClass
                 controller: this
                 model: @model

@@ -5,9 +5,7 @@
     {BaseView} = require('./base')
     {DummyMediumView} = require('./media/base')
     {TextToPlantView} = require('./media/text_to_plant')
-    {InstructionsView} = require('./media/instructions')
     {Point} = require('./../../math/points')
-    {PlantToTextNote} = require('./media/plant_to_text')
 
 
     class TextBoxView extends BaseView

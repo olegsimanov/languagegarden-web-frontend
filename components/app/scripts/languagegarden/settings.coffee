@@ -18,7 +18,7 @@ settings =
     # Font size can be selected per word
     # It's probably the only working way to resize invidual letters
     # Min font size must be used to ensure the letters are draggable
-    defaultFontSize: 150
+    defaultFontSize: 50
     minFontSize: 30
     maxFontSize: 250
 
@@ -35,7 +35,6 @@ settings =
 
     apiResourceNames:
         'lessons': "lessons"
-        'blobs': "media"
 
     sentry:
         publicDSN: publicDSN

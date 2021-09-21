@@ -13,8 +13,6 @@
     {LetterMetrics} = require('./../svgmetrics')
     {NoOpBehavior} = require('./../modebehaviors/noop')
     {MediumViewBase, DummyMediumView} = require('./media/base')
-    {ImageView} = require('./media/images')
-    {NoteView} = require('./media/note')
     {ElementView} = require('./elements')
     {interpolateColor} = require('./../interpolations/colors')
     {interpolateOpacity} = require('./../interpolations/base')
@@ -391,14 +389,7 @@
             if model.get('placementType') == PlacementType.HIDDEN
                 null
             else
-                switch model.get('type')
-                    when MediumType.IMAGE then ImageView
-                    when MediumType.SOUND then SoundView
-                    # note medium backwards compatibility
-                    when MediumType.NOTE then NoteView
-                    when MediumType.DICTIONARY_NOTE then NoteView
-                    when MediumType.TEXT_TO_PLANT_NOTE then NoteView
-                    else null
+                null
 
         getMediumViewConstructor: (model) ->
             viewCls = @getMediumViewClass(model) or DummyMediumView

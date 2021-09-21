@@ -5,10 +5,7 @@
     {TextBoxView} = require('./../../common/views/textboxes')
     {
         EditorTextToPlantView
-        MarkableTextToPlantView
     } = require('./media/text_to_plant')
-    {EditorPlantToTextNote} = require('./media/planttotext')
-    {EditorInstructionsView} = require('./media/instructions')
     {EditorMode} = require('./../constants')
 
 
