@@ -33,8 +33,6 @@
     {EditorMode, EditorLayers, ColorMode} = require('./../constants')
     {interpolateColor} = require('./../../common/interpolations/colors')
     {interpolateValue} = require('./../../common/interpolations/base')
-    {OperationType} = require('./../../common/diffs/operations')
-    {splitDiff} = require('./../../common/diffs/utils')
     {Point} = require('./../../math/points')
     {BBox} = require('./../../math/bboxes')
     {PlantElement} = require('./../../common/models/elements')
@@ -425,27 +423,6 @@
             for view in @getElementViews()
                 if view.letterAreasDirty
                     view.updateLetterAreas()
-
-        rewindModel: (position) ->
-            if not @model.canRewind()
-                return
-
-            @deselectAll()
-
-        rewindModelNext: ->
-            if @model.hasNextPosition()
-                @rewindModel(@model.getDiffPosition() + 1)
-
-        rewindModelPrev: ->
-            if @model.hasPrevPosition()
-                @rewindModel(@model.getDiffPosition() - 1)
-
-        rebaseModelDiffs: ->
-
-        deletePreviousModelDiff: ->
-
-        toggleKeyFrame: ->
-
 
     class EditorCanvasView extends BaseEditorCanvasView
 

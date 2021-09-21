@@ -15,23 +15,16 @@
         wrapLetterWithZWJ
     } = require('./../utils')
     {
-        getCurvedPathString
         disableSelection
         addSVGElementClass
-        toggleSVGElementClass
     } = require('./../domutils')
     {LetterMetrics} = require('./../svgmetrics')
-    {TSpanMultiColorGradient} = require('./../svggradient')
-    {exponentialInterpolateValue} = require('./../interpolations/base')
-    {splitDiff} = require('./../diffs/utils')
     {
         getLetterAreaPathStringAndPoints
         getBigUpperPath
         getBigLowerPath
-        getSmallUpperPath
-        getSmallLowerPath
     } = require('./../letterareas')
-    {VisibilityType, CanvasLayers} = require('./../constants')
+    {CanvasLayers} = require('./../constants')
     {PlantChildView} = require('./base')
     {TextPath, SyntheticTextPath} = require('./textpaths')
 

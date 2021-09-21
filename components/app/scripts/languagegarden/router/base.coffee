@@ -93,7 +93,7 @@
             cfg = @getControllerConfig(@controllerType)
             if cfg?.hasEditorModelsObjects
                 if @editorModelObjects?
-                    @editorModelObjects.history.isModelSaved() or @editorModelObjects.model.getDiffsLength() == 0
+                    @editorModelObjects.history.isModelSaved()
                 else
                     true
             else

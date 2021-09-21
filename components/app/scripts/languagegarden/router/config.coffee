@@ -95,15 +95,6 @@
             editorModelObjects = _.clone(@controller.carveOutModelObjects())
             editorModelObjects.sidebarState = @controller.sidebarState.deepClone()
             dataModel = editorModelObjects.dataModel
-            if options.newStation
-                tapStateChanges @controller, dataModel, (stateModel, timeline) ->
-
-                    timeline.capWithStation()
-
-                if options.stationIndex?
-                    stationPositions = dataModel.getAllStationPositions()
-                    stationPos = stationPositions[options.stationIndex]
-                    dataModel.duplicateState(stationPos)
 
             editorModelObjects
 

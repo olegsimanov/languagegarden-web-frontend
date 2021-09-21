@@ -4,38 +4,26 @@
     require('raphael')
     _ = require('underscore')
     $ = require('jquery')
-    {enumerate, toIndex} = require('./../utils')
+    {enumerate} = require('./../utils')
     {
         disableSelection
         addSVGElementClass
-        getOffsetRect
     } = require('./../domutils')
     {LetterMetrics} = require('./../svgmetrics')
     {NoOpBehavior} = require('./../modebehaviors/noop')
-    {MediumViewBase, DummyMediumView} = require('./media/base')
+    {DummyMediumView} = require('./media/base')
     {ElementView} = require('./elements')
-    {interpolateColor} = require('./../interpolations/colors')
-    {interpolateOpacity} = require('./../interpolations/base')
-    {splitDiff} = require('./../diffs/utils')
-    {OperationType} = require('./../diffs/operations')
     {Point} = require('./../../math/points')
     {BBox} = require('./../../math/bboxes')
     {PlantMedium} = require('./../models/media')
     {BaseView} = require('./base')
     {
         MediumType
-        TextSize
         PlacementType
         CanvasLayers
         CanvasMode
     } = require('./../constants')
     {Settings} = require('./../models/settings')
-    {TextToPlantView} = require('./media/text_to_plant')
-    {
-        isElementSplitDiff
-        isElementSplitReversedDiff
-    } = require('./../autokeyframes')
-
 
     class CanvasView extends BaseView
         className: 'canvas'

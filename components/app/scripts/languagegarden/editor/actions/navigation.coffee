@@ -1,7 +1,7 @@
     'use strict'
 
     _ = require('underscore')
-    {Action, ToolbarStateAction} = require('./base')
+    {Action} = require('./base')
     {EditorMode} = require('./../constants')
 
     ###
@@ -22,10 +22,6 @@
         getNavigationInfo: ->
             type: @navigationType
             plantId: @controller.dataModel.id
-
-
-    class GoToPlayerBase extends GoToControllerBase
-        navigationType: 'play-plant'
 
 
     class GoToBuilderBase extends GoToControllerBase
@@ -103,34 +99,8 @@
 
         getHelpText: -> 'Edit current station'
 
-
-    class GoToStationCreator extends GoToBuilderBase
-        id: 'go-to-station-creator'
-
-        isNewStation: -> @timeline.getDiffsLength() > 0
-
-        getHelpText: -> 'Create a new station'
-
-
-    class DuplicateStationAndGoToCreator extends GoToStationCreator
-        id: 'duplicate-station-go-to-creator'
-
-        initialize: (options) ->
-            super
-            @setPropertyFromOptions(options, 'stationIndex', required: true)
-
-        getHelpText: -> 'Duplicate station'
-
-        getNavigationInfo: ->
-            navInfo = super
-            navInfo.stationIndex = @stationIndex
-            navInfo
-
-
     module.exports =
         GoToPlantsList: GoToPlantsList
         DiscardAndGoToNavigator: DiscardAndGoToNavigator
         SaveAndGoToNavigator: SaveAndGoToNavigator
         GoToStationEditor: GoToStationEditor
-        GoToStationCreator: GoToStationCreator
-        DuplicateStationAndGoToCreator: DuplicateStationAndGoToCreator

@@ -4,7 +4,6 @@
     _ = require('underscore')
     $ = require('jquery')
     {BBox} = require('./../../../math/bboxes')
-    {OperationType} = require('./../../diffs/operations')
     {PlantChildView} = require('./../base')
     {VisibilityType, PlacementType} = require('./../../constants')
     {addSVGElementClass, removeSVGElementClass} = require('./../../domutils')
@@ -20,27 +19,6 @@
         getPlacementType: -> PlacementType.CANVAS
 
         toFront: =>
-
-        ###Groups operations in batches for further processing.
-        Operations are checked for their type, each TEXT_REPLACE operation will
-        have own group created, others if can, will be grouped.
-
-        Done to preserve the animation order.
-        ###
-        @groupOperations: (diff) ->
-            opGroups = []
-            lastGroup = []
-            for op in diff
-                if op.type == OperationType.TEXT_REPLACE
-                    if lastGroup.length > 0
-                        opGroups.push(lastGroup)
-                        lastGroup = []
-                    opGroups.push([op])
-                else
-                    lastGroup.push(op)
-
-            opGroups.push(lastGroup) if lastGroup.length > 0
-            opGroups
 
     class DummyMediumView extends MediumViewBase
 
