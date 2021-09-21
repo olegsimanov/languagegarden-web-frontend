@@ -24,6 +24,5 @@
     module.exports =
         ColorMode: ColorMode
         EditorCanvasMode: EditorCanvasMode
-        #TODO: remove
         EditorMode: EditorCanvasMode
         EditorLayers: CanvasLayers

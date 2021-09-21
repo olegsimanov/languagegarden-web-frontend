@@ -33,7 +33,6 @@
         PlacementType
     } = require('./../../common/constants')
     {CanvasView} = require('./../../common/views/canvas')
-    {backgroundColorChoices} = require('./../colors')
 
 
     class BaseEditorCanvasView extends CanvasView
@@ -47,7 +46,6 @@
             @dragged = false
             @dragging = false
             @bgDragging = false
-            @initializeBackgroundColors()
 
             # listening on own events
             @listenTo(this, 'selectchange', @onSelectChange)
@@ -108,9 +106,6 @@
             @toggleModeClass()
             @toggleDraggingClass(false)
             @toggleBgDraggingClass(false)
-
-        initializeBackgroundColors: =>
-            @bgColorChoices = _.clone(backgroundColorChoices)
 
         remove: =>
             @selectionRectObj.remove()

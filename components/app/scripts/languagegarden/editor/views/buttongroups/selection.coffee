@@ -65,13 +65,6 @@
             className: 'tooltip-edit'
             help: 'Edit'
         ,
-        #TODO: uncomment lines below when we want to use links on elements
-            ###
-            id: 'editelementhref'
-            actionClass: EditElementHRef
-            className: 'tooltip-edit'
-        ,
-            ###
             id: 'delete'
             actionClass: DeleteAction
             className: 'tooltip-bin icon icon_trash'

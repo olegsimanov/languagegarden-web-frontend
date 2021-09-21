@@ -2,7 +2,6 @@
 
     {BaseModeBehavior} = require('./../../common/modebehaviors/base')
     {ColorBehavior} = require('./../letterbehaviors/color')
-    {ModeSwitchAndSelectBehavior} = require('./../letterbehaviors/select')
     {EditorMode} = require('./../constants')
 
 
