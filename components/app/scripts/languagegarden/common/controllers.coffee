@@ -4,12 +4,6 @@
 
     _ = require('underscore')
     $ = require('jquery')
-    # hack for bootstrap-dropdown
-    if typeof window != 'undefined'
-        window.jQuery ?= $
-    require('bootstrap-dropdown')
-
-    require('../../../../bower_components/bootstrap/less/bootstrap.less')
     require('../../../styles/layout.less')
     require('../../../font/languagegarden-regular-webfont.css')
     require('../../../font/eskorte-arabic-regular-webfont.css')
