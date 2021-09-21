@@ -8,7 +8,7 @@
     {Point} = require('./../../math/points')
     {pathJoin} = require('./../utils')
     {PlantElements} = require('./elements')
-    {PlantMedium, PlantMedia} = require('./media')
+    {PlantMedia} = require('./media')
     {BaseModelWithSubCollections} = require('./base')
     {MediumType} = require('./../constants')
     {UnitDataCache} = require('../datacache')
