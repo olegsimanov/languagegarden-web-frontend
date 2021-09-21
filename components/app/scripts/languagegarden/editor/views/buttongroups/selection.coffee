@@ -11,6 +11,7 @@
         SwitchToScale
         SwitchToMove
     } = require('./../../actions/modeswitch')
+    {StartUpdating} = require('./../../actions/edit')
     StartUpdatingText = require('./../../actions/edittext').StartUpdating
 
 
@@ -53,6 +54,11 @@
             actionClass: SplitWordElement
             className: 'tooltip-word-split icon icon_scissors'
             help: 'Split word at cursor'
+        ,
+            id: 'edit'
+            actionClass: StartUpdating
+            className: 'tooltip-edit icon icon_pencil'
+            help: 'Edit'
         ,
             id: 'edittext'
             actionClass: StartUpdatingText
