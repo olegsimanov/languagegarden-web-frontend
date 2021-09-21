@@ -80,35 +80,6 @@
 
         hammerEventOptions: {}
 
-        bindClickableElementEvents: ->
-            clickDispatcher = @getMediumEventDispatcher('click')
-            dblClickDispatcher = @getMediumEventDispatcher('dblclick')
-            dragDispatcher = @getMediumEventDispatcher('drag')
-            dragStartDispatcher = @getMediumEventDispatcher('dragstart')
-            dragEndDispatcher = @getMediumEventDispatcher('dragend')
-
-            hammerDrag = (e) =>
-                x = e.center.x
-                y = e.center.y
-                dx = e.deltaX
-                dy = e.deltaY
-                [x, y] = @parentView.transformToCanvasCoords(x, y)
-                [dx, dy] = @parentView.transformToCanvasCoordOffsets(dx, dy)
-                dragDispatcher(e, x, y, dx, dy)
-            hammerDragstart = (e) =>
-                x = e.center.x
-                y = e.center.y
-                [x, y] = @parentView.transformToCanvasCoords(x, y)
-                dragStartDispatcher(e, x, y)
-
-            Hammer(@getClickableNode(), @hammerEventOptions)
-                .on('tap', clickDispatcher)
-                .on('doubletap', dblClickDispatcher)
-                .on('pan', hammerDrag)
-                .on('panstart', hammerDragstart)
-                .on('panend', dragEndDispatcher)
-
-
     BaseEditorDummyMediumView = DummyMediumView
     .extend(HTMLStylablePrototype)
     .extend(VisibilityPrototype)
