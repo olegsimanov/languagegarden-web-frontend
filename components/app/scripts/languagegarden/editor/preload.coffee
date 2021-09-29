@@ -20,15 +20,9 @@ preloadAll = (settings, preload) ->
             'img/3/lg_redo2.png'
             'img/3/lg_redo3.png'
 
-            'img/3/lg_save1.png'
-            'img/3/lg_save2.png'
-            'img/3/lg_save3.png'
       ]
 
       desktop_images = [
-            'img/3/lg_settings1.png'
-            'img/3/lg_settings2.png'
-            'img/3/lg_settings3.png'
 
             # menu slider
             'lib/jquery-ui-1.10.1.custom/css/smoothness/images/ui-bg_flat_75_ffffff_40x100.png'
