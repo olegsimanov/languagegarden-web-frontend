@@ -27,16 +27,10 @@
         apiBaseUrl: 'http://localhost:8000/api/v2/'
       });
 
-      // let type = 'nav-plant';
-      // let type = 'play-plant';
-      let type = 'edit-plant';
-      // let type = 'play-activity-passive';
-      // let type = null;
-
       let lessonId = null;
 
       PlantStarter.load(document.body, {
-        type: type,
+        type: 'edit-plant',
         plantId: lessonId,
         backURL: '/',
         userId: null,
