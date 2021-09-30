@@ -5,7 +5,7 @@
     $ = require('jquery')
     {BBox} = require('./../../../math/bboxes')
     {PlantChildView} = require('./../base')
-    {VisibilityType, PlacementType} = require('./../../constants')
+    {VisibilityType, PlacementType} = require('./../../../editor/constants')
     {addSVGElementClass, removeSVGElementClass} = require('./../../domutils')
 
 

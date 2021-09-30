@@ -2,7 +2,7 @@
 
     _ = require('underscore')
     Backbone = require('backbone')
-    {VisibilityType} = require('./../../common/constants')
+    {VisibilityType} = require('./../constants')
     {extend, extendAll} = require('./../../common/extend')
     {SubCollectionPrototype} = require('./subcollection')
     {getAttrsOpts} = require('./../../common/utils')

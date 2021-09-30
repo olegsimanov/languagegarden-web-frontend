@@ -1,7 +1,7 @@
     'use strict'
 
     {capitalize} = require('./../../common/utils')
-    {PunctuationCharacter} = require('./../../common/constants')
+    {PunctuationCharacter} = require('./../constants')
     {Action} = require('./base')
 
 

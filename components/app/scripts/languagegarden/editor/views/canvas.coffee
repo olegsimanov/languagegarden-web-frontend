@@ -31,7 +31,7 @@
     {PlantElement} = require('./../models/elements')
     {
         PlacementType
-    } = require('./../../common/constants')
+    } = require('./../constants')
     {CanvasView} = require('./../../common/views/canvas')
 
 

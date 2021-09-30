@@ -1,6 +1,6 @@
     'use strict'
 
-    {MediumType} = require('./../../common/constants')
+    {MediumType} = require('./../constants')
     {SelectBehavior} = require('./select')
 
 

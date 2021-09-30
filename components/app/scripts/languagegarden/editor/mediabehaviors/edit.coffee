@@ -1,7 +1,7 @@
     'use strict'
 
     {DblClickBehavior} = require('./base')
-    {MediumType} = require('./../../common/constants')
+    {MediumType} = require('./../constants')
 
 
     class EditBehavior extends DblClickBehavior

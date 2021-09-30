@@ -23,7 +23,7 @@
     } = require('./../domutils')
     {BaseView} = require('./base')
     {TSpanMultiColorGradient} = require('./../svggradient')
-    {CanvasLayers} = require('./../constants')
+    {CanvasLayers} = require('./../../editor/constants')
 
 
 

@@ -5,7 +5,7 @@
     jQuery = require('jquery')
     $ = require('jquery')
     {HtmlMediumView} = require('./base')
-    {PlacementType} = require('./../../constants')
+    {PlacementType} = require('./../../../editor/constants')
     {trim, isWord, isWordOrEmpty, chopIntoWords} = require('./../../utils')
     {BBox} = require('./../../../math/bboxes')
 

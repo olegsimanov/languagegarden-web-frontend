@@ -24,7 +24,7 @@
         getBigUpperPath
         getBigLowerPath
     } = require('./../letterareas')
-    {CanvasLayers} = require('./../constants')
+    {CanvasLayers} = require('./../../editor/constants')
     {PlantChildView} = require('./base')
     {TextPath, SyntheticTextPath} = require('./textpaths')
 
@@ -691,8 +691,7 @@
             widthMargin = width * Xmargin
             heightMargin = height * Ymargin
 
-            @_clipRect ?= @paper.rect(0, 0, 1, 1)
-                .attr(stroke: 'none')
+            @_clipRect ?= @paper.rect(0, 0, 1, 1).attr(stroke: 'none')
             @_clipRect.attr
                 x: x - widthMargin
                 y: y - heightMargin

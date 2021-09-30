@@ -1,12 +1,11 @@
     'use strict'
 
     _ = require('underscore')
-    {MediumType} = require('./../../common/constants')
+    {MediumType, EditorMode} = require('./../constants')
     {TextBoxView} = require('./../../common/views/textboxes')
     {
         EditorTextToPlantView
     } = require('./media/text_to_plant')
-    {EditorMode} = require('./../constants')
 
 
     class EditorTextBoxView extends TextBoxView

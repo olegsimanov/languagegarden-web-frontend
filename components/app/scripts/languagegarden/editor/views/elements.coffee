@@ -5,7 +5,7 @@
     jQuery = require('jquery')
     $ = require('jquery')
     settings = require('./../../settings')
-    {VisibilityType, CanvasLayers} = require('./../../common/constants')
+    {VisibilityType, CanvasLayers} = require('./../constants')
     {EditorMode} = require('./../constants')
     {Point} = require('./../../math/points')
     {

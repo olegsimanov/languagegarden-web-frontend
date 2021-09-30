@@ -21,7 +21,7 @@
         PlacementType
         CanvasLayers
         CanvasMode
-    } = require('./../constants')
+    } = require('./../../editor/constants')
     {Settings} = require('./../../editor/models/settings')
 
     class CanvasView extends BaseView

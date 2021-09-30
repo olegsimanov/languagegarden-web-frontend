@@ -1,7 +1,7 @@
     'use strict'
 
     _ = require('underscore')
-    {MediumType, PlacementType} = require('./../constants')
+    {MediumType, PlacementType} = require('./../../editor/constants')
     {BaseView} = require('./base')
     {DummyMediumView} = require('./../../editor/views/media/base')
     {TextToPlantView} = require('./media/text_to_plant')

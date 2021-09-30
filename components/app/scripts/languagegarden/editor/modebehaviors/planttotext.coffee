@@ -5,7 +5,7 @@
     MediumMoveBehavior = require('./../mediabehaviors/move').MoveBehavior
     MediumEditBehavior = require('./../mediabehaviors/edit').EditBehavior
 
-    {VisibilityType, MediumType} = require('./../../common/constants')
+    {VisibilityType, MediumType} = require('./../constants')
     {BaseModeBehavior} = require('./base')
     {TextToPlantLetterClickBehavior} = require('./../letterbehaviors/planttotext')
 

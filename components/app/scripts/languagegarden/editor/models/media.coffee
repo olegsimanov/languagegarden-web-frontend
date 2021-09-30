@@ -8,7 +8,7 @@
         MediumType
         VisibilityType
         PunctuationCharacter
-    } = require('./../../common/constants')
+    } = require('./../constants')
 
 
     class PlantMedium extends PlantChildModel

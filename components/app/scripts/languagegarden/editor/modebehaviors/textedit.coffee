@@ -5,7 +5,7 @@
     LetterEditBehavior = require('./../letterbehaviors/edit').EditBehavior
     {TextEditSelectBehavior} = require('./../mediabehaviors/textedit')
     MediumEditBehavior = require('./../mediabehaviors/edit').EditBehavior
-    {MediumType} = require('./../../common/constants')
+    {MediumType} = require('./../constants')
 
 
     class TextEditBehavior extends ModeBehavior

@@ -6,7 +6,7 @@
     {
         visibilityOpacityMap
         markedOpacityMap
-    } = require('./../constants')
+    } = require('./../../editor/constants')
     {extend, extendAll} = require('./../extend')
     {EventForwardingPrototype} = require('./../events')
     {

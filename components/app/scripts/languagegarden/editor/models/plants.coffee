@@ -10,7 +10,7 @@
     {PlantElements} = require('./elements')
     {PlantMedia} = require('./media')
     {BaseModelWithSubCollections} = require('./base')
-    {MediumType} = require('./../../common/constants')
+    {MediumType} = require('./../constants')
     {UnitDataCache} = require('../../common/datacache')
 #    require('backbone.localStorage')
 
