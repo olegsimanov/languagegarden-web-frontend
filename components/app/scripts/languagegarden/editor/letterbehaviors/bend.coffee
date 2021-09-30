@@ -4,7 +4,7 @@
     bezier = require('./../../math/bezier')
     {Line} = require('./../../math/lines')
     {Point} = require('./../../math/points')
-    {DragBehavior} = require('./../../common/letterbehaviors/base')
+    {DragBehavior} = require('./base')
 
 
     class BendBehavior extends DragBehavior

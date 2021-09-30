@@ -4,7 +4,7 @@
     {Action} = require('./base')
     {Line} = require('./../../math/lines')
     {Point} = require('./../../math/points')
-    {PlantElement} = require('./../../common/models/elements')
+    {PlantElement} = require('./../models/elements')
     {
         getWordSplits
         getSentenceSplitIndices

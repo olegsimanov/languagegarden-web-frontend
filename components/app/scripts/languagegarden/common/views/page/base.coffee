@@ -3,7 +3,7 @@
     _ = require('underscore')
     $ = require('jquery')
     {AffineTransformation} = require('./../../../math/transformations')
-    {SIDEBAR_WIDTH} = require('./../../models/plants')
+    {SIDEBAR_WIDTH} = require('./../../../editor/models/plants')
     {RenderableView} = require('./../renderable')
     {getOffsetRect} = require('./../../domutils')
     {template} = require('./../../templates')

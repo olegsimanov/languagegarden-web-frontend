@@ -1,6 +1,6 @@
     'use strict'
 
-    {BaseModeBehavior} = require('./../../common/modebehaviors/base')
+    {BaseModeBehavior} = require('./base')
     {ColorBehavior} = require('./../letterbehaviors/color')
     {EditorMode} = require('./../constants')
 

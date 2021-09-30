@@ -4,12 +4,10 @@
     {
         LetterBehaviorPrototype
         LetterDragBehaviorPrototype
-    } = require('./../../common/letterbehaviors/base')
+    } = require('./base')
 
 
-    class MoveBehavior extends MoveBehaviorBase
-            .extend(LetterBehaviorPrototype)
-            .extend(LetterDragBehaviorPrototype)
+    class MoveBehavior extends MoveBehaviorBase.extend(LetterBehaviorPrototype).extend(LetterDragBehaviorPrototype)
 
         id: 'move-letter'
         plantChildType: 'element'

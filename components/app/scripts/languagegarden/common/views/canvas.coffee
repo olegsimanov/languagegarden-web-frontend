@@ -14,7 +14,7 @@
     {ElementView} = require('./elements')
     {Point} = require('./../../math/points')
     {BBox} = require('./../../math/bboxes')
-    {PlantMedium} = require('./../models/media')
+    {PlantMedium} = require('./../../editor/models/media')
     {BaseView} = require('./base')
     {
         MediumType
@@ -22,7 +22,7 @@
         CanvasLayers
         CanvasMode
     } = require('./../constants')
-    {Settings} = require('./../models/settings')
+    {Settings} = require('./../../editor/models/settings')
 
     class CanvasView extends BaseView
         className: 'canvas'

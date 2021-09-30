@@ -1,6 +1,6 @@
     'use strict'
 
-    {ClickBehavior} = require('./../../common/mediabehaviors/base')
+    {ClickBehavior} = require('./base')
 
 
 

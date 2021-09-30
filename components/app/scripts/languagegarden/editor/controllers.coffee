@@ -3,7 +3,7 @@
     _ = require('underscore')
     buttons = require('./views/buttons')
     deleteActions = require('./actions/delete')
-    {UnitState, LessonData} = require('./../common/models/plants')
+    {UnitState, LessonData} = require('./models/plants')
     editorColors = require('./colors')
     settings = require('./../settings')
     {EditorPalette} = require('./models/palette')
@@ -12,7 +12,7 @@
     {BaseController} = require('./../common/controllers')
     {EditorPageView} = require('./views/page/base')
     {BuilderToolbar} = require('./views/toolbars/builder')
-    {Settings} = require('./../common/models/settings')
+    {Settings} = require('./models/settings')
     {LetterMetrics} = require('./../common/svgmetrics')
     {ToolbarEnum} = require('./../common/views/toolbars/constants')
 

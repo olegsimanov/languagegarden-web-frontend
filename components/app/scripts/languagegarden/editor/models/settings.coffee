@@ -2,7 +2,7 @@
 
     settings = require('./../../settings')
     {BaseModel} = require('./base')
-    {TextSize} = require('./../constants')
+    {TextSize} = require('./../../common/constants')
 
 
     class Settings extends BaseModel

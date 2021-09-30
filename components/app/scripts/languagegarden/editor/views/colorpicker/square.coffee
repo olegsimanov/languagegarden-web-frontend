@@ -13,7 +13,7 @@
         EditorDivButton
         EditorDivToggleButton
     } = require('./../buttons')
-    {SplitColorTool} = require('./../../../common/models/palette')
+    {SplitColorTool} = require('./../../models/palette')
 
 
     ###Just a div placeholder with right className.###
@@ -242,8 +242,7 @@
             }, ctx
 
     ###Regular palette split color view.###
-    PaletteSplitColorView = class extends PaletteColorView
-            .extend(SplitColorPrototype)
+    PaletteSplitColorView = class extends PaletteColorView.extend(SplitColorPrototype)
 
         className: "#{PaletteColorView::className} color-palette-split-color"
 
@@ -253,8 +252,7 @@
         className: "#{PaletteColorViewBase::className} split-color"
 
     ###Split color editor split color view.###
-    SplitEditorSplitColorView = class extends PaletteColorViewBase
-            .extend(SplitColorPrototype)
+    SplitEditorSplitColorView = class extends PaletteColorViewBase.extend(SplitColorPrototype)
 
         className: "#{PaletteColorView::className}
             split-editor-color-preview_done"

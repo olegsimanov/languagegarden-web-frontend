@@ -42,17 +42,11 @@
             view._dragInfo = null
 
 
-    class DragBehavior extends DragBehaviorBase
-            .extend(LetterBehaviorPrototype)
-            .extend(LetterDragBehaviorPrototype)
+    class DragBehavior extends DragBehaviorBase.extend(LetterBehaviorPrototype).extend(LetterDragBehaviorPrototype)
 
+    class ClickBehavior extends ClickBehaviorBase.extend(LetterBehaviorPrototype)
 
-    class ClickBehavior extends ClickBehaviorBase
-            .extend(LetterBehaviorPrototype)
-
-
-    class DblClickBehavior extends DblClickBehaviorBase
-            .extend(LetterBehaviorPrototype)
+    class DblClickBehavior extends DblClickBehaviorBase.extend(LetterBehaviorPrototype)
 
 
     module.exports =

@@ -3,7 +3,7 @@
     _ = require('underscore')
     settings = require('./../../settings')
     {Point} = require('./../../math/points')
-    {DragBehavior} = require('./../../common/letterbehaviors/base')
+    {DragBehavior} = require('./base')
     {Line} = require('./../../math/lines')
 
 

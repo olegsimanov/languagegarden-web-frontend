@@ -1,6 +1,6 @@
     'use strict'
 
-    {ClickBehavior} = require('./../../common/letterbehaviors/base')
+    {ClickBehavior} = require('./base')
     {ColorMode} = require('./../constants')
 
 

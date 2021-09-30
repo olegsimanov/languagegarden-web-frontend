@@ -1,6 +1,6 @@
     'use strict'
 
-    {DblClickBehavior} = require('./../../common/letterbehaviors/base')
+    {DblClickBehavior} = require('./base')
 
 
     class EditBehavior extends DblClickBehavior

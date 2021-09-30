@@ -1,7 +1,7 @@
     'use strict'
 
     _ = require('underscore')
-    {DragBehaviorBase} = require('./../../common/plantchildbehaviors/base')
+    {DragBehaviorBase} = require('./base')
     {Point} = require('./../../math/points')
     {BBox} = require('./../../math/bboxes')
     moveHelpers = require('./../behaviorhelpers/move')

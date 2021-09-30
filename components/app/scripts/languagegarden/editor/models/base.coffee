@@ -2,12 +2,11 @@
 
     _ = require('underscore')
     Backbone = require('backbone')
-    {VisibilityType} = require('./../constants')
-    {extend, extendAll} = require('./../extend')
+    {VisibilityType} = require('./../../common/constants')
+    {extend, extendAll} = require('./../../common/extend')
     {SubCollectionPrototype} = require('./subcollection')
-    {getAttrsOpts} = require('./../utils')
-    {EventForwardingPrototype} = require('./../events')
-
+    {getAttrsOpts} = require('./../../common/utils')
+    {EventForwardingPrototype} = require('./../../common/events')
 
     class BaseModel extends Backbone.Model.extend(EventForwardingPrototype)
 

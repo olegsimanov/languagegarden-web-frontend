@@ -37,17 +37,9 @@
             view._dragInfo = null
 
 
-    class DragBehavior extends DragBehaviorBase
-            .extend(MediaBehaviorPrototype)
-            .extend(MediaDragBehaviorPrototype)
-
-
-    class ClickBehavior extends ClickBehaviorBase
-            .extend(MediaBehaviorPrototype)
-
-
-    class DblClickBehavior extends DblClickBehaviorBase
-            .extend(MediaBehaviorPrototype)
+    class DragBehavior extends DragBehaviorBase.extend(MediaBehaviorPrototype).extend(MediaDragBehaviorPrototype)
+    class ClickBehavior extends ClickBehaviorBase.extend(MediaBehaviorPrototype)
+    class DblClickBehavior extends DblClickBehaviorBase.extend(MediaBehaviorPrototype)
 
 
     module.exports =

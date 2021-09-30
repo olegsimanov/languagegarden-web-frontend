@@ -1,6 +1,6 @@
     'use strict'
 
-    {DblClickBehavior} = require('./../../common/mediabehaviors/base')
+    {DblClickBehavior} = require('./base')
     {MediumType} = require('./../../common/constants')
 
 

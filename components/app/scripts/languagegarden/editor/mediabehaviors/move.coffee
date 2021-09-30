@@ -4,7 +4,7 @@
     {
         MediaBehaviorPrototype
         MediaDragBehaviorPrototype
-    } = require('./../../common/mediabehaviors/base')
+    } = require('./base')
 
 
     class MoveBehavior extends MoveBehaviorBase.extend(MediaBehaviorPrototype).extend(MediaDragBehaviorPrototype)

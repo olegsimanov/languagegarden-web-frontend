@@ -9,7 +9,7 @@
     } = require('./../../math/transformations')
     {Path} = require('./../../math/bezier')
     settings = require('./../../settings')
-    {deepCopy} = require('./../utils')
+    {deepCopy} = require('./../../common/utils')
     {PlantChildModel, PlantChildCollection} = require('./base')
 
 

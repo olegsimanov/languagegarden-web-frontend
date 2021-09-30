@@ -1,6 +1,6 @@
     'use strict'
 
-    {ModeBehavior} = require('./../../common/modebehaviors/base')
+    {ModeBehavior} = require('./base')
     LetterEditBehavior = require('./../letterbehaviors/edit').EditBehavior
 
 

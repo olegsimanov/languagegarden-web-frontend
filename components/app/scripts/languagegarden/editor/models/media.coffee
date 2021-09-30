@@ -3,12 +3,12 @@
     _ = require('underscore')
     {Point} = require('./../../math/points')
     {PlantChildModel, PlantChildCollection} = require('./base')
-    {deepCopy, startsWith, structuralEquals} = require('./../utils')
+    {deepCopy, startsWith, structuralEquals} = require('./../../common/utils')
     {
         MediumType
         VisibilityType
         PunctuationCharacter
-    } = require('./../constants')
+    } = require('./../../common/constants')
 
 
     class PlantMedium extends PlantChildModel

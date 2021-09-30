@@ -28,7 +28,7 @@
     {EditorMode, EditorLayers, ColorMode} = require('./../constants')
     {Point} = require('./../../math/points')
     {BBox} = require('./../../math/bboxes')
-    {PlantElement} = require('./../../common/models/elements')
+    {PlantElement} = require('./../models/elements')
     {
         PlacementType
     } = require('./../../common/constants')
