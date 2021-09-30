@@ -3,7 +3,6 @@
     _ = require('underscore')
     settings = require('./../../settings')
     {Point} = require('./../../math/points')
-    {BaseView} = require('./../../common/views/base')
     {EditorMode, ColorMode} = require('./../constants')
     {
         DivButton
@@ -79,7 +78,6 @@
             event.preventDefault()
             @action.fullPerform()
 
-    # mode buttons
     class EditorColorModeButton extends EditorDivToggleButton
 
         className: "color-mode-button #{EditorDivToggleButton::className}"
@@ -109,35 +107,16 @@
             super
             @model.set('colorMode', @currentState)
 
-    # navigation buttons
-
-    class GoToPlantsListButton extends MenuActionButton
-        actionClass: navigationActions.GoToPlantsList
-        customClassName: 'icon icon_home'
-
-
     class DoneButton extends MenuActionButton
         actionClass: navigationActions.SaveAndGoToNavigator
         customClassName: 'icon icon_check'
-
-
-    class GoToEditorActionButton extends MenuActionButton
-        modelListenEventName: 'diffpositionchange'
-        isHidden: -> not @isEnabled()
-
-
-    class GoToStationEditorButton extends GoToEditorActionButton
-        actionClass: navigationActions.GoToStationEditor
 
     module.exports =
         ImageButton: EditorDivButton
         TooltipButton: TooltipButton
         MenuActionButton: MenuActionButton
-        #deprecated, do not use
-        GoToPlantsListButton: GoToPlantsListButton
         DoneButton: DoneButton
         DivButton: EditorDivButton
         EditorDivButton: EditorDivButton
         EditorDivToggleButton: EditorDivToggleButton
         EditorColorModeButton: EditorColorModeButton
-        GoToStationEditorButton: GoToStationEditorButton

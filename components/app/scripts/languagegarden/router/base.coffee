@@ -16,10 +16,6 @@
 
         initialize: (options) ->
             super
-            if document.body.addEventListener?
-                # addEventListener is not supported on IE8
-                document.body.addEventListener 'touchmove', (event) ->
-                    event.preventDefault()
             @bindControllerRoutes()
             @containerElement = options.containerElement
             @loaderEl = options.loaderElement or options.loaderEl
@@ -28,8 +24,7 @@
             @useURL = options.useURL
             @backURL = options.backURL or '/'
             @userId = options.userId or null
-            @windowHandlersMap =
-                'beforeunload': @onWindowBeforeUnload
+            @windowHandlersMap = 'beforeunload': @onWindowBeforeUnload
             $(window).on(@windowHandlersMap)
 
         bindControllerRoutes: ->
@@ -43,8 +38,7 @@
                         routeHandler = (args...) =>
                             @showLoader()
                             options = optionsFromArgs.apply(this, args)
-                            boundHandler = =>
-                                originalHandler.apply(this, args)
+                            boundHandler = => originalHandler.apply(this, args)
                             @afterControllerLoaded(controllerType,
                                                    boundHandler,
                                                    options)
@@ -89,21 +83,6 @@
             url = @generateURL(navInfo)
             Backbone.history.navigate(url, trigger: trigger)
 
-        isModelSaved: ->
-            cfg = @getControllerConfig(@controllerType)
-            if cfg?.hasEditorModelsObjects
-                if @editorModelObjects?
-                    @editorModelObjects.history.isModelSaved()
-                else
-                    true
-            else
-                true
-
-        ###
-        Do not destroy the controller yet, just unpin it from this.controller
-        from router and stop listening. You should remove (destroy) the demoted
-        controller before new controller will be rendered.
-        ###
         demoteController: ->
             if @controller?
                 @stopListening(@controller)
@@ -111,10 +90,6 @@
                 @controller = null
             @controllerType = null
 
-        ###
-        This is called when new view triggers start:success (in
-        onControllerStartSuccess handler)
-        ###
         destroyDemotedController: ->
             if @previousController?
                 @previousController.remove()
@@ -147,7 +122,6 @@
             controllerOptions = controllerOptionsExtractor.call(this, options)
             controllerOptions = _.extend {}, (controllerOptions or {}),
                 containerElement: @containerElement
-                debugEnabled: @debugEnabled
                 userId: @userId
                 backURL: @backURL
 
@@ -160,8 +134,6 @@
                 callback()
                 return
             config = @getControllerConfig(controllerType)
-            @debugEnabled = settings.debug.enabled
-            @disableUnloadConfirm = settings.debug.disableConfirm
             config.requireDependency (controllerModule) =>
                 controllerCls = controllerModule[config.controllerName]
                 opts = _.extend {}, options,
@@ -185,12 +157,6 @@
             @hideLoader()
 
         onWindowBeforeUnload: (e) =>
-            if not @isModelSaved() and not @disableUnloadConfirm
-                message = 'There are unsaved changes that will be lost!'
-                e = e or window.event
-                e.returnValue = message
-                return message
-
             @showLoader()
             return
 

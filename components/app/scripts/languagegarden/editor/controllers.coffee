@@ -7,9 +7,7 @@
     editorColors = require('./colors')
     settings = require('./../settings')
     {EditorPalette} = require('./models/palette')
-    {
-        EditorCanvasView
-    } = require('./views/canvas')
+    {EditorCanvasView} = require('./views/canvas')
     {EditorTextBoxView} = require('./views/textboxes')
     {BaseController} = require('./../common/controllers')
     {EditorPageView} = require('./views/page/base')
@@ -63,8 +61,7 @@
                 letterMetrics: @letterMetrics
 
             @listenTo(@canvasView, 'change:dragging', @onCanvasDraggingChange)
-            @listenTo(@canvasView, 'change:bgDragging',
-                      @onCanvasBgDraggingChange)
+            @listenTo(@canvasView, 'change:bgDragging', @onCanvasBgDraggingChange)
 
             @textBoxView = new @textBoxViewClass
                 controller: this

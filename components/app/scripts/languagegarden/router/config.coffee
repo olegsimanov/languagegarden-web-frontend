@@ -28,11 +28,6 @@
             plantId = navInfo.plantId or 'unsaved'
             baseUrl = "/lessons/edit/#{plantId}/"
             appendage = ''
-            if navInfo.newStation
-                if navInfo.stationIndex?
-                    appendage = "duplicate-station/#{navInfo.stationIndex}/"
-                else
-                    appendage = 'new-station/'
             baseUrl + appendage
         routing: [
             routes: [

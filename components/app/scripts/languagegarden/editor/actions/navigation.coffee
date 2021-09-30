@@ -4,10 +4,6 @@
     {Action} = require('./base')
     {EditorMode} = require('./../constants')
 
-    ###
-    Action that allows navigating to player, prompting to save the plant in
-    the process.
-    ###
     class GoToControllerBase extends Action
         navigationType: null
         trackingChanges: false
@@ -37,38 +33,8 @@
 
         isAvailable: -> @timeline.isRewindedAtEnd()
 
-
-    class DoActionAndGoToController extends GoToControllerBase
-
-        actionClass: null
-
-        initialize: (options) ->
-            super
-            @action = new @actionClass(@getActionOptions(options))
-
-        getActionOptions: (options) -> options
-
-        perform: ->
-            @action.perform()
-            super
-
-        isAvailable: -> super and @action.isAvailable()
-
-        getHelpText: -> @action.getHelpText()
-
-
     class GoToNavigatorBase extends GoToControllerBase
         navigationType: 'nav-plant'
-
-
-    class DoActionAndGoToNavigator extends DoActionAndGoToController
-        navigationType: 'nav-plant'
-
-
-    class GoToPlantsList extends GoToControllerBase
-        navigationType: 'list-plants'
-        id: 'go-to-plants-list'
-
 
     class DiscardAndGoToNavigator extends GoToNavigatorBase
         id: 'go-to-navigator'
@@ -78,10 +44,6 @@
 
         initialize: (options) ->
             super
-            saveActionOptions = _.extend {}, options,
-                onSaveSuccess: =>
-                    @navigateToController()
-                allowSaveWithoutChanges: true
 
         initializeListeners: ->
             super
@@ -100,7 +62,6 @@
         getHelpText: -> 'Edit current station'
 
     module.exports =
-        GoToPlantsList: GoToPlantsList
         DiscardAndGoToNavigator: DiscardAndGoToNavigator
         SaveAndGoToNavigator: SaveAndGoToNavigator
         GoToStationEditor: GoToStationEditor

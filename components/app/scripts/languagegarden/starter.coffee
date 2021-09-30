@@ -22,7 +22,8 @@ load = (containerElement, options={}) ->
     loaderElement = createLoaderElement();
     containerElement.appendChild(loaderElement)
 
-    router = new Router(createRouterOptions(loaderElement, containerElement))
+    routerOptions = createRouterOptions(loaderElement, containerElement)
+    router = new Router(routerOptions)
     router.navigateToController(
         type:       options.type
         plantId:    options.plantId
