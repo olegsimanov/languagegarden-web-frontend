@@ -1,7 +1,6 @@
 'use strict'
 
 _ = require('underscore')
-Backbone = require('backbone')
 $ = require('jquery')
 settings = require('./../settings')
 config = require('./../config')
