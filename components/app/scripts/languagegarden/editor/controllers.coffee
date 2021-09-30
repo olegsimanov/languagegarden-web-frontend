@@ -14,7 +14,7 @@
     {BuilderToolbar} = require('./views/toolbars/builder')
     {Settings} = require('./models/settings')
     {LetterMetrics} = require('./../common/svgmetrics')
-    {ToolbarEnum} = require('./../common/views/toolbars/constants')
+    {ToolbarEnum} = require('./views/toolbars/constants')
 
 
     class BaseEditorController extends BaseController

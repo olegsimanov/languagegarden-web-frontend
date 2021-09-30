@@ -1,8 +1,8 @@
     'use strict'
 
     _ = require('underscore')
-    {slugify} = require('./../../utils')
-    {DivButton} = require('./../buttons')
+    {slugify} = require('./../../../common/utils')
+    {DivButton} = require('./../../../common/views/buttons')
 
 
     navEventBaseName = 'toolbarnav'
@@ -43,8 +43,7 @@
             available in options
 
     ###
-    class ToolbarNavButton extends DivButton
-            .extend(ToolbarNavButtonPrototype)
+    class ToolbarNavButton extends DivButton.extend(ToolbarNavButtonPrototype)
 
         initialize: (options) ->
             @initializeNavButton(options)

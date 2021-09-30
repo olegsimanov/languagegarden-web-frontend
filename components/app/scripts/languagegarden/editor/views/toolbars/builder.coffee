@@ -1,7 +1,7 @@
     'use strict'
 
     _ = require('underscore')
-    {ToolbarEnum} = require('./../../../common/views/toolbars/constants')
+    {ToolbarEnum} = require('./../../views/toolbars/constants')
     {EditorToolbar, EditorSubToolbar} = require('./base')
     {SquarePicker} = require('./../colorpicker/square')
     {SelectionButtonGroup} = require('./../buttongroups/selection')
@@ -11,8 +11,8 @@
     } = require('./../../actions/navigation')
 
     settings = require('./../../../settings')
-    {StatefulToolbar} = require('./../../../common/views/toolbars/stateful')
-    {ToolbarNavButton} = require('./../../../common/views/toolbars/navbuttons')
+    {StatefulToolbar} = require('./../../views/toolbars/stateful')
+    {ToolbarNavButton} = require('./../../views/toolbars/navbuttons')
     {EditorMode} = require('./../../constants')
 
 

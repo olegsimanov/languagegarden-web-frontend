@@ -1,8 +1,8 @@
     'use strict'
 
     _ = require('underscore')
-    {RenderableView} = require('./../renderable')
-    {StatefulClassPrototype} = require('./../../stateful')
+    {RenderableView} = require('./../../../common/views/renderable')
+    {StatefulClassPrototype} = require('./../../../common/stateful')
     {BaseToolbar} = require('./base')
 
 

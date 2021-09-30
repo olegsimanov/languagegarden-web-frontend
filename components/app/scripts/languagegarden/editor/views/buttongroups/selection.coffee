@@ -1,7 +1,7 @@
     'use strict'
 
     _ = require('underscore')
-    {ButtonGroup} = require('./../../../common/views/buttongroups/base')
+    {ButtonGroup} = require('./../../../editor/views/buttongroups/base')
     {SplitSentenceElement, SplitWordElement} = require('./../../actions/split')
     {DeleteAction} = require('./../../actions/delete')
     {

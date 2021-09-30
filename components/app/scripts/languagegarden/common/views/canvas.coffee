@@ -10,7 +10,7 @@
         addSVGElementClass
     } = require('./../domutils')
     {LetterMetrics} = require('./../svgmetrics')
-    {DummyMediumView} = require('./media/base')
+    {DummyMediumView} = require('./../../editor/views/media/base')
     {ElementView} = require('./elements')
     {Point} = require('./../../math/points')
     {BBox} = require('./../../math/bboxes')
