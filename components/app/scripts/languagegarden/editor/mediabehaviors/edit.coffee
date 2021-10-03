@@ -6,10 +6,6 @@
 
     class EditBehavior extends DblClickBehavior
 
-        storeMetric: =>
-            # disabling metric logging
-            # these are logged by respective actions
-
         onDblClick: (view, event) =>
             super
             switch view.model?.get('type')

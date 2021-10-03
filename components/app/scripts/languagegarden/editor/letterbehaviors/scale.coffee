@@ -35,7 +35,6 @@
 
         onDragMove: (view, event, x, y, dx, dy, {letter}) =>
             super
-            #TODO: change drag info
             di = view._drag
             [x, y] = view.screenToPathCoordinates(x, y)
             x += di.dragPointOffset.x

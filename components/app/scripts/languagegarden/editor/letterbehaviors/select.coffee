@@ -6,10 +6,6 @@
 
     class ModeSwitchAndSelectBehavior extends ClickBehavior
 
-        storeMetric: =>
-            # disabling metric logging
-            # I don't think we should log this one at all
-
         onClick: (view, event, {letter}) =>
             super
             if @parentView.multiSelect

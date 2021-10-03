@@ -47,12 +47,6 @@
 
         getParentModel: -> @parentModel
 
-        ###
-        Partial function. for given attribute name returns function which
-        finds the index of first model in collection which satisfies the
-        condition model.get(attrName) == value. in other case, this generated
-        function returns -1.
-        ###
         findFirstIndexByAttribute: (attrName) ->
             (value) =>
                 for i in [0...@length]
@@ -61,43 +55,21 @@
                         return i
                 return -1
 
-        ###
-        Partial function. for given attribute name returns function which
-        finds the first model in collection which satisfies the condition
-        model.get(attrName) == value. In other case, this generated
-        function returns null.
-        ###
         findFirstByAttribute: (attrName) ->
             findIndex = @findFirstIndexByAttribute(attrName)
             (value) =>
                 index = findIndex(value)
                 if index >= 0 then @models[index] else null
 
-        ###
-        Partial function. for given attribute name returns function which
-        finds the index of some model in collection which satisfies the
-        condition model.get(attrName) == value. in other case, this generated
-        function returns -1.
-        ###
         findIndexByAttribute: (attrName) ->
             @findFirstIndexByAttribute(attrName)
 
-        ###
-        Partial function. for given attribute name returns function which
-        finds some model in collection which satisfies the condition
-        model.get(attrName) == value.In other case, this generated
-        function returns null.
-        ###
         findByAttribute: (attrName) ->
             @findFirstByAttribute(attrName)
 
-        ###
-        WARNING: overriding semi-documented Backbone.Collection method
-        ###
         _prepareModel: (attrs, options) ->
             if @modelFactory?
                 if attrs instanceof Backbone.Model
-                    # do not overwrite model collection
                     attrs.collection ?= this
                     return attrs
                 options = if options? then _.clone(options) else {}
@@ -112,7 +84,6 @@
                 else
                     model
             else
-                # use the default model preparation
                 super
 
         deepClone: -> new @constructor(@toJSON())
@@ -174,12 +145,8 @@
         getExistingObjectIds: ->
             if @parentModel.isRewindedAtEnd?
                 if @parentModel.isRewindedAtEnd()
-                    # using the standard method of getting objects is
-                    # sufficient here
                     @parentModel.getObjectIds()
                 else
-                    # we need ALL objects, not only in given time point but
-                    # also from the future (to avoid collision)
                     @parentModel.getHistoricalObjectIds()
             else
                 @parentModel.getObjectIds()
@@ -187,13 +154,10 @@
         getUniqueObjectId: ->
             existingObjectIds = @getExistingObjectIds()
 
-            # using object lookup instead of iterating on whole array
             testDict = {}
             for objectId in existingObjectIds
                 testDict[objectId] = 1
 
-            # not the most intelligent way, but should be sufficient when the
-            # number of plant elements/ media will be small
             counter = 1
             while true
                 newObjectId = "#{@objectIdPrefix}_#{counter}"
@@ -202,9 +166,6 @@
                 counter += 1
             newObjectId
 
-        ###
-        WARNING: overriding semi-documented Backbone.Collection method
-        ###
         _prepareModel: (attrs, options) ->
             model = super
 

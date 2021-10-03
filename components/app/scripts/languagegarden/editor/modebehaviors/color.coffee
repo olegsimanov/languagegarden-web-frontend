@@ -5,9 +5,6 @@
     {EditorMode} = require('./../constants')
 
 
-    ###When in color mode, only coloring is possible. Items will lose their
-    selection, at least visually.
-    ###
     class ColorModeBehavior extends BaseModeBehavior
 
         boundLettersClasses: [

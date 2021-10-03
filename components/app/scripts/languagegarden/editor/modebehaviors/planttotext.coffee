@@ -17,12 +17,6 @@
             TextToPlantLetterClickBehavior,
         ]
 
-        ###Returns VisibilityType that should be set based on selection state
-        and given editor mode.
-        @param selected If the view should be marked as selected.
-        @param inPlantToTextMode If views should be marked for PLANT_TO_TEXT
-            editor mode.
-        ###
         getVisibilityType = (selected, inPlantToTextMode=true) ->
             visibility = VisibilityType.VISIBLE
             if not selected and inPlantToTextMode
@@ -36,10 +30,6 @@
                 mediaModel = @model.media.findByAttribute('type')(MediumType.PLANT_TO_TEXT_NOTE)
                 return mediaModel
             @model.media.findByObjectId(@activeObjectId)
-
-        isActiveModelInPlantToTextMode: ->
-            model = @getActiveModel()
-            model?.get('inPlantToTextMode') or false
 
         setActiveModelPlantToTextMode: (flag) ->
             model = @getActiveModel()

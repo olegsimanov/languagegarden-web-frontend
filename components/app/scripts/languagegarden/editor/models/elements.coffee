@@ -1,6 +1,5 @@
     'use strict'
 
-    #TODO: remove raphael dependency
     Raphael = require('raphael')
     _ = require('underscore')
     {Point} = require('./../../math/points')
@@ -37,7 +36,6 @@
             setDefaultValue('text', '')
             setDefaultValue('transformMatrix', Raphael.matrix())
 
-            # reducing the scaling transfom if transformMatrix has scale
             if options?.transformMatrix?
                 scale = options.transformMatrix.split?().scalex
                 if scale? and scale != 1
@@ -53,11 +51,6 @@
             attrs['labels'] = []
             attrs
 
-        ### Sets attributes for given letters.
-        @param letters Index or list of a letter indexes. Default: all indexes.
-        @param key Name of the property to set.
-        @param value Value to set the property to.
-        ###
         setLetterAttribute: (letters, key, value, options) ->
 
             if not letters?
@@ -90,10 +83,6 @@
             if changeLetterStyle
                 @trigger("change:letter:style") if loud
 
-        ### Gets all attributes or one specified by it's name.
-        @param letterIndex Index of the letter to get attribute for.
-        @param key Specific key to gey, default: all keys are returned.
-        ###
         getLetterAttribute: (letterIndex, key) ->
             lettersAttributes = @get('lettersAttributes')
             letterAttrs = lettersAttributes[letterIndex]
@@ -108,7 +97,6 @@
                 super
 
         set: (key, val, options) ->
-            # normalize input
             if typeof key == 'object'
                 attrs = _.clone(key) or {}
                 options = val
@@ -129,14 +117,11 @@
                  attrs.endPoint] = attrs.points
                 delete attrs.points
 
-            # apply point wrappers
             for name in ['startPoint', 'endPoint']
                 if attrs[name]?
                     attrs[name] = Point.fromValue(attrs[name])
                     if not @path[name].equals(attrs[name])
                         pathChanged = true
-                    # we need to set the points so the path object will
-                    # have the same reference, even when there is no change.
                     @path[name] = attrs[name]
 
             for name in ['controlPoints']
@@ -144,17 +129,13 @@
                     attrs[name] = (Point.fromValue(p) for p in attrs[name])
                     if not _.isEqual(@path[name], attrs[name])
                         pathChanged = true
-                    # we need to set the points so the path object will
-                    # have the same reference, even when there is no change.
                     @path[name] = attrs[name]
 
-            # apply raphael matrix wrappers
             for name in ['transformMatrix']
                 if attrs[name]?
                     m = attrs[name]
                     attrs[name] = Raphael.matrix(m.a, m.b, m.c, m.d, m.e, m.f)
 
-            # defensive deep copying of array of letter atributes
             for name in ['lettersAttributes']
                 if attrs[name]?
                     attrs[name] = deepCopy(attrs[name])
@@ -187,8 +168,6 @@
                             secondCut = lettersAttributes[start..]
                             lettersAttributes = firstCut.concat(secondCut)
                         attrs['lettersAttributes'] = lettersAttributes
-
-            # TODO: event triggering for letter attribute changes
 
             if pathChanged
                 @path.invalidateCache()
@@ -273,25 +252,6 @@
 
         getPath: -> @path
 
-        ###Applies font size to the text, scaling path points accordingly.###
-        applyFontSize: (fontSize, cx, cy) ->
-            cx ?= @get('startPoint').x
-            cy ?= @get('startPoint').y
-            scale = fontSize / @get('fontSize')
-
-            mat = Raphael.matrix()
-            mat.scale(scale, scale, cx, cy)
-            matTransformApp = Point.getTransformApplicator(mat)
-
-            # we trasform all the points to the screen coordinates...
-            points = @getPointsCopy()
-            for p in points
-                matTransformApp(p)
-            # and apply new font size & points
-            @set
-                fontSize: fontSize
-                points: points
-
         reduceTransform: ->
             fontSize = @get('fontSize')
             mat = @get('transformMatrix')
@@ -314,25 +274,6 @@
                 fontSize: fontSize * matInfo.scalex
                 points: points
 
-        reduceTransformTranslation: ->
-            mat = @get('transformMatrix')
-            invMat = mat.invert()
-            matInfo = mat.split()
-            matTransformApp = Point.getTransformApplicator(mat)
-            invMatTransformApp = Point.getTransformApplicator(invMat)
-            transVec = new Point(matInfo.dx, matInfo.dy)
-            pointTransformApp = (p) ->
-                invMatTransformApp(matTransformApp(p).addToSelf(transVec))
-
-            # we translate all the points in the screen coordinates...
-            points = @getPointsCopy()
-            for p in points
-                pointTransformApp(p)
-            # ...and then reset the translation coordinates
-            mat.e = 0
-            mat.f = 0
-            @set('points', points)
-
         calculateScalingRotation: (originPoint, inputVector, outputVector,
                                    options) ->
             fontSize = @get('fontSize')
@@ -350,25 +291,6 @@
 
             ATF.scalingRotation(originPoint, inputVector, outputVector, options)
 
-        ###
-        Transforms the element using rotation and uniform scaling.
-        ###
-        scaleRotate: (transformPoint, oldTransformPoint, originPoint, options) ->
-            inputVector = oldTransformPoint.sub(originPoint)
-            outputVector = transformPoint.sub(originPoint)
-
-            t = @calculateScalingRotation(originPoint, inputVector,
-                                          outputVector, options)
-            @transform(t)
-
-        ###
-        Transforms the element using the specific transformation t. You can
-        pass additional source element model which will be used as the source
-        moded to be transformed into this model.
-
-        We assume here that transformation t is composed of uniform scaling
-        and rotation with respect to some translation.
-        ###
         transform: (t, source) ->
             # In our case, when the transformation is composed
             # of uniform scaling and rotation, the square root
@@ -434,7 +356,6 @@
 
             attrPrefix = if startLetterStretched then 'start' else 'end'
             attrs["#{attrPrefix}Point"] = stretchPoint
-#            console.log('attrs', attrs)
             @set(attrs)
 
 

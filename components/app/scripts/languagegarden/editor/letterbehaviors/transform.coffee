@@ -38,14 +38,11 @@
             path = view.model.getPath()
 
             minDistance = settings.minFontSize * textLength / scale
-            # maxDistance = settings.maxFontSize * textLength / scale * 2
 
             [startPt.x, startPt.y] = view.screenToPathCoordinates(
                 startPt.x, startPt.y)
 
             if textLength == 1
-                # one letter words are a special case, middle point of the
-                # letter is used as operation center
                 pos = view.getLetterMiddlePathPosition(0)
                 if not originPt?
                     originPt = path.getPointAtLength(pos)
@@ -57,15 +54,12 @@
                     else
                         originPt = start
 
-                # dragging can be done by any part of the letter, thus we need
-                # to limit the effective dragging point to end of the first
-                # letter or the start of the last letter
-                if firstLetterDragged  # first letter
+                if firstLetterDragged
                     if textRTL
                         pos = view.getLetterEndPathPosition(0)
                     else
                         pos = view.getLetterStartPathPosition(0)
-                else  # last letter
+                else
                     if textRTL
                         pos = view.getLetterStartPathPosition(textLength - 1)
                     else
@@ -74,7 +68,6 @@
                 pointOnPath = path.getPointAtLength(pos)
                 dragPointOffset = pointOnPath.sub(startPt)
 
-            # helpers for distinguishing
             selectedElementViews = @parentView.getSelectedElementViews()
             selectedMediaViews = @parentView.getSelectedMediaViews()
             selectedElements = (v.model for v in selectedElementViews)
@@ -120,9 +113,6 @@
             for v in selectedElementViews
                 v._drag = @getSecondaryViewDragInfo(v, x, y, di) if v != view
 
-        ###Simplified drag info for views other than the currently dragged
-        (clicked) one.
-        ###
         getSecondaryViewDragInfo: (view, x, y, clickedViewDi) =>
             initialPoints: _.map(view.getPoints(), (a) => a.toArray())
             initialMatrix: view.model.get('transformMatrix')
@@ -149,9 +139,6 @@
             super
             view._drag = undefined
 
-        ###TODO: this method shouldn't process more than one view refactor to
-        have similar logic as in scale.
-        ###
         onDragEndApplyTransform: (view, drag) =>
             if view.isOutOfBounds
                 @restoreViewInitialState(view)

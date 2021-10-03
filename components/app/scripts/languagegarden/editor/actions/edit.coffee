@@ -10,8 +10,6 @@
         perform: ->
             selectedElement = @parentView.getSelectedElements()[0]
             @parentView.startUpdating(selectedElement)
-            # false is important here. we do not want to create a snapshot
-            # after performing this action
             false
 
         isAvailable: ->

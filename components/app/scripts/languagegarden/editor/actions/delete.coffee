@@ -15,8 +15,6 @@
             elementViews = @canvasView.getSelectedElementViews()
             mediaViews = @canvasView.getSelectedMediaViews()
 
-            # prevent if in text edit mode
-            # TODO: find out a better place for this fix
             if elementViews.length == 0 and mediaViews.length == 1
                 if mediaViews[0]?.isInEditMode
                     return
@@ -37,4 +35,4 @@
 
     module.exports =
         DeleteAction: DeleteAction
-    
+

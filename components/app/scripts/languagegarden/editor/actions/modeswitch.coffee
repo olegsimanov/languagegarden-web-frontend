@@ -5,12 +5,7 @@
     {EditorMode} = require('./../constants')
 
 
-    ###Base class, contains isAvailable conditions.###
     class ModeSwitchAction extends Action
-
-        storeMetric: ->
-            # suppress storing metrics of mode switch actions
-            # this is much better done in the editor
 
         isInMode: (mode=@mode) -> @canvasView.mode == mode
 
@@ -34,14 +29,12 @@
 
         mediaSelected: -> @canvasView.getSelectedMediaViews().length > 0
 
-        ###Multiple words and no media selected.###
         multipleWordsNoMediaSelected: ->
             @multipleWordsSelected() and not @mediaSelected()
 
 
     class ModeSwitchActionSingleMode extends ModeSwitchAction
 
-        # EditorMode value this action will switch to
         mode: null
 
         initialize: (options) ->
@@ -60,7 +53,6 @@
 
         isAvailable: => @canApplyToSelection()
 
-        ###Actual action-specific isAvailable check.###
         canApplyToSelection: =>
 
         onModeChange: ->

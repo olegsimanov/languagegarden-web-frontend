@@ -22,7 +22,6 @@
         triggerToggledChange: ->
             @trigger('change:toggled', this, @isToggled())
 
-        # this method should be overriden for performing specific action
         perform: ->
 
         isAvailable: -> true
@@ -37,7 +36,6 @@
             @onPerformEnd()
 
         onPerformStart: ->
-            @storeMetric()
 
         onPerformEnd: ->
 
@@ -49,10 +47,6 @@
                 @help
             else
                 @getHelpTextFromId()
-
-        storeMetric: =>
-            # suppress storing metrics of mode switch actions
-            # this is much better done in the editor
 
 
     class UnitAction extends Action
@@ -74,16 +68,6 @@
             # for deprecated usage
             @parentView = @canvasView
 
-
-    class NavigationAction extends UnitAction
-
-        getNavInfo: ->
-
-        perform: ->
-            navInfo =  @getNavInfo()
-            @controller.trigger('navigate', @controller, navInfo)
-
-        isAvailable: -> true
 
     class EditorAction extends UnitAction
         trackingChanges: true

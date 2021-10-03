@@ -45,7 +45,6 @@
                 startPoint: startPoint.add(moveVector)
                 controlPoints: (p.add(moveVector) for p in ctrlPoints)
                 endPoint: endPoint.add(moveVector)
-            # TODO: use events for autoupdate
             view.updateTextPath()
             movedCount += 1
             lastView = view

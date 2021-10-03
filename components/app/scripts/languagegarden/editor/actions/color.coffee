@@ -5,22 +5,18 @@
     {ColorMode} = require('./../constants')
 
 
-    ### Handles basic word/letter input. ###
     class WordActionBase extends Action
 
         initialize: (options) ->
             super
             @setPropertyFromOptions(options, 'toolModel', required: true)
 
-        ### Allows tooltip integration. ###
         isAvailable: => @canvasView.getSelectedElements().length > 0
 
-        ### Sanitize the data, call correct handler add selected group args. ###
         perform: (model, letter_index) =>
             if letter_index?
                 @letterPerform(model, letter_index)
             else
-                # model is a list of selected models
                 @wordPerform(model)
 
         fullPerform: (model, letter_index) =>
@@ -35,8 +31,6 @@
 
     class ColorBaseAction extends WordActionBase
 
-        ### Applies letterPerform with null letter indicating the whole word.
-        ###
         wordPerform: (models) =>
             [@letterPerform(model, null) for model in models]
             true

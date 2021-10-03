@@ -15,11 +15,6 @@
         onModeEnter: (oldMode) =>
             super
             @model.stopTrackingChanges()
-            # usually selection change should not be performed in onModeEnter
-            # or in onModeLeave, because there is mode change associated with
-            # it (see EditorCanvasView.onSelectChange for details) but the EDIT
-            # mode is exception here (again, see EditorCanvasView.onSelectChange
-            # for details)
             @parentView.deselectAll()
 
         onModeLeave: (newMode) =>

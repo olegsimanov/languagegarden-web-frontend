@@ -52,8 +52,6 @@
                 if l.getSide(ctrlPoint) > 0
                     l.project(ctrlPoint)
 
-            # perform damping to make the change of control point less
-            # 'jumpy'
             ctrlPoint = Point.weightedAvg(oldCtrlPoint, ctrlPoint, 0.15)
 
             ctrlPoint.x = Math.floor(ctrlPoint.x)
