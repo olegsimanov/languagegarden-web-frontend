@@ -21,7 +21,6 @@
             @loaderEl = options.loaderElement or options.loaderEl
             if @loaderEl
                 @$loaderEl = $(@loaderEl)
-            @useURL = options.useURL
             @backURL = options.backURL or '/'
             @userId = options.userId or null
             @windowHandlersMap = 'beforeunload': @onWindowBeforeUnload
@@ -56,10 +55,11 @@
                 cfg.type == ControllerType.DEFAULT)[0]
 
         navigateToController:(navInfo={}) ->
-            if @useURL
-                @backboneNavigateToController(navInfo)
-            else
-                @internalNavigateToController(navInfo)
+            trigger = navInfo.trigger
+            trigger ?= true
+            if trigger
+                url = @generateURL(navInfo)
+                Backbone.history.loadUrl(url)
 
         generateURL: (navInfo) ->
             for cfg in @controllerConfig
@@ -70,30 +70,11 @@
             defaultCfg = @getDefaultControllerConfig()
             defaultCfg.urlGenerator(navInfo)
 
-        internalNavigateToController: (navInfo) ->
-            trigger = navInfo.trigger
-            trigger ?= true
-            if trigger
-                url = @generateURL(navInfo)
-                Backbone.history.loadUrl(url)
-
-        backboneNavigateToController: (navInfo) ->
-            trigger = navInfo.trigger
-            trigger ?= true
-            url = @generateURL(navInfo)
-            Backbone.history.navigate(url, trigger: trigger)
-
         demoteController: ->
             if @controller?
                 @stopListening(@controller)
-                @previousController = @controller
                 @controller = null
             @controllerType = null
-
-        destroyDemotedController: ->
-            if @previousController?
-                @previousController.remove()
-                @previousController = null
 
         createController: (controllerType, controllerCls, controllerOptions) ->
             @controller = new controllerCls(controllerOptions)
@@ -153,7 +134,6 @@
         onControllerStartSuccess: (source) ->
             if @controller != source
                 return
-            @destroyDemotedController()
             @hideLoader()
 
         onWindowBeforeUnload: (e) =>

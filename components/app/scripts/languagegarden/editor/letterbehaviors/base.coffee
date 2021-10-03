@@ -20,8 +20,7 @@
 
     LetterDragBehaviorPrototype =
 
-        getDragInfo: (view, {letterIndex}) ->
-            view._dragInfo?[letterIndex]
+        getDragInfo: (view, {letterIndex}) -> view._dragInfo?[letterIndex]
 
         onDragStartViewUpdate: (view, event, x, y, {letterIndex}) ->
             view._dragInfo ?= {}

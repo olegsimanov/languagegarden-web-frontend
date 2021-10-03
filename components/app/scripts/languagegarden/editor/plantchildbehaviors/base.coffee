@@ -27,7 +27,6 @@
 
     class MouseBehaviorBase extends PlantChildBehavior
 
-        # HANDLERS
         mouseHandlerBase: (view, event) ->
             event.preventDefault()
             event.srcEvent.stopPropagation()
@@ -84,7 +83,6 @@
             dy -= di._startdy
             [x, y, dx, dy]
 
-        # BOUNDS CHECKING
         shouldCheckOutOfBounds: false
 
         updateOutOfBounds: =>

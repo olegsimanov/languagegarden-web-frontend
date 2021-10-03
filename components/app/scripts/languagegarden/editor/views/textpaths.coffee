@@ -687,7 +687,6 @@
 
 
         create: ->
-            # assert not @textObjs?
             @updateLetters()
 
             @updateTransformMatrix()

@@ -32,7 +32,6 @@
             ln ?= @parentView.getSelectedElements().length
             ln > 1
 
-        ###Dispatch to the correct sub handler.###
         onDragMove: (clickedView, event, x, y, dx, dy, options) =>
             if @isMultiWordRotate(clickedView)
                 @multiWordOnDragMove(clickedView, event, x, y, dx, dy, options)

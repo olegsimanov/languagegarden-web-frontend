@@ -69,9 +69,7 @@
             super
 
         restoreViewInitialState: (view, di) =>
-            [
-                startPoint, controlPoints..., endPoint
-            ] = _.map(di.initialPoints, (cs) -> new Point(cs...))
+            [startPoint, controlPoints..., endPoint] = _.map(di.initialPoints, (cs) -> new Point(cs...))
             view.model.set(
                 controlPoints: controlPoints
                 startPoint: startPoint

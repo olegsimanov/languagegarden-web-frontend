@@ -11,70 +11,31 @@
     require('../../../styles/iefix.less')
 
     require('../../iefix')
-    {EventObject} = require('./../editor/events')
 
-    buttons = require('./views/buttons')
-    deleteActions = require('./actions/delete')
+    {LetterMetrics}         = require('./svgmetrics')
+    deleteActions           = require('./actions/delete')
+    editorColors            = require('./colors')
+    settings                = require('./../settings')
+    {EventObject} =          require('./../editor/events')
+
+    {EditorPalette}         = require('./models/palette')
+    {Settings}              = require('./models/settings')
     {UnitState, LessonData} = require('./models/plants')
-    editorColors = require('./colors')
-    settings = require('./../settings')
-    {EditorPalette} = require('./models/palette')
-    {EditorCanvasView} = require('./views/canvas')
-    {EditorTextBoxView} = require('./views/textboxes')
-    {EditorPageView} = require('./views/page/base')
-    {BuilderToolbar} = require('./views/toolbars/builder')
-    {Settings} = require('./models/settings')
-    {LetterMetrics} = require('./svgmetrics')
-    {ToolbarEnum} = require('./views/toolbars/constants')
 
+    buttons                 = require('./views/buttons')
+    {EditorCanvasView}      = require('./views/canvas')
+    {EditorTextBoxView}     = require('./views/textboxes')
+    {EditorPageView}        = require('./views/page/base')
+    {BuilderToolbar}        = require('./views/toolbars/builder')
+    {ToolbarEnum}           = require('./views/toolbars/constants')
 
-    class BaseController extends EventObject
-
-        constructor: (options) ->
-            @cid = _.uniqueId('controller')
-            @bus = new EventObject()
-            super
-
-        initialize: (options) ->
-            super
-            @containerElement = options.containerElement or document.body
-            @backURL = options.backURL or '/'
-
-        remove: ->
-            @bus.stopListening()
-            @bus.off()
-            @off()
-            super
-
-        getTriggeringCallbacks: (options) ->
-            successCallback = options?.success or ->
-            errorCallback = options?.error or ->
-
-            triggerSuccess = =>
-                successCallback()
-                @trigger('start:success', this)
-
-            triggerError = =>
-                errorCallback()
-                @trigger('start:error', this)
-
-            [triggerSuccess, triggerError]
-
-        start: (options) ->
-            [triggerSuccess, triggerError] = @getTriggeringCallbacks(options)
-            triggerSuccess()
-
-        onObjectNavigate: (source, navigationInfo) ->
-            @trigger('navigate', source, navigationInfo)
-
-
-    class BaseEditorController extends BaseController
-        modelClass: UnitState
-        dataModelClass: LessonData
-        ToolbarEnum: ToolbarEnum
-        buttonClasses: []
-        canvasViewClass: EditorCanvasView
-        textBoxViewClass: EditorTextBoxView
+    class BaseEditorController extends EventObject
+        modelClass:         UnitState
+        dataModelClass:     LessonData
+        ToolbarEnum:        ToolbarEnum
+        buttonClasses:      []
+        canvasViewClass:    EditorCanvasView
+        textBoxViewClass:   EditorTextBoxView
 
         shortcutsAndActionsClasses: [
             ['Delete', deleteActions.DeleteAction],
@@ -83,8 +44,17 @@
         toolbarViewClass: null
         getToolbarViewClass: -> @toolbarViewClass
 
+        constructor: (options) ->
+            @cid = _.uniqueId('controller')
+            @bus = new EventObject()
+            super
+
         initialize: (options={}) ->
             super
+
+            @containerElement = options.containerElement or document.body
+            @backURL = options.backURL or '/'
+
             @draggingInfo = {}
 
             @dataModel = options.dataModel
@@ -147,6 +117,23 @@
             for evObj in @getEventObjects()
                 @listenTo(evObj, 'navigate', @onObjectNavigate)
 
+        getTriggeringCallbacks: (options) ->
+            successCallback = options?.success or ->
+            errorCallback = options?.error or ->
+
+            triggerSuccess = =>
+                successCallback()
+                @trigger('start:success', this)
+
+            triggerError = =>
+                errorCallback()
+                @trigger('start:error', this)
+
+            [triggerSuccess, triggerError]
+
+        onObjectNavigate: (source, navigationInfo) ->
+            @trigger('navigate', source, navigationInfo)
+
         getPageViewSubviews: ->
             '.toolbar-container': @toolbarView
             '.canvas-container': [@canvasView]
@@ -172,6 +159,11 @@
             @view = null
             @letterMetrics.remove()
             @letterMetrics = null
+
+            @bus.stopListening()
+            @bus.off()
+            @off()
+
             super
 
         renderViews: ->

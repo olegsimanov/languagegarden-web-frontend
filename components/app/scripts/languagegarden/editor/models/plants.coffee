@@ -25,9 +25,7 @@
             collectionClass: PlantMedia
         ]
 
-        forwardedEventNames: [
-            'childchange',
-        ].concat(BaseModelWithSubCollections::forwardedEventNames)
+        forwardedEventNames: ['childchange',].concat(BaseModelWithSubCollections::forwardedEventNames)
 
         initialize: (options) ->
             super

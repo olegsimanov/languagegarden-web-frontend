@@ -5,11 +5,7 @@
 
     SubCollectionPrototype =
 
-        subCollectionConfig: [
-        #     name: 'modelAttribute'
-        #     collectionClass: CollectionClass
-        # ,
-        ]
+        subCollectionConfig: []
 
         getSubCollectionNames: -> @_subCollectionNames
         getSubCollections: ->  @_subCollections

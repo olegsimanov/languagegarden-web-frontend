@@ -5,17 +5,11 @@
 
     class ControllerType
 
-        @PLANT_LIST = 'plant-list'
-
         @PLANT_BUILDER = 'plant-builder'
-        @PLANT_NAVIGATOR = 'plant-navigator'
-
-        @DEFAULT = @PLANT_LIST
+        @DEFAULT = @PLANT_BUILDER
 
 
-    editorRequireDependency = (cb) -> require.ensure([], ((require) ->
-        cb(require('../editor/controllers'))
-    ), 'editor')
+    editorRequireDependency = (cb) -> require.ensure([], ((require) -> cb(require('../editor/controllers'))), 'editor')
 
     controllerConfig = [
 
@@ -36,32 +30,12 @@
             ]
             handler: (plantId) ->
                 @controller.setModelId(plantId)
-        ,
-
-            routes: [
-                'lessons/edit/:plantId/new-station(/)'
-            ]
-            optionsFromArgs: (plantId) ->
-                newStation: true
-            handler: (plantId) ->
-                @controller.setModelId(plantId)
-        ,
-
-            routes: [
-                'lessons/edit/:plantId/duplicate-station/:stationIndex(/)'
-            ]
-            optionsFromArgs: (plantId, stationIndex) ->
-                newStation: true
-                stationIndex: stationIndex
-            handler: (plantId) ->
-                @controller.setModelId(plantId)
         ]
-
     ]
 
     transitionConfig = [
 
-        startType: ControllerType.PLANT_NAVIGATOR
+        startType: ControllerType.PLANT_BUILDER
         endType: ControllerType.PLANT_BUILDER
         endControllerOptions: (options) ->
             editorModelObjects = _.clone(@controller.carveOutModelObjects())

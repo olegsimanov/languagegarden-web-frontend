@@ -520,10 +520,8 @@
 
         letterAreaEventsHammer: (area, click, dblclick, drag, dragstart, dragend) =>
 
-            hammerDrag = (e) ->
-                drag(e, e.deltaX, e.deltaY, e.center.x, e.center.y)
-            hammerDragstart = (e) =>
-                dragstart(e, e.center.x, e.center.y)
+            hammerDrag = (e) -> drag(e, e.deltaX, e.deltaY, e.center.x, e.center.y)
+            hammerDragstart = (e) => dragstart(e, e.center.x, e.center.y)
             hammer = Hammer(area.node)
             pan = new Hammer.Pan(threshold: 10)
             hammer.add(pan)
@@ -537,11 +535,9 @@
         bindLetterArea: (letterArea, letterIndex) ->
             isBoundary = letterIndex in [0, @getText().length - 1]
             clickDispatcher = @getLetterEventDispatcher('click', isBoundary)
-            dblClickDispatcher = @getLetterEventDispatcher(
-                'dblclick', isBoundary)
+            dblClickDispatcher = @getLetterEventDispatcher('dblclick', isBoundary)
             dragDispatcher = @getLetterEventDispatcher('drag', isBoundary)
-            dragStartDispatcher = @getLetterEventDispatcher(
-                'dragstart', isBoundary)
+            dragStartDispatcher = @getLetterEventDispatcher('dragstart', isBoundary)
             dragEndDispatcher = @getLetterEventDispatcher('dragend', isBoundary)
 
             click = (e) => clickDispatcher(e, letterIndex: letterIndex)
@@ -632,7 +628,6 @@
     class BaseEditorElementView extends ElementView
 
         initialize: (options) ->
-            # TODO: refactor the editor/parentView
             parentView = options.parentView or options.editor
             options.parentView = options.editor = parentView
             super(options)
@@ -669,10 +664,6 @@
                 @textPath.removeCSSClass(cssClass)
                 @removeLetterAreasClass(cssClass)
 
-        ###
-        Override which does not use setCoreOpacity, instead uses css classes
-        (we assume that we do not use setAnimOpacity in editor).
-        ###
         updateVisibility: ->
             if not @textPath?
                 return
@@ -689,29 +680,20 @@
 
             @addCSSClass(className)
 
-        ### Adds rotation to the matrix. ###
-        getRotationAngle: (x, y) =>
-            Raphael.angle(
-                x, y, @_drag.startPt.toArray()..., @_drag.originPt.toArray()...
-            )
+        getRotationAngle: (x, y) => Raphael.angle(x, y, @_drag.startPt.toArray()..., @_drag.originPt.toArray()...)
 
         rotate: (x, y, angle) =>
             angle ?= @getRotationAngle(x, y)
-
             points = (p.copy() for p in @getPoints())
 
-            # reset points
             for [pt, [x, y]] in _.zip(points, @_drag.initialPoints)
                 pt.setCoords(x, y)
 
-            # perform fake 0 angle roatate in one letter scale to force
-            # redrawing of letter surroundings
             angle = 0 if @_drag?.rotateZero
 
             Point.rotatePoints(angle, @_drag.originPt.toArray()..., points)
             @model.set('points', points)
 
-        ###Overriding super to move the repaint rect to the correct layer.###
         forceRepaint: =>
             clipRect = super(arguments...)
             @parentView.putElementToFrontAtLayer(clipRect, CanvasLayers.LETTERS)
@@ -745,12 +727,7 @@
             delete @colorPalette
             super
 
-        onSelectChange: ->
-            # forcing repaint as some parts of the words did not apply css
-            @forceRepaint() if not @isSelected()
-            # TODO: after repaint, parts of letters not fitting the bounding box
-            # will disappear. These are the same regions that wouldn't otherwise
-            # update. The disappearance is related to opacity setting (FIXME).
+        onSelectChange: -> @forceRepaint() if not @isSelected()
 
         onPaletteEdited: -> @updateTextPath()
 
@@ -797,9 +774,6 @@
 
         initializeInput: =>
             transform = Point.getTransform(@model.get('transformMatrix'))
-            # the 'hidden' input must be placed near the plant element
-            # - this causes proper scroll to place with the plant element
-            # in ipad safari when the virtual keyboard pops up
             inputPoint = transform(@model.get('startPoint'))
 
             $input = $('<input type="text">')
