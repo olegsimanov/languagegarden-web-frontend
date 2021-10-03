@@ -2,8 +2,8 @@
 
     _ = require('underscore')
     settings = require('./../../../settings')
-    {BaseView} = require('./../../../common/views/base')
-    {TooltipButton} = require('./../../../common/views/buttons')
+    {BaseView} = require('./../base')
+    {TooltipButton} = require('./../buttons')
 
 
     class ButtonGroup extends BaseView

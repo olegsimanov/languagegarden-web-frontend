@@ -25,8 +25,8 @@
         getBigLowerPath
     } = require('./../letterareas')
     {CanvasLayers} = require('./../../editor/constants')
-    {PlantChildView} = require('./base')
-    {TextPath, SyntheticTextPath} = require('./textpaths')
+    {PlantChildView} = require('./../../editor/views/base')
+    {TextPath, SyntheticTextPath} = require('./../../editor/views/textpaths')
 
 
     class ElementView extends PlantChildView

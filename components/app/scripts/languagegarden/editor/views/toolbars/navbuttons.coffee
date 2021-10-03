@@ -2,7 +2,7 @@
 
     _ = require('underscore')
     {slugify} = require('./../../../common/utils')
-    {DivButton} = require('./../../../common/views/buttons')
+    {DivButton} = require('./../buttons')
 
 
     navEventBaseName = 'toolbarnav'

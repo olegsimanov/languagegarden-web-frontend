@@ -9,7 +9,7 @@
         getWordSplits
         getSentenceSplitIndices
         getWordSplitIndices
-    } = require('./../../common/views/elementsplit')
+    } = require('./../views/elementsplit')
 
 
     class SplitActionBase extends Action

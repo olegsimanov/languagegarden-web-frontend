@@ -15,7 +15,7 @@
         getCaretPosition
     } = require('./../../common/domutils')
     {ElementView} = require('./../../common/views/elements')
-    {getTrimmedWordParams} = require('./../../common/views/elementsplit')
+    {getTrimmedWordParams} = require('./elementsplit')
 
 
 

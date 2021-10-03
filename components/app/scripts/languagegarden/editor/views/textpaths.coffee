@@ -13,16 +13,16 @@
         isArabicLetter
         areLettersJoinable
         wrapLetterWithZWJ
-    } = require('./../utils')
+    } = require('./../../common/utils')
     {
         getCurvedPathString
         disableSelection
         addSVGElementClass
         removeSVGElementClass
         toggleSVGElementClass
-    } = require('./../domutils')
+    } = require('./../../common/domutils')
     {BaseView} = require('./base')
-    {TSpanMultiColorGradient} = require('./../svggradient')
+    {TSpanMultiColorGradient} = require('./../../common/svggradient')
     {CanvasLayers} = require('./../../editor/constants')
 
 

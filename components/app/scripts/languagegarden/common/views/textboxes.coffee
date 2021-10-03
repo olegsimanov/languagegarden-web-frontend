@@ -2,7 +2,7 @@
 
     _ = require('underscore')
     {MediumType, PlacementType} = require('./../../editor/constants')
-    {BaseView} = require('./base')
+    {BaseView} = require('./../../editor/views/base')
     {DummyMediumView} = require('./../../editor/views/media/base')
     {TextToPlantView} = require('../../editor/views/media/text_to_plant')
     {Point} = require('./../../math/points')

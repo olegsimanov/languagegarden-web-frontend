@@ -4,7 +4,7 @@
     _ = require('underscore')
     $ = require('jquery')
     {BBox} = require('./../../../math/bboxes')
-    {PlantChildView} = require('../../../common/views/base')
+    {PlantChildView} = require('../base')
     {VisibilityType, PlacementType} = require('./../../../editor/constants')
     {addSVGElementClass, removeSVGElementClass} = require('./../../../common/domutils')
 

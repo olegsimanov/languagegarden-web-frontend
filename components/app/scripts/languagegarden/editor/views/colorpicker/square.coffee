@@ -6,8 +6,8 @@
     {BBox} = require('./../../../math/bboxes')
     {Point} = require('./../../../math/points')
     {EditorMode, ColorMode} = require('./../../constants')
-    {BaseView} = require('./../../../common/views/base')
-    {RenderableView} = require('./../../../common/views/renderable')
+    {BaseView} = require('./../base')
+    {RenderableView} = require('./../renderable')
     {
         EditorColorModeButton
         EditorDivButton

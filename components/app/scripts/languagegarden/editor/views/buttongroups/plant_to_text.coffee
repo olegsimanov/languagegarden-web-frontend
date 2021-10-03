@@ -1,8 +1,8 @@
     'use strict'
 
     _ = require('underscore')
-    {ButtonGroup} = require('./../../../common/views/buttongroups/base')
-    {PunctuationButton} = require('./../../../common/views/buttons')
+    {ButtonGroup} = require('./base')
+    {PunctuationButton} = require('./../buttons')
     plantToTextActions = require('./../../actions/planttotext')
 
 

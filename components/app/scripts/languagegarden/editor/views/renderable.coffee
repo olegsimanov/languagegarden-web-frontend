@@ -2,7 +2,7 @@
 
     _ = require('underscore')
     $ = require('jquery')
-    {template} = require('./../domutils')
+    {template} = require('./../../common/domutils')
     {BaseView} = require('./base')
 
 

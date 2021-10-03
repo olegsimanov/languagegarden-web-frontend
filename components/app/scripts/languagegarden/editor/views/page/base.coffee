@@ -4,7 +4,7 @@
     $ = require('jquery')
     {AffineTransformation} = require('./../../../math/transformations')
     {SIDEBAR_WIDTH} = require('./../../models/plants')
-    {RenderableView} = require('./../../../common/views/renderable')
+    {RenderableView} = require('./../renderable')
     {getOffsetRect} = require('./../../../common/domutils')
     {template} = require('./../../../common/templates')
 

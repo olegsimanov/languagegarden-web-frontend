@@ -4,7 +4,7 @@
     require('raphael')
     _ = require('underscore')
     $ = require('jquery')
-    {enumerate} = require('./../utils')
+    {enumerate} = require('./../../common/utils')
     {
         disableSelection
         addSVGElementClass
@@ -15,7 +15,7 @@
     {Point} = require('./../../math/points')
     {BBox} = require('./../../math/bboxes')
     {PlantMedium} = require('./../../editor/models/media')
-    {BaseView} = require('./base')
+    {BaseView} = require('./../../editor/views/base')
     {
         MediumType
         PlacementType
