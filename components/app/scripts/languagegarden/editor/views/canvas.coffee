@@ -4,12 +4,12 @@
     require('raphael')
     _ = require('underscore')
     $ = require('jquery')
-    {isDarkColor} = require('./../../common/utils')
+    {isDarkColor} = require('./../utils')
     {
         disableSelection
         getOffsetRect
         addSVGElementClass
-    } = require('./../../common/domutils')
+    } = require('./../domutils')
     {
         ColorAction
         RemoveColorAction
@@ -35,12 +35,12 @@
     } = require('./../constants')
 
 
-    {enumerate} = require('./../../common/utils')
+    {enumerate} = require('./../utils')
     {
         disableSelection
         addSVGElementClass
-    } = require('./../../common/domutils')
-    {LetterMetrics} = require('./../../common/svgmetrics')
+    } = require('./../domutils')
+    {LetterMetrics} = require('./../svgmetrics')
     {DummyMediumView} = require('./media/base')
     {ElementView} = require('./elements')
     {Point} = require('./../../math/points')

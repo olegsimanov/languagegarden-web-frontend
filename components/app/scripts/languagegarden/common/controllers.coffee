@@ -10,7 +10,7 @@
     require('../../../styles/iefix.less')
 
     require('../../iefix')
-    {EventObject} = require('./events')
+    {EventObject} = require('./../editor/events')
 
 
     class BaseController extends EventObject

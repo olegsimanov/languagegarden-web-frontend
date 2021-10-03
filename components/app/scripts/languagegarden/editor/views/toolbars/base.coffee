@@ -3,10 +3,10 @@
     _ = require('underscore')
     settings = require('./../../../settings')
     {RenderableView} = require('./../renderable')
-    {slugify} = require('./../../../common/utils')
+    {slugify} = require('./../../utils')
     {DivButton} = require('./../buttons')
 
-    {template} = require('./../../../common/templates')
+    {template} = require('./../../templates')
     {ToolbarBackButton} = require('./../../views/toolbars/navbuttons')
 
 

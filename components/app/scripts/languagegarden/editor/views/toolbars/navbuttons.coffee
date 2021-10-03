@@ -1,7 +1,7 @@
     'use strict'
 
     _ = require('underscore')
-    {slugify} = require('./../../../common/utils')
+    {slugify} = require('./../../utils')
     {DivButton} = require('./../buttons')
 
 

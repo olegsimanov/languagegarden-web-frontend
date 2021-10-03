@@ -2,7 +2,7 @@
 
     _ = require('underscore')
     {RenderableView} = require('./../renderable')
-    {StatefulClassPrototype} = require('./../../../common/stateful')
+    {StatefulClassPrototype} = require('./../../stateful')
     {BaseToolbar} = require('./base')
 
 

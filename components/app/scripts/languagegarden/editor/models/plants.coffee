@@ -6,12 +6,12 @@
     settings = require('./../../settings')
     config = require('./../../config')
     {Point} = require('./../../math/points')
-    {pathJoin} = require('./../../common/utils')
+    {pathJoin} = require('./../utils')
     {PlantElements} = require('./elements')
     {PlantMedia} = require('./media')
     {BaseModelWithSubCollections} = require('./base')
     {MediumType} = require('./../constants')
-    {UnitDataCache} = require('../../common/datacache')
+    {UnitDataCache} = require('../datacache')
 #    require('backbone.localStorage')
 
 #    Backbone.sync = (method, model, options) ->

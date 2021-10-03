@@ -2,7 +2,7 @@
 
     _ = require('underscore')
     $ = require('jquery')
-    {template} = require('./../../../common/templates')
+    {template} = require('./../../templates')
     {BBox} = require('./../../../math/bboxes')
     {Point} = require('./../../../math/points')
     {EditorMode, ColorMode} = require('./../../constants')

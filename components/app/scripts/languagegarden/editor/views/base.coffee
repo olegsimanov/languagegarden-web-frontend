@@ -7,13 +7,13 @@
         visibilityOpacityMap
         markedOpacityMap
     } = require('./../../editor/constants')
-    {extend, extendAll} = require('./../../common/extend')
-    {EventForwardingPrototype} = require('./../../common/events')
+    {extend, extendAll} = require('./../extend')
+    {EventForwardingPrototype} = require('./../events')
     {
         buildPropertySupportPrototype
         PropertySetupPrototype
-    } = require('./../../common/properties')
-    {capitalize} = require('./../../common/utils')
+    } = require('./../properties')
+    {capitalize} = require('./../utils')
 
 
     BaseViewCore = Backbone.View

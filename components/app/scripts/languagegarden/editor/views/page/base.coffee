@@ -5,8 +5,8 @@
     {AffineTransformation} = require('./../../../math/transformations')
     {SIDEBAR_WIDTH} = require('./../../models/plants')
     {RenderableView} = require('./../renderable')
-    {getOffsetRect} = require('./../../../common/domutils')
-    {template} = require('./../../../common/templates')
+    {getOffsetRect} = require('./../../domutils')
+    {template} = require('./../../templates')
 
     class PageView extends RenderableView
 

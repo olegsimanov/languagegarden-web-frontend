@@ -1,7 +1,7 @@
     'use strict'
 
-    {capitalize} = require('./../../common/utils')
-    {EventObject} = require('./../../common/events')
+    {capitalize} = require('./../utils')
+    {EventObject} = require('./../events')
 
     class Action extends EventObject
 

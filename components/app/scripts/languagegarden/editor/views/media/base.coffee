@@ -6,7 +6,7 @@
     {BBox} = require('./../../../math/bboxes')
     {PlantChildView} = require('../base')
     {VisibilityType, PlacementType} = require('./../../../editor/constants')
-    {addSVGElementClass, removeSVGElementClass} = require('./../../../common/domutils')
+    {addSVGElementClass, removeSVGElementClass} = require('./../../domutils')
 
 
     class MediumViewBase extends PlantChildView

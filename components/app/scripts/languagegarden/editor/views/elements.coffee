@@ -14,7 +14,7 @@
         removeSVGElementClass
         setCaretPosition
         getCaretPosition
-    } = require('./../../common/domutils')
+    } = require('./../domutils')
     {getTrimmedWordParams} = require('./elementsplit')
 
 
@@ -27,17 +27,17 @@
         structuralEquals
         sum
         wrapLetterWithZWJ
-    } = require('./../../common/utils')
+    } = require('./../utils')
     {
         disableSelection
         addSVGElementClass
-    } = require('./../../common/domutils')
-    {LetterMetrics} = require('./../../common/svgmetrics')
+    } = require('./../domutils')
+    {LetterMetrics} = require('./../svgmetrics')
     {
         getLetterAreaPathStringAndPoints
         getBigUpperPath
         getBigLowerPath
-    } = require('./../../common/letterareas')
+    } = require('./../letterareas')
     {CanvasLayers} = require('./../constants')
     {PlantChildView} = require('./base')
     {TextPath, SyntheticTextPath} = require('./textpaths')

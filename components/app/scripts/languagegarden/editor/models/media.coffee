@@ -3,7 +3,7 @@
     _ = require('underscore')
     {Point} = require('./../../math/points')
     {PlantChildModel, PlantChildCollection} = require('./base')
-    {deepCopy, startsWith, structuralEquals} = require('./../../common/utils')
+    {deepCopy, startsWith, structuralEquals} = require('./../utils')
     {
         MediumType
         VisibilityType

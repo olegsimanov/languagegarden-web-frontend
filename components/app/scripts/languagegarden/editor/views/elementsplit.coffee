@@ -3,7 +3,7 @@
     _ = require('underscore')
     {Line} = require('./../../math/lines')
     {Point} = require('./../../math/points')
-    {ltrim, rtrim} = require('./../../common/utils')
+    {ltrim, rtrim} = require('./../utils')
 
 
     ###Given a view and indices to cut it's text at, calculates the data for

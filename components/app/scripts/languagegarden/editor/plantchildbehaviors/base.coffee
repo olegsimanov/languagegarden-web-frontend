@@ -2,7 +2,7 @@
 
     _ = require('underscore')
     {Point} = require('./../../math/points')
-    {extend, extendAll} = require('./../../common/extend')
+    {extend, extendAll} = require('./../extend')
 
 
 

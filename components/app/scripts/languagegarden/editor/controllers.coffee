@@ -13,7 +13,7 @@
     {EditorPageView} = require('./views/page/base')
     {BuilderToolbar} = require('./views/toolbars/builder')
     {Settings} = require('./models/settings')
-    {LetterMetrics} = require('./../common/svgmetrics')
+    {LetterMetrics} = require('./svgmetrics')
     {ToolbarEnum} = require('./views/toolbars/constants')
 
 

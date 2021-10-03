@@ -2,11 +2,11 @@
 
     _ = require('underscore')
     Hammer = require('hammerjs')
-    utils = require('./../../common/utils')
-    {disableSelection} = require('./../../common/domutils')
+    utils = require('./../utils')
+    {disableSelection} = require('./../domutils')
     {Point} = require('./../../math/points')
     {BaseView} = require('./base')
-    {StatefulClassPrototype} = require('./../../common/stateful')
+    {StatefulClassPrototype} = require('./../stateful')
 
     settings = require('./../../settings')
     {Point} = require('./../../math/points')
