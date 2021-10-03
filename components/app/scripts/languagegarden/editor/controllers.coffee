@@ -87,9 +87,6 @@
             super
             @draggingInfo = {}
 
-            #languagegarden.settings.debug.enabled
-            debugEnabled = options.debugEnabled
-            debugEnabled ?= false
             @dataModel = options.dataModel
             @dataModel ?= new @dataModelClass()
             @model = new @modelClass()
@@ -106,7 +103,6 @@
                 controller: this
                 model: @model
                 dataModel: @dataModel
-                debug: debugEnabled
                 settings: settingsModel
                 colorPalette: editorPalette
                 letterMetrics: @letterMetrics
@@ -118,7 +114,6 @@
                 controller: this
                 model: @model
                 dataModel: @dataModel
-                debug: debugEnabled
                 settings: settingsModel
                 letterMetrics: @letterMetrics
 
@@ -157,11 +152,6 @@
             '.canvas-container': [@canvasView]
             '.text-to-plant-container': @textBoxView
 
-        ###
-        This method is used for 'carving out' model data from controller,
-        which allows reusing model & history objects in the editor when
-        we return from the test player.
-        ###
         carveOutModelObjects: ->
             dataModel: @dataModel.deepClone()
 

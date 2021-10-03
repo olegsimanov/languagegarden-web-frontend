@@ -27,10 +27,6 @@ components/package.json
 components/bower.json
 ------------------------------------------------------------------------------------------------------------------------
 
-bootstrap       Sleek, intuitive, and powerful front-end framework for faster and easier web development.
-
-bootstrap-modal for modal dialogs?
-
 backbone        is a JavaScript library with a RESTful JSON interface and is based on the model–view–controller
                 application design paradigm. Backbone is known for being lightweight, as its only hard dependency is
                 on one JavaScript library,[2] Underscore.js, plus jQuery for use of the full library.[3] It is
@@ -38,19 +34,12 @@ backbone        is a JavaScript library with a RESTful JSON interface and is bas
                 applications (e.g. multiple clients and the server) synchronized.[5]
                 https://devdocs.io/backbone/index
 
-backbone.       https://github.com/jeromegn/Backbone.localStorage/tree/2e6d192038d8384b0e15995d17edf5fbb23eb20c
-localstorage
-
 underscore      Underscore is a JavaScript library that provides a whole mess of useful functional programming helpers
                 without extending any built-in objects. (https://underscorejs.org)
 
                 Underscore provides over 100 functions that support both your favorite workaday functional helpers:
                 map, filter, invoke — as well as more specialized goodies: function binding, javascript templating,
                 creating quick indexes, deep equality testing, and so on.
-
-raven.js        Raven.js is the (legacy) browser JavaScript SDK for Sentry. (https://ravenjs.com)
-                Sentry is a performance monitoring library. You can trace performance issues to poor-performing api
-                calls and slow database queries. (https://sentry.io)
 
 less            It's CSS, with just a little more. (https://lesscss.org)
 

@@ -4,9 +4,6 @@
     {DragBehaviorBase} = require('./base')
     {Point} = require('./../../math/points')
     {BBox} = require('./../../math/bboxes')
-    moveHelpers = require('./../behaviorhelpers/move')
-
-
 
     class MoveBehaviorBase extends DragBehaviorBase
 
@@ -28,7 +25,7 @@
             super
 
             dragInfo = @getDragInfo(view, options)
-            moveHelpers.initDragInfo(dragInfo, @parentView, view, @plantChildType)
+            @initDragInfo(dragInfo, @parentView, view, @plantChildType)
 
             # calculate cursor bbox
             dragInfo.cursorBox = @getMoveCursorBBox(dragInfo, x, y)
@@ -41,17 +38,14 @@
 
             [x, y, dx, dy] = @processCoordinates(x, y, dx, dy, di)
 
-            # if selection is active, prevent unselected views from issuing move
             selected = @parentView.getSelectedViews()
             if selected.length > 0 and view not in selected then return
 
             [x, y, dx, dy] = @applyCursorLimit(di.cursorBox, x, y, dx, dy)
 
-            moveHelpers.moveUsingDragInfo(di, @parentView, dx, dy)
+            @moveUsingDragInfo(di, @parentView, dx, dy)
 
-        ###Calculate positions the cursor can move.###
         getMoveCursorBBox: (dragInfo, x, y) ->
-            # find min/max of all letter area points
             contentBBox = BBox.fromPointList(
                 _.flatten(_.map(
                     dragInfo.movingElements,
@@ -65,8 +59,6 @@
                 ).push(contentBBox).value()
             )
 
-            # offset based on cursor position
-            # assuming the cursor must already be inside the bounding box
             BBox.fromCoordinates(
                 x - contentBBox.leftTop.x,
                 y - contentBBox.leftTop.y,
@@ -74,8 +66,63 @@
                 @containerBBox.rightBottom.y - contentBBox.rightBottom.y + y,
             )
 
-        updateViewOutOfBounds: =>
-            # disable updating the view so no coloring happens
+        initDragInfo: (dragInfo, editor, view, type) ->
+            dragInfo.movingElements = []
+            dragInfo.movingMedia = []
+
+            addView = (view, movingInfos) ->
+                model = view.model
+                movingInfos.push
+                    view: view
+                    model: model
+                    initialAttributes: _.clone(model.attributes)
+
+            addElementView = (view) -> addView(view, dragInfo.movingElements)
+            addMediumView = (view) -> addView(view, dragInfo.movingMedia)
+
+            for view in editor.getSelectedElementViews()
+                addElementView(view)
+
+            for view in editor.getSelectedMediaViews()
+                addMediumView(view)
+
+            if _.size(dragInfo.movingElements) == 0 and _.size(dragInfo.movingMedia) == 0
+                switch type
+                    when 'element'
+                        addElementView(view)
+                    when 'medium'
+                        addMediumView(view)
+
+        moveUsingDragInfo: (dragInfo, editor, dx, dy) ->
+            moveVector = new Point(dx, dy)
+            lastView = null
+            movedCount = 0
+            for elInfo in dragInfo.movingElements
+                element = elInfo.model
+                view = elInfo.view
+                startPoint = elInfo.initialAttributes.startPoint
+                ctrlPoints = elInfo.initialAttributes.controlPoints
+                endPoint = elInfo.initialAttributes.endPoint
+                element.set
+                    startPoint: startPoint.add(moveVector)
+                    controlPoints: (p.add(moveVector) for p in ctrlPoints)
+                    endPoint: endPoint.add(moveVector)
+                view.updateTextPath()
+                movedCount += 1
+                lastView = view
+
+            for elInfo in dragInfo.movingMedia
+                medium = elInfo.model
+                view = elInfo.view
+                centerPoint = elInfo.initialAttributes.centerPoint
+                medium.set
+                    centerPoint: centerPoint.add(moveVector)
+                movedCount += 1
+                lastView = view
+
+            if movedCount == 1
+                lastView.toFront()
+
 
     module.exports =
         MoveBehaviorBase: MoveBehaviorBase

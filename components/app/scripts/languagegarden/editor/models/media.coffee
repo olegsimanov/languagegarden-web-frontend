@@ -23,7 +23,6 @@
             @setDefaultValue('rotateAngle', 0)
 
         set: (key, val, options) ->
-            # normalize input
             if typeof key == 'object'
                 attrs = _.clone(key) or {}
                 options = val
@@ -31,12 +30,10 @@
                 attrs = {}
                 attrs[key] = val
 
-            # apply point wrappers
             for name in ['centerPoint', 'scaleVector', 'maxDeviationVector']
                 if attrs[name]?
                     attrs[name] = Point.fromValue(attrs[name])
 
-            # defensive deep copying of array of textElements, if present.
             for name in ['textElements', 'noteTextContent']
                 if attrs[name]?
                     attrs[name] = deepCopy(attrs[name])
@@ -46,11 +43,9 @@
         toJSON: =>
             data = super
 
-            # dumping Point objects to ordinary object
             for name in ['centerPoint', 'scaleVector']
                 data[name] = data[name].toJSON()
 
-            # defensive deep copying of array of textElements, if present.
             for name in ['textElements', 'noteTextContent']
                 if data[name]?
                     data[name] = deepCopy(data[name])
@@ -93,16 +88,13 @@
                 words.push(wordParts.join(''))
             words
 
-        getContentElementIDs: ->
-            (item.objectId for item in _.flatten(@get('noteTextContent')))
+        getContentElementIDs: -> (item.objectId for item in _.flatten(@get('noteTextContent')))
 
         getContentLength: -> @get('noteTextContent').length
 
         hasContent: -> @getContentLength() > 0
 
-        getTextContent: (noteTextContent) ->
-            # TODO: automerge punctuation by string.replace
-            @getTextWords(noteTextContent).join('\n')
+        getTextContent: (noteTextContent) -> @getTextWords(noteTextContent).join('\n')
 
         canJoinWords: -> @getContentLength() > 1
 
@@ -236,12 +228,6 @@
     class PlantMedia extends PlantChildCollection
         modelFactory: PlantMedium.fromJSON
         objectIdPrefix: 'medium'
-
-        initialize: ->
-            super
-            @findByType = @findByAttribute('type')
-            @findIndexByType = @findIndexByAttribute('type')
-
 
     module.exports =
         PlantMedium: PlantMedium

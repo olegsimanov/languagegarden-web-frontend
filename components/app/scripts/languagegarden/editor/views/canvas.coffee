@@ -35,7 +35,6 @@
     } = require('./../constants')
 
 
-    {enumerate} = require('./../utils')
     {
         disableSelection
         addSVGElementClass
@@ -126,14 +125,10 @@
 
         backgroundEventsHammer: (click, dblclick, drag, dragstart, dragend) ->
 
-            hammerClick = (e) =>
-                click(e, e.center.x, e.center.y)
-            hammerDblClick = (e) =>
-                dblclick(e, e.center.x, e.center.y)
-            hammerDrag = (e) =>
-                drag(e, e.deltaX, e.deltaY, e.center.x, e.center.y)
-            hammerDragstart = (e) =>
-                dragstart(e, e.center.x, e.center.y)
+            hammerClick = (e) => click(e, e.center.x, e.center.y)
+            hammerDblClick = (e) => dblclick(e, e.center.x, e.center.y)
+            hammerDrag = (e) => drag(e, e.deltaX, e.deltaY, e.center.x, e.center.y)
+            hammerDragstart = (e) => dragstart(e, e.center.x, e.center.y)
             Hammer(@backgroundObj.node)
                 .on('tap', hammerClick)
                 .on('doubletap', hammerDblClick)
@@ -438,16 +433,6 @@
             @syncMediaViews()
             this
 
-        renderView: (view, previousModelData) ->
-            model = view.model
-            oldType = previousModelData.type
-            newType = model.get('type')
-            if model instanceof PlantMedium and oldType != newType
-                @removeMediumView(model)
-                @addMediumView(model)
-            else
-                view.render()
-
         getTextDirection: -> @dataModel.get('textDirection') or 'ltr'
 
         isTextRTL: -> @getTextDirection() == 'rtl'
@@ -470,12 +455,10 @@
             super
             @insertView = null
 
-            # editor fields initial values
             @dragged = false
             @dragging = false
             @bgDragging = false
 
-            # listening on own events
             @listenTo(this, 'selectchange', @onSelectChange)
             @listenTo(this, 'change:dragging', (s, v) => @toggleDraggingClass(v))
             @listenTo(this, 'change:bgDragging', (s, v) => @toggleBgDraggingClass(v))
@@ -527,8 +510,7 @@
             addSVGElementClass(@selectionRectObj.node, 'selection-area')
             disableSelection(@selectionRectObj.node)
             @selectionRectObj.hide()
-            @putElementToFrontAtLayer(@selectionRectObj,
-                                      EditorLayers.SELECTION_RECT)
+            @putElementToFrontAtLayer(@selectionRectObj, EditorLayers.SELECTION_RECT)
 
         initializeEditorEl: =>
             @toggleModeClass()
@@ -540,10 +522,6 @@
             @stopListening(this)
             @stopListening(@model)
             super
-
-        ###
-        Editor Fields interface
-        ###
 
         getPaletteToolAction: (toolModel) =>
             toolModel ?= @colorPalette.get('selectedTool')
@@ -561,25 +539,17 @@
             color ?= @model.get('bgColor')
             if isDarkColor(color) then '#000000' else '#FFFFFF'
 
-        toggleModeClass: (mode=@mode, flag=true) =>
-            @$el.toggleClass("#{mode.replace(/\s/g,'-')}-mode", flag)
+        toggleModeClass: (mode=@mode, flag=true) => @$el.toggleClass("#{mode.replace(/\s/g,'-')}-mode", flag)
 
-        toggleDraggingClass: (flag=true) =>
-            @$el.toggleClass("in-dragging", flag)
+        toggleDraggingClass: (flag=true) => @$el.toggleClass("in-dragging", flag)
 
-        toggleBgDraggingClass: (flag=true) =>
-            @$el.toggleClass("in-bg-dragging", flag)
+        toggleBgDraggingClass: (flag=true) => @$el.toggleClass("in-bg-dragging", flag)
 
         setDragging: (dragging) => @setField('dragging', dragging)
 
         setBgDragging: (bgDragging) => @setField('bgDragging', bgDragging)
 
-        ###
-        Adding/Removing/Resetting elements helpers
-        ###
-
-        getElementViewConstructor: (model) ->
-            (options) -> new EditorElementView(options)
+        getElementViewConstructor: (model) -> (options) -> new EditorElementView(options)
 
         getElementViewConstructorOptions: (model) ->
             model: model
@@ -592,10 +562,6 @@
             wasSelected = view.isSelected()
             super(model)
             if wasSelected then @selectChange()
-
-        ###
-        Adding/Removing/Resetting media helpers
-        ###
 
         getMediumViewClass: (model) ->
             if model.get('placementType') == PlacementType.HIDDEN
@@ -616,11 +582,6 @@
             wasSelected = view.isSelected()
             super(model)
             if wasSelected then @selectChange()
-
-
-        ###
-        Event handlers
-        ###
 
         onModeChange: =>
 
@@ -655,25 +616,15 @@
                 @colorPalette.set('colorMode', ColorMode.WORD)
 
             if @mode == EditorMode.EDIT
-                # the selection was made during edition, which means it
-                # wasn't caused by user. therefore we skip the
-                # mode switching part
                 return
 
             if @mode == EditorMode.COLOR
-                # we don't want to switch mode if selection was made when
-                # color mode was active
                 return
 
-            # WARNING: only switch to mode behaviors which do NOT change the
-            # selection when handling 'modeenter' event. In other case there
-            # will be an infinite event loop
             mode = @defaultMode
             if numOfSelections == 1
                 if numOfElemSelections == 1
                     if @getSelectedElements()[0].get('text').length == 1
-                        # one letter word - selecting SCALE mode by default as
-                        # it is the only mode available for such words
                         mode = useIfAvailable(EditorMode.SCALE)
                     else
                         mode = useIfAvailable(EditorMode.STRETCH)
@@ -698,10 +649,6 @@
             switch code
                 when 17 then @multiSelect = true
 
-        ###
-        Element edition interface
-        ###
-
         startInserting: (p) =>
             insertModel = new PlantElement
                 startPoint: p
@@ -711,14 +658,12 @@
             @startEditing(insertModel)
 
         startUpdating: (elemModel) =>
-            # we disable tracking because we temporarily remove the model
             @model.stopTrackingChanges()
             @editElementModelPosition = @model.elements.indexOf(elemModel)
             @model.removeElement(elemModel)
             @startEditing(elemModel)
 
         startEditing: (elemModel) =>
-            # we use reload=true to finish previous edit, if present
             @setMode(EditorMode.EDIT, true)
             @insertView = new EditedElementView
                 paper: @paper
@@ -729,16 +674,10 @@
         finishEditing: (options) =>
             @setDefaultMode()
 
-        # Media
-
-        # click-to-edit text box
         startTextEditing: (textView) =>
             textView.shouldEnterEditMode = true
             @setMode(EditorMode.TEXT_EDIT, true)
 
-        finishTextEditing: (textView) => @setDefaultMode()
-
-        # plant-to-text note
         startPlantToTextMode: (plantToTextModel) ->
             @activePlantToTextObjectId = plantToTextModel.get('objectId')
             @setMode(EditorMode.PLANT_TO_TEXT)
@@ -754,16 +693,7 @@
                     return view
             return null
 
-        ###
-        Element views helper functions
-        ###
-
-        getSelectableViews: =>
-            @getElementViews().concat(@getMediaViews())
-
-        ###
-        Selection interface
-        ###
+        getSelectableViews: => @getElementViews().concat(@getMediaViews())
 
         selectChange: => @trigger('selectchange')
 

@@ -11,7 +11,6 @@
     {PlantMedia} = require('./media')
     {BaseModelWithSubCollections} = require('./base')
     {MediumType} = require('./../constants')
-    {UnitDataCache} = require('../datacache')
 
     SIDEBAR_WIDTH = 120
     DEFAULT_CANVAS_WIDTH = 1004 - SIDEBAR_WIDTH
@@ -104,7 +103,6 @@
         toJSON: (options) ->
             data = super
             if options?.unparse
-                # we are passing unparse option in the sync
                 @unparse(data)
             else
                 data
@@ -136,26 +134,9 @@
             url = pathJoin(urlPrefix, '/')
             url
 
-        getCachePayload: (id) -> null
-
         sync: (method, model, options) ->
-            options ?= {}
-            if method == 'read' and options.success? and @has('id')
-                result = @getCachePayload(@get('id'))
-                if result?
-                    setTimeout((-> options.success(result)), 0)
-                    return
-
-            options.unparse = true
-
-#            if method != 'read'
-#                originalBeforeSend = options.beforeSend
-#                options.beforeSend = (xhr) ->
-#                    csrftoken = $.cookie('csrftoken')
-#                    xhr.setRequestHeader('X-CSRFToken', csrftoken);
-#                    originalBeforeSend?(xhr)
-
-            super
+            console.log("UnitData.sync() called")
+            options.success({})
 
         deepClone: (constructor) ->
             constructor ?= @constructor
@@ -173,10 +154,6 @@
             super
             @setDefaultValue('categories', [])
             @setDefaultValue('levels', [])
-
-        getCachePayload: (id) ->
-            cache = UnitDataCache.getInstance()
-            cache.getLessonPayload(id)
 
     module.exports =
         UnitState: UnitState
