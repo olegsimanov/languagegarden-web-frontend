@@ -1,25 +1,108 @@
     'use strict'
 
-    Hammer = require('hammerjs')
+    require('raphael')
     _ = require('underscore')
-    {
-        DummyMediumView
-        HTMLStylablePrototype
-        VisibilityPrototype
-    } = require('./../../../common/views/media/base')
+    $ = require('jquery')
+    {BBox} = require('./../../../math/bboxes')
+    {PlantChildView} = require('../../../common/views/base')
+    {VisibilityType, PlacementType} = require('./../../../editor/constants')
+    {addSVGElementClass, removeSVGElementClass} = require('./../../../common/domutils')
 
 
-    ###Adds view selectability.
+    class MediumViewBase extends PlantChildView
 
-    Provides: select/isSelected methods
+        getPlacementType: -> PlacementType.CANVAS
 
-    Requires implementations of styling methods:
-    * addElementCSS,
-    * removeElementCSS.
+        toFront: =>
 
-    See languagegarden.common.views.media.base for interfaces implementing them.
+    class DummyMediumView extends MediumViewBase
 
-    ###
+
+    class HtmlMediumView extends MediumViewBase
+        width: 200
+        height: 100
+        className: 'html-media-float'
+        shouldAppendToContainer: true
+
+        initialize: (options) =>
+            super
+            @containerEl = options.containerEl
+            @width ?= options.width if options.width
+            @height ?= options.height if options.height
+            @listenTo(@model, 'change:centerPoint', @onPositionChange)
+
+        remove: =>
+            delete @containerEl
+            super
+
+        onPositionChange: -> @setPosition()
+
+        setPosition: (x, y) =>
+            [x, y] = @model.get('centerPoint').toArray() if not (x? and y?)
+            @$el.css
+                left: x
+                top: y
+            [x, y]
+
+        getBBox: =>
+            clientBBox = BBox.fromClientRect(@el.getBoundingClientRect())
+            @parentView.transformToCanvasBBox(clientBBox)
+
+        intersects: (bbox) => @getBBox().intersects(bbox)
+
+
+    class SvgMediumView extends MediumViewBase
+
+        initialize: (options) =>
+            super(options)
+            @paper = options.paper
+
+        remove: =>
+            delete @paper
+            super
+
+
+    VisibilityPrototype =
+
+        __required_interface_methods__: [
+            'getElementNode',
+            'addElementCSS',
+            'removeElementCSS',
+        ]
+
+        updateVisibility: ->
+
+            marked = @model.get('marked')
+            if marked in [false, true]
+                className = if marked then 'marked' else VisibilityType.FADED
+            else
+                className = @model.get('visibilityType') or VisibilityType.DEFAULT
+
+            elemNode = @getElementNode()
+            for own key, value of VisibilityType
+                @removeElementCSS(elemNode, value)
+            @addElementCSS(elemNode, className)
+
+        setVisibilityType: (value=VisibilityType.VISIBLE, options) ->
+            @model.set('visibilityType', value, options)
+
+
+    SVGStylablePrototype =
+
+        addElementCSS: (node, cssCls) ->
+            addSVGElementClass(node, cssCls)
+
+        removeElementCSS: (node, cssCls) ->
+            removeSVGElementClass(node, cssCls)
+
+
+    HTMLStylablePrototype =
+
+        addElementCSS: (node, cssCls) -> $(node).addClass(cssCls)
+
+        removeElementCSS: (node, cssCls) -> $(node).removeClass(cssCls)
+
+
     SelectablePrototype =
 
         __required_interface_methods__: [
@@ -51,7 +134,6 @@
         isSelected: -> @selected or false
 
 
-    ###Medium editor events compatibility (see ModeBehavior).###
     EventDispatchingPrototype =
 
         __required_interface_methods__: [
@@ -70,7 +152,6 @@
                     false
 
 
-    ###Adds method allowing view to plug into editor events.###
     EventBindingPrototype =
 
         __required_interface_methods__: [
@@ -80,9 +161,7 @@
 
         hammerEventOptions: {}
 
-    BaseEditorDummyMediumView = DummyMediumView
-    .extend(HTMLStylablePrototype)
-    .extend(VisibilityPrototype)
+    BaseEditorDummyMediumView = DummyMediumView.extend(HTMLStylablePrototype).extend(VisibilityPrototype)
 
 
     EditorDummyMediumView = class extends BaseEditorDummyMediumView
@@ -97,6 +176,7 @@
 
 
     module.exports =
+        HtmlMediumView: HtmlMediumView
         SelectablePrototype: SelectablePrototype
         EventDispatchingPrototype: EventDispatchingPrototype
         EventBindingPrototype: EventBindingPrototype

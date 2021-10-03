@@ -4,7 +4,7 @@
     {MediumType, PlacementType} = require('./../../editor/constants')
     {BaseView} = require('./base')
     {DummyMediumView} = require('./../../editor/views/media/base')
-    {TextToPlantView} = require('./media/text_to_plant')
+    {TextToPlantView} = require('../../editor/views/media/text_to_plant')
     {Point} = require('./../../math/points')
 
 
