@@ -42,7 +42,7 @@
     } = require('./../../common/domutils')
     {LetterMetrics} = require('./../../common/svgmetrics')
     {DummyMediumView} = require('./media/base')
-    {ElementView} = require('./../../common/views/elements')
+    {ElementView} = require('./elements')
     {Point} = require('./../../math/points')
     {BBox} = require('./../../math/bboxes')
     {PlantMedium} = require('./../models/media')
