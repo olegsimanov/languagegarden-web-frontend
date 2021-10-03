@@ -12,25 +12,10 @@
     {BaseModelWithSubCollections} = require('./base')
     {MediumType} = require('./../constants')
     {UnitDataCache} = require('../datacache')
-#    require('backbone.localStorage')
 
-#    Backbone.sync = (method, model, options) ->
-#        console.log('calling: (' + method + ', ' + model + ', ' + options)
-#        syncDfd = Backbone.$.Deferred()
-#        syncDfd.resolve()
-
-    # This is based on IPad I resolution
     SIDEBAR_WIDTH = 120
     DEFAULT_CANVAS_WIDTH = 1004 - SIDEBAR_WIDTH
     DEFAULT_CANVAS_HEIGHT = 462
-
-
-    wrapError = (model, options) ->
-        error = options.error
-        options.error = (resp) ->
-            error?(model, resp, options)
-            model.trigger('error', model, resp, options)
-
 
     class UnitState extends BaseModelWithSubCollections
         subCollectionConfig: [
@@ -41,7 +26,6 @@
             collectionClass: PlantMedia
         ]
 
-        # add childchange to support nesting in stations collection
         forwardedEventNames: [
             'childchange',
         ].concat(BaseModelWithSubCollections::forwardedEventNames)
@@ -73,8 +57,6 @@
 
         removeElement: (model, options) -> @elements.remove(model, options)
 
-        addMedium: (model, options) -> @media.add(model, options)
-
         removeMedium: (model, options) -> @media.remove(model, options)
 
         onSubCollectionChange: (sender, ctx) ->
@@ -88,7 +70,6 @@
             modelClass: UnitState
         ]
 
-        # add childchange to support nesting in stations collection
         forwardedEventNames: [
             'childchange',
         ].concat(BaseModelWithSubCollections::forwardedEventNames)
@@ -113,11 +94,6 @@
             @setDefaultValue('canvasWidth', DEFAULT_CANVAS_WIDTH)
             @setDefaultValue('canvasHeight', DEFAULT_CANVAS_HEIGHT)
             @setDefaultValue('textDirection', 'ltr')
-
-        validate: (attrs, options) ->
-            if not (attrs.textDirection in ['ltr', 'rtl'])
-                return 'invalid textDirection'
-            return
 
         get: (attr) ->
             if attr in @getSubCollectionNames()
@@ -165,14 +141,9 @@
         sync: (method, model, options) ->
             options ?= {}
             if method == 'read' and options.success? and @has('id')
-                # special case for fetching lesson/activity - trying to find
-                # the payload in cache
                 result = @getCachePayload(@get('id'))
                 if result?
-                    # success callback was constructed in Backbone.Model::fetch
-                    # so we use it to update the model
                     setTimeout((-> options.success(result)), 0)
-                    # TODO: mock XHR object which is returned by sync
                     return
 
             options.unparse = true
@@ -192,7 +163,6 @@
             modelCopy
 
     class LessonData extends UnitData
-#        localStorage: new Backbone.LocalStorage("LessonData")
         urlRoot: -> config.getUrlRoot(settings.apiResourceNames.lessons)
         forwardedAttrsMap: _.extend({}, UnitData::forwardedAttrsMap,
             'categories': 'categories'

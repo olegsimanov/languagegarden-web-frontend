@@ -66,15 +66,10 @@
         endControllerOptions: (options) ->
             editorModelObjects = _.clone(@controller.carveOutModelObjects())
             editorModelObjects.sidebarState = @controller.sidebarState.deepClone()
-            dataModel = editorModelObjects.dataModel
-
             editorModelObjects
 
         startControllerOptions: ->
             editorModelObjects = @controller.carveOutModelObjects()
-            # we resetting the data model to force it to reload
-            # this is the easiest way to restore the data model if someone
-            # discarded the changes done in the builder
             editorModelObjects.dataModel = null
             _.extend({}, editorModelObjects,
                 sidebarState: @controller.sidebarState.deepClone()

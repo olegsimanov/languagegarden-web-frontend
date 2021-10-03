@@ -71,8 +71,6 @@
             y = @rightBottom.y - margin if @rightBottom.y < y - margin
             [x, y]
 
-        # modifying operations. use with care!
-
         applyToPoints: (applicator) ->
             applicator(@leftTop)
             applicator(@rightBottom)
@@ -82,26 +80,17 @@
 
         scale: (vector) -> @applyToPoints((p) -> p.vecMulSelf(vector))
 
-        # CLASS METHODS
-
         @newEmpty = => new this(new Point(), new Point())
 
-        @fromSVGRect = (rect) =>
-            new this(new Point(rect.x, rect.y),
-                     new Point(rect.x + rect.width, rect.y + rect.height))
+        @fromSVGRect = (rect) => new this(new Point(rect.x, rect.y), new Point(rect.x + rect.width, rect.y + rect.height))
 
-        @fromClientRect = (rect) =>
-            new this(new Point(rect.left, rect.top),
-                     new Point(rect.right, rect.bottom))
+        @fromClientRect = (rect) => new this(new Point(rect.left, rect.top), new Point(rect.right, rect.bottom))
 
-        @fromCoordinates = (x1, y1, x2, y2) =>
-            new this(new Point(x1, y1), new Point(x2, y2))
+        @fromCoordinates = (x1, y1, x2, y2) => new this(new Point(x1, y1), new Point(x2, y2))
 
-        @fromXYWH = (x, y, width, height) =>
-            new this(new Point(x, y), new Point(x + width, y + height))
+        @fromXYWH = (x, y, width, height) => new this(new Point(x, y), new Point(x + width, y + height))
 
-        @fromCenterPoint = (centerPoint, devPoint) =>
-            new this(centerPoint.add(devPoint.neg()), centerPoint.add(devPoint))
+        @fromCenterPoint = (centerPoint, devPoint) => new this(centerPoint.add(devPoint.neg()), centerPoint.add(devPoint))
 
         @fromPointList = (l) =>
             if l.length == 0
@@ -133,21 +122,12 @@
                 @fromCoordinates(_.min(leftList), _.min(topList),
                                  _.max(rightList), _.max(bottomList))
 
-        ###Creates BBox from an html DOM element.
-        @param el (string or jquery object) The DOM to get dimensions from.
-        @param absolute (boolean) Should the BBox be absolute to the DOM's
-        parent, topLeft becoming 0, 0 point.
-        ###
         @fromHtmlDOM = (el, absolute=false) =>
             el = $(el) if _.isString(el)
             if absolute
                 @fromXYWH(0, 0, el.width(), el.height())
             else
                 @fromClientRect(el[0].getBoundingClientRect(el))
-
-        @transformed = (bbox, transform) =>
-            @fromPointList((transform(p) for p in bbox.getBoundaryPoints()))
-
 
     module.exports =
         BBox: BBox

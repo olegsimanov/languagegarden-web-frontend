@@ -31,11 +31,6 @@
             className: 'tooltip-plant-to-text-remove icon icon_erase'
             help: 'Remove last word'
         ,
-        #     id: 'plant-to-text-clear'
-        #     actionClass: plantToTextActions.Clear
-        #     className: 'tooltip-plant-to-text-clear'
-        #     help: 'Remove all words'
-        #
         ]
 
 

@@ -6,12 +6,8 @@
     {Point} = require('./../../math/points')
     {Path} = require('./../../math/bezier')
     {
-        enumerate
-        isSubset
         structuralEquals
         sum
-        isArabicLetter
-        areLettersJoinable
         wrapLetterWithZWJ
     } = require('./../utils')
     {
@@ -66,7 +62,6 @@
 
         getTextYOffset: (invalidate=false) ->
             if invalidate or not @textYOffset?
-                #TODO: why 5? investigate it.
                 @textYOffset = @getMaxLetterHeight() / 5
             @textYOffset
 
@@ -187,7 +182,6 @@
 
         getLetterStartPathPositions: ->
             letters = @getLetters()
-            numOfLetters = letters.length
             spacePerElement = @getSpaceLength()
             lengths = []
             path = @getPath()
@@ -214,7 +208,6 @@
 
         getLetterMiddlePathPositions: ->
             letters = @getLetters()
-            numOfLetters = letters.length
             fontSize = @getFontSize()
             spacePerElement = @getSpaceLength()
             lengths = []
@@ -251,7 +244,6 @@
             letters = @letters
             if letters.length == 0
                 return []
-            fontSize = @getFontSize()
             mat = @getTransformMatrix()
             path = @getPath()
 
@@ -415,10 +407,6 @@
 
             @updateEachTime()
 
-        reCreate: ->
-            @remove()
-            @create()
-
 
     class TextPath extends BaseTextPath
 
@@ -543,7 +531,6 @@
 
 
     class SyntheticTextPath extends BaseTextPath
-        ### Workaround which uses SVG texts for each letter ###
 
         initialize: (options) ->
             super

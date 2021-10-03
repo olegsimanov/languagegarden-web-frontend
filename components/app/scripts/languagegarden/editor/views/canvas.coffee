@@ -102,8 +102,6 @@
                 'Scale', 'ShiftX', 'ShiftY'])
             @setupEventForwarding(@parentView, eventNames)
 
-        metricKey: => "plant-#{@model.id or 'new'}"
-
         settingsKey: -> 'plant-view'
 
         initializeLayers: ->
@@ -242,7 +240,6 @@
                 return
             leaveHandler = @getModeBehaviorHandler('modeleave', oldMode)
             enterHandler = @getModeBehaviorHandler('modeenter', mode)
-            $el = $(@el)
             leaveHandler(mode) if leaveHandler?
             @toggleModeClass(@mode, false)
             @mode = mode
@@ -252,8 +249,6 @@
             @setField('mode', mode)
 
         setDefaultMode: -> @setMode(@defaultMode)
-
-        setNoOpMode: -> @setMode(CanvasMode.NOOP)
 
         updateBgColor: ->
             @$canvasEl.css('backgroundColor', @model.get('bgColor'))
@@ -292,12 +287,6 @@
                 @trigger("change", this)
                 @trigger("change:#{name}", this, value, oldValue)
 
-        setDebug: (debug=true) =>
-            @setField('debug', debug)
-            for name, view of @elementViews
-                view.reCreateTextPath()
-            @insertView?.reCreateTextPath()
-
         setDragging: (dragging) -> @setField('dragging', dragging)
 
         setBgDragging: (bgDragging) -> @setField('bgDragging', bgDragging)
@@ -321,17 +310,6 @@
                         Point.fromValue(options.endPoint))
                 ]
             @model.addElement(options)
-
-        addPlantElements: (texts, options) ->
-            step = options.fontSize or @settings.get('fontSize')
-            for [i, text] in enumerate(texts)
-                opts = _.clone(options)
-                opts.text = text
-                opts.startPoint = [
-                    opts.startPoint[0],
-                    opts.startPoint[1] + i * step,
-                ]
-                @addPlantElement(opts)
 
         getElementViewConstructor: (model) ->
             (options) => new ElementView(options)

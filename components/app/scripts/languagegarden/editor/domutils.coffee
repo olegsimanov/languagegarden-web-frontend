@@ -72,7 +72,6 @@
             hits = []
 
         clickBBox = BBox.fromSVGRect(sr)
-        negatedSvgNodeOffset = Point.fromObject(so).negateSelf()
         predicate = (node) ->
             if node.tagName != tagName
                 false
@@ -111,8 +110,6 @@
         value = classNames.join(' ')
         node.setAttribute('class', value)
 
-    # adds CSS class to SVG element. jquery does not work here, so we use
-    # the native DOM methods.
     addSVGElementClass = (node, className) ->
         classNames = getSVGElementClasses(node)
         if not (className in classNames)
@@ -131,9 +128,6 @@
         else
             removeSVGElementClass(node, className)
 
-    getPointString = (point) -> "#{point.x} #{point.y}"
-
-    # generates SVG compilant path string
     getCurvedPathString = (startPoint, controlPoints, endPoint) ->
         stringList = []
         stringList.push('M')
@@ -156,7 +150,6 @@
         if node.selectionStart?
             node.selectionStart
         else if not document.selection?
-            # no selection, so no caret
             0
         else
             # for IE
@@ -206,21 +199,12 @@
                 img.onerror = (e) -> options.onerror(e, @src)
             img.src = "#{staticUrl}#{imageUrl}"
 
-    ### Preload images specified by their urls.
-    @param imageUrls List of image urls
-    @param options Additional options which ma include:
-        delay - Time in miliseconds to delay preload by,
-        staticUrl - Prefix to add to prepend to the image url.
-        onload, onerror - Callbacks (event, imgSrc).
-
-    ###
     preload = (imageUrls, options) =>
         if options?.delay?
             _.delay (-> _preloadCore(imageUrls, options)), options.delay
         else
             _preloadCore(imageUrls, options)
 
-    ###Selects whole contenteditable content.###
     selectAllContenteditableContent = (el) ->
         # http://stackoverflow.com/questions/3805852/
         # select-all-text-in-contenteditable-div-when-it-focus-click

@@ -85,12 +85,6 @@
             stateModel = @collection?.getParentModel()
             stateModel.elements.findByObjectId(objectId)
 
-        isInPlantToTextMode: -> @get('inPlantToTextMode')
-
-        ###
-        Should return list of strings, is considered only with 'text' value of
-        model's noteTextContent.
-        ###
         getTextWords: (noteTextContent)->
             noteTextContent ?= @get('noteTextContent')
             words = []
@@ -99,9 +93,6 @@
                 words.push(wordParts.join(''))
             words
 
-        ###
-        Returns objectIds of elements added to this model.
-        ###
         getContentElementIDs: ->
             (item.objectId for item in _.flatten(@get('noteTextContent')))
 
@@ -123,10 +114,6 @@
             else
                 false
 
-        ###General purpose method for changing noteTextContext.
-        Copies the value, feeds it to the given callback and saves the result.
-        Does a copy, so that the value is treated as updated.
-        ###
         updateNoteTextContent: (fun) ->
             oldContent = @get('noteTextContent')
             newContent = deepCopy(oldContent)
@@ -157,20 +144,6 @@
                 @trigger('change', this)
                 @trigger('change:noteTextContent', newContent)
 
-        ###Store plant element to noteTextContent. It should contain objects
-        representing strings/objects to join eg:
-        [
-            [{'objectId': 'pid_1', 'text': 'Some'}],
-            [ # effect of a join
-                {'objectId': 'pid_24', 'text': 'cat'},
-                {'objectId': 'pid_25', 'text': 's'},
-            ],
-            [{'objectId': 'pid_14', 'text': 'like'}],
-        ]
-
-        Nesting is required by the text join operation. The objectId is required
-        only for deselecting element views.
-        ###
         addElement: (elemModel) ->
             @updateNoteTextContent (textContent) =>
                 segmentObj =
@@ -182,11 +155,6 @@
 
                 @noteTextContentMagicalJoin(textContent, oldTextContent)
 
-        ###
-        "Magical glue"
-
-        This will modify the textContent list in-place.
-        ###
         noteTextContentMagicalJoin: (textContent, oldTextContent) ->
             okNoteTextContent = @get('okNoteTextContent')
 
@@ -200,7 +168,6 @@
             newText = @getTextContent(textContent)
             joinedText = @getTextContent(textContentJoined)
 
-            # "Magical glue"
             if (startsWith(okText, oldText) and
                     not startsWith(okText, newText) and
                     startsWith(okText, joinedText))
@@ -264,17 +231,6 @@
                         text: character
                         objectId: null
                     ])
-
-
-    class UnitImage extends PlantMedium
-        # Replace filename.png with filename_size.png
-        # Currently we support 'medium' and 'small' sizes
-        getUrlForSize: (size) ->
-            url = @get('url')
-            if url
-                url.replace(/.[^.]+$/, (match) -> "_#{size}#{match}")
-            else
-                null
 
 
     class PlantMedia extends PlantChildCollection

@@ -3,8 +3,6 @@
     _ = require('underscore')
 
 
-    # the extend from http://backbonejs.org/docs/backbone.html
-    # on steroids + parent argument
     extendHelper = (parent, protoProps, staticProps) ->
 
         if protoProps && _.has(protoProps, 'constructor')

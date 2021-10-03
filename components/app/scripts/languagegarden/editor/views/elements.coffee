@@ -22,9 +22,6 @@
     {Point} = require('./../../math/points')
     {BBox} = require('./../../math/bboxes')
     {
-        enumerate
-        isSubset
-        structuralEquals
         sum
         wrapLetterWithZWJ
     } = require('./../utils')
@@ -50,7 +47,6 @@
             @paper = options.paper or @parentView?.paper
             @textPath = null
             @letterAreas = []
-            letterAreasDirty = false
             @textDirty = false
             @controlPointObjs = null
             @textXOffset = 0
@@ -63,11 +59,6 @@
             @isOutOfBounds = false
             @listenTo(@, 'change:isOutOfBounds', @onIsOutOfBoundsChange)
             @listenTo(@letterMetrics, 'cache:invalidate', @onMetricsCacheInvalidate)
-
-            if $.browser.webkit
-                @tryForceRepaint = @forceRepaint
-            else
-                @tryForceRepaint = ->
 
         onModelBind: ->
             super
@@ -310,9 +301,6 @@
 
         intersects: (bbox) -> @getIntersectionInfo(bbox).intersects
 
-        calculateNormal: (p1, p2) ->
-            Point.getNormal(p1, p2)
-
         applyTransformMatrix: (matrix) ->
             @textPath?.applyTransformMatrix(matrix)
 
@@ -344,7 +332,6 @@
             if letters.length == 0
                 return []
             [pathStart, pathControls..., pathEnd] = @getPoints()
-            fontSize = @getFontSize()
             mat = @model.get('transformMatrix')
             path = @getPath()
 
@@ -640,13 +627,6 @@
             @textPath
                 .setOpacity(opacity)
                 .updateOpacity()
-
-
-    class SettingsElementView extends ElementView
-
-        putTextPathToFront: ->
-
-        putLetterAreaToFront: (letterArea) ->
 
 
     class BaseEditorElementView extends ElementView

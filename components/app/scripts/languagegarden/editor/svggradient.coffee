@@ -6,10 +6,7 @@
     require('jquery.browser')
     {Point} = require('./../math/points')
     {SVGWrappedElement} = require('./svgbase')
-    {enumerate} = require('./utils')
     {
-        getQuadrilateralPathString
-        retrieveId
         addSVGElementClass
         removeSVGElementClass
     } = require('./domutils')
@@ -105,10 +102,8 @@
                 distributeOffsetDelta(1.0 - endOffset,
                                       [0...multiColorSizes.length].reverse())
             else
-                # use the sizes in range [startOffset, endOffset]
                 currentOffset = startOffset
             colorInfos = []
-            gradientColors = []
 
             for [mc, offsetIncrease] in _.zip(multiColor, offsetIncreases)
                 colorInfos.push
@@ -124,16 +119,6 @@
             @multiColor = multiColor
 
 
-    ###
-    Due to a bug in webkit-based browsers, the gradient is inproperly placed
-    at tspan element, even when we use gradientUnits="userSpaceOnUse"
-    this is an workaround gradient class, which performs some hackish
-    operations on gradient transform matrix, to achieve expected result.
-
-    Status of this bug:
-
-    https://code.google.com/p/chromium/issues/detail?id=242853
-    ###
     class WebkitShiftedMultiColorGradient extends MultiColorGradient
 
         initialize: (options) ->

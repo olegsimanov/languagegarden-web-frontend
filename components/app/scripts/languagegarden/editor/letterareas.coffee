@@ -20,7 +20,6 @@
         bigLeftBottom: ['p']
         bigRightBottom: ['q']
 
-    # TODO: these values are purely experimental
     smallFactor = 0.5
     bigFactor = 0.82
     sideFactor = 0.45
@@ -115,7 +114,6 @@
         a4 = startPoint.sub(smallOrthogonal)
         [[a1, a2, a3, a4], getQuadrilateralPathString]
 
-    # letter -> letter area path function mapping
     mapping = {}
     mapping[' '] = getSmall
 
@@ -127,8 +125,6 @@
 
     for l in getCharRange('a', 'z')
         mapping[l] = getSmall
-
-    # specific letters override
 
     for l in smallLetters.bigLeftTop
         mapping[l] = getBigLeftTop
@@ -170,11 +166,7 @@
 
 
     _letterContext = (letter, startPoint, endPoint, orthogonal) ->
-        # if the letter area path string function was not found, use
-        # the worst case (whole area should be covered)
         fun = mapping[letter] or getFull
-        # each get<lettertype> handler should return points and a callback for
-        # generating the path
         [pts, pathGenerator] = fun(startPoint, endPoint, orthogonal)
 
     module.exports =
@@ -191,8 +183,6 @@
                 pathPoints: pts
             }
 
-
-        # public exports
         getBigUpperPath: getTransformedPath(bigFactor)
         getBigLowerPath: getTransformedPath(-bigFactor)
         getSmallUpperPath: getTransformedPath(smallFactor)

@@ -6,14 +6,8 @@
     $ = require('jquery')
     {HtmlMediumView} = require('./base')
     {PlacementType} = require('../../constants')
-    {trim, isWord, isWordOrEmpty, chopIntoWords} = require('./../../utils')
+    {isWord, isWordOrEmpty, chopIntoWords} = require('./../../utils')
     {BBox} = require('./../../../math/bboxes')
-
-
-    class TextToPlantPlaceholderView extends HtmlMediumView
-        className: 'text-to-plant-box text-to-plant-box__hidden'
-
-        getPlacementType: -> PlacementType.UNDERSOIL
 
 
     class TextToPlantView extends HtmlMediumView
@@ -30,10 +24,6 @@
         initialize: (options) ->
             super
             @setEditableMode(false)
-
-        onControllerBind: ->
-            super
-            @listenTo(@controller, 'change:dragging', @onDraggingChange)
 
         setEditableMode: (enabled=true) ->
             eventHandlerDict =
@@ -67,8 +57,6 @@
                     @elHammer.off('pan', @onDragMove)
                     @elHammer.off('panend', @onDragEnd)
                 @$el.off(eventHandlerDict)
-
-            @editingEnabled = enabled
 
         setSelectableMode: (enabled=true) ->
             unselectable = if enabled then 'off' else 'on'
@@ -422,9 +410,6 @@
 
             @parentView.model.startTrackingChanges()
             delete @_dragInfo
-
-        onDraggingChange: (controller, value, oldValue) ->
-            @setEditableMode(not value)
 
         render: ->
             super

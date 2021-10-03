@@ -14,10 +14,6 @@
         getSubCollectionNames: -> @_subCollectionNames
         getSubCollections: ->  @_subCollections
 
-        ###Initialize all subcollections according to subCollectionConfig.
-        Collections are required on first this.set call, thus thus method must
-        be called earlier.
-        ###
         createSubCollections: ->
             for subColCfg in @subCollectionConfig
                 if not @[subColCfg.name]?
@@ -40,9 +36,6 @@
             delete @_subCollections
             delete @_subCollectionNames
 
-        ###Additional collection setup, requires collections to already exist
-        on the model.
-        ###
         initializeSubCollections: ->
             for subCollection in @getSubCollections()
                 @initializeSubCollection(subCollection)
@@ -62,19 +55,11 @@
             # TODO: add change event?
             return
 
-        ###Returns dictionary of subcollection's toJSON results.
-        @param data If provided, will be used instead of an empty object.
-
-        ###
         subCollectionsToJSON: (data={}) ->
             for subCollectionName in @getSubCollectionNames()
                 data[subCollectionName] = @[subCollectionName].toJSON()
             data
 
-        ###Retrieves objectIds of any model in subcollections.
-        Searches for getObjectIds methods on inspected nested objects which are
-        used as an override.
-        ###
         getObjectIds: ->
             objectIds = []
             for subCollection in @getSubCollections()
@@ -94,7 +79,6 @@
                             objectIds.push(objId) if objId?
             _.flatten(objectIds)
 
-        ###Call from your set method to allow settings of collection items.###
         subCollectionSet: (attrs, options) ->
             for subCollectionName in @getSubCollectionNames()
                 if attrs[subCollectionName]?

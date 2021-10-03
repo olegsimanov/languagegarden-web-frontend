@@ -27,21 +27,7 @@ class UnitDataCache extends EventObject
         @lessons = {}
         @state = STATE_READY
 
-    isReady: -> @state == STATE_READY
-
-    _triggerChange: (options) ->
-        silent = options?.silent or false
-        if not silent
-            @trigger('populate', this)
-        return
-
-    populateLesson: (lessonData, options) ->
-        @lessons[lessonData.id] = deepCopy(lessonData)
-        @_triggerChange(options)
-
     getLessonPayload: (lessonId) -> @lessons[lessonId] or null
-
-    getLessonIds: -> _.keys(@lessons)
 
     clear: ->
         @lessons = {}

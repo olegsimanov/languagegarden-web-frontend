@@ -38,11 +38,6 @@
             @listenTo(@model.media, 'change:inPlantToTextMode',
                 @onMediumInPlantToTextModeChanged)
 
-        onModelUnbind: ->
-            @stopListening(@model.media)
-            @removeAllMediaViews()
-            super
-
         areViewsSynced: (viewsDict, collection) ->
             _.isEqual(_.keys(viewsDict or {}), _.pluck(collection.models, 'cid'))
 
@@ -177,10 +172,6 @@
             super
             @mode = EditorMode.MOVE
 
-        ###
-        Adding/Removing/Resetting media helpers
-        ###
-
         getMediumViewClass: (model) ->
             switch model.get('type')
                 when MediumType.TEXT_TO_PLANT
@@ -203,7 +194,6 @@
 
         setDefaultMode: ->
 
-        # plant-to-text note
         startPlantToTextMode: (plantToTextModel) ->
             @activePlantToTextObjectId = plantToTextModel.get('objectId')
             @setMode(EditorMode.PLANT_TO_TEXT)

@@ -105,7 +105,6 @@
 
         model: Tool
 
-        ###Helper for creating tools from simple objects.###
         createTools: (toolInfos) =>
             tools = []
             for detail in toolInfos
@@ -135,8 +134,6 @@
             @trigger("moved", tool, newIndex, oldIndex)
             tool.trigger("moved", @, newIndex, oldIndex)
 
-        getEditable: => @filter (t) => t.editable
-
         lastColorToolIndex: =>
             index = 0
             @some (tool) =>
@@ -146,12 +143,6 @@
                 else
                     true
             index
-
-        addColorTool: (tool, options={}) =>
-            index = @lastColorToolIndex()
-            options = _.extend({at: index}, options)
-            @add(tool, options)
-
 
     class Palette extends BaseModel
 
@@ -168,17 +159,11 @@
         getToolForLabel: (label) => @tools.find((i) => i.get('label') == label)
         getColorForLabel: (label) => @getToolForLabel(label)?.get('color')
 
-    ###Handles selection of tools - ensures there is only a single tool
-    selected at a time.
-    ###
     class EditorToolCollection extends ToolCollection
 
         initialize: (options) =>
             super
             @listenTo(@, 'change:selected', @onToolSelectedChange)
-
-        cleanup: =>
-            @stopListening(@)
 
         onToolSelectedChange: (sender, isSelected) =>
             if isSelected
@@ -209,13 +194,9 @@
             @stopListening(@)
             super
 
-        ###Tool was selected by setting @selectedTool.###
         onSelectedToolChange: (sender, selectedTool, options) =>
             selectedTool.set('selected', true)
 
-        ###Tool was selected by setting tool.set('selected', true) or
-        deselected by the collection.
-        ###
         onToolSelectedChange: (sender, isSelected, options) =>
             @set('selectedTool', sender) if isSelected
 

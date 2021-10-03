@@ -11,18 +11,15 @@
 
     isSubset = (a, b) -> _.all(a, (x) -> x in b)
 
-    # String.prototype.trim is not always defined
     ltrim = (text) -> text.replace(/^\s+/, '')
 
     rtrim = (text) -> text.replace(/\s+$/, '')
 
     trim = (text) -> text.replace(/^\s+|\s+$/g, '')
 
-    startsWith = (text, prefix) ->
-        text.substring(0, prefix.length) == prefix
+    startsWith = (text, prefix) -> text.substring(0, prefix.length) == prefix
 
-    capitalize = (text) ->
-        "#{text.charAt(0).toUpperCase()}#{text.slice(1)}"
+    capitalize = (text) -> "#{text.charAt(0).toUpperCase()}#{text.slice(1)}"
 
     padLeft = (value, length, pad='0') ->
         str = '' + value
@@ -38,9 +35,7 @@
 
     base64UrlEncode = (str) ->
         b64str = btoa(str)
-        # replace '+'' -> '-', '\' -> '_'
         b64str = b64str.replace(/\+/g,'-').replace(/\//g,'_')
-        # remove trailing '='
         b64str = b64str.split('=')[0]
         b64str
 
@@ -97,12 +92,6 @@
         else value
 
 
-    ###
-    Generates array of ranges (which is array of 2-element arrays)
-    using given positions. the given positions will be reduced
-    to unique ordered list of numbers
-    in range [0, len).
-    ###
     generateRanges = (positions, len) ->
         positions = _.uniq(_.sortBy(positions, _.identity), true)
         positions = _.filter(positions, (x) => 0 < x and x < len)
@@ -111,8 +100,7 @@
 
         _.zip(startPositions, endPositions)
 
-    getCharRange = (first, last) ->
-        (String.fromCharCode(code) for code in [first.charCodeAt(0)..last.charCodeAt(0)])
+    getCharRange = (first, last) -> (String.fromCharCode(code) for code in [first.charCodeAt(0)..last.charCodeAt(0)])
 
     rgbToHex = (r, g, b) =>
         toHexString = (a) ->
@@ -213,8 +201,6 @@
                 acc.push(c)
         acc.join('')
 
-    # The JSON.stringify does not have to replace non-ascii chars to the
-    # '\uXXXX' equivalent. This function enforces this.
     stringifyToASCIIJSON = (value, replacer, space) ->
         jsonString = JSON.stringify(value, replacer, space)
         if isASCII(jsonString)
@@ -222,16 +208,8 @@
         else
             replaceWithUnicodeSequences(jsonString)
 
-    # whitespace & special chars which should be splitted
     nonalphaRegExp = /[ \xa0\n\t?!,.:;]/
 
-    ###
-    Splits the text by whitespaces and special chars, retaining the whitespaces
-    and special chars in the result. by default the spaces are replaced by
-    the hard spaces (\xa0).
-
-    For instance 'foo bar!' -> ['foo', '\xa0', 'bar', '!'].
-    ###
     chopIntoWords = (text) ->
         splits = []
         while true
@@ -268,7 +246,6 @@
 
     fromHex = (hex) -> parseInt(hex, 16)
 
-    # according to http://en.wikipedia.org/wiki/Arabic_script_in_Unicode
     arabicRanges = [
         [fromHex('0600'), fromHex('06FF')]
         [fromHex('0750'), fromHex('077F')]

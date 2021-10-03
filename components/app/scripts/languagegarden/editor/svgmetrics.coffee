@@ -23,7 +23,7 @@
             'overflow': 'hidden'
             'z-index': -1000
         .appendTo(document.body)
-        paper = Raphael($measuringDiv.get(0), '100%', '100%')
+        Raphael($measuringDiv.get(0), '100%', '100%')
 
 
     removeMeasuringPaper = (paper) ->
@@ -97,13 +97,10 @@
                 @trigger('cache:invalidate', this)
 
         getScaleFactor: (m) =>
-            # omit translation information
             mat = Raphael.matrix(m.a, m.b, m.c, m.d, 0, 0)
             (new Point(mat.x(0.0, 1.0), mat.y(0.0, 1.0))).getNorm()
 
         _getLength: (pseudoLetter, size) ->
-            # pseudoLetter can be one-letter string, but may also
-            # contain additional zero-width joiners.
             obj = @createTextHelperObj(pseudoLetter, size)
             try
                 node = obj.node
@@ -150,11 +147,9 @@
                     if letterCache[size]?
                         return letterCache[size]
                     else
-                        # choose the nearest size in cache
                         bestSizeKey = @cache.letterLengthMaxSize[letter]
                         return letterCache[bestSizeKey] * size / bestSizeKey
 
-            # approximated length could not be calculated - fallback
             @getExactLength(letter, size)
 
         getTextLength: (text, size) ->
@@ -167,73 +162,30 @@
                 l += @getLength(wrappedLetter, size)
             l
 
-        ###
-        For given text returns the length for prefixes for given text.
-        For instance, for text 'test' it will return the lengths of
-        't', 'te', 'tes', 'test'.
-        If empty is true then it will return the lengths of
-        '', 't', 'te', 'tes', 'test'.
-        ###
-        getPrefixesLengths: (text, size, empty=false) ->
-            prefixLen = 0
-            prefixLengths = []
-            if empty
-                prefixLengths.push(0)
-            for i in [0...text.length]
-                prefixLen += @getLength(text.charAt(i), size)
-                prefixLengths.push(prefixLen)
-            prefixLengths
-
-        getApproxTextLength: (text, size) -> @getTextLength(text, size)
-
         _getHeight: (letter, size) ->
             size * settings.fontSizeToLetterHeightMultiplier
 
         getHeight: (letter, size) -> @_getHeight(letter, size)
 
-        getApproxHeight: (letter, size) -> @_getHeight(letter, size)
-
-        ### Calculates min/max scale for given font size to remain in limits.
-
-        TODO: perhaps use settings directly?
-        TODO2: Add _.memoize
-        ###
-        getScaleBoundsForFontWidth: (fontSize, minW, maxW, largestLetter='W') =>
-            baseSize = @getTextLength(largestLetter, fontSize)
-            [minW / baseSize, maxW / baseSize]
-
-        ###
-        Checks the consistency of the cache. Sometimes the cache is filled
-        too early, and this methods detects that and invalidates the cache
-        if necessary.
-        ###
         checkCacheConsistency: ->
             letterKeys = _.keys(@cache.letterLength)
             if letterKeys.length == 0
-                # Cache is empty, nothing to do there
                 return
 
             letter = letterKeys[0]
             maxSize = @cache.letterLengthMaxSize[letter]
-            # cached letter/size found, proceeding...
             cachedMetric = @cache.letterLength[letter][maxSize]
             currentMetric = @_getLength(letter, maxSize)
 
             if cachedMetric == currentMetric
-                # The metric is consistent, nothing to do there
                 return
             @invalidateCache()
 
         onConsistencyTimeout: =>
             @checkCacheConsistency()
-            # We are using 'exponential-constant' intervals instead of constant
-            # time intervals.
             if @consistencyIntervalTime < 1800000
-                # If the interval time is less than half a hour,
-                # we double it. In other case it stays the same
                 @consistencyIntervalTime *= 2
-            @consistencyTimeout = setTimeout(@onConsistencyTimeout,
-                                             @consistencyIntervalTime)
+            @consistencyTimeout = setTimeout(@onConsistencyTimeout, @consistencyIntervalTime)
 
 
     module.exports =

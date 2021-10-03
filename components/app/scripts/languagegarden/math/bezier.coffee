@@ -30,8 +30,7 @@
                     pointsBuffer[k].mulSelf(_t).addMulToSelf(pointsBuffer[k + 1], t)
             pointsBuffer[0]
 
-    calculateDiffPoints = (points) ->
-        (points[k + 1].sub(points[k]) for k in [0...(points.length - 1)])
+    calculateDiffPoints = (points) -> (points[k + 1].sub(points[k]) for k in [0...(points.length - 1)])
 
 
     class Path
@@ -90,8 +89,6 @@
         Returns all points (start, control, end) as flat array of points
         ###
         getPoints: -> [@startPoint].concat(@controlPoints).concat([@endPoint])
-
-        getDegree: -> @_degree
 
         ###
         Returns the point on Bezier curve at given time parameter within real

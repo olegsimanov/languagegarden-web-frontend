@@ -15,10 +15,8 @@
             @updateProperties(options)
             @create()
 
-        # implement in subclass
         initialize: (options) ->
 
-        # implement in subclass
         updateProperties: (options) ->
 
         generateId: -> _.uniqueId('lg-svg-elem-uniq')
@@ -35,7 +33,6 @@
 
         getSVGNamespaceURI: -> @getSVGRootNode().namespaceURI
 
-        # implement in subclass
         getParentNode: ->
 
         isCreated: -> @node?
@@ -58,10 +55,8 @@
 
         insertSVGNode: (node) -> @getParentNode().appendChild(node)
 
-        # implement in subclass. should return the node
         createSVGNode: (svgNS) ->
 
-        # implement in subclass
         updateSVGNode: (node) ->
 
 

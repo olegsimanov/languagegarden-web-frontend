@@ -10,14 +10,6 @@
         @HUGE = 'huge'
         @DEFAULT = @NORMAL
 
-        @NOTE_SIZES = [
-            @TINY,
-            @SMALL,
-            @NORMAL,
-            @BIG,
-            @HUGE,
-        ]
-
         @DISPLAY_NAMES = {}
         @DISPLAY_NAMES[@TINY] = 'Tiny'
         @DISPLAY_NAMES[@SMALL] = 'Small'
@@ -47,8 +39,6 @@
     class CanvasLayers
         @BACKGROUND = 'background'
         @SELECTION_RECT = 'selectionRect'
-        @IMAGES = 'images'
-        @IMAGE_AREAS = 'imageAreas'
         @LETTERS = 'letters'
         @LETTER_AREAS = 'letterAreas'
 
@@ -57,28 +47,6 @@
         @PLANT_TO_TEXT = 'plant to text'
 
         @DEFAULT = @MOVE
-
-
-    class PunctuationCharacter
-        @COMMA            = ','
-        @PERIOD           = '.'
-        @QUESTION_MARK    = '?'
-        @SEMICOLON        = ';'
-        @COLON            = ':'
-        @EXCLAMATION_MARK = '!'
-        @DASH             = '-'
-        @QUOTATION_MARK   = '"'
-
-        @CHARACTERS = [
-            @COMMA
-            @PERIOD
-            @QUESTION_MARK
-            @SEMICOLON
-            @COLON
-            @EXCLAMATION_MARK
-            @DASH
-            @QUOTATION_MARK
-        ]
 
     visibilityOpacityMap = {}
     visibilityOpacityMap[VisibilityType.VISIBLE] = 1.0

@@ -64,8 +64,6 @@
             [triggerSuccess, triggerError] = @getTriggeringCallbacks(options)
             triggerSuccess()
 
-        getAnalyticsData: ->
-
         onObjectNavigate: (source, navigationInfo) ->
             @trigger('navigate', source, navigationInfo)
 

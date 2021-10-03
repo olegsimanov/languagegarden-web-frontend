@@ -66,7 +66,6 @@
                 x: elWidth / (2 * scale)
                 y: elHeight / (2 * scale)
             ))
-            @containerTransform = tf
             @containerTransformString = tf.toCSSTransform()
 
             @containerScale = scale
@@ -77,9 +76,6 @@
             else
                 @containerShiftX = (elWidth - containerWidth * scale) / 2
                 @containerShiftY = 0
-            @containerShift =
-                for suf in ['Transform', 'Scale', 'ShiftX', 'ShiftY']
-                    @trigger("change:pageContainer#{suf}", this, @["container#{suf}"])
 
         updateContainerTransform: =>
             if not @isRendered()

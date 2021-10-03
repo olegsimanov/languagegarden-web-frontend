@@ -6,17 +6,6 @@
     {ltrim, rtrim} = require('./../utils')
 
 
-    ###Given a view and indices to cut it's text at, calculates the data for
-    splitting operation.
-
-    @param view The word view to use
-    @param lettersRanges An array arrays each containing start and end indices
-    of subsequent words resulting from the split.
-    @returns array Subword details each defined as {
-        lettersRange: [startLetterIndex, endLetterIndex],
-        pathPoints: [startPoint, controlPoints..., endPoint]
-    }
-    ###
     getWordSplits = (view, lettersRanges) ->
         path = view.getPath()
         pathLength = path.getLength()
