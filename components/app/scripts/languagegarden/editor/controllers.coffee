@@ -46,7 +46,6 @@
 
         constructor: (options) ->
             @cid = _.uniqueId('controller')
-            @bus = new EventObject()
             super
 
         initialize: (options={}) ->
@@ -160,8 +159,6 @@
             @letterMetrics.remove()
             @letterMetrics = null
 
-            @bus.stopListening()
-            @bus.off()
             @off()
 
             super
