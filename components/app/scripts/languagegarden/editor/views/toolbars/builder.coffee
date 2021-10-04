@@ -39,9 +39,6 @@
             super
 
 
-    #
-    # PLANT BUILDER
-    #
     class TooltipToolbar extends EditorToolbar
 
         toolbarName: ToolbarEnum.BUILDER

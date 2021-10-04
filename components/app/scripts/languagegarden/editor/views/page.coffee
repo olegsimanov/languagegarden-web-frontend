@@ -1,12 +1,11 @@
     'use strict'
 
-    _ = require('underscore')
-    $ = require('jquery')
-    {AffineTransformation} = require('./../../../math/transformations')
-    {SIDEBAR_WIDTH} = require('./../../models/plants')
-    {RenderableView} = require('./../renderable')
-    {getOffsetRect} = require('./../../domutils')
-    {template} = require('./../../templates')
+    _                       = require('underscore')
+    $                       = require('jquery')
+    {AffineTransformation}  = require('./../../math/transformations')
+    {RenderableView}        = require('./renderable')
+    {getOffsetRect}         = require('./../domutils')
+    {template}              = require('./../templates')
 
     class PageView extends RenderableView
 
@@ -41,7 +40,7 @@
 
         recalculateContainerTransform: ->
             ATF = AffineTransformation
-            @canvasContainerShiftX = 10 + SIDEBAR_WIDTH
+            @canvasContainerShiftX = 10
             @canvasContainerShiftY = 10
             containerWidth = @$pageContainer.width()
             containerHeight = @$pageContainer.height()
@@ -74,12 +73,10 @@
 
         updateContainerTransform: =>
             if not @isRendered()
-                # the view was not yet rendered, so this.$pageContainer
-                # is not available.
+                # the view was not yet rendered, so this.$pageContainer is not available.
                 return
             @recalculateContainerTransform()
-            if (@containerScale == 1.0 and @containerShiftX == 0 and
-                    @containerShiftY == 0)
+            if (@containerScale == 1.0 and @containerShiftX == 0 and @containerShiftY == 0)
                 transformStr = 'none'
             else
                 transformStr = @containerTransformString

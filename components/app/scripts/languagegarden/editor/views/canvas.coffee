@@ -75,21 +75,19 @@
                     'height': canvasDimensions[1]
                 .attr('unselectable', 'on')
             @$canvasEl = $(@paper.canvas)
-
             @settings = options.settings or Settings.getSettings(@settingsKey())
-
             @letterMetrics = options.letterMetrics or new LetterMetrics()
 
-            @listenTo(@model.elements, 'add', @onElementAdd)
-            @listenTo(@model.elements, 'remove', @onElementRemove)
-            @listenTo(@model.elements, 'reset', @onElementsReset)
+            @listenTo(@model.elements, 'add',           @onElementAdd)
+            @listenTo(@model.elements, 'remove',        @onElementRemove)
+            @listenTo(@model.elements, 'reset',         @onElementsReset)
 
-            @listenTo(@model.media, 'add', @onMediumAdd)
-            @listenTo(@model.media, 'remove', @onMediumRemove)
-            @listenTo(@model.media, 'reset', @onMediaReset)
+            @listenTo(@model.media, 'add',              @onMediumAdd)
+            @listenTo(@model.media, 'remove',           @onMediumRemove)
+            @listenTo(@model.media, 'reset',            @onMediaReset)
 
-            @listenTo(@model, 'change:bgColor', @onBgColorChange)
-            @listenTo(@model, 'change:textDirection', @updateTextDirectionFromModel)
+            @listenTo(@model, 'change:bgColor',         @onBgColorChange)
+            @listenTo(@model, 'change:textDirection',   @updateTextDirectionFromModel)
 
             @initializeModes()
             @initializeLayers()
@@ -104,6 +102,7 @@
         settingsKey: -> 'plant-view'
 
         initializeLayers: ->
+
             createLayerGuard = (name) =>
                 guard = @paper.rect(0, 0, 1, 1)
                 disableSelection(guard.node)
@@ -111,6 +110,7 @@
                 guard.hide()
                 guard.toFront()
                 guard
+
             @layerGuards                    = {}
             @layerGuards.images             = createLayerGuard('images')
             @layerGuards.letters            = createLayerGuard('letters')
@@ -129,13 +129,14 @@
             hammerDblClick          = (e) => dblclick(e, e.center.x, e.center.y)
             hammerDrag              = (e) => drag(e, e.deltaX, e.deltaY, e.center.x, e.center.y)
             hammerDragstart         = (e) => dragstart(e, e.center.x, e.center.y)
+
             Hammer(@backgroundObj.node)
-                .on('tap', hammerClick)
-                .on('doubletap', hammerDblClick)
-                .on('hold', hammerDblClick)
-                .on('pan', hammerDrag)
-                .on('panstart', hammerDragstart)
-                .on('panend', dragend)
+                .on('tap',          hammerClick)
+                .on('doubletap',    hammerDblClick)
+                .on('hold',         hammerDblClick)
+                .on('pan',          hammerDrag)
+                .on('panstart',     hammerDragstart)
+                .on('panend',       dragend)
 
         initializeBackgroundEvents: ->
 
@@ -161,8 +162,7 @@
                 @setDragging(false)
                 @getModeBehaviorHandler('bgdragend')(e)
 
-            @backgroundEventsHammer(
-                click, dblclick, drag, dragstart, dragend)
+            @backgroundEventsHammer(click, dblclick, drag, dragstart, dragend)
 
             @putElementToFrontAtLayer(@backgroundObj, CanvasLayers.BACKGROUND)
 
@@ -174,7 +174,7 @@
 
             @backgroundObj
                 .attr
-                    width: @$canvasEl.attr("width")
+                    width:  @$canvasEl.attr("width")
                     height: @$canvasEl.attr("height")
                 .toBack()
             @backgroundObj.attr
@@ -218,8 +218,7 @@
                 controller: @controller
                 parentView: this
 
-        getModeBehaviorHandler: (eventName, mode=@mode) =>
-            @modeBehaviors[mode]?.handlers[eventName]
+        getModeBehaviorHandler: (eventName, mode=@mode) => @modeBehaviors[mode]?.handlers[eventName]
 
         isModeAvailable: (mode) -> @modeBehaviors[mode]?
 
@@ -697,7 +696,7 @@
 
         getSelectableViews: => @getElementViews().concat(@getMediaViews())
 
-        selectChange: => @trigger('selectchange')
+        selectChange:       => @trigger('selectchange')
 
         deselectAll: (options) =>
             anySelected = false
@@ -762,11 +761,6 @@
             bboxes.push(@insertView.getBBox()) if @insertView?.isSelected()
             BBox.fromBBoxList(bboxes)
 
-
-        ###
-        Letter areas
-        ###
-
         updateDirtyLetterAreas: =>
             for view in @getElementViews()
                 if view.letterAreasDirty
@@ -775,22 +769,5 @@
     class EditorCanvasView extends BaseEditorCanvasView
 
 
-    class NavigatorCanvasView extends BaseEditorCanvasView
-
-        getNavigatorModeConfig: ->
-            startMode: EditorMode.NOOP
-            defaultMode: EditorMode.NOOP
-            modeSpecs: []
-
-        getModeConfig: -> @getNavigatorModeConfig()
-
-        getMediumViewClass: (model) ->
-            if model.get('placementType') == PlacementType.HIDDEN
-                null
-            else
-                super
-
-
     module.exports =
         EditorCanvasView: EditorCanvasView
-        NavigatorCanvasView: NavigatorCanvasView

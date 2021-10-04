@@ -1,8 +1,3 @@
-// TODO: Convert to ES2016/ESM syntax
-var config = {
-  apiBaseUrl: '/api/v2/',
-}
-
 function setValue(name, value) {
   config[name] = value;
 }

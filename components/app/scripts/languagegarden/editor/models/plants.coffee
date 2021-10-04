@@ -12,9 +12,8 @@
     {BaseModelWithSubCollections} = require('./base')
     {MediumType} = require('./../constants')
 
-    SIDEBAR_WIDTH = 120
-    DEFAULT_CANVAS_WIDTH = 1004 - SIDEBAR_WIDTH
-    DEFAULT_CANVAS_HEIGHT = 462
+    DEFAULT_CANVAS_WIDTH = 1000
+    DEFAULT_CANVAS_HEIGHT = 460
 
     class UnitState extends BaseModelWithSubCollections
 
@@ -153,6 +152,5 @@
             @setDefaultValue('levels', [])
 
     module.exports =
-        UnitState: UnitState
-        LessonData: LessonData
-        SIDEBAR_WIDTH: SIDEBAR_WIDTH
+        UnitState:      UnitState
+        LessonData:     LessonData

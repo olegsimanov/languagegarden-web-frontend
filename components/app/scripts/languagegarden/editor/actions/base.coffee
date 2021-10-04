@@ -8,7 +8,7 @@
         id: 'action-id-undefined'
 
         constructor: (options) ->
-            super
+            @initialize(options)
             @initializeListeners(options)
 
         initialize: (options) ->

@@ -1,9 +1,9 @@
     'use strict'
 
-    _ = require('underscore')
-    Backbone = require('backbone')
-    {extend, extendAll} = require('./extend')
-    {PropertySetupPrototype} = require('./properties')
+    _                           = require('underscore')
+    Backbone                    = require('backbone')
+    {extend, extendAll}         = require('./extend')
+    {PropertySetupPrototype}    = require('./properties')
 
 
     EventForwardingPrototype =
@@ -24,24 +24,22 @@
 
 
     class CoreEventObject
-        @extend: extend
+        @extend:    extend
         @extendAll: extendAll
 
 
-    BaseEventObject = CoreEventObject.extendAll(Backbone.Events,
-                                                EventForwardingPrototype,
-                                                PropertySetupPrototype)
+    BaseEventObject = CoreEventObject.extendAll(Backbone.Events, EventForwardingPrototype, PropertySetupPrototype)
 
 
     class EventObject extends BaseEventObject
 
-        constructor: (options) ->
-            @initialize(options)
-
-        initialize: (options) ->
+#        constructor: (options) ->
+#            @initialize(options)
+#
+#        initialize: (options) ->
 
         remove: ->
-            @stopListening()
+            @stopListening()                        # this is Backbone.Events method
             @removed = true
 
 

@@ -13,7 +13,6 @@
     require('../../iefix')
 
     {LetterMetrics}         = require('./svgmetrics')
-    deleteActions           = require('./actions/delete')
     editorColors            = require('./colors')
     settings                = require('./../settings')
     {EventObject}           = require('./../editor/events')
@@ -25,7 +24,7 @@
     buttons                 = require('./views/buttons')
     {EditorCanvasView}      = require('./views/canvas')
     {EditorTextBoxView}     = require('./views/textboxes')
-    {EditorPageView}        = require('./views/page/base')
+    {EditorPageView}        = require('./views/page')
     {BuilderToolbar}        = require('./views/toolbars/builder')
     {ToolbarEnum}           = require('./views/toolbars/constants')
 
@@ -40,12 +39,11 @@
 
         getToolbarViewClass: -> @toolbarViewClass
 
-        constructor: (options) ->
+        constructor: () ->
             @cid = _.uniqueId('controller')
-            super
+            @initialize()
 
         initialize: (options={}) ->
-            super
 
             @containerElement = options.containerElement or document.body
 

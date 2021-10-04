@@ -53,5 +53,5 @@
             this
 
     module.exports =
-        buildPropertySupportPrototype: buildPropertySupportPrototype
-        PropertySetupPrototype: PropertySetupPrototype
+        buildPropertySupportPrototype:  buildPropertySupportPrototype
+        PropertySetupPrototype:         PropertySetupPrototype
