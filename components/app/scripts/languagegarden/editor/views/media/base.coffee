@@ -6,8 +6,6 @@
     {BBox} = require('./../../../math/bboxes')
     {PlantChildView} = require('../base')
     {VisibilityType, PlacementType} = require('./../../../editor/constants')
-    {addSVGElementClass, removeSVGElementClass} = require('./../../domutils')
-
 
     class MediumViewBase extends PlantChildView
 
@@ -50,18 +48,6 @@
 
         intersects: (bbox) => @getBBox().intersects(bbox)
 
-
-    class SvgMediumView extends MediumViewBase
-
-        initialize: (options) =>
-            super(options)
-            @paper = options.paper
-
-        remove: =>
-            delete @paper
-            super
-
-
     VisibilityPrototype =
 
         __required_interface_methods__: [
@@ -83,18 +69,7 @@
                 @removeElementCSS(elemNode, value)
             @addElementCSS(elemNode, className)
 
-        setVisibilityType: (value=VisibilityType.VISIBLE, options) ->
-            @model.set('visibilityType', value, options)
-
-
-    SVGStylablePrototype =
-
-        addElementCSS: (node, cssCls) ->
-            addSVGElementClass(node, cssCls)
-
-        removeElementCSS: (node, cssCls) ->
-            removeSVGElementClass(node, cssCls)
-
+        setVisibilityType: (value=VisibilityType.VISIBLE, options) -> @model.set('visibilityType', value, options)
 
     HTMLStylablePrototype =
 

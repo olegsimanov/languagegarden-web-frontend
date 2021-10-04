@@ -1,7 +1,9 @@
 require('../polyfills/console')
 require('../../styles/loader.less')
-PlantConfig = require('./config')
+{PlantConfig} = require('./config')
 {Router} = require('./router/base')
+{ControllerType} = require('./router/config')
+
 
 createLoaderElement = () =>
     loaderElement = document.createElement('div')

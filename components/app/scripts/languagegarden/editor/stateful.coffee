@@ -5,16 +5,10 @@
 
     StatefulClassPrototype =
 
-        # cycling through states
-        getCurrentStateIndex: -> _.indexOf(@states, @currentState)
-        getNextStateIndex: -> (@getCurrentStateIndex() + 1) % @states.length
-        getPrevStateIndex: ->
-            # TODO: use %% operator after upgrade to Coffeescript 1.7 ?
-            (@getCurrentStateIndex() + @states.length - 1) % @states.length
-        getNextState: -> @states[@getNextStateIndex()]
-        getPrevState: -> @states[@getPrevStateIndex()]
+        getCurrentStateIndex:   -> _.indexOf(@states, @currentState)
+        getNextStateIndex:      -> (@getCurrentStateIndex() + 1) % @states.length
+        getNextState:           -> @states[@getNextStateIndex()]
 
-        getState: -> @currentState
         setState: (state, options={}) ->
             state = @defaultState if not _.contains(@states, state)
 

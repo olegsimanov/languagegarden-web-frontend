@@ -37,7 +37,6 @@
 
         constructor: (options) ->
             @initialize(options)
-            @initialized = true
 
         initialize: (options) ->
 

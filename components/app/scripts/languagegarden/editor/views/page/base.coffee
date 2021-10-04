@@ -27,9 +27,6 @@
             @renderCore()
             @$pageContainer = @$('.page-container')
             @appendToContainerIfNeeded()
-            # we need to add the transform after the element is appended
-            # to the container - if we do that before, then for some reason
-            # the style is lost on chrome. WTF google?
             @updateContainerTransform()
 
         getElementDimensions: ->
@@ -37,8 +34,6 @@
                     @$el.css('width') == '100%' and
                     @$el.css('height') == '100%' and
                     (containerEl = @getContainerEl())?)
-                # the element is not yet embedded into the DOM, so we use the
-                # container element instead
                 $containerEl = $(containerEl)
                 [$containerEl.width(), $containerEl.height()]
             else

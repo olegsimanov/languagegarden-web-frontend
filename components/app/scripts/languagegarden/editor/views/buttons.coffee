@@ -16,13 +16,13 @@
 
 
     class DivButton extends BaseView
-        tagName: 'div'
-        className: 'button'
-        toggledClassName: 'active'
-        fadeEffects: false
-        disabled: false
-        hidden: false
-        help: null
+        tagName:            'div'
+        className:          'button'
+        toggledClassName:   'active'
+        fadeEffects:        false
+        disabled:           false
+        hidden:             false
+        help:               null
 
         initialize: (options) ->
             super

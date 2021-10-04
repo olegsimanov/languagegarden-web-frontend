@@ -708,8 +708,6 @@
 
     class EditorElementView extends BaseEditorElementView
 
-        # event handlers
-
         initialize: (options) =>
             super(options)
             @selected = false
@@ -751,13 +749,9 @@
                 return
             @trigger(eventName, this)
 
-        setVisibilityType: (value=VisibilityType.VISIBLE, options) =>
-            @model.set('visibilityType', value, options)
+        setVisibilityType: (value=VisibilityType.VISIBLE, options) => @model.set('visibilityType', value, options)
 
-        select: (selected=true, options) =>
-            @changeSelection(
-                selected, options, 'selected', 'selected', 'selectchange'
-            )
+        select: (selected=true, options) => @changeSelection(selected, options, 'selected', 'selected', 'selectchange')
 
 
     class EditedElementView extends BaseEditorElementView

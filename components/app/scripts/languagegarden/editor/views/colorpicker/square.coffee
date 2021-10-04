@@ -2,29 +2,26 @@
 
     _ = require('underscore')
     $ = require('jquery')
+
     {template} = require('./../../templates')
     {BBox} = require('./../../../math/bboxes')
     {Point} = require('./../../../math/points')
-    {EditorMode, ColorMode} = require('./../../constants')
+    {EditorMode} = require('./../../constants')
     {BaseView} = require('./../base')
     {RenderableView} = require('./../renderable')
     {
         EditorColorModeButton
-        EditorDivButton
         EditorDivToggleButton
     } = require('./../buttons')
     {SplitColorTool} = require('./../../models/palette')
 
 
-    ###Just a div placeholder with right className.###
     PlaceholderView = class extends BaseView
 
         className: 'split-color-picker-placeholder'
-
         render: => @
 
 
-    ###The edit button activating after opening split color editor.###
     SplitColorPaletteEditButton = class extends EditorDivToggleButton
 
         className: "split-color-mode-button

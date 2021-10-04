@@ -23,15 +23,13 @@
     <script type="text/javascript">
     (function () {
 
-      PlantConfig.configure({
-        apiBaseUrl: 'http://localhost:8000/api/v2/'
-      });
-
-      let lessonId = null;
+      // PlantConfig.configure({
+      //   apiBaseUrl: 'http://localhost:8000/api/v2/'
+      // });
 
       PlantStarter.load(document.body, {
         type: 'edit-plant',
-        plantId: lessonId,
+        plantId: null,
         backURL: '/',
         userId: null,
         useURL: false
