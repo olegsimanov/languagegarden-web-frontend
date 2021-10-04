@@ -14,9 +14,8 @@
         constructor: ->
             super
 
-        @getSettings = (name) =>
-            settings = new Settings(id: name)
-            settings
+        @getSettings = (name) => new Settings(id: name)
+
 
     module.exports =
         Settings: Settings

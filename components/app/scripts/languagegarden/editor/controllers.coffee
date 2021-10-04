@@ -28,36 +28,22 @@
     {BuilderToolbar}        = require('./views/toolbars/builder')
     {ToolbarEnum}           = require('./views/toolbars/constants')
 
-    class BaseEditorController extends EventObject
+    class PlantEditorController extends EventObject
         modelClass:         UnitState
         dataModelClass:     LessonData
         ToolbarEnum:        ToolbarEnum
         buttonClasses:      []
         canvasViewClass:    EditorCanvasView
         textBoxViewClass:   EditorTextBoxView
-        toolbarViewClass:   null
+        toolbarViewClass:   BuilderToolbar
 
-        getToolbarViewClass: -> @toolbarViewClass
+        constructor: (options = {}) ->
 
-        constructor: () ->
-            @cid = _.uniqueId('controller')
-            @initialize()
+            @draggingInfo       = {}
 
-        initialize: (options={}) ->
-
-            @containerElement = options.containerElement or document.body
-
-            @draggingInfo = {}
-
-            @dataModel = options.dataModel
-            @dataModel ?= new @dataModelClass()
-            @model = new @modelClass()
-
-            editorPalette = new EditorPalette
-                toolInfos: editorColors.initialTools
-                newWordColor: editorColors.newWordColor
-
-            settingsModel = Settings.getSettings('plant-view')
+            @dataModel          = options.dataModel
+            @dataModel          ?= new @dataModelClass()
+            @model              = new @modelClass()
 
             @letterMetrics = new LetterMetrics()
 
@@ -65,112 +51,56 @@
                 controller: this
                 model: @model
                 dataModel: @dataModel
-                settings: settingsModel
-                colorPalette: editorPalette
+                settings: Settings.getSettings('plant-view')
+                colorPalette: new EditorPalette
+                    toolInfos: editorColors.initialTools
+                    newWordColor: editorColors.newWordColor
                 letterMetrics: @letterMetrics
-
-            @listenTo(@canvasView, 'change:dragging', @onCanvasDraggingChange)
-            @listenTo(@canvasView, 'change:bgDragging', @onCanvasBgDraggingChange)
 
             @textBoxView = new @textBoxViewClass
                 controller: this
                 model: @model
                 dataModel: @dataModel
-                settings: settingsModel
+                settings: Settings.getSettings('plant-view')
                 letterMetrics: @letterMetrics
 
-            toolbarViewClass = @getToolbarViewClass()
-            @toolbarView = new toolbarViewClass
+            @toolbarView = new BuilderToolbar
                 controller: @
 
             @view = new EditorPageView
                 controller: this
                 canvasView: @canvasView
-                subviews: @getPageViewSubviews()
-                containerEl: @containerElement
+                subviews:
+                    '.toolbar-container':       @toolbarView
+                    '.canvas-container':        [@canvasView]
+                    '.text-to-plant-container': @textBoxView
+                containerEl: options.containerElement or document.body
 
             @canvasView.setParentView(@view)
             @textBoxView.setParentView(@view)
 
-            @modelId = options.modelId
-            @listenTo(@dataModel, 'sync', @onModelSync)
-            for evObj in @getEventObjects()
-                @listenTo(evObj, 'navigate', @onObjectNavigate)
-
-        getTriggeringCallbacks: (options) ->
-            successCallback = options?.success or ->
-            errorCallback = options?.error or ->
-
-            triggerSuccess = =>
-                successCallback()
-                @trigger('start:success', this)
-
-            triggerError = =>
-                errorCallback()
-                @trigger('start:error', this)
-
-            [triggerSuccess, triggerError]
-
-        onObjectNavigate: (source, navigationInfo) ->
-            @trigger('navigate', source, navigationInfo)
-
-        getPageViewSubviews: ->
-            '.toolbar-container': @toolbarView
-            '.canvas-container': [@canvasView]
-            '.text-to-plant-container': @textBoxView
-
-        carveOutModelObjects: ->
-            dataModel: @dataModel.deepClone()
-
-        getEventObjects: ->
-            views = [@view]
-            models = []
-            models.push(@dataModel) if @dataModel?
-            views.concat(models)
+            @listenTo(@canvasView, 'change:dragging',   @onCanvasDraggingChange)
+            @listenTo(@canvasView, 'change:bgDragging', @onCanvasBgDraggingChange)
 
         remove: ->
-            for obj in @getEventObjects()
-                @stopListening(obj)
-                obj.remove()
-            @model = null
-            @dataModel = null
-            @canvasView = null
-            @view = null
+
             @letterMetrics.remove()
-            @letterMetrics = null
+
+            @model          = null
+            @dataModel      = null
+            @canvasView     = null
+            @view           = null
+            @letterMetrics  = null
 
             @off()
 
             super
 
-        renderViews: ->
-            @view.render()
+        renderViews: -> @view.render()
 
-        onModelSync: ->
+        start: () ->
+            @trigger('start:success', this)
             @renderViews()
-
-        setModelId: (modelId, options) ->
-            [triggerSuccess, triggerError] = @getTriggeringCallbacks(options)
-
-            if modelId in ['unsaved', 'new']
-                modelId = null
-            else if _.isString(modelId)
-                modelId = parseInt(modelId, 10)
-
-            oldModelId = @dataModel.id
-
-            if ((not modelId? and oldModelId?) or
-                    (modelId? and not oldModelId?) or
-                    (modelId? and oldModelId? and oldModelId != modelId))
-                triggerSuccess()
-                @renderViews()
-            else
-                triggerSuccess()
-                @renderViews()
-
-        start: (options) ->
-            modelId = options?.modelId or @modelId
-            @setModelId(modelId, options)
 
         isDragging: -> (@draggingInfo.canvasElements or @draggingInfo.canvasBackground or false)
 
@@ -192,10 +122,6 @@
             dragging = @isDragging()
             if oldDragging != dragging
                 @trigger('change:dragging', this, dragging, oldDragging)
-
-
-    class PlantEditorController extends BaseEditorController
-        toolbarViewClass: BuilderToolbar
 
     module.exports =
         PlantEditorController:          PlantEditorController

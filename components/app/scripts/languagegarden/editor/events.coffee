@@ -33,16 +33,11 @@
 
     class EventObject extends BaseEventObject
 
-#        constructor: (options) ->
-#            @initialize(options)
-#
-#        initialize: (options) ->
-
         remove: ->
             @stopListening()                        # this is Backbone.Events method
             @removed = true
 
 
     module.exports =
-        EventObject: EventObject
-        EventForwardingPrototype: EventForwardingPrototype
+        EventObject:                EventObject
+        EventForwardingPrototype:   EventForwardingPrototype

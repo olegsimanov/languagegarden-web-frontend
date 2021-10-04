@@ -3,7 +3,6 @@
     _ = require('underscore')
     {Point} = require('./../../math/points')
     {
-        PlantChildBehavior
         DragBehaviorBase
         ClickBehaviorBase
         DblClickBehaviorBase
