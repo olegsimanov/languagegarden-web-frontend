@@ -2,45 +2,33 @@
 
     _ = require('underscore')
 
-    class TextSize
-        @TINY = 'tiny'
-        @SMALL = 'small'
-        @NORMAL = 'normal'
-        @BIG = 'big'
-        @HUGE = 'huge'
-        @DEFAULT = @NORMAL
-
-        @DISPLAY_NAMES = {}
-        @DISPLAY_NAMES[@TINY] = 'Tiny'
-        @DISPLAY_NAMES[@SMALL] = 'Small'
-        @DISPLAY_NAMES[@NORMAL] = 'Normal'
-        @DISPLAY_NAMES[@BIG] = 'Big'
-        @DISPLAY_NAMES[@HUGE] = 'Huge'
-
-
     class MediumType
-        @TEXT = 'text'
-        @TEXT_TO_PLANT = 'text-to-plant'
+
+        @TEXT           = 'text'
+        @TEXT_TO_PLANT  = 'text-to-plant'
 
     class VisibilityType
-        @VISIBLE = 'visible'
-        @HIDDEN = 'hidden'
-        @PLANT_TO_TEXT_FADED = 'plant-to-text-faded'
-        @FADED = 'faded'
+
+        @VISIBLE                = 'visible'
+        @HIDDEN                 = 'hidden'
+        @PLANT_TO_TEXT_FADED    = 'plant-to-text-faded'
+        @FADED                  = 'faded'
 
         @DEFAULT = @VISIBLE
 
     class PlacementType
-        @CANVAS = 'canvas'
-        @UNDERSOIL = 'undersoil'
-        @HIDDEN = 'hidden'
+
+        @CANVAS     = 'canvas'
+        @UNDERSOIL  = 'undersoil'
+        @HIDDEN     = 'hidden'
 
 
     class CanvasLayers
-        @BACKGROUND = 'background'
-        @SELECTION_RECT = 'selectionRect'
-        @LETTERS = 'letters'
-        @LETTER_AREAS = 'letterAreas'
+
+        @BACKGROUND         = 'background'
+        @SELECTION_RECT     = 'selectionRect'
+        @LETTERS            = 'letters'
+        @LETTER_AREAS       = 'letterAreas'
 
     class CanvasMode
         @MOVE = 'move'
@@ -65,13 +53,14 @@
         LETTER: 'letter'
 
     class EditorCanvasMode extends CanvasMode
-        @STRETCH = 'stretch'
-        @SCALE = 'scale'
-        @GROUP_SCALE = 'group scale'
-        @EDIT = 'edit'
-        @COLOR = 'color'
-        @TEXT_EDIT = 'text edit'
-        @ROTATE = 'rotate'
+
+        @STRETCH        = 'stretch'
+        @SCALE          = 'scale'
+        @GROUP_SCALE    = 'group scale'
+        @EDIT           = 'edit'
+        @COLOR          = 'color'
+        @TEXT_EDIT      = 'text edit'
+        @ROTATE         = 'rotate'
 
         @DEFAULT = @MOVE
 
@@ -82,7 +71,6 @@
         EditorMode: EditorCanvasMode
         EditorLayers: CanvasLayers          # TODO: please remove this duplication
         CanvasLayers: CanvasLayers          # TODO: please remove this duplication
-        TextSize: TextSize
         MediumType: MediumType
         VisibilityType: VisibilityType
         PlacementType: PlacementType

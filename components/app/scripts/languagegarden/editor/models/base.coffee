@@ -1,12 +1,12 @@
     'use strict'
 
-    _ = require('underscore')
-    Backbone = require('backbone')
-    {VisibilityType} = require('./../constants')
-    {extend, extendAll} = require('./../extend')
-    {SubCollectionPrototype} = require('./subcollection')
-    {getAttrsOpts} = require('./../utils')
-    {EventForwardingPrototype} = require('./../events')
+    _                           = require('underscore')
+    Backbone                    = require('backbone')
+    {SubCollectionPrototype}    = require('./subcollection')
+    {VisibilityType}            = require('./../constants')
+    {extend, extendAll}         = require('./../extend')
+    {getAttrsOpts}              = require('./../utils')
+    {EventForwardingPrototype}  = require('./../events')
 
     class BaseModel extends Backbone.Model.extend(EventForwardingPrototype)
 
@@ -224,9 +224,9 @@
 
 
     module.exports =
-        BaseModel: BaseModel
-        BaseCollection: BaseCollection
-        PlantChildModel: PlantChildModel
-        PlantChildCollection: PlantChildCollection
-        BaseModelWithSubCollections: BaseModelWithSubCollections
-        PlantChildModelWithSubCollections: PlantChildModelWithSubCollections
+        BaseModel:                          BaseModel
+        BaseCollection:                     BaseCollection
+        PlantChildModel:                    PlantChildModel
+        PlantChildCollection:               PlantChildCollection
+        BaseModelWithSubCollections:        BaseModelWithSubCollections
+        PlantChildModelWithSubCollections:  PlantChildModelWithSubCollections

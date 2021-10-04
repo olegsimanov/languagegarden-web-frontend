@@ -38,8 +38,7 @@
 
     is solvable.
     ###
-    isLinearSystemSolvable = (a, b, c, d, e, f) ->
-        a * e - d * b != 0
+    isLinearSystemSolvable = (a, b, c, d, e, f) -> a * e - d * b != 0
 
 
     ###
@@ -60,7 +59,7 @@
 
 
     module.exports =
-        solveLinear: solveLinear
-        solveQuadratic: solveQuadratic
+        solveLinear:            solveLinear
+        solveQuadratic:         solveQuadratic
         isLinearSystemSolvable: isLinearSystemSolvable
-        solveLinearSystem: solveLinearSystem
+        solveLinearSystem:      solveLinearSystem
