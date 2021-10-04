@@ -17,6 +17,7 @@
     DEFAULT_CANVAS_HEIGHT = 462
 
     class UnitState extends BaseModelWithSubCollections
+
         subCollectionConfig: [
             name: 'elements'
             collectionClass: PlantElements
@@ -47,11 +48,9 @@
                 super
 
         stopTrackingChanges: -> @trigger('trackchanges', this, false)
-
         startTrackingChanges: -> @trigger('trackchanges', this, true)
 
         addElement: (model, options) -> @elements.add(model, options)
-
         removeElement: (model, options) -> @elements.remove(model, options)
 
         removeMedium: (model, options) -> @media.remove(model, options)

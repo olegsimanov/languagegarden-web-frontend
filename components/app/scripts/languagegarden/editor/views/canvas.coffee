@@ -4,57 +4,60 @@
     require('raphael')
     _ = require('underscore')
     $ = require('jquery')
-    {isDarkColor} = require('./../utils')
-    {
-        disableSelection
-        getOffsetRect
-        addSVGElementClass
-    } = require('./../domutils')
+
+
+    {isDarkColor}                           = require('./../utils')
     {
         ColorAction
         RemoveColorAction
         SplitColorAction
-    } = require('./../actions/color')
-    {EditorDummyMediumView} = require('./media/base')
-    {EditorElementView, EditedElementView} = require('./elements')
-    {MoveBehavior} = require('./../modebehaviors/move')
-    {ColorBehavior} = require('./../modebehaviors/color')
-    {StretchBehavior} = require('./../modebehaviors/stretch')
-    {ScaleBehavior} = require('./../modebehaviors/scale')
-    {GroupScaleBehavior} = require('./../modebehaviors/groupscale')
-    {EditBehavior} = require('./../modebehaviors/edit')
-    {TextEditBehavior} = require('./../modebehaviors/textedit')
-    {PlantToTextBehavior} = require('./../modebehaviors/planttotext')
-    {RotateBehavior} = require('./../modebehaviors/rotate')
-    {EditorMode, EditorLayers, ColorMode} = require('./../constants')
-    {Point} = require('./../../math/points')
-    {BBox} = require('./../../math/bboxes')
-    {PlantElement} = require('./../models/elements')
-    {
-        PlacementType
-    } = require('./../constants')
+    }                                       = require('./../actions/color')
 
 
-    {
-        disableSelection
-        addSVGElementClass
-    } = require('./../domutils')
-    {LetterMetrics} = require('./../svgmetrics')
-    {DummyMediumView} = require('./media/base')
-    {ElementView} = require('./elements')
-    {Point} = require('./../../math/points')
-    {BBox} = require('./../../math/bboxes')
-    {PlantMedium} = require('./../models/media')
-    {BaseView} = require('./base')
+    {MoveBehavior}                          = require('./../modebehaviors/move')
+    {ColorBehavior}                         = require('./../modebehaviors/color')
+    {StretchBehavior}                       = require('./../modebehaviors/stretch')
+    {ScaleBehavior}                         = require('./../modebehaviors/scale')
+    {GroupScaleBehavior}                    = require('./../modebehaviors/groupscale')
+    {EditBehavior}                          = require('./../modebehaviors/edit')
+    {TextEditBehavior}                      = require('./../modebehaviors/textedit')
+    {PlantToTextBehavior}                   = require('./../modebehaviors/planttotext')
+    {RotateBehavior}                        = require('./../modebehaviors/rotate')
+
+
     {
         MediumType
         PlacementType
         CanvasLayers
         CanvasMode
-    } = require('./../constants')
-    {Settings} = require('./../models/settings')
+        EditorMode
+        EditorLayers
+        ColorMode
+    }                                       = require('./../constants')
+
+    {
+        disableSelection
+        addSVGElementClass
+    }                                       = require('./../domutils')
+    {LetterMetrics}                         = require('./../svgmetrics')
+
+    {EditorDummyMediumView}                 = require('./media/base')
+    {DummyMediumView}                       = require('./media/base')
+
+    {EditorElementView, EditedElementView}  = require('./elements')
+    {ElementView}                           = require('./elements')
+
+    {BBox}                                  = require('./../../math/bboxes')
+    {Point}                                 = require('./../../math/points')
+
+    {Settings}                              = require('./../models/settings')
+    {PlantElement}                          = require('./../models/elements')
+
+    {BaseView}                              = require('./base')
+
 
     class CanvasView extends BaseView
+
         className: 'canvas'
 
         initialize: (options) ->
@@ -64,8 +67,7 @@
             @colorPalette = options.colorPalette
             @setPropertyFromOptions(options, 'dataModel', required: true)
             canvasDimensions = @getCanvasSetupDimensions()
-            @paper = Raphael(@$el.get(0),
-                canvasDimensions[0], canvasDimensions[1])
+            @paper = Raphael(@$el.get(0), canvasDimensions[0], canvasDimensions[1])
             @updateTextDirectionFromModel()
             @$el
                 .css
@@ -75,8 +77,6 @@
             @$canvasEl = $(@paper.canvas)
 
             @settings = options.settings or Settings.getSettings(@settingsKey())
-
-            @debug = if options?.debug? then options.debug else false
 
             @letterMetrics = options.letterMetrics or new LetterMetrics()
 
@@ -111,24 +111,24 @@
                 guard.hide()
                 guard.toFront()
                 guard
-            @layerGuards = {}
-            @layerGuards.images = createLayerGuard('images')
-            @layerGuards.letters = createLayerGuard('letters')
-            @layerGuards.letterMasks = createLayerGuard('letter-masks')
+            @layerGuards                    = {}
+            @layerGuards.images             = createLayerGuard('images')
+            @layerGuards.letters            = createLayerGuard('letters')
+            @layerGuards.letterMasks        = createLayerGuard('letter-masks')
 
-            @layerGuards.background = createLayerGuard('background')
-            @layerGuards.imageAreas = createLayerGuard('image-areas')
-            @layerGuards.letterAreas = createLayerGuard('letter-areas')
-            @layerGuards.selectionRect = createLayerGuard('selection-rect')
-            @layerGuards.selectionTooltip = createLayerGuard('selection-tooltip')
-            @layerGuards.menu = createLayerGuard('menu')
+            @layerGuards.background         = createLayerGuard('background')
+            @layerGuards.imageAreas         = createLayerGuard('image-areas')
+            @layerGuards.letterAreas        = createLayerGuard('letter-areas')
+            @layerGuards.selectionRect      = createLayerGuard('selection-rect')
+            @layerGuards.selectionTooltip   = createLayerGuard('selection-tooltip')
+            @layerGuards.menu               = createLayerGuard('menu')
 
         backgroundEventsHammer: (click, dblclick, drag, dragstart, dragend) ->
 
-            hammerClick = (e) => click(e, e.center.x, e.center.y)
-            hammerDblClick = (e) => dblclick(e, e.center.x, e.center.y)
-            hammerDrag = (e) => drag(e, e.deltaX, e.deltaY, e.center.x, e.center.y)
-            hammerDragstart = (e) => dragstart(e, e.center.x, e.center.y)
+            hammerClick             = (e) => click(e, e.center.x, e.center.y)
+            hammerDblClick          = (e) => dblclick(e, e.center.x, e.center.y)
+            hammerDrag              = (e) => drag(e, e.deltaX, e.deltaY, e.center.x, e.center.y)
+            hammerDragstart         = (e) => dragstart(e, e.center.x, e.center.y)
             Hammer(@backgroundObj.node)
                 .on('tap', hammerClick)
                 .on('doubletap', hammerDblClick)
@@ -167,6 +167,7 @@
             @putElementToFrontAtLayer(@backgroundObj, CanvasLayers.BACKGROUND)
 
         initializeBackgroundObject: =>
+
             @backgroundObj = @paper.rect(0, 0, 1, 1)
             disableSelection(@backgroundObj.node)
             addSVGElementClass(@backgroundObj.node, 'background-area')
@@ -183,15 +184,16 @@
                 'stroke-width': 0
 
         initializeModes: ->
+
             cfg = @getModeConfig()
             @modeBehaviors = {}
             @mode = cfg.startMode
             @defaultMode = cfg.defaultMode or cfg.startMode
             for modeSpec in cfg.modeSpecs
                 @addModeBehavior(modeSpec.mode, modeSpec.behaviorClass)
-            cfg.initializer?.call(this)
 
         remove: =>
+
             @removeAllElementViews()
             @removeAllMediaViews()
             @backgroundObj.remove()

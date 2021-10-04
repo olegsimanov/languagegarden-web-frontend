@@ -12,6 +12,7 @@
             @fadeOutDelay = options?.fadeOutDelay or @fadeOutDelay
 
         perform: ->
+
             elementViews = @canvasView.getSelectedElementViews()
             mediaViews = @canvasView.getSelectedMediaViews()
 

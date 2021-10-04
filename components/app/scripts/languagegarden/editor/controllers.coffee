@@ -1,10 +1,10 @@
     'use strict'
 
     _ = require('underscore')
+    $ = require('jquery')
 
     require('../../polyfills/request-animation-frame')
 
-    $ = require('jquery')
     require('../../../styles/layout.less')
     require('../../../font/languagegarden-regular-webfont.css')
     require('../../../font/eskorte-arabic-regular-webfont.css')
@@ -16,7 +16,7 @@
     deleteActions           = require('./actions/delete')
     editorColors            = require('./colors')
     settings                = require('./../settings')
-    {EventObject} =          require('./../editor/events')
+    {EventObject}           = require('./../editor/events')
 
     {EditorPalette}         = require('./models/palette')
     {Settings}              = require('./models/settings')
@@ -36,12 +36,8 @@
         buttonClasses:      []
         canvasViewClass:    EditorCanvasView
         textBoxViewClass:   EditorTextBoxView
+        toolbarViewClass:   null
 
-        shortcutsAndActionsClasses: [
-            ['Delete', deleteActions.DeleteAction],
-        ]
-
-        toolbarViewClass: null
         getToolbarViewClass: -> @toolbarViewClass
 
         constructor: (options) ->
@@ -52,7 +48,6 @@
             super
 
             @containerElement = options.containerElement or document.body
-            @backURL = options.backURL or '/'
 
             @draggingInfo = {}
 
@@ -85,18 +80,6 @@
                 dataModel: @dataModel
                 settings: settingsModel
                 letterMetrics: @letterMetrics
-
-            if not settings.isMobile
-                #TODO: handle optional dependencies
-                editorKeyboard = require('./keyboard')
-
-                @shortcutListener = new editorKeyboard.ShortcutListener
-                    el: document.body
-
-                for [shortcut, actionCls] in _.result(this,
-                                                'shortcutsAndActionsClasses')
-                    @shortcutListener.on(shortcut, new actionCls(
-                        controller: this))
 
             toolbarViewClass = @getToolbarViewClass()
             @toolbarView = new toolbarViewClass
@@ -151,7 +134,6 @@
             for obj in @getEventObjects()
                 @stopListening(obj)
                 obj.remove()
-            @shortcutListener?.remove()
             @model = null
             @dataModel = null
             @canvasView = null
@@ -192,9 +174,7 @@
             modelId = options?.modelId or @modelId
             @setModelId(modelId, options)
 
-        isDragging: ->
-            (@draggingInfo.canvasElements or
-                @draggingInfo.canvasBackground or false)
+        isDragging: -> (@draggingInfo.canvasElements or @draggingInfo.canvasBackground or false)
 
         setToolbarState: (state) ->
             if not state?
