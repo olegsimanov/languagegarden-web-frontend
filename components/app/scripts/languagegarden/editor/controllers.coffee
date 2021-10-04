@@ -165,8 +165,6 @@
 
         renderViews: ->
             @view.render()
-            # reinitialize scroll after the sidebar view (the subview of
-            # this.view) is added to document body
 
         onModelSync: ->
             @renderViews()
