@@ -1,53 +1,10 @@
     'use strict'
 
-    _ = require('underscore')
-    {Line} = require('./../../math/lines')
-    {Point} = require('./../../math/points')
-    {ltrim, rtrim} = require('./../utils')
+    _               = require('underscore')
+    {ltrim, rtrim}  = require('./../utils')
+    {Line}          = require('./../../math/lines')
+    {Point}         = require('./../../math/points')
 
-
-    getWordSplits = (view, lettersRanges) ->
-        path = view.getPath()
-        pathLength = path.getLength()
-
-        elementSplits = []
-        for lettersRange in lettersRanges
-            [startLetterIndex, endLetterIndex] = lettersRange
-            if view.isTextRTL()
-                endPos = view.getLetterEndPathPosition(startLetterIndex)
-                startPos = view.getLetterStartPathPosition(endLetterIndex)
-            else
-                startPos = view.getLetterStartPathPosition(startLetterIndex)
-                endPos = view.getLetterEndPathPosition(endLetterIndex)
-
-            subStartPoint = path.getPointAtLength(startPos)
-            subEndPoint = path.getPointAtLength(endPos)
-
-            startPathPos = startPos / pathLength
-            endPathPos = endPos / pathLength
-
-            subControlPoint = calculateControlPoint(
-                startPathPos, endPathPos, path, subStartPoint, subEndPoint,
-                startLetterIndex, endLetterIndex)
-
-            elementSplits.push
-                lettersRange: lettersRange
-                pathPoints: [subStartPoint, subControlPoint, subEndPoint]
-
-        elementSplits
-
-    getSentenceSplitIndices = (text) ->
-        results = []
-
-        for [i, letter] in _.zip([0...text.length], text)
-            if letter == ' '
-                if start?
-                    results.push([start, i - 1])
-                    start = null
-            else
-                start = i if not start?
-        results.push([start, i]) if start?
-        results
 
     stringBlankCounts = (str) ->
         [
@@ -90,6 +47,10 @@
             return true
         return false
 
+    getWordTrimIndices = (text) ->
+        blanks = stringBlankCounts(text)
+        [[blanks[0], text.length - blanks[1] - 1], ]
+
     getWordSplitIndices = (text, position) ->
         firstBlanks = stringBlankCounts(text[...position])
         secondsBlanks = stringBlankCounts(text[position...])
@@ -102,16 +63,41 @@
         ]
         _.filter(indices, (range) -> range[0] <= range[1])
 
-    getWordTrimIndices = (text) ->
-        blanks = stringBlankCounts(text)
-        [[blanks[0], text.length - blanks[1] - 1], ]
-
     getTrimmedWordParams = (view) ->
         getWordSplits(view, getWordTrimIndices(view.model.get('text')))
 
+    getWordSplits = (view, lettersRanges) ->
+
+        path = view.getPath()
+        pathLength = path.getLength()
+
+        elementSplits = []
+        for lettersRange in lettersRanges
+            [startLetterIndex, endLetterIndex] = lettersRange
+            if view.isTextRTL()
+                endPos = view.getLetterEndPathPosition(startLetterIndex)
+                startPos = view.getLetterStartPathPosition(endLetterIndex)
+            else
+                startPos = view.getLetterStartPathPosition(startLetterIndex)
+                endPos = view.getLetterEndPathPosition(endLetterIndex)
+
+            subStartPoint = path.getPointAtLength(startPos)
+            subEndPoint = path.getPointAtLength(endPos)
+
+            startPathPos = startPos / pathLength
+            endPathPos = endPos / pathLength
+
+            subControlPoint = calculateControlPoint(
+                startPathPos, endPathPos, path, subStartPoint, subEndPoint,
+                startLetterIndex, endLetterIndex)
+
+            elementSplits.push
+                lettersRange: lettersRange
+                pathPoints: [subStartPoint, subControlPoint, subEndPoint]
+
+        elementSplits
 
     module.exports =
-        getWordSplits: getWordSplits
-        getSentenceSplitIndices: getSentenceSplitIndices
-        getWordSplitIndices: getWordSplitIndices
-        getTrimmedWordParams: getTrimmedWordParams
+        getWordSplits:              getWordSplits
+        getWordSplitIndices:        getWordSplitIndices
+        getTrimmedWordParams:       getTrimmedWordParams

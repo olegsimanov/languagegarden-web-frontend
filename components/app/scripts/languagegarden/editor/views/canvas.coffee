@@ -5,14 +5,21 @@
     _ = require('underscore')
     $ = require('jquery')
 
+    {BaseView}                              = require('./base')
+    {EditorDummyMediumView}                 = require('./media/base')
+    {DummyMediumView}                       = require('./media/base')
 
-    {isDarkColor}                           = require('./../utils')
+    {EditorElementView, EditedElementView}  = require('./elements')
+    {ElementView}                           = require('./elements')
+
+    {Settings}                              = require('./../models/settings')
+    {PlantElement}                          = require('./../models/elements')
+
     {
         ColorAction
         RemoveColorAction
         SplitColorAction
     }                                       = require('./../actions/color')
-
 
     {MoveBehavior}                          = require('./../behaviors/mode/move')
     {ColorBehavior}                         = require('./../behaviors/mode/color')
@@ -40,19 +47,10 @@
     }                                       = require('./../domutils')
     {LetterMetrics}                         = require('./../svgmetrics')
 
-    {EditorDummyMediumView}                 = require('./media/base')
-    {DummyMediumView}                       = require('./media/base')
-
-    {EditorElementView, EditedElementView}  = require('./elements')
-    {ElementView}                           = require('./elements')
+    {isDarkColor}                           = require('./../utils')
 
     {BBox}                                  = require('./../../math/bboxes')
     {Point}                                 = require('./../../math/points')
-
-    {Settings}                              = require('./../models/settings')
-    {PlantElement}                          = require('./../models/elements')
-
-    {BaseView}                              = require('./base')
 
 
     class CanvasView extends BaseView
@@ -61,21 +59,25 @@
 
         initialize: (options) ->
             super
-            @elementViews = {}
-            @mediaViews = {}
-            @colorPalette = options.colorPalette
+            @elementViews   = {}
+            @mediaViews     = {}
+            @colorPalette   = options.colorPalette
+
             @setPropertyFromOptions(options, 'dataModel', required: true)
+
             canvasDimensions = @getCanvasSetupDimensions()
             @paper = Raphael(@$el.get(0), canvasDimensions[0], canvasDimensions[1])
+
             @updateTextDirectionFromModel()
             @$el
                 .css
                     'width': canvasDimensions[0]
                     'height': canvasDimensions[1]
                 .attr('unselectable', 'on')
-            @$canvasEl = $(@paper.canvas)
-            @settings = options.settings or Settings.getSettings(@settingsKey())
-            @letterMetrics = options.letterMetrics or new LetterMetrics()
+
+            @$canvasEl      = $(@paper.canvas)
+            @settings       = options.settings or Settings.getSettings(@settingsKey())
+            @letterMetrics  = options.letterMetrics or new LetterMetrics()
 
             @listenTo(@model.elements, 'add',           @onElementAdd)
             @listenTo(@model.elements, 'remove',        @onElementRemove)
@@ -110,12 +112,10 @@
                 guard
 
             @layerGuards                    = {}
-            @layerGuards.images             = createLayerGuard('images')
             @layerGuards.letters            = createLayerGuard('letters')
             @layerGuards.letterMasks        = createLayerGuard('letter-masks')
 
             @layerGuards.background         = createLayerGuard('background')
-            @layerGuards.imageAreas         = createLayerGuard('image-areas')
             @layerGuards.letterAreas        = createLayerGuard('letter-areas')
             @layerGuards.selectionRect      = createLayerGuard('selection-rect')
             @layerGuards.selectionTooltip   = createLayerGuard('selection-tooltip')
@@ -218,10 +218,9 @@
 
         getModeBehaviorHandler: (eventName, mode=@mode) => @modeBehaviors[mode]?.handlers[eventName]
 
-        isModeAvailable: (mode) -> @modeBehaviors[mode]?
-
-        getDefaultMode: -> @defaultMode
-        setDefaultMode: -> @setMode(@defaultMode)
+        isModeAvailable: (mode)     -> @modeBehaviors[mode]?
+        getDefaultMode:             -> @defaultMode
+        setDefaultMode:             -> @setMode(@defaultMode)
 
         toggleModeClass: (mode=@mode, flag=true) ->
 
@@ -245,21 +244,21 @@
 
 
 
-        updateBgColor: -> @$canvasEl.css('backgroundColor', @model.get('bgColor'))
+        updateBgColor:                              -> @$canvasEl.css('backgroundColor', @model.get('bgColor'))
 
         putElementToFrontAtLayer: (element, layer) ->
             layerGuard = @layerGuards[layer]
             element.insertBefore(layerGuard)
 
-        getChildrenContainerElement: -> @$el.get(0)
-        getCanvasBBox: (absolute) => BBox.fromHtmlDOM(@$el, absolute)
-        getCanvasSetupDimensions: -> [@dataModel.get('canvasWidth'), @dataModel.get('canvasHeight')]
-        getCanvasScale: -> @parentView.getPageScale()
+        getChildrenContainerElement:                -> @$el.get(0)
+        getCanvasBBox: (absolute)                   => BBox.fromHtmlDOM(@$el, absolute)
+        getCanvasSetupDimensions:                   -> [@dataModel.get('canvasWidth'), @dataModel.get('canvasHeight')]
+        getCanvasScale:                             -> @parentView.getPageScale()
 
-        transformToCanvasCoords: (x, y) -> @parentView.transformToCanvasCoords(x, y)
-        transformToCanvasCoordOffsets: (dx, dy) -> @parentView.transformToCanvasCoordOffsets(dx, dy)
-        transformToCanvasBBox: (bbox) -> @parentView.transformToCanvasBBox(bbox)
-        transformCanvasToContainerCoords: (x, y) -> @parentView.transformCanvasToContainerCoords(x, y)
+        transformToCanvasCoords: (x, y)             -> @parentView.transformToCanvasCoords(x, y)
+        transformToCanvasCoordOffsets: (dx, dy)     -> @parentView.transformToCanvasCoordOffsets(dx, dy)
+        transformToCanvasBBox: (bbox)               -> @parentView.transformToCanvasBBox(bbox)
+        transformCanvasToContainerCoords: (x, y)    -> @parentView.transformCanvasToContainerCoords(x, y)
 
         setField: (name, value, options) =>
             oldValue = this[name]
@@ -268,8 +267,8 @@
                 @trigger("change", this)
                 @trigger("change:#{name}", this, value, oldValue)
 
-        setDragging: (dragging) -> @setField('dragging', dragging)
-        setBgDragging: (bgDragging) -> @setField('bgDragging', bgDragging)
+        setDragging: (dragging)         -> @setField('dragging', dragging)
+        setBgDragging: (bgDragging)     -> @setField('bgDragging', bgDragging)
 
         addPlantElement: (options) ->
             options = _.clone(options)
@@ -291,8 +290,7 @@
                 ]
             @model.addElement(options)
 
-        getElementViewConstructor: (model) ->
-            (options) => new ElementView(options)
+        getElementViewConstructor: (model) -> (options) => new ElementView(options)
 
         getElementViewConstructorOptions: (model) ->
             model: model
@@ -364,15 +362,15 @@
             @removeAllMediaViews()
             @model.media.each (model) => @addMediumView(model)
 
-        onElementAdd: (model, collection, options) -> @addElementView(model)
-        onElementRemove: (model, collection, options) -> @removeElementView(model)
-        onElementsReset: (collection, options) -> @reloadAllElementViews()
-        onMediumAdd: (model, collection, options) -> @addMediumView(model)
-        onMediumRemove: (model, collection, options) -> @removeMediumView(model)
-        onMediaReset: (collection, options) -> @reloadAllMediaViews()
-        onBgColorChange: -> @updateBgColor()
-        areViewsSynced: (viewsDict, collection) -> _.isEqual(_.keys(viewsDict), _.pluck(collection.models, 'cid'))
-        getElementViews: => view for name, view of @elementViews
+        onElementAdd: (model, collection, options)      -> @addElementView(model)
+        onElementRemove: (model, collection, options)   -> @removeElementView(model)
+        onElementsReset: (collection, options)          -> @reloadAllElementViews()
+        onMediumAdd: (model, collection, options)       -> @addMediumView(model)
+        onMediumRemove: (model, collection, options)    -> @removeMediumView(model)
+        onMediaReset: (collection, options)             -> @reloadAllMediaViews()
+        onBgColorChange:                                -> @updateBgColor()
+        areViewsSynced: (viewsDict, collection)         -> _.isEqual(_.keys(viewsDict), _.pluck(collection.models, 'cid'))
+        getElementViews:                                => view for name, view of @elementViews
 
         getMediaViews: (mediaTypes) =>
             views = (view for name, view of @mediaViews)
@@ -402,11 +400,11 @@
             @syncMediaViews()
             this
 
-        getTextDirection: -> @dataModel.get('textDirection') or 'ltr'
-
-        isTextRTL: -> @getTextDirection() == 'rtl'
+        getTextDirection:       -> @dataModel.get('textDirection') or 'ltr'
+        isTextRTL:              -> @getTextDirection() == 'rtl'
 
         updateTextDirectionFromModel: ->
+
             canvasEl = @paper.canvas
 
             if @isTextRTL()
@@ -415,9 +413,7 @@
                 canvasEl.setAttribute('writing-mode', 'rl')
 
 
-
-
-    class BaseEditorCanvasView extends CanvasView
+    class EditorCanvasView extends CanvasView
 
         className: "#{CanvasView::className} editor"
 
@@ -467,10 +463,8 @@
             ,
             ]
 
-        getModeConfig: -> @getPlantEditorModeConfig()
-
-
-        settingsKey: -> "editor-#{super}"
+        getModeConfig:  -> @getPlantEditorModeConfig()
+        settingsKey:    -> "editor-#{super}"
 
         initializeSelectionRect: =>
             # initial Raphael objects
@@ -703,8 +697,6 @@
             for view in @getElementViews()
                 if view.letterAreasDirty
                     view.updateLetterAreas()
-
-    class EditorCanvasView extends BaseEditorCanvasView
 
 
     module.exports =

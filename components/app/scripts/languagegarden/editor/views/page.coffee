@@ -2,6 +2,7 @@
 
     _                       = require('underscore')
     $                       = require('jquery')
+
     {RenderableView}        = require('./renderable')
     {getOffsetRect}         = require('./../domutils')
     {template}              = require('./../templates')
