@@ -2,13 +2,12 @@
 
     Raphael = require('raphael')
     _ = require('underscore')
-    {Point} = require('./../../math/points')
-    {
-        AffineTransformation
-    } = require('./../../math/transformations')
-    {Path} = require('./../../math/bezier')
-    settings = require('./../../settings')
-    {deepCopy} = require('./../utils')
+
+    {Point}                 = require('./../../math/points')
+    {AffineTransformation}  = require('./../../math/transformations')
+    {Path}                  = require('./../../math/bezier')
+    settings                = require('./../../settings')
+    {deepCopy}              = require('./../utils')
     {PlantChildModel, PlantChildCollection} = require('./base')
 
 
@@ -365,5 +364,5 @@
 
 
     module.exports =
-        PlantElement: PlantElement
-        PlantElements: PlantElements
+        PlantElement:   PlantElement
+        PlantElements:  PlantElements

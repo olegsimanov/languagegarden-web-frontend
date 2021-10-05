@@ -2,15 +2,15 @@
 
     _ = require('underscore')
     $ = require('jquery')
-    require('jquery.cookie')
-    settings = require('./../../settings')
-    config = require('./../../config')
-    {Point} = require('./../../math/points')
-    {pathJoin} = require('./../utils')
-    {PlantElements} = require('./elements')
-    {PlantMedia} = require('./media')
-    {BaseModelWithSubCollections} = require('./base')
-    {MediumType} = require('./../constants')
+
+    settings                        = require('./../../settings')
+    config                          = require('./../../config')
+    {Point}                         = require('./../../math/points')
+    {pathJoin}                      = require('./../utils')
+    {MediumType}                    = require('./../constants')
+    {PlantElements}                 = require('./elements')
+    {PlantMedia}                    = require('./media')
+    {BaseModelWithSubCollections}   = require('./base')
 
     DEFAULT_CANVAS_WIDTH = 1000
     DEFAULT_CANVAS_HEIGHT = 460
