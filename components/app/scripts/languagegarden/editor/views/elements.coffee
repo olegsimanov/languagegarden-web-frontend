@@ -1,62 +1,68 @@
     'use strict'
 
-    Hammer = require('hammerjs')
     require('raphael')
-    _ = require('underscore')
-    jQuery = require('jquery')
-    $ = require('jquery')
-    settings = require('./../../settings')
-    {VisibilityType, CanvasLayers} = require('./../constants')
-    {EditorMode} = require('./../constants')
-    {Point} = require('./../../math/points')
+    require('jquery.browser')
+
+    Hammer                          = require('hammerjs')
+    _                               = require('underscore')
+    jQuery                          = require('jquery')
+    $                               = require('jquery')
+
+
+    {PlantChildView}                = require('./base')
+    {TextPath, SyntheticTextPath}   = require('./textpaths')
+    {getTrimmedWordParams}          = require('./elementsplit')
+
+    {Point}                         = require('./../../math/points')
+    {Point}                         = require('./../../math/points')
+    {BBox}                          = require('./../../math/bboxes')
+
+    settings                        = require('./../../settings')
+
+    {LetterMetrics}                 = require('./../svgmetrics')
+    {
+        VisibilityType,
+        CanvasLayers
+        EditorMode
+    }                               = require('./../constants')
+
     {
         addSVGElementClass
         removeSVGElementClass
         setCaretPosition
         getCaretPosition
-    } = require('./../domutils')
-    {getTrimmedWordParams} = require('./elementsplit')
+        disableSelection
+    }                               = require('./../domutils')
 
-
-    require('jquery.browser')
-    {Point} = require('./../../math/points')
-    {BBox} = require('./../../math/bboxes')
     {
         sum
         wrapLetterWithZWJ
-    } = require('./../utils')
-    {
-        disableSelection
-        addSVGElementClass
-    } = require('./../domutils')
-    {LetterMetrics} = require('./../svgmetrics')
+    }                               = require('./../utils')
+
     {
         getLetterAreaPathStringAndPoints
         getBigUpperPath
         getBigLowerPath
-    } = require('./../letterareas')
-    {CanvasLayers} = require('./../constants')
-    {PlantChildView} = require('./base')
-    {TextPath, SyntheticTextPath} = require('./textpaths')
+    }                               = require('./../letterareas')
 
 
     class ElementView extends PlantChildView
 
         initialize: (options) =>
             super(options)
-            @paper = options.paper or @parentView?.paper
-            @textPath = null
-            @letterAreas = []
-            @textDirty = false
-            @controlPointObjs = null
-            @textXOffset = 0
-            @textYOffset = null
-            @fadeOutDelay = options.fadeOutDelay or 250
-            @letterMetrics = options.letterMetrics or @parentView?.letterMetrics or new LetterMetrics()
-            @colorPalette = options.colorPalette or @parentView?.colorPalette
-            @letterFill = options.letterFill
-            @useLetterAreas = true
-            @isOutOfBounds = false
+            @paper              = options.paper or @parentView?.paper
+            @textPath           = null
+            @letterAreas        = []
+            @textDirty          = false
+            @controlPointObjs   = null
+            @textXOffset        = 0
+            @textYOffset        = null
+            @fadeOutDelay       = options.fadeOutDelay or 250
+            @letterMetrics      = options.letterMetrics or @parentView?.letterMetrics or new LetterMetrics()
+            @colorPalette       = options.colorPalette or @parentView?.colorPalette
+            @letterFill         = options.letterFill
+            @useLetterAreas     = true
+            @isOutOfBounds      = false
             @listenTo(@, 'change:isOutOfBounds', @onIsOutOfBoundsChange)
             @listenTo(@letterMetrics, 'cache:invalidate', @onMetricsCacheInvalidate)
 
@@ -107,42 +113,27 @@
         onMetricsCacheInvalidate: ->
             @reCreateTextPath()
 
-        getStartPoint: -> @model.get('startPoint')
-
-        getEndPoint: -> @model.get('endPoint')
+        getStartPoint:  -> @model.get('startPoint')
+        getEndPoint:    -> @model.get('endPoint')
 
         getControlPoints: -> @model.get('controlPoints')
-
-        getPath: -> @model.path
-
         getPoints: -> @model.getPoints()
 
+        getPath: -> @model.path
         getText: -> @model.get('text')
-
         getLetters: -> @model.get('text').split('')
-
         getNextLetter: -> @model.get('nextLetter') or null
-
         getPreviousLetter: -> @model.get('previousLetter') or null
-
         getFontSize: -> Math.round(@model.get('fontSize'))
-
         getTransformMatrix: -> @model.get('transformMatrix')
-
         getCanvasScale: -> @parentView?.getCanvasScale() or 1.0
-
         getTextDirection: -> @parentView?.getTextDirection?() or 'ltr'
-
         isTextRTL: -> @getTextDirection() == 'rtl'
-
         isDebugMode: -> false
-
         isDraggedNow: -> false
-
         isEditedNow: -> false
 
-        pathToScreenCoordinates: (x, y) ->
-            Point.applyMatrixToXY(x, y, @model.get('transformMatrix'))
+        pathToScreenCoordinates: (x, y) -> Point.applyMatrixToXY(x, y, @model.get('transformMatrix'))
 
         screenToPathCoordinates: (x, y) ->
             if @_drag?.initialMatrixInv?
@@ -174,8 +165,7 @@
 
             {'fill': fill}
 
-        getLettersStyleAttrs: ->
-            (@getLetterStyleAttrs(i) for i in [0...@getLetters().length])
+        getLettersStyleAttrs: -> (@getLetterStyleAttrs(i) for i in [0...@getLetters().length])
 
         getGenericLettersLengths: (letters, fontSize) ->
             fontSize ?= @getFontSize()
@@ -200,8 +190,7 @@
 
         getLettersLengths: -> @getGenericLettersLengths(@getLetters())
 
-        getGenericTextLettersLength: (letters, fontSize) ->
-            sum(@getGenericLettersLengths(letters, fontSize))
+        getGenericTextLettersLength: (letters, fontSize) -> sum(@getGenericLettersLengths(letters, fontSize))
 
         getSpaceLength: -> @textPath?.getSpaceLength() or 0
 
@@ -210,23 +199,14 @@
             options.isTextRTL = @isTextRTL()
             wrapLetterWithZWJ(letter, options)
 
-        getMaxLetterHeight: ->
-            @getFontSize() * settings.fontSizeToLetterHeightMultiplier
+        getMaxLetterHeight: -> @getFontSize() * settings.fontSizeToLetterHeightMultiplier
 
-        getLetterStartPathPositions: ->
-            @textPath?.getLetterStartPathPositions() or []
+        getLetterStartPathPositions: -> @textPath?.getLetterStartPathPositions() or []
 
-        getLetterPathPosition: (letterIndex, letterLengthFactor) ->
-            @textPath?.getLetterPathPosition(letterIndex, letterLengthFactor) or 0
-
-        getLetterStartPathPosition: (letterIndex) ->
-            @getLetterPathPosition(letterIndex, 0.0)
-
-        getLetterMiddlePathPosition: (letterIndex) ->
-            @getLetterPathPosition(letterIndex, 0.5)
-
-        getLetterEndPathPosition: (letterIndex) ->
-            @getLetterPathPosition(letterIndex, 1)
+        getLetterPathPosition: (letterIndex, letterLengthFactor) -> @textPath?.getLetterPathPosition(letterIndex, letterLengthFactor) or 0
+        getLetterStartPathPosition: (letterIndex) -> @getLetterPathPosition(letterIndex, 0.0)
+        getLetterMiddlePathPosition: (letterIndex) -> @getLetterPathPosition(letterIndex, 0.5)
+        getLetterEndPathPosition: (letterIndex) -> @getLetterPathPosition(letterIndex, 1)
 
         invalidateBoundaryInfo: ->
             @_bbox = null
@@ -301,17 +281,13 @@
 
         intersects: (bbox) -> @getIntersectionInfo(bbox).intersects
 
-        applyTransformMatrix: (matrix) ->
-            @textPath?.applyTransformMatrix(matrix)
+        applyTransformMatrix: (matrix) -> @textPath?.applyTransformMatrix(matrix)
 
-        disableSelection: ->
-            @textPath?.disableSelection()
+        disableSelection: -> @textPath?.disableSelection()
 
-        putElementToFrontAtLayer: (svgElem, layerType) ->
-            @parentView.putElementToFrontAtLayer(svgElem, layerType)
+        putElementToFrontAtLayer: (svgElem, layerType) -> @parentView.putElementToFrontAtLayer(svgElem, layerType)
 
-        putTextPathToFront: ->
-            @textPath?.toFront()
+        putTextPathToFront: -> @textPath?.toFront()
 
         putLetterAreaToFront: (letterArea) ->
             if not letterArea?

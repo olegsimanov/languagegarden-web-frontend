@@ -7,8 +7,8 @@
 
         subCollectionConfig: []
 
-        getSubCollectionNames: -> @_subCollectionNames
-        getSubCollections: ->  @_subCollections
+        getSubCollectionNames:  -> @_subCollectionNames
+        getSubCollections:      -> @_subCollections
 
         createSubCollections: ->
             for subColCfg in @subCollectionConfig

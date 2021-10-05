@@ -12,12 +12,8 @@
 
 
     ATF = AffineTransformation
-    collectionIdName = 'id'
-
 
     class PlantElement extends PlantChildModel
-
-        collectionIdName: collectionIdName
 
         letterStyleAttributes: ['labels']
 
