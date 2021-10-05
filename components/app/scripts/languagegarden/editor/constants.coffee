@@ -4,8 +4,8 @@
 
     class MediumType
 
-        @TEXT           = 'text'
-        @TEXT_TO_PLANT  = 'text-to-plant'
+        @TEXT                   = 'text'
+        @TEXT_TO_PLANT          = 'text-to-plant'
 
     class VisibilityType
 
@@ -14,27 +14,27 @@
         @PLANT_TO_TEXT_FADED    = 'plant-to-text-faded'
         @FADED                  = 'faded'
 
-        @DEFAULT = @VISIBLE
+        @DEFAULT                = @VISIBLE
 
     class PlacementType
 
-        @CANVAS     = 'canvas'
-        @UNDERSOIL  = 'undersoil'
-        @HIDDEN     = 'hidden'
+        @CANVAS                 = 'canvas'
+        @UNDERSOIL              = 'undersoil'
+        @HIDDEN                 = 'hidden'
 
 
     class CanvasLayers
 
-        @BACKGROUND         = 'background'
-        @SELECTION_RECT     = 'selectionRect'
-        @LETTERS            = 'letters'
-        @LETTER_AREAS       = 'letterAreas'
+        @BACKGROUND             = 'background'
+        @SELECTION_RECT         = 'selectionRect'
+        @LETTERS                = 'letters'
+        @LETTER_AREAS           = 'letterAreas'
 
     class CanvasMode
-        @MOVE = 'move'
-        @PLANT_TO_TEXT = 'plant to text'
 
-        @DEFAULT = @MOVE
+        @MOVE                   = 'move'
+        @PLANT_TO_TEXT          = 'plant to text'
+
 
     visibilityOpacityMap = {}
     visibilityOpacityMap[VisibilityType.VISIBLE] = 1.0
@@ -48,9 +48,9 @@
     markedOpacityMap[false] = 0.25
 
     ColorMode =
-        DEFAULT: 'word'
-        WORD: 'word'
-        LETTER: 'letter'
+        DEFAULT:    'word'
+        WORD:       'word'
+        LETTER:     'letter'
 
     class EditorCanvasMode extends CanvasMode
 
@@ -62,15 +62,16 @@
         @TEXT_EDIT      = 'text edit'
         @ROTATE         = 'rotate'
 
-        @DEFAULT = @MOVE
+        @DEFAULT        = @MOVE
 
 
     module.exports =
-        ColorMode: ColorMode
-        EditorCanvasMode: EditorCanvasMode
-        EditorMode: EditorCanvasMode
-        EditorLayers: CanvasLayers          # TODO: please remove this duplication
-        CanvasLayers: CanvasLayers          # TODO: please remove this duplication
-        MediumType: MediumType
-        VisibilityType: VisibilityType
-        PlacementType: PlacementType
+
+        ColorMode:          ColorMode
+        EditorCanvasMode:   EditorCanvasMode        # TODO: please remove this duplication
+        EditorMode:         EditorCanvasMode        # TODO: please remove this duplication
+        EditorLayers:       CanvasLayers            # TODO: please remove this duplication
+        CanvasLayers:       CanvasLayers            # TODO: please remove this duplication
+        MediumType:         MediumType
+        VisibilityType:     VisibilityType
+        PlacementType:      PlacementType

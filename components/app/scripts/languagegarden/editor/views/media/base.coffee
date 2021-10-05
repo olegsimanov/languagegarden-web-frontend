@@ -1,22 +1,23 @@
     'use strict'
 
     require('raphael')
-    _ = require('underscore')
-    $ = require('jquery')
-    {BBox} = require('./../../../math/bboxes')
-    {PlantChildView} = require('../base')
+    _                               = require('underscore')
+    $                               = require('jquery')
+
+    {PlantChildView}                = require('../base')
+    {BBox}                          = require('./../../../math/bboxes')
     {VisibilityType, PlacementType} = require('./../../../editor/constants')
 
     class MediumViewBase extends PlantChildView
 
-        getPlacementType: -> PlacementType.CANVAS
-
-        toFront: =>
+        getPlacementType:   -> PlacementType.CANVAS
+        toFront:            =>
 
     class DummyMediumView extends MediumViewBase
 
 
     class HtmlMediumView extends MediumViewBase
+
         width: 200
         height: 100
         className: 'html-media-float'
@@ -48,6 +49,8 @@
 
         intersects: (bbox) => @getBBox().intersects(bbox)
 
+
+
     VisibilityPrototype =
 
         __required_interface_methods__: [
@@ -70,6 +73,7 @@
             @addElementCSS(elemNode, className)
 
         setVisibilityType: (value=VisibilityType.VISIBLE, options) -> @model.set('visibilityType', value, options)
+
 
     HTMLStylablePrototype =
 
@@ -136,6 +140,7 @@
 
         hammerEventOptions: {}
 
+
     BaseEditorDummyMediumView = DummyMediumView.extend(HTMLStylablePrototype).extend(VisibilityPrototype)
 
 
@@ -151,8 +156,8 @@
 
 
     module.exports =
-        HtmlMediumView: HtmlMediumView
-        SelectablePrototype: SelectablePrototype
-        EventDispatchingPrototype: EventDispatchingPrototype
-        EventBindingPrototype: EventBindingPrototype
-        EditorDummyMediumView: EditorDummyMediumView
+        HtmlMediumView:             HtmlMediumView
+        SelectablePrototype:        SelectablePrototype
+        EventDispatchingPrototype:  EventDispatchingPrototype
+        EventBindingPrototype:      EventBindingPrototype
+        EditorDummyMediumView:      EditorDummyMediumView
