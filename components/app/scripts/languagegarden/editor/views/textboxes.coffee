@@ -1,15 +1,21 @@
     'use strict'
 
     _ = require('underscore')
-    {MediumType, EditorMode, PlacementType} = require('./../constants')
+
+    {
+        MediumType,
+        EditorMode,
+        PlacementType
+    }                           = require('./../constants')
     {
         EditorTextToPlantView
         TextToPlantView
-    } = require('./media/text_to_plant')
+    }                           = require('./media/text_to_plant')
+    {Point}                     = require('./../../math/points')
 
-    {BaseView} = require('./base')
-    {DummyMediumView} = require('./media/base')
-    {Point} = require('./../../math/points')
+
+    {BaseView}                  = require('./base')
+    {DummyMediumView}           = require('./media/base')
 
 
     class TextBoxView extends BaseView
@@ -22,24 +28,20 @@
             @rendered = false
 
         onParentViewBind: ->
-            eventNames = ("change:pageContainer#{suf}" for suf in ['Transform',
-                'Scale', 'ShiftX', 'ShiftY'])
+            eventNames = ("change:pageContainer#{suf}" for suf in ['Transform', 'Scale', 'ShiftX', 'ShiftY'])
             @setupEventForwarding(@parentView, eventNames)
 
         onModelBind: ->
             super
             @mediaViews = {}
             @reloadAllMediaViews()
-            @listenTo(@model, 'change:textDirection',
-                @onModelTextDirectionChange)
+            @listenTo(@model, 'change:textDirection', @onModelTextDirectionChange)
             @listenTo(@model.media, 'add', @onMediumAdd)
             @listenTo(@model.media, 'remove', @onMediumRemove)
             @listenTo(@model.media, 'reset', @onMediaReset)
-            @listenTo(@model.media, 'change:inPlantToTextMode',
-                @onMediumInPlantToTextModeChanged)
+            @listenTo(@model.media, 'change:inPlantToTextMode', @onMediumInPlantToTextModeChanged)
 
-        areViewsSynced: (viewsDict, collection) ->
-            _.isEqual(_.keys(viewsDict or {}), _.pluck(collection.models, 'cid'))
+        areViewsSynced: (viewsDict, collection) -> _.isEqual(_.keys(viewsDict or {}), _.pluck(collection.models, 'cid'))
 
         getMediaViews: (mediaTypes) =>
             views = (view for name, view of @mediaViews)
@@ -109,17 +111,11 @@
             @$el.toggleClass('plant-to-text-box__rtl',
                 @dataModel.get('textDirection') == 'rtl')
 
-        onMediumAdd: (model, collection, options) -> @addMediumView(model)
-
-        onMediumRemove: (model, collection, options) -> @removeMediumView(model)
-
-        onMediaReset: (collection, options) -> @reloadAllMediaViews()
-
-        onMediumInPlantToTextModeChanged: ->
-            @updateNotesMode()
-
-        onModelTextDirectionChange: ->
-            @updateTextDirection()
+        onMediumAdd: (model, collection, options)       -> @addMediumView(model)
+        onMediumRemove: (model, collection, options)    -> @removeMediumView(model)
+        onMediaReset: (collection, options)             -> @reloadAllMediaViews()
+        onMediumInPlantToTextModeChanged:               -> @updateNotesMode()
+        onModelTextDirectionChange:                     -> @updateTextDirection()
 
         addPlantElement: (options) =>
             options = _.clone(options)
@@ -141,20 +137,12 @@
                 ]
             @model.addElement(options)
 
-        getCanvasSetupDimensions: ->
-            [@dataModel.get('canvasWidth'), @dataModel.get('canvasHeight')]
+        getCanvasSetupDimensions:                   -> [@dataModel.get('canvasWidth'), @dataModel.get('canvasHeight')]
 
-        transformToCanvasCoords: (x, y) ->
-            @parentView.transformToCanvasCoords(x, y)
-
-        transformToCanvasCoordOffsets: (dx, dy) ->
-            @parentView.transformToCanvasCoordOffsets(dx, dy)
-
-        transformToCanvasBBox: (bbox) ->
-            @parentView.transformToCanvasBBox(bbox)
-
-        transformCanvasToContainerCoords: (x, y) ->
-            @parentView.transformCanvasToContainerCoords(x, y)
+        transformToCanvasCoords: (x, y)             -> @parentView.transformToCanvasCoords(x, y)
+        transformToCanvasCoordOffsets: (dx, dy)     -> @parentView.transformToCanvasCoordOffsets(dx, dy)
+        transformToCanvasBBox: (bbox)               -> @parentView.transformToCanvasBBox(bbox)
+        transformCanvasToContainerCoords: (x, y)    -> @parentView.transformCanvasToContainerCoords(x, y)
 
         render: ->
             super
@@ -168,7 +156,7 @@
 
     class EditorTextBoxView extends TextBoxView
 
-        initialize: (options) ->
+        initialize: () ->
             super
             @mode = EditorMode.MOVE
 

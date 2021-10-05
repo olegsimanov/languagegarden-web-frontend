@@ -17,8 +17,7 @@
                     if retainSource
                         handler = (args...) -> @trigger(evName, args...)
                     else
-                        handler = (src, args...) ->
-                            @trigger(evName, this, args...)
+                        handler = (src, args...) -> @trigger(evName, this, args...)
 
                     @listenTo(target, evName, handler)
 

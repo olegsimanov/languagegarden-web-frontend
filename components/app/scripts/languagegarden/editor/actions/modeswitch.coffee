@@ -1,8 +1,8 @@
     'use strict'
 
-    _ = require('underscore')
-    {Action} = require('./base')
-    {EditorMode} = require('./../constants')
+    _               = require('underscore')
+    {Action}        = require('./base')
+    {EditorMode}    = require('./../constants')
 
 
     class ModeSwitchAction extends Action
@@ -25,12 +25,9 @@
                 not @mediaSelected()
             )
 
-        multipleWordsSelected: -> @canvasView.getSelectedElements().length > 1
-
-        mediaSelected: -> @canvasView.getSelectedMediaViews().length > 0
-
-        multipleWordsNoMediaSelected: ->
-            @multipleWordsSelected() and not @mediaSelected()
+        multipleWordsSelected:          -> @canvasView.getSelectedElements().length > 1
+        mediaSelected:                  -> @canvasView.getSelectedMediaViews().length > 0
+        multipleWordsNoMediaSelected:   -> @multipleWordsSelected() and not @mediaSelected()
 
 
     class ModeSwitchActionSingleMode extends ModeSwitchAction

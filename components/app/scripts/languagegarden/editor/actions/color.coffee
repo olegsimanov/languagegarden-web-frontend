@@ -2,7 +2,6 @@
 
     _ = require('underscore')
     {Action} = require('./base')
-    {ColorMode} = require('./../constants')
 
 
     class WordActionBase extends Action
@@ -63,15 +62,7 @@
             model.setLetterAttribute(letter_i, 'labels', @toolModel.getLabels())
             true
 
-    class HideAction extends Action
-
-        id: 'word-hide'
-
-        letterPerform: => console.log('HideAction letter perform')
-        wordPerform: => console.log('HideAction word perform')
-
     module.exports =
         ColorAction: ColorAction
         RemoveColorAction: RemoveColorAction
         SplitColorAction: SplitColorAction
-        HideAction: HideAction

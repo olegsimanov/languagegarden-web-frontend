@@ -1,7 +1,7 @@
     'use strict'
 
-    {capitalize} = require('./../utils')
-    {EventObject} = require('./../events')
+    {capitalize}    = require('./../utils')
+    {EventObject}   = require('./../events')
 
     class Action extends EventObject
 
@@ -11,22 +11,16 @@
             @initialize(options)
             @initializeListeners(options)
 
-        initialize: (options) ->
-            @setPropertyFromOptions(options, 'controller', required: true)
+        initialize: (options)   -> @setPropertyFromOptions(options, 'controller', required: true)
+        initializeListeners:    ->
 
-        initializeListeners: ->
-
-        triggerAvailableChange: ->
-            @trigger('change:available', this, @isAvailable())
-
-        triggerToggledChange: ->
-            @trigger('change:toggled', this, @isToggled())
+        triggerAvailableChange: -> @trigger('change:available', this, @isAvailable())
+        triggerToggledChange:   -> @trigger('change:toggled', this, @isToggled())
 
         perform: ->
 
-        isAvailable: -> true
-
-        isToggled: -> false
+        isAvailable:            -> true
+        isToggled:              -> false
 
         fullPerform: =>
             if not @isAvailable()
@@ -35,12 +29,10 @@
             @perform()
             @onPerformEnd()
 
-        onPerformStart: ->
+        onPerformStart:         ->
+        onPerformEnd:           ->
 
-        onPerformEnd: ->
-
-        getHelpTextFromId: ->
-            capitalize(@id).replace(/-/g, ' ')
+        getHelpTextFromId:      -> capitalize(@id).replace(/-/g, ' ')
 
         getHelpText: ->
             if @help?

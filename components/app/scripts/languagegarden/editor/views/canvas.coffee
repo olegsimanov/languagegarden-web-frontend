@@ -95,8 +95,7 @@
             @initializeBackgroundEvents()
 
         onParentViewBind: ->
-            eventNames = ("change:pageContainer#{suf}" for suf in ['Transform',
-                'Scale', 'ShiftX', 'ShiftY'])
+            eventNames = ("change:pageContainer#{suf}" for suf in ['Transform', 'Scale', 'ShiftX', 'ShiftY'])
             @setupEventForwarding(@parentView, eventNames)
 
         settingsKey: -> 'plant-view'
@@ -223,6 +222,7 @@
         isModeAvailable: (mode) -> @modeBehaviors[mode]?
 
         getDefaultMode: -> @defaultMode
+        setDefaultMode: -> @setMode(@defaultMode)
 
         toggleModeClass: (mode=@mode, flag=true) ->
 
@@ -244,37 +244,23 @@
             @mode = oldMode
             @setField('mode', mode)
 
-        setDefaultMode: -> @setMode(@defaultMode)
 
-        updateBgColor: ->
-            @$canvasEl.css('backgroundColor', @model.get('bgColor'))
+
+        updateBgColor: -> @$canvasEl.css('backgroundColor', @model.get('bgColor'))
 
         putElementToFrontAtLayer: (element, layer) ->
             layerGuard = @layerGuards[layer]
             element.insertBefore(layerGuard)
 
         getChildrenContainerElement: -> @$el.get(0)
+        getCanvasBBox: (absolute) => BBox.fromHtmlDOM(@$el, absolute)
+        getCanvasSetupDimensions: -> [@dataModel.get('canvasWidth'), @dataModel.get('canvasHeight')]
+        getCanvasScale: -> @parentView.getPageScale()
 
-        getCanvasBBox: (absolute) =>
-            BBox.fromHtmlDOM(@$el, absolute)
-
-        getCanvasSetupDimensions: ->
-            [@dataModel.get('canvasWidth'), @dataModel.get('canvasHeight')]
-
-        getCanvasScale: ->
-            @parentView.getPageScale()
-
-        transformToCanvasCoords: (x, y) ->
-            @parentView.transformToCanvasCoords(x, y)
-
-        transformToCanvasCoordOffsets: (dx, dy) ->
-            @parentView.transformToCanvasCoordOffsets(dx, dy)
-
-        transformToCanvasBBox: (bbox) ->
-            @parentView.transformToCanvasBBox(bbox)
-
-        transformCanvasToContainerCoords: (x, y) ->
-            @parentView.transformCanvasToContainerCoords(x, y)
+        transformToCanvasCoords: (x, y) -> @parentView.transformToCanvasCoords(x, y)
+        transformToCanvasCoordOffsets: (dx, dy) -> @parentView.transformToCanvasCoordOffsets(dx, dy)
+        transformToCanvasBBox: (bbox) -> @parentView.transformToCanvasBBox(bbox)
+        transformCanvasToContainerCoords: (x, y) -> @parentView.transformCanvasToContainerCoords(x, y)
 
         setField: (name, value, options) =>
             oldValue = this[name]
@@ -284,7 +270,6 @@
                 @trigger("change:#{name}", this, value, oldValue)
 
         setDragging: (dragging) -> @setField('dragging', dragging)
-
         setBgDragging: (bgDragging) -> @setField('bgDragging', bgDragging)
 
         addPlantElement: (options) ->
@@ -380,30 +365,14 @@
             @removeAllMediaViews()
             @model.media.each (model) => @addMediumView(model)
 
-        onElementAdd: (model, collection, options) ->
-            @addElementView(model)
-
-        onElementRemove: (model, collection, options) ->
-            @removeElementView(model)
-
-        onElementsReset: (collection, options) ->
-            @reloadAllElementViews()
-
-        onMediumAdd: (model, collection, options) ->
-            @addMediumView(model)
-
-        onMediumRemove: (model, collection, options) ->
-            @removeMediumView(model)
-
-        onMediaReset: (collection, options) ->
-            @reloadAllMediaViews()
-
-        onBgColorChange: ->
-            @updateBgColor()
-
-        areViewsSynced: (viewsDict, collection) ->
-            _.isEqual(_.keys(viewsDict), _.pluck(collection.models, 'cid'))
-
+        onElementAdd: (model, collection, options) -> @addElementView(model)
+        onElementRemove: (model, collection, options) -> @removeElementView(model)
+        onElementsReset: (collection, options) -> @reloadAllElementViews()
+        onMediumAdd: (model, collection, options) -> @addMediumView(model)
+        onMediumRemove: (model, collection, options) -> @removeMediumView(model)
+        onMediaReset: (collection, options) -> @reloadAllMediaViews()
+        onBgColorChange: -> @updateBgColor()
+        areViewsSynced: (viewsDict, collection) -> _.isEqual(_.keys(viewsDict), _.pluck(collection.models, 'cid'))
         getElementViews: => view for name, view of @elementViews
 
         getMediaViews: (mediaTypes) =>
@@ -450,6 +419,7 @@
 
 
     class BaseEditorCanvasView extends CanvasView
+
         className: "#{CanvasView::className} editor"
 
         initialize: (options) ->
@@ -460,15 +430,16 @@
             @dragging = false
             @bgDragging = false
 
-            @listenTo(this, 'selectchange', @onSelectChange)
-            @listenTo(this, 'change:dragging', (s, v) => @toggleDraggingClass(v))
-            @listenTo(this, 'change:bgDragging', (s, v) => @toggleBgDraggingClass(v))
-            @listenTo(this, 'change:mode', @onModeChange)
+            @listenTo(this, 'selectchange',         @onSelectChange)
+            @listenTo(this, 'change:dragging',      (s, v) => @toggleDraggingClass(v))
+            @listenTo(this, 'change:bgDragging',    (s, v) => @toggleBgDraggingClass(v))
+            @listenTo(this, 'change:mode',          @onModeChange)
 
             @initializeSelectionRect()
             @initializeEditorEl()
 
         getPlantEditorModeConfig: ->
+
             startMode: EditorMode.MOVE
             modeSpecs: [
                 mode: EditorMode.MOVE
@@ -499,8 +470,7 @@
                 behaviorClass: PlantToTextBehavior
             ]
 
-        getModeConfig: ->
-            @getPlantEditorModeConfig()
+        getModeConfig: -> @getPlantEditorModeConfig()
 
 
         settingsKey: -> "editor-#{super}"
@@ -541,17 +511,12 @@
             if isDarkColor(color) then '#000000' else '#FFFFFF'
 
         toggleModeClass: (mode=@mode, flag=true) => @$el.toggleClass("#{mode.replace(/\s/g,'-')}-mode", flag)
-
         toggleDraggingClass: (flag=true) => @$el.toggleClass("in-dragging", flag)
-
         toggleBgDraggingClass: (flag=true) => @$el.toggleClass("in-bg-dragging", flag)
-
         setDragging: (dragging) => @setField('dragging', dragging)
-
         setBgDragging: (bgDragging) => @setField('bgDragging', bgDragging)
 
         getElementViewConstructor: (model) -> (options) -> new EditorElementView(options)
-
         getElementViewConstructorOptions: (model) ->
             model: model
             parentView: this
@@ -640,16 +605,6 @@
             if view? and view.editor == this and view.isSelected()
                 @trigger('selectionplaybackchange', player, view)
 
-        onDocumentKeyUp: (event) =>
-            code = if event.keyCode then event.keyCode else event.which
-            switch code
-                when 17 then @multiSelect = false
-
-        onDocumentKeyDown: (event) =>
-            code = if event.keyCode then event.keyCode else event.which
-            switch code
-                when 17 then @multiSelect = true
-
         startInserting: (p) =>
             insertModel = new PlantElement
                 startPoint: p
@@ -672,8 +627,7 @@
                 model: elemModel
             @insertView.render()
 
-        finishEditing: (options) =>
-            @setDefaultMode()
+        finishEditing: (options) => @setDefaultMode()
 
         startTextEditing: (textView) =>
             textView.shouldEnterEditMode = true
@@ -733,29 +687,16 @@
             if selectionChanged
                 @trigger('selectchange')
 
-        getElementViewByModelCid: (cid) =>
-            _.find @elementViews, (v) -> v?.model?.cid == cid
+        getElementViewByModelCid: (cid)     => _.find @elementViews, (v) -> v?.model?.cid == cid
+        getElementByCid: (cid)              => @getElementViewByModelCid(cid)?.model
 
-        getElementByCid: (cid) => @getElementViewByModelCid(cid)?.model
+        getSelectedElements:                => view.model for name, view of @elementViews when view.isSelected()
+        getSelectedElementViews:            => view for name, view of @elementViews when view.isSelected()
+        getSelectedMedia:                   => view.model for name, view of @mediaViews when view.isSelected()
+        getSelectedMediaViews:              => view for name, view of @mediaViews when view.isSelected()
+        getSelectedViews:                   => @getSelectedElementViews().concat(@getSelectedMediaViews())
 
-        getSelectedElements: =>
-            view.model for name, view of @elementViews when view.isSelected()
-
-        getSelectedElementViews: =>
-            view for name, view of @elementViews when view.isSelected()
-
-        getSelectedMedia: =>
-            view.model for name, view of @mediaViews when view.isSelected()
-
-        getSelectedMediaViews: =>
-            view for name, view of @mediaViews when view.isSelected()
-
-        getSelectedViews: =>
-            @getSelectedElementViews()
-            .concat(@getSelectedMediaViews())
-
-        selectionBBoxChange: => @trigger('change:selectionBBox')
-
+        selectionBBoxChange:                => @trigger('change:selectionBBox')
         getSelectionBBox: =>
             bboxes = (view.getBBox() for view in @getSelectedViews())
             bboxes.push(@insertView.getBBox()) if @insertView?.isSelected()

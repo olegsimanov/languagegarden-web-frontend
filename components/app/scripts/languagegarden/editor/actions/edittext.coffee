@@ -1,7 +1,7 @@
     'use strict'
 
-    {MediumType} = require('./../constants')
-    {Action} = require('./base')
+    {MediumType}    = require('./../constants')
+    {Action}        = require('./base')
 
 
     class StartUpdating extends Action

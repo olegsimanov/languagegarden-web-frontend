@@ -10,6 +10,9 @@
 
     class BaseModel extends Backbone.Model.extend(EventForwardingPrototype)
 
+        @extend:        extend
+        @extendAll:     extendAll
+
         setParentModel: (model) -> @parentModel = model
         getParentModel:         -> @parentModel
 
@@ -28,13 +31,9 @@
                 @attributes[attr][level1][level2] = value
                 @changed[attr] = @attributes[attr]
 
-        setDefaultValue: (attrName, value) ->
-            @set(attrName, value) if not @has(attrName)
+        setDefaultValue: (attrName, value) -> @set(attrName, value) if not @has(attrName)
 
         deepClone: -> new @constructor(@toJSON())
-
-        @extend:        extend
-        @extendAll:     extendAll
 
 
     class BaseCollection extends Backbone.Collection

@@ -81,29 +81,6 @@
             console.log('getSplitIndices method missing!')
 
 
-    class SplitSentenceElement extends SplitActionBase
-
-        id: 'sentence-split'
-
-        getViewsToProcess: -> @canvasView.getSelectedElementViews()
-
-        perform: ->
-            for elemView in @getViewsToProcess()
-                if @canSplit(elemView.model)
-                    @splitWord(elemView)
-            true
-
-        isAvailable: ->
-            models = @canvasView.getSelectedElements()
-            models.length == 1 and @canSplit(models)
-
-        canSplit: (models) ->
-            models = [models] if not _.isArray(models)
-            _.some models, (e) => e.get('text').search(' ') != -1
-
-        getSplitIndices: (args...) => getSentenceSplitIndices(args...)
-
-
     class SplitWordElement extends SplitActionBase
 
         id: 'word-split'
@@ -156,5 +133,4 @@
 
 
     module.exports =
-        SplitSentenceElement: SplitSentenceElement
         SplitWordElement: SplitWordElement
