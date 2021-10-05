@@ -1,20 +1,20 @@
     'use strict'
 
     _ = require('underscore')
-    {Point} = require('./../../../math/points')
-    {BBox} = require('./../../../math/bboxes')
+
     {
         DragBehaviorBase
         ClickBehaviorBase
         DblClickBehaviorBase
-    } = require('./../../behaviors/plantchild/base')
+    }           = require('./../plantchild/base')
+    {Point}     = require('./../../../math/points')
+    {BBox}      = require('./../../../math/bboxes')
 
 
 
     LetterBehaviorPrototype =
 
         id: 'missing-letter-hehavior-id'
-        getMetricName: -> "lbehavior.#{@id}"
 
 
     LetterDragBehaviorPrototype =

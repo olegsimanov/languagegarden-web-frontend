@@ -20,6 +20,7 @@
             @initialize(options)
 
         initialize: (options) =>
+
             loadEventHandlers = (classes, prefix) =>
                 for cls in classes
                     letterBehavior = new cls
@@ -28,48 +29,45 @@
                         parentBehavior: this
                     for eventName, handler of letterBehavior.handlers
                         @handlers["#{prefix}#{eventName}"] = handler
+
             @handlers ?= {}
-            loadEventHandlers(@boundLettersClasses, 'boundletter')
-            loadEventHandlers(@middleLettersClasses, 'middleletter')
-            loadEventHandlers(@boundLettersClasses, 'selectedboundletter')
-            loadEventHandlers(@middleLettersClasses, 'selectedmiddleletter')
+
+            loadEventHandlers(@boundLettersClasses,         'boundletter')
+            loadEventHandlers(@middleLettersClasses,        'middleletter')
+            loadEventHandlers(@boundLettersClasses,         'selectedboundletter')
+            loadEventHandlers(@middleLettersClasses,        'selectedmiddleletter')
             loadEventHandlers(@selectedBoundLettersClasses, 'selectedboundletter')
-            loadEventHandlers(@selectedMiddleLettersClasses, 'selectedmiddleletter')
+            loadEventHandlers(@selectedMiddleLettersClasses,'selectedmiddleletter')
 
-            loadEventHandlers(@mediaClasses, 'medium')
-            loadEventHandlers(@mediaClasses, 'selectedmedium')
-            loadEventHandlers(@selectedMediaClasses, 'selectedmedium')
+            loadEventHandlers(@mediaClasses,                'medium')
+            loadEventHandlers(@mediaClasses,                'selectedmedium')
+            loadEventHandlers(@selectedMediaClasses,        'selectedmedium')
 
-            @handlers.bgclick = @onBgClick
-            @handlers.bgdblclick = @onBgDblClick
-            @handlers.bgdragstart = @onBgDragStart
-            @handlers.bgdrag = @onBgDragMove
-            @handlers.bgdragend = @onBgDragEnd
-            @handlers.modeenter = @onModeEnter
-            @handlers.modeleave = @onModeLeave
-            @handlers.modereset = @onModeReset
+            @handlers.bgclick       = @onBgClick
+            @handlers.bgdblclick    = @onBgDblClick
+            @handlers.bgdragstart   = @onBgDragStart
+            @handlers.bgdrag        = @onBgDragMove
+            @handlers.bgdragend     = @onBgDragEnd
+            @handlers.modeenter     = @onModeEnter
+            @handlers.modeleave     = @onModeLeave
+            @handlers.modereset     = @onModeReset
 
         remove: ->
+
             @handlers = null
             @model = null
             @controller = null
             @parentView = null
 
-        onModeEnter: (oldMode) =>
+        onModeEnter: (oldMode)              =>
+        onModeReset:                        =>
+        onModeLeave: (newMode)              =>
 
-        onModeReset: =>
-
-        onModeLeave: (newMode) =>
-
-        onBgClick: (event, x, y) =>
-
-        onBgDblClick: (event, x, y) =>
-
-        onBgDragStart: (event, x, y) =>
-
+        onBgClick: (event, x, y)            =>
+        onBgDblClick: (event, x, y)         =>
+        onBgDragStart: (event, x, y)        =>
         onBgDragMove: (event, x, y, dx, dy) =>
-
-        onBgDragEnd: (event) =>
+        onBgDragEnd: (event)                =>
 
 
     class ModeBehavior extends BaseModeBehavior
@@ -114,5 +112,5 @@
 
 
     module.exports =
-        BaseModeBehavior: BaseModeBehavior
-        ModeBehavior: ModeBehavior
+        BaseModeBehavior:   BaseModeBehavior
+        ModeBehavior:       ModeBehavior

@@ -14,9 +14,6 @@
 
         id: 'missing-media-hehavior-id'
 
-        getMetricName: -> "mbehavior.#{@id}"
-
-
     MediaDragBehaviorPrototype =
 
         getDragInfo: (view) -> view._dragInfo
@@ -36,14 +33,14 @@
             view._dragInfo = null
 
 
-    class DragBehavior extends DragBehaviorBase.extend(MediaBehaviorPrototype).extend(MediaDragBehaviorPrototype)
-    class ClickBehavior extends ClickBehaviorBase.extend(MediaBehaviorPrototype)
-    class DblClickBehavior extends DblClickBehaviorBase.extend(MediaBehaviorPrototype)
+    class DragBehavior      extends DragBehaviorBase.extend(MediaBehaviorPrototype).extend(MediaDragBehaviorPrototype)
+    class ClickBehavior     extends ClickBehaviorBase.extend(MediaBehaviorPrototype)
+    class DblClickBehavior  extends DblClickBehaviorBase.extend(MediaBehaviorPrototype)
 
 
     module.exports =
-        DragBehavior: DragBehavior
-        ClickBehavior: ClickBehavior
-        DblClickBehavior: DblClickBehavior
-        MediaBehaviorPrototype: MediaBehaviorPrototype
+        DragBehavior:               DragBehavior
+        ClickBehavior:              ClickBehavior
+        DblClickBehavior:           DblClickBehavior
+        MediaBehaviorPrototype:     MediaBehaviorPrototype
         MediaDragBehaviorPrototype: MediaDragBehaviorPrototype
