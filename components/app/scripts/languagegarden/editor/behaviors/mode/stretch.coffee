@@ -5,13 +5,10 @@
     LetterStretchBehavior               = require('./../../behaviors/letter/stretch').StretchBehavior
     LetterModeSwitchAndSelectBehavior   = require('./../../behaviors/letter/select').ModeSwitchAndSelectBehavior
     LetterEditBehavior                  = require('./../../behaviors/letter/edit').EditBehavior
-    {SelectBehavior}                    = require('./../../behaviors/media/select')
 
 
     class StretchBehavior extends ModeBehavior
-        mediaClasses: [
-            SelectBehavior,
-        ]
+
         selectedBoundLettersClasses: [
             LetterStretchBehavior,
         ]

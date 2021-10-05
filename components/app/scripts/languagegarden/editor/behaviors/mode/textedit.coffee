@@ -4,15 +4,10 @@
     {MediumType}                = require('./../../constants')
     LetterSelectBehavior        = require('./../../behaviors/letter/select').ModeSwitchAndSelectBehavior
     LetterEditBehavior          = require('./../../behaviors/letter/edit').EditBehavior
-    {TextEditSelectBehavior}    = require('./../../behaviors/media/textedit')
-    MediumEditBehavior          = require('./../../behaviors/media/edit').EditBehavior
 
 
     class TextEditBehavior extends ModeBehavior
-        mediaClasses: [
-            TextEditSelectBehavior,
-            MediumEditBehavior,
-        ]
+
         boundLettersClasses: [
             LetterSelectBehavior,
             LetterEditBehavior,
