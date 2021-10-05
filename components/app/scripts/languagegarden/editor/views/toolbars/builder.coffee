@@ -1,21 +1,21 @@
     'use strict'
 
     _ = require('underscore')
-    {ToolbarEnum} = require('./../../views/toolbars/constants')
-    {EditorToolbar, EditorSubToolbar} = require('./base')
-    {SquarePicker} = require('./../colorpicker/square')
-    {SelectionButtonGroup} = require('./../buttongroups/selection')
     {
-        DiscardAndGoToNavigator
+        EditorToolbar,
+        EditorSubToolbar
+    }                           = require('./base')
+    {SquarePicker}              = require('./../colorpicker/square')
+    {SelectionButtonGroup}      = require('./../buttongroups/selection')
+    {ToolbarEnum}               = require('./../../views/toolbars/constants')
+    {StatefulToolbar}           = require('./../../views/toolbars/stateful')
+    {ToolbarNavButton}          = require('./../../views/toolbars/navbuttons')
+    {
         SaveAndGoToNavigator
-    } = require('./../../actions/navigation')
-
-    settings = require('./../../../settings')
-    {StatefulToolbar} = require('./../../views/toolbars/stateful')
-    {ToolbarNavButton} = require('./../../views/toolbars/navbuttons')
-    {EditorMode} = require('./../../constants')
-
-
+        DiscardAndGoToNavigator
+    }                           = require('./../../actions/navigation')
+    {EditorMode}                = require('./../../constants')
+    settings                    = require('./../../../settings')
 
     class PaletteToolbarNavButton extends ToolbarNavButton
 
@@ -99,4 +99,4 @@
     module.exports =
         BuilderToolbar: BuilderToolbar
         TooltipToolbar: TooltipToolbar
-        ColorToolbar: ColorToolbar
+        ColorToolbar:   ColorToolbar

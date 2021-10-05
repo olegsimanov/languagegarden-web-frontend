@@ -46,10 +46,10 @@
             else
                 super
 
-        stopTrackingChanges: -> @trigger('trackchanges', this, false)
-        startTrackingChanges: -> @trigger('trackchanges', this, true)
+        stopTrackingChanges:    -> @trigger('trackchanges', this, false)
+        startTrackingChanges:   -> @trigger('trackchanges', this, true)
 
-        addElement: (model, options) -> @elements.add(model, options)
+        addElement: (model, options)    -> @elements.add(model, options)
         removeElement: (model, options) -> @elements.remove(model, options)
 
         removeMedium: (model, options) -> @media.remove(model, options)

@@ -11,7 +11,6 @@
 
         @VISIBLE                = 'visible'
         @HIDDEN                 = 'hidden'
-        @PLANT_TO_TEXT_FADED    = 'plant-to-text-faded'
         @FADED                  = 'faded'
 
         @DEFAULT                = @VISIBLE
@@ -39,7 +38,6 @@
     visibilityOpacityMap = {}
     visibilityOpacityMap[VisibilityType.VISIBLE] = 1.0
     visibilityOpacityMap[VisibilityType.HIDDEN] = 0.0
-    visibilityOpacityMap[VisibilityType.PLANT_TO_TEXT_FADED] = 0.25
     visibilityOpacityMap[VisibilityType.FADED] = 0.5
 
 

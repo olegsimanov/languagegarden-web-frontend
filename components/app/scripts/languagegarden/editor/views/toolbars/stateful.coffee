@@ -1,13 +1,11 @@
     'use strict'
 
     _ = require('underscore')
-    {RenderableView} = require('./../renderable')
-    {StatefulClassPrototype} = require('./../../stateful')
-    {BaseToolbar} = require('./base')
+    {RenderableView}            = require('./../renderable')
+    {StatefulClassPrototype}    = require('./../../stateful')
 
 
-    StatefulRenderableView = RenderableView
-        .extend(StatefulClassPrototype)
+    StatefulRenderableView = RenderableView.extend(StatefulClassPrototype)
 
     ###Toolbar that renders different toolbar depending on its state.###
     class StatefulToolbarBase extends StatefulRenderableView
@@ -15,7 +13,6 @@
         # Map of label to children class {stateName: toolbarClass}
         toolbars: undefined
         getToolbars: => @toolbars
-        getToolbarForName: (toolbarName) => @toolbars[toolbarName]
 
         initialize: (options) =>
             super
@@ -59,12 +56,10 @@
                     toolbarView.setActive(false)
             @toolbarViews[state].setActive(true)
 
-    ###Provides easier child specification as a list of classes which is
-    converted into map of form: {name: view}
-    ###
+
     class StatefulToolbar extends StatefulToolbarBase
 
-        defaultState: null
+        defaultState:   null
         toolbarClasses: null
 
         initialize: (options) =>
@@ -77,5 +72,4 @@
 
 
     module.exports =
-        BaseToolbar: BaseToolbar
-        StatefulToolbar: StatefulToolbar
+        StatefulToolbar:    StatefulToolbar

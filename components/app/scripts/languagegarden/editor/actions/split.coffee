@@ -1,36 +1,53 @@
     'use strict'
 
-    _ = require('underscore')
-    {Action} = require('./base')
-    {Point} = require('./../../math/points')
-    {PlantElement} = require('./../models/elements')
+    _               = require('underscore')
+    {Action}        = require('./base')
+    {PlantElement}  = require('./../models/elements')
     {
         getWordSplits
-        getSentenceSplitIndices
         getWordSplitIndices
-    } = require('./../views/elementsplit')
+    }               = require('./../views/elementsplit')
+    {Point}         = require('./../../math/points')
 
 
-    class SplitActionBase extends Action
+    class SplitWordElement extends Action
 
-        lettersRangesAreAdjacent: (previousSplit, split) ->
-            if not previousSplit?
-                return false
-            if not split?
-                return false
-            return previousSplit.lettersRange[1] + 1 == split.lettersRange[0]
+        id: 'word-split'
+
+        isAvailable: ->
+            if @canvasView.insertView?
+                @canvasView.insertView.canSplitWord()
+            else if @canvasView.wordSplitContext?
+                {model, position} = @getWordSplitContext()
+                @canSplitAt(model.get('text'), position)
+            else
+                false
+
+        perform: ->
+
+            {position, view, model} = @getWordSplitContext()
+            text = model?.get('text')
+
+            @removeSplitContext()
+
+            if text and @canSplitAt(text, position)
+                model = @splitWord(view, @getSplitIndices(text, position))[0]
+                makesnapshot = true
+
+            _.delay => @canvasView.startUpdating(model) if model?
+
+            makesnapshot or false
 
         splitWord: (view, indices) ->
-            origElemModel = view.model
-            elemCollection = @model.elements
-            text = origElemModel.get('text')
-            indices ?= @getSplitIndices(text)
-            elemCollectionPosition = elemCollection.indexOf(origElemModel)
 
-            newModelData = []
-
-            previousSplit = null
-            previousWord = null
+            origElemModel           = view.model
+            elemCollection          = @model.elements
+            text                    = origElemModel.get('text')
+            indices                 ?= @getSplitIndices(text)
+            elemCollectionPosition  = elemCollection.indexOf(origElemModel)
+            newModelData            = []
+            previousSplit           = null
+            previousWord            = null
 
             for split in getWordSplits(view, indices)
                 options = @getSubWordsParams(view, split.lettersRange...)
@@ -57,8 +74,8 @@
                     if prevLetter?
                         firstWord.set('previousLetter', prevLetter)
 
-                previousSplit = split
-                previousWord = word
+                previousSplit   = split
+                previousWord    = word
 
             if previousWord?
                 lastWord = previousWord
@@ -77,25 +94,14 @@
             fontSize: view.model.get('fontSize')
             lettersAttributes: view.model.get('lettersAttributes')[startli..endli]
 
-        getSplitIndices: (text) ->
-            console.log('getSplitIndices method missing!')
+        lettersRangesAreAdjacent: (previousSplit, split) ->
+            if not previousSplit?
+                return false
+            if not split?
+                return false
+            return previousSplit.lettersRange[1] + 1 == split.lettersRange[0]
 
-
-    class SplitWordElement extends SplitActionBase
-
-        id: 'word-split'
-
-        isAvailable: ->
-            if @canvasView.insertView?
-                @canvasView.insertView.canSplitWord()
-            else if @canvasView.wordSplitContext?
-                {model, position} = @getWordSplitContext()
-                @canSplitAt(model.get('text'), position)
-            else
-                false
-
-        canSplitAt: (text, position) ->
-            0 < position < text.length
+        canSplitAt: (text, position) -> 0 < position < text.length
 
         getWordSplitContext: ->
 
@@ -108,28 +114,13 @@
 
             view = @canvasView.getElementViewByModelCid(model.cid)
 
-            position: context.position
-            view: view
-            model: model
+            position:   context.position
+            view:       view
+            model:      model
 
-        removeSplitContext: ->
-            @canvasView.wordSplitContext = null
+        removeSplitContext:         -> @canvasView.wordSplitContext = null
 
-        perform: ->
-            {position, view, model} = @getWordSplitContext()
-            text = model?.get('text')
-
-            @removeSplitContext()
-
-            if text and @canSplitAt(text, position)
-                model = @splitWord(view, @getSplitIndices(text, position))[0]
-                makesnapshot = true
-
-            _.delay => @canvasView.startUpdating(model) if model?
-
-            makesnapshot or false
-
-        getSplitIndices: (args...) -> getWordSplitIndices(args...)
+        getSplitIndices: (args...)  -> getWordSplitIndices(args...)
 
 
     module.exports =

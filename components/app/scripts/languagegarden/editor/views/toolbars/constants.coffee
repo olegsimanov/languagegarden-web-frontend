@@ -2,9 +2,9 @@
 
 
     ToolbarEnum =
-        NAVIGATION: 'navigation'
-        BUILDER: 'builder'
-        COLOR: 'color'
+        NAVIGATION:     'navigation'
+        BUILDER:        'builder'
+        COLOR:          'color'
 
 
     module.exports =

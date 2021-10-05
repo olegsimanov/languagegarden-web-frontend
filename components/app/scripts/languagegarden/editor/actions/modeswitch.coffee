@@ -94,8 +94,8 @@
 
 
     module.exports =
-        SwitchToRotate: SwitchToRotate
-        SwitchToStretch: SwitchToStretch
-        SwitchToScale: SwitchToScale
-        SwitchToGroupScale: SwitchToGroupScale
-        SwitchToMove: SwitchToMove
+        SwitchToRotate:         SwitchToRotate
+        SwitchToStretch:        SwitchToStretch
+        SwitchToScale:          SwitchToScale
+        SwitchToGroupScale:     SwitchToGroupScale
+        SwitchToMove:           SwitchToMove

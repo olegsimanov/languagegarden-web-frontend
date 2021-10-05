@@ -1,8 +1,8 @@
     'use strict'
 
-    _ = require('underscore')
-    {slugify} = require('./../../utils')
-    {DivButton} = require('./../buttons')
+    _               = require('underscore')
+    {DivButton}     = require('./../buttons')
+    {slugify}       = require('./../../utils')
 
 
     navEventBaseName = 'toolbarnav'
@@ -18,12 +18,10 @@
         navTarget: null
         eventName: null
 
-        triggerToolbarNavEvent: -> @trigger(@eventName, @, @navTarget)
+        triggerToolbarNavEvent:                          -> @trigger(@eventName, @, @navTarget)
 
-        getNavButtonClass: (navTarget=@navTarget) ->
-            "toolbar-button-#{ slugify(@navTarget) }"
-
-        getNavEventName: (navTarget=@navTarget) -> getNavEventName(navTarget)
+        getNavButtonClass: (navTarget=@navTarget)   -> "toolbar-button-#{ slugify(@navTarget) }"
+        getNavEventName: (navTarget=@navTarget)     -> getNavEventName(navTarget)
 
         initializeNavButton: (options) ->
             @setOptions(options, ['navTarget'], true)
@@ -36,13 +34,6 @@
             @triggerToolbarNavEvent()
 
 
-    ###Button that will trigger toolbar nav event when clicked.
-    Options:
-        navTarget: ideally a string refering to certain toolbar
-        eventName/customClassName: both will be generated from navTarget if not
-            available in options
-
-    ###
     class ToolbarNavButton extends DivButton.extend(ToolbarNavButtonPrototype)
 
         initialize: (options) ->
@@ -50,7 +41,6 @@
             super
 
         onClick: (e) => @navButtonOnClick()
-
         isEnabled: -> true
 
 
@@ -62,7 +52,7 @@
 
 
     module.exports =
-        getNavEventName: getNavEventName
-        ToolbarNavButton: ToolbarNavButton
-        ToolbarBackButton: ToolbarBackButton
-        ToolbarNavButtonPrototype: ToolbarNavButtonPrototype
+        getNavEventName:            getNavEventName
+        ToolbarNavButton:           ToolbarNavButton
+        ToolbarBackButton:          ToolbarBackButton
+        ToolbarNavButtonPrototype:  ToolbarNavButtonPrototype

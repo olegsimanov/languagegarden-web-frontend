@@ -1,18 +1,16 @@
     'use strict'
 
     _ = require('underscore')
-    settings = require('./../../../settings')
-    {RenderableView} = require('./../renderable')
-    {slugify} = require('./../../utils')
-    {DivButton} = require('./../buttons')
-
-    {template} = require('./../../templates')
+    {DivButton}         = require('./../buttons')
+    {RenderableView}    = require('./../renderable')
+    {slugify}           = require('./../../utils')
+    {template}          = require('./../../templates')
     {ToolbarBackButton} = require('./../../views/toolbars/navbuttons')
+    settings            = require('./../../../settings')
 
 
     BaseToolbar = class extends RenderableView
 
-        # map for selector: <list of viewData>
         toolbarViewAnchors: {}
         toolbarName: 'toolbar-name-missing'
         fallbackActionViewClass: DivButton
@@ -168,5 +166,5 @@
 
 
     module.exports =
-        EditorToolbar: EditorToolbar
-        EditorSubToolbar: EditorSubToolbar
+        EditorToolbar:      EditorToolbar
+        EditorSubToolbar:   EditorSubToolbar
