@@ -2,10 +2,10 @@
 
     _                       = require('underscore')
     $                       = require('jquery')
-    {AffineTransformation}  = require('./../../math/transformations')
     {RenderableView}        = require('./renderable')
     {getOffsetRect}         = require('./../domutils')
     {template}              = require('./../templates')
+    {AffineTransformation}  = require('./../../math/transformations')
 
     class PageView extends RenderableView
 

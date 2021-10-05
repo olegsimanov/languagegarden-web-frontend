@@ -1,9 +1,9 @@
     'use strict'
 
-    _ = require('underscore')
-    $ = require('jquery')
-    {template} = require('./../domutils')
-    {BaseView} = require('./base')
+    _           = require('underscore')
+    $           = require('jquery')
+    {BaseView}  = require('./base')
+    {template}  = require('./../domutils')
 
 
     RenderSubviewMixin =
@@ -52,14 +52,13 @@
             return
 
 
-    RenderableViewBase = BaseView.extend(RenderSubviewMixin)
+    class RenderableView extends BaseView.extend(RenderSubviewMixin)
 
-    class RenderableView extends RenderableViewBase
-        template: null
-        containerView: null
-        containerEl: null
+        template:               null
+        containerView:          null
+        containerEl:            null
         renderedTemplateResult: null
-        renderChangedHTML: false
+        renderChangedHTML:      false
 
         initialize: (options) ->
             super
@@ -111,5 +110,4 @@
 
 
     module.exports =
-        RenderableView: RenderableView
-        RenderSubviewMixin: RenderSubviewMixin
+        RenderableView:     RenderableView

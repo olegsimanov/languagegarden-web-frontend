@@ -1,13 +1,12 @@
     'use strict'
 
-    _ = require('underscore')
-    {Point} = require('./../../../math/points')
-    {BBox} = require('./../../../math/bboxes')
+    _           = require('underscore')
+    {Point}     = require('./../../../math/points')
+    {BBox}      = require('./../../../math/bboxes')
 
 
     class BaseModeBehavior
-        mediaClasses: []
-        selectedMediaClasses: []
+
         boundLettersClasses: []
         middleLettersClasses: []
         selectedBoundLettersClasses: []
@@ -39,10 +38,6 @@
             loadEventHandlers(@selectedBoundLettersClasses, 'selectedboundletter')
             loadEventHandlers(@selectedMiddleLettersClasses,'selectedmiddleletter')
 
-            loadEventHandlers(@mediaClasses,                'medium')
-            loadEventHandlers(@mediaClasses,                'selectedmedium')
-            loadEventHandlers(@selectedMediaClasses,        'selectedmedium')
-
             @handlers.bgclick       = @onBgClick
             @handlers.bgdblclick    = @onBgDblClick
             @handlers.bgdragstart   = @onBgDragStart
@@ -54,8 +49,8 @@
 
         remove: ->
 
-            @handlers = null
-            @model = null
+            @handlers   = null
+            @model      = null
             @controller = null
             @parentView = null
 

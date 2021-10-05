@@ -1,21 +1,20 @@
     'use strict'
 
-    _ = require('underscore')
+    _                           = require('underscore')
+
+    {BaseView}                  = require('./base')
+    {DummyMediumView}           = require('./media/base')
+    {
+        EditorTextToPlantView
+        TextToPlantView
+    }                           = require('./media/texttoplant')
 
     {
         MediumType,
         EditorMode,
         PlacementType
     }                           = require('./../constants')
-    {
-        EditorTextToPlantView
-        TextToPlantView
-    }                           = require('./media/text_to_plant')
     {Point}                     = require('./../../math/points')
-
-
-    {BaseView}                  = require('./base')
-    {DummyMediumView}           = require('./media/base')
 
 
     class TextBoxView extends BaseView
@@ -153,6 +152,8 @@
                 view.render()
             @rendered = true
             this
+
+
 
     class EditorTextBoxView extends TextBoxView
 

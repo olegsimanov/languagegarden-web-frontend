@@ -46,6 +46,7 @@
             @moveUsingDragInfo(di, @parentView, dx, dy)
 
         getMoveCursorBBox: (dragInfo, x, y) ->
+
             contentBBox = BBox.fromPointList(
                 _.flatten(_.map(
                     dragInfo.movingElements,
@@ -77,8 +78,8 @@
                     model: model
                     initialAttributes: _.clone(model.attributes)
 
-            addElementView = (view) -> addView(view, dragInfo.movingElements)
-            addMediumView = (view) -> addView(view, dragInfo.movingMedia)
+            addElementView = (view) ->  addView(view, dragInfo.movingElements)
+            addMediumView = (view) ->   addView(view, dragInfo.movingMedia)
 
             for view in editor.getSelectedElementViews()
                 addElementView(view)

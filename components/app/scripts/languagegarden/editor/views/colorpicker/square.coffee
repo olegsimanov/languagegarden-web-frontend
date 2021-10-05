@@ -238,17 +238,17 @@
                 modelColors: @model.getColors(),
             }, ctx
 
-    ###Regular palette split color view.###
     PaletteSplitColorView = class extends PaletteColorView.extend(SplitColorPrototype)
 
         className: "#{PaletteColorView::className} color-palette-split-color"
 
-    ###Split color palette color view.###
+
     SplitEditorColorView = class extends PaletteColorViewBase
 
         className: "#{PaletteColorViewBase::className} split-color"
 
-    ###Split color editor split color view.###
+
+
     SplitEditorSplitColorView = class extends PaletteColorViewBase.extend(SplitColorPrototype)
 
         className: "#{PaletteColorView::className}
@@ -266,8 +266,8 @@
             @setOptions(options, ['model'])
             @model ?= @editor.colorPalette
             @updateSubviews()
-            @listenTo(@editor, 'selectchange', @onSelectChange)
-            @listenTo(@editor, 'change:mode', @onEditorModeChange)
+            @listenTo(@editor, 'selectchange',  @onSelectChange)
+            @listenTo(@editor, 'change:mode',   @onEditorModeChange)
 
         onSelectChange: =>
 
@@ -278,6 +278,7 @@
             delete @paletteViewsCache
 
         remove: =>
+
             @removing = true
 
             @removePaletteViews()
