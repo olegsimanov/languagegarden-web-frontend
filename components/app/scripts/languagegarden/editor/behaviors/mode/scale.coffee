@@ -1,11 +1,11 @@
     'use strict'
 
-    {ModeBehavior} = require('./base')
-    LetterBendBehavior = require('./../letterbehaviors/bend').BendBehavior
-    LetterScaleBehavior = require('./../letterbehaviors/scale').ScaleBehavior
-    LetterModeSwitchAndSelectBehavior = require('./../letterbehaviors/select').ModeSwitchAndSelectBehavior
-    LetterEditBehavior = require('./../letterbehaviors/edit').EditBehavior
-    {SelectBehavior} = require('./../mediabehaviors/select')
+    {ModeBehavior}                      = require('./base')
+    LetterBendBehavior                  = require('./../../behaviors/letter/bend').BendBehavior
+    LetterScaleBehavior                 = require('./../../behaviors/letter/scale').ScaleBehavior
+    LetterModeSwitchAndSelectBehavior   = require('./../../behaviors/letter/select').ModeSwitchAndSelectBehavior
+    LetterEditBehavior                  = require('./../../behaviors/letter/edit').EditBehavior
+    {SelectBehavior}                    = require('./../../behaviors/media/select')
 
 
     class ScaleBehavior extends ModeBehavior

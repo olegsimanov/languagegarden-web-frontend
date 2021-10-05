@@ -1,8 +1,8 @@
     'use strict'
 
     {BaseModeBehavior} = require('./base')
-    {ColorBehavior} = require('./../letterbehaviors/color')
-    {EditorMode} = require('./../constants')
+    {ColorBehavior} = require('./../../behaviors/letter/color')
+    {EditorMode} = require('./../../constants')
 
 
     class ColorModeBehavior extends BaseModeBehavior

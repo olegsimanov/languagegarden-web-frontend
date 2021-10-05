@@ -14,15 +14,15 @@
     }                                       = require('./../actions/color')
 
 
-    {MoveBehavior}                          = require('./../modebehaviors/move')
-    {ColorBehavior}                         = require('./../modebehaviors/color')
-    {StretchBehavior}                       = require('./../modebehaviors/stretch')
-    {ScaleBehavior}                         = require('./../modebehaviors/scale')
-    {GroupScaleBehavior}                    = require('./../modebehaviors/groupscale')
-    {EditBehavior}                          = require('./../modebehaviors/edit')
-    {TextEditBehavior}                      = require('./../modebehaviors/textedit')
-    {PlantToTextBehavior}                   = require('./../modebehaviors/planttotext')
-    {RotateBehavior}                        = require('./../modebehaviors/rotate')
+    {MoveBehavior}                          = require('./../behaviors/mode/move')
+    {ColorBehavior}                         = require('./../behaviors/mode/color')
+    {StretchBehavior}                       = require('./../behaviors/mode/stretch')
+    {ScaleBehavior}                         = require('./../behaviors/mode/scale')
+    {GroupScaleBehavior}                    = require('./../behaviors/mode/groupscale')
+    {EditBehavior}                          = require('./../behaviors/mode/edit')
+    {TextEditBehavior}                      = require('./../behaviors/mode/textedit')
+    {PlantToTextBehavior}                   = require('./../behaviors/mode/planttotext')
+    {RotateBehavior}                        = require('./../behaviors/mode/rotate')
 
 
     {

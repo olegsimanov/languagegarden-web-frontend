@@ -1,8 +1,8 @@
     'use strict'
 
-    _ = require('underscore')
-    {Point} = require('./../../math/points')
-    {TransformBehavior} = require('./transform')
+    _                       = require('underscore')
+    {TransformBehavior}     = require('./transform')
+    {Point}                 = require('./../../../math/points')
 
 
     class SingleLetterRotateBehavior extends TransformBehavior

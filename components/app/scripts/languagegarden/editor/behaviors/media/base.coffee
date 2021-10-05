@@ -1,12 +1,12 @@
     'use strict'
 
-    _ = require('underscore')
-    {Point} = require('./../../math/points')
+    _                           = require('underscore')
     {
         DragBehaviorBase
         ClickBehaviorBase
         DblClickBehaviorBase
-    } = require('./../plantchildbehaviors/base')
+    }                           = require('./../../behaviors/plantchild/base')
+    {Point}                     = require('./../../../math/points')
 
 
 

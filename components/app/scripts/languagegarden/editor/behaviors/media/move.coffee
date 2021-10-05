@@ -1,10 +1,10 @@
     'use strict'
 
-    {MoveBehaviorBase} = require('./../plantchildbehaviors/move')
     {
         MediaBehaviorPrototype
         MediaDragBehaviorPrototype
-    } = require('./base')
+    }                   = require('./base')
+    {MoveBehaviorBase}  = require('./../../behaviors/plantchild/move')
 
 
     class MoveBehavior extends MoveBehaviorBase.extend(MediaBehaviorPrototype).extend(MediaDragBehaviorPrototype)

@@ -1,13 +1,12 @@
     'use strict'
 
     _ = require('underscore')
-    MediumSelectBehavior = require('./../mediabehaviors/select').SelectBehavior
-    MediumMoveBehavior = require('./../mediabehaviors/move').MoveBehavior
-    MediumEditBehavior = require('./../mediabehaviors/edit').EditBehavior
-
-    {VisibilityType, MediumType} = require('./../constants')
-    {BaseModeBehavior} = require('./base')
-    {TextToPlantLetterClickBehavior} = require('./../letterbehaviors/planttotext')
+    {BaseModeBehavior}                  = require('./base')
+    {VisibilityType, MediumType}        = require('./../../constants')
+    MediumSelectBehavior                = require('./../../behaviors/media/select').SelectBehavior
+    MediumMoveBehavior                  = require('./../../behaviors/media/move').MoveBehavior
+    MediumEditBehavior                  = require('./../../behaviors/media/edit').EditBehavior
+    {TextToPlantLetterClickBehavior}    = require('./../../behaviors/letter/texttoplant')
 
     class PlantToTextBehavior extends BaseModeBehavior
         boundLettersClasses: [

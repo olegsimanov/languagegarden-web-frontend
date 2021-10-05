@@ -1,20 +1,19 @@
     'use strict'
 
     _ = require('underscore')
-    {Point} = require('./../../math/points')
-    {BBox} = require('./../../math/bboxes')
+    {Point} = require('./../../../math/points')
+    {BBox} = require('./../../../math/bboxes')
     {
         DragBehaviorBase
         ClickBehaviorBase
         DblClickBehaviorBase
-    } = require('./../plantchildbehaviors/base')
+    } = require('./../../behaviors/plantchild/base')
 
 
 
     LetterBehaviorPrototype =
 
         id: 'missing-letter-hehavior-id'
-
         getMetricName: -> "lbehavior.#{@id}"
 
 
@@ -41,16 +40,14 @@
             view._dragInfo = null
 
 
-    class DragBehavior extends DragBehaviorBase.extend(LetterBehaviorPrototype).extend(LetterDragBehaviorPrototype)
-
-    class ClickBehavior extends ClickBehaviorBase.extend(LetterBehaviorPrototype)
-
-    class DblClickBehavior extends DblClickBehaviorBase.extend(LetterBehaviorPrototype)
+    class DragBehavior      extends DragBehaviorBase.extend(LetterBehaviorPrototype).extend(LetterDragBehaviorPrototype)
+    class ClickBehavior     extends ClickBehaviorBase.extend(LetterBehaviorPrototype)
+    class DblClickBehavior  extends DblClickBehaviorBase.extend(LetterBehaviorPrototype)
 
 
     module.exports =
-        DragBehavior: DragBehavior
-        ClickBehavior: ClickBehavior
-        DblClickBehavior: DblClickBehavior
-        LetterBehaviorPrototype: LetterBehaviorPrototype
-        LetterDragBehaviorPrototype: LetterDragBehaviorPrototype
+        DragBehavior:                   DragBehavior
+        ClickBehavior:                  ClickBehavior
+        DblClickBehavior:               DblClickBehavior
+        LetterBehaviorPrototype:        LetterBehaviorPrototype
+        LetterDragBehaviorPrototype:    LetterDragBehaviorPrototype

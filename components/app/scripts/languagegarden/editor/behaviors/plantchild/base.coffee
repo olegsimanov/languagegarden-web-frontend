@@ -1,15 +1,18 @@
     'use strict'
 
-    _ = require('underscore')
-    {Point} = require('./../../math/points')
-    {extend, extendAll} = require('./../extend')
+    _                   = require('underscore')
 
+    {Point}             = require('./../../../math/points')
+    {
+        extend,
+        extendAll
+    }                   = require('./../../extend')
 
 
     class PlantChildBehavior
 
-        @extend: extend
-        @extendAll: extendAll
+        @extend:        extend
+        @extendAll:     extendAll
 
         id: 'missing-object-hehavior-id'
 
@@ -19,7 +22,6 @@
             @model = @parentView.model
             @parentBehavior = options.parentBehavior
             @initialize(options)
-            @metricName = @getMetricName()
 
         initialize: =>
             @handlers ?= {}
@@ -91,26 +93,22 @@
             _.each(views, (v) => @updateViewOutOfBounds(v, flag))
 
         updateViewOutOfBounds: (view, flag) => view.setIsOutOfBounds?(flag)
-
-        isViewOutOfBounds: (view) => not view.isInsideBBox?(@containerBBox, true)
+        isViewOutOfBounds: (view)           => not view.isInsideBBox?(@containerBBox, true)
 
 
     class ClickBehaviorBase extends MouseBehaviorBase
 
-        onClick: (view, event)  => @mouseHandlerBase(view, event)
-
-        initializeHandlers: -> @handlers.click = @onClick
+        onClick: (view, event)      => @mouseHandlerBase(view, event)
+        initializeHandlers:         -> @handlers.click = @onClick
 
 
     class DblClickBehaviorBase extends MouseBehaviorBase
 
-        onDblClick: (view, event)  => @mouseHandlerBase(view, event)
-
-        initializeHandlers: -> @handlers.dblclick = @onDblClick
+        onDblClick: (view, event)   => @mouseHandlerBase(view, event)
+        initializeHandlers:         -> @handlers.dblclick = @onDblClick
 
 
     module.exports =
-        PlantChildBehavior: PlantChildBehavior
-        DragBehaviorBase: DragBehaviorBase
-        ClickBehaviorBase: ClickBehaviorBase
-        DblClickBehaviorBase: DblClickBehaviorBase
+        DragBehaviorBase:       DragBehaviorBase
+        ClickBehaviorBase:      ClickBehaviorBase
+        DblClickBehaviorBase:   DblClickBehaviorBase

@@ -1,7 +1,7 @@
     'use strict'
 
-    {MediumType} = require('./../constants')
     {SelectBehavior} = require('./select')
+    {MediumType} = require('./../../constants')
 
 
     class TextEditSelectBehavior extends SelectBehavior

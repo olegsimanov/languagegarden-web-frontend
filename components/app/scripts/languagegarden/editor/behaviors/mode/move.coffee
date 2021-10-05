@@ -1,12 +1,12 @@
     'use strict'
 
-    {ModeBehavior} = require('./base')
-    LetterMoveBehavior = require('./../letterbehaviors/move').MoveBehavior
-    LetterModeSwitchAndSelectBehavior = require('./../letterbehaviors/select').ModeSwitchAndSelectBehavior
-    LetterEditBehavior = require('./../letterbehaviors/edit').EditBehavior
-    MediumSelectBehavior = require('./../mediabehaviors/select').SelectBehavior
-    MediumMoveBehavior = require('./../mediabehaviors/move').MoveBehavior
-    MediumEditBehavior = require('./../mediabehaviors/edit').EditBehavior
+    {ModeBehavior}                      = require('./base')
+    LetterMoveBehavior                  = require('./../../behaviors/letter/move').MoveBehavior
+    LetterModeSwitchAndSelectBehavior   = require('./../../behaviors/letter/select').ModeSwitchAndSelectBehavior
+    LetterEditBehavior                  = require('./../../behaviors/letter/edit').EditBehavior
+    MediumSelectBehavior                = require('./../../behaviors/media/select').SelectBehavior
+    MediumMoveBehavior                  = require('./../../behaviors/media/move').MoveBehavior
+    MediumEditBehavior                  = require('./../../behaviors/media/edit').EditBehavior
 
 
     class MoveBehavior extends ModeBehavior

@@ -1,10 +1,10 @@
     'use strict'
 
-    {MoveBehaviorBase} = require('./../plantchildbehaviors/move')
     {
         LetterBehaviorPrototype
         LetterDragBehaviorPrototype
     } = require('./base')
+    {MoveBehaviorBase} = require('./../../behaviors/plantchild/move')
 
 
     class MoveBehavior extends MoveBehaviorBase.extend(LetterBehaviorPrototype).extend(LetterDragBehaviorPrototype)

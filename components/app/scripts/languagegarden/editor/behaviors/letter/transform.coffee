@@ -1,10 +1,10 @@
     'use strict'
 
-    _ = require('underscore')
-    settings = require('./../../settings')
-    {Point} = require('./../../math/points')
-    {DragBehavior} = require('./base')
-    {Line} = require('./../../math/lines')
+    _                   = require('underscore')
+    {DragBehavior}      = require('./base')
+    settings            = require('./../../../settings')
+    {Point}             = require('./../../../math/points')
+    {Line}              = require('./../../../math/lines')
 
 
 

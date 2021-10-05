@@ -62,6 +62,6 @@
         getHelpText: -> 'Edit current station'
 
     module.exports =
-        DiscardAndGoToNavigator: DiscardAndGoToNavigator
-        SaveAndGoToNavigator: SaveAndGoToNavigator
-        GoToStationEditor: GoToStationEditor
+        DiscardAndGoToNavigator:    DiscardAndGoToNavigator
+        SaveAndGoToNavigator:       SaveAndGoToNavigator
+        GoToStationEditor:          GoToStationEditor

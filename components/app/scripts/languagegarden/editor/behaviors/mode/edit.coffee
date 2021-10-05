@@ -1,7 +1,7 @@
     'use strict'
 
     {ModeBehavior} = require('./base')
-    LetterEditBehavior = require('./../letterbehaviors/edit').EditBehavior
+    LetterEditBehavior = require('./../../behaviors/letter/edit').EditBehavior
 
 
     class EditBehavior extends ModeBehavior
