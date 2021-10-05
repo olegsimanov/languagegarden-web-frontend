@@ -11,8 +11,7 @@
     class BaseModel extends Backbone.Model.extend(EventForwardingPrototype)
 
         setParentModel: (model) -> @parentModel = model
-
-        getParentModel: -> @parentModel
+        getParentModel:         -> @parentModel
 
         getFastAttributeSetter: (attr) ->
             (value) =>
@@ -34,18 +33,16 @@
 
         deepClone: -> new @constructor(@toJSON())
 
-        @extend: extend
-
-        @extendAll: extendAll
+        @extend:        extend
+        @extendAll:     extendAll
 
 
     class BaseCollection extends Backbone.Collection
 
         modelFactoryFailureError = 'factory failure'
 
-        setParentModel: (model) -> @parentModel = model
-
-        getParentModel: -> @parentModel
+        setParentModel: (model)     -> @parentModel = model
+        getParentModel:             -> @parentModel
 
         findFirstIndexByAttribute: (attrName) ->
             (value) =>
@@ -110,8 +107,7 @@
 
             result
 
-        @extend: extend
-
+        @extend:    extend
         @extendAll: extendAll
 
 
@@ -119,13 +115,8 @@
 
         initialize: (options) ->
             super
-            @deletingInProgress = false
             if not @has('visibilityType')
                 @set('visibilityType', VisibilityType.DEFAULT)
-
-        setDeletingInProgress: -> @deletingInProgress = true
-
-        isDeletingInProgress: -> @deletingInProgress
 
         clear: (options) ->
             result = super
@@ -203,30 +194,9 @@
 
         toJSON: => @subCollectionsToJSON(super)
 
-
-    class PlantChildModelWithSubCollections extends BaseModelWithSubCollections
-
-        initialize: (options) ->
-            super
-            @deletingInProgress = false
-            if not @has('visibilityType')
-                @set('visibilityType', VisibilityType.DEFAULT)
-
-        setDeletingInProgress: -> @deletingInProgress = true
-
-        isDeletingInProgress: -> @deletingInProgress
-
-        clear: (options) ->
-            result = super
-            @deletingInProgress = false
-            @trigger('clear', this)
-            result
-
-
     module.exports =
         BaseModel:                          BaseModel
         BaseCollection:                     BaseCollection
         PlantChildModel:                    PlantChildModel
         PlantChildCollection:               PlantChildCollection
         BaseModelWithSubCollections:        BaseModelWithSubCollections
-        PlantChildModelWithSubCollections:  PlantChildModelWithSubCollections

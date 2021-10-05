@@ -29,6 +29,7 @@
     {ToolbarEnum}           = require('./views/toolbars/constants')
 
     class PlantEditorController extends EventObject
+
         modelClass:         UnitState
         dataModelClass:     LessonData
         ToolbarEnum:        ToolbarEnum

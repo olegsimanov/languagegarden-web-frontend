@@ -1,19 +1,20 @@
     'use strict'
 
     _ = require('underscore')
-    Backbone = require('backbone')
     jQuery = require('jquery')
+    Backbone = require('backbone')
+
     {
         visibilityOpacityMap
         markedOpacityMap
-    } = require('./../../editor/constants')
-    {extend, extendAll} = require('./../extend')
-    {EventForwardingPrototype} = require('./../events')
+    }                                   = require('./../../editor/constants')
+    {extend, extendAll}                 = require('./../extend')
+    {EventForwardingPrototype}          = require('./../events')
     {
         buildPropertySupportPrototype
         PropertySetupPrototype
-    } = require('./../properties')
-    {capitalize} = require('./../utils')
+    }                                   = require('./../properties')
+    {capitalize}                        = require('./../utils')
 
 
     BaseViewCore = Backbone.View
@@ -120,13 +121,11 @@
             opacity ?= 1.0
             opacity
 
-        getOpacity: ->
-            @getModelOpacity()
+        getOpacity:         ->  @getModelOpacity()
 
-        updateVisibility: ->
-            @setCoreOpacity(@getOpacity())
+        updateVisibility:   -> @setCoreOpacity(@getOpacity())
 
 
     module.exports =
-        BaseView: BaseView
-        PlantChildView: PlantChildView
+        BaseView:           BaseView
+        PlantChildView:     PlantChildView
