@@ -27,6 +27,7 @@
         ]
 
     class MediaMoveBehavior extends ModeBehavior
+
         mediaClasses: [
             MediumSelectBehavior,
             MediumMoveBehavior,
@@ -36,17 +37,13 @@
         middleLettersClasses: []
 
 
-        onBgClick: (event, x, y) =>
-
-        onBgDblClick: (event, x, y) =>
-
-        onBgDragStart: (event, x, y) =>
-
+        onBgClick: (event, x, y)            =>
+        onBgDblClick: (event, x, y)         =>
+        onBgDragStart: (event, x, y)        =>
         onBgDragMove: (event, x, y, dx, dy) =>
-
-        onBgDragEnd: (event) =>
+        onBgDragEnd: (event)                =>
 
 
     module.exports =
-        MoveBehavior: MoveBehavior
-        MediaMoveBehavior: MediaMoveBehavior
+        MoveBehavior:       MoveBehavior
+        MediaMoveBehavior:  MediaMoveBehavior

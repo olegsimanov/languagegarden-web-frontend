@@ -21,7 +21,6 @@
     {GroupScaleBehavior}                    = require('./../behaviors/mode/groupscale')
     {EditBehavior}                          = require('./../behaviors/mode/edit')
     {TextEditBehavior}                      = require('./../behaviors/mode/textedit')
-    {PlantToTextBehavior}                   = require('./../behaviors/mode/planttotext')
     {RotateBehavior}                        = require('./../behaviors/mode/rotate')
 
 
@@ -466,8 +465,6 @@
                 mode: EditorMode.TEXT_EDIT
                 behaviorClass: TextEditBehavior
             ,
-                mode: EditorMode.PLANT_TO_TEXT
-                behaviorClass: PlantToTextBehavior
             ]
 
         getModeConfig: -> @getPlantEditorModeConfig()
