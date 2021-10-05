@@ -9,8 +9,8 @@
 
     class MoveBehavior extends MoveBehaviorBase.extend(MediaBehaviorPrototype).extend(MediaDragBehaviorPrototype)
 
-        id: 'move-media'
-        plantChildType: 'medium'
+        id:                 'move-media'
+        plantChildType:     'medium'
 
 
     module.exports =
