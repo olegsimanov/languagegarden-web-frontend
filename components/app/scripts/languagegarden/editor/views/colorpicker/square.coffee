@@ -6,7 +6,7 @@
     {template} = require('./../../templates')
     {BBox} = require('./../../../math/bboxes')
     {Point} = require('./../../../math/points')
-    {EditorMode} = require('./../../constants')
+    {EditorCanvasMode} = require('./../../constants')
     {BaseView} = require('./../base')
     {RenderableView} = require('./../renderable')
     {
@@ -163,7 +163,7 @@
         canEdit: => @paletteModel?.get('selectedTool')?.type == 'splitcolor'
 
         shouldShowEditButton: =>
-            @canEdit() and @getEditor().mode == EditorMode.COLOR
+            @canEdit() and @getEditor().mode == EditorCanvasMode.COLOR
 
         toggleVisibility: (show, $el=@$el) ->
             show = @hidden if not show?
@@ -218,7 +218,7 @@
             super
 
             @model.set('selected', true)
-            @editor.setMode(EditorMode.COLOR)
+            @editor.setMode(EditorCanvasMode.COLOR)
 
 
     RemoveColorView = class extends PaletteColorView

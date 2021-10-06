@@ -49,8 +49,7 @@
             @setFastMode(false)
             @invalidateCache(silent: true)
             @consistencyIntervalTime = 500
-            @consistencyTimeout = setTimeout(@onConsistencyTimeout,
-                                             @consistencyIntervalTime)
+            @consistencyTimeout = setTimeout(@onConsistencyTimeout, @consistencyIntervalTime)
 
         remove: ->
             if @paperAutoCreated

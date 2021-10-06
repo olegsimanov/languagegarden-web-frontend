@@ -1,8 +1,8 @@
     'use strict'
 
-    _               = require('underscore')
-    {Action}        = require('./base')
-    {EditorMode}    = require('./../constants')
+    _                   = require('underscore')
+    {Action}            = require('./base')
+    {EditorCanvasMode}  = require('./../constants')
 
 
     class ModeSwitchAction extends Action
@@ -61,34 +61,34 @@
 
 
     class SwitchToRotate extends ModeSwitchActionSingleMode
-        mode: EditorMode.ROTATE
+        mode: EditorCanvasMode.ROTATE
 
         canApplyToSelection: =>
             @singleOneLetterWordSelected() or @multipleWordsNoMediaSelected()
 
 
     class SwitchToStretch extends ModeSwitchActionSingleMode
-        mode: EditorMode.STRETCH
+        mode: EditorCanvasMode.STRETCH
 
         canApplyToSelection: => @singleMultiLetterWordSelected()
 
 
     class SwitchToScale extends ModeSwitchActionSingleMode
-        mode: EditorMode.SCALE
+        mode: EditorCanvasMode.SCALE
 
         canApplyToSelection: =>
             not @mediaSelected() and @canvasView.getSelectedElements().length == 1
 
 
     class SwitchToGroupScale extends ModeSwitchActionSingleMode
-        mode: EditorMode.GROUP_SCALE
+        mode: EditorCanvasMode.GROUP_SCALE
 
         canApplyToSelection: =>
             not @mediaSelected() and @canvasView.getSelectedElements().length > 1
 
 
     class SwitchToMove extends ModeSwitchActionSingleMode
-        mode: EditorMode.MOVE
+        mode: EditorCanvasMode.MOVE
 
         canApplyToSelection: => @multipleWordsNoMediaSelected()
 

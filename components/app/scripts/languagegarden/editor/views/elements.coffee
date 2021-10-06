@@ -22,8 +22,7 @@
     {LetterMetrics}                 = require('./../svgmetrics')
     {
         VisibilityType,
-        CanvasLayers
-        EditorMode
+        EditorCanvasLayers
     }                               = require('./../constants')
 
     {
@@ -293,7 +292,7 @@
             if not letterArea?
                 return
             @parentView.putElementToFrontAtLayer(letterArea,
-                CanvasLayers.LETTER_AREAS)
+                EditorCanvasLayers.LETTER_AREAS)
 
         toFront: ->
             if not @parentView
@@ -608,11 +607,9 @@
             options.parentView = options.editor = parentView
             super(options)
 
-        isDebugMode: -> @parentView.debug
-
-        isDraggedNow: -> @parentView.dragging
-
-        isEditedNow: -> @parentView.mode == EditorMode.EDIT
+        isDebugMode:    -> @parentView.debug
+        isDraggedNow:   -> @parentView.dragging
+        isEditedNow:    -> @parentView.mode == EditorCanvasLayers.EDIT
 
         addLetterAreasClass: (cssClass) ->
             if not @letterAreas?
@@ -672,7 +669,7 @@
 
         forceRepaint: =>
             clipRect = super(arguments...)
-            @parentView.putElementToFrontAtLayer(clipRect, CanvasLayers.LETTERS)
+            @parentView.putElementToFrontAtLayer(clipRect, EditorCanvasLayers.LETTERS)
 
         isSelected: => @selected
 

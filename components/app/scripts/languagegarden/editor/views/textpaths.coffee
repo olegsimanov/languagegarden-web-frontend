@@ -19,7 +19,7 @@
     } = require('./../domutils')
     {BaseView} = require('./base')
     {TSpanMultiColorGradient} = require('./../svggradient')
-    {CanvasLayers} = require('./../../editor/constants')
+    {EditorCanvasLayers} = require('./../../editor/constants')
 
 
 
@@ -55,30 +55,21 @@
                     gradient?.remove()
             @letterGradients = null
 
-        getFontSize: -> @fontSize
-
-        getMaxLetterHeight: ->
-            @fontSize * settings.fontSizeToLetterHeightMultiplier
+        getFontSize:        -> @fontSize
+        getMaxLetterHeight: -> @fontSize * settings.fontSizeToLetterHeightMultiplier
 
         getTextYOffset: (invalidate=false) ->
             if invalidate or not @textYOffset?
                 @textYOffset = @getMaxLetterHeight() / 5
             @textYOffset
 
-        getPath: -> @path
-
-        getTransformMatrix: -> @transformMatrix
-
-        getLetters: -> @letters
-
-        getText: -> @letters.join('')
-
-        getLetterStyleAttrs: (index) -> @lettersStyleAttrs?[index] or {}
-
-        getLetterLength: (index) -> @lettersLengths[index] or @fontSize
-
-        getLettersLengths: ->
-            (@getLetterLength(i) for i in [0...@letters.length])
+        getPath:                        -> @path
+        getTransformMatrix:             -> @transformMatrix
+        getLetters:                     -> @letters
+        getText:                        -> @letters.join('')
+        getLetterStyleAttrs: (index)    -> @lettersStyleAttrs?[index] or {}
+        getLetterLength: (index)        -> @lettersLengths[index] or @fontSize
+        getLettersLengths:              -> (@getLetterLength(i) for i in [0...@letters.length])
 
         getPathString: ->
             ### generates SVG compliant path string ###
@@ -88,12 +79,9 @@
                 @path.getEndPoint()
             )
 
-        getOpacity: -> @opacity
-
-        isDebugMode: -> @parentView?.isDebugMode() or false
-
-        isTextRTL: -> @parentView?.isTextRTL() or false
-
+        getOpacity:     -> @opacity
+        isDebugMode:    -> @parentView?.isDebugMode() or false
+        isTextRTL:      -> @parentView?.isTextRTL() or false
         getCanvasScale: -> @parentView?.getCanvasScale() or 1.0
 
         setPreviousLetter: (letter=null) ->
@@ -482,7 +470,7 @@
                 return
             if not @tpObj?
                 return
-            @parentView.putElementToFrontAtLayer(@tpObj, CanvasLayers.LETTERS)
+            @parentView.putElementToFrontAtLayer(@tpObj, EditorCanvasLayers.LETTERS)
 
         updateLetters: () ->
             @tpObj.updateText(@getText())
@@ -631,11 +619,12 @@
             for letterObj in @getLetterObjs()
                 @parentView.putElementToFrontAtLayer(
                     letterObj,
-                    CanvasLayers.LETTERS
+                    EditorCanvasLayers.LETTERS
                 )
             return this
 
         updateLetters: ->
+
             @textObjs ?= []
             @lettersTransforms ?= []
             letters = @letters
@@ -687,8 +676,8 @@
 
 
         create: ->
-            @updateLetters()
 
+            @updateLetters()
             @updateTransformMatrix()
             @updateFontSize()
             @updateSpan()
@@ -698,6 +687,7 @@
             @updateEachTime()
 
         remove: ->
+
             for letterObj in @getLetterObjs()
                 letterObj.remove()
             @textObjs = null
@@ -706,5 +696,5 @@
 
 
     module.exports =
-        TextPath: TextPath
-        SyntheticTextPath: SyntheticTextPath
+        TextPath:           TextPath
+        SyntheticTextPath:  SyntheticTextPath

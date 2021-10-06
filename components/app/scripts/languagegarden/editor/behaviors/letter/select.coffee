@@ -1,7 +1,6 @@
     'use strict'
 
     {ClickBehavior}     = require('./base')
-    {EditorMode}        = require('./../../constants')
 
 
     class ModeSwitchAndSelectBehavior extends ClickBehavior

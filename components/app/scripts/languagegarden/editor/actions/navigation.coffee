@@ -1,8 +1,7 @@
     'use strict'
 
-    _               = require('underscore')
-    {Action}        = require('./base')
-    {EditorMode}    = require('./../constants')
+    _                   = require('underscore')
+    {Action}            = require('./base')
 
     class GoToControllerBase extends Action
 

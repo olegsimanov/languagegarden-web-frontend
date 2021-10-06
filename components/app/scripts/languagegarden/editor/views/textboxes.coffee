@@ -11,7 +11,7 @@
 
     {
         MediumType,
-        EditorMode,
+        EditorCanvasMode,
         PlacementType
     }                           = require('./../constants')
     {Point}                     = require('./../../math/points')
@@ -159,7 +159,7 @@
 
         initialize: () ->
             super
-            @mode = EditorMode.MOVE
+            @mode = EditorCanvasMode.MOVE
 
         getMediumViewClass: (model) ->
             switch model.get('type')
@@ -185,7 +185,7 @@
 
         startPlantToTextMode: (plantToTextModel) ->
             @activePlantToTextObjectId = plantToTextModel.get('objectId')
-            @setMode(EditorMode.PLANT_TO_TEXT)
+            @setMode(EditorCanvasMode.PLANT_TO_TEXT)
 
         finishPlantToTextMode: ->
             delete @activePlantToTextObjectId

@@ -1,17 +1,17 @@
     'use strict'
 
-    _ = require('underscore')
-    Hammer = require('hammerjs')
-    utils = require('./../utils')
-    {disableSelection} = require('./../domutils')
-    {Point} = require('./../../math/points')
-    {BaseView} = require('./base')
-    {StatefulClassPrototype} = require('./../stateful')
+    _                           = require('underscore')
+    Hammer                      = require('hammerjs')
 
-    settings = require('./../../settings')
-    {Point} = require('./../../math/points')
-    {EditorMode, ColorMode} = require('./../constants')
-    navigationActions = require('./../actions/navigation')
+    {BaseView}                  = require('./base')
+    utils                       = require('./../utils')
+    {disableSelection}          = require('./../domutils')
+    {StatefulClassPrototype}    = require('./../stateful')
+    {ColorMode}                 = require('./../constants')
+    navigationActions           = require('./../actions/navigation')
+    {Point}                     = require('./../../math/points')
+    settings                    = require('./../../settings')
+    {Point}                     = require('./../../math/points')
 
 
 

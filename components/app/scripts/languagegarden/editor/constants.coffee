@@ -22,23 +22,18 @@
         @HIDDEN                 = 'hidden'
 
 
-    class CanvasLayers
+    class EditorCanvasLayers
 
         @BACKGROUND             = 'background'
         @SELECTION_RECT         = 'selectionRect'
         @LETTERS                = 'letters'
         @LETTER_AREAS           = 'letterAreas'
 
-    class CanvasMode
-
-        @MOVE                   = 'move'
-        @PLANT_TO_TEXT          = 'plant to text'
-
 
     visibilityOpacityMap = {}
-    visibilityOpacityMap[VisibilityType.VISIBLE] = 1.0
-    visibilityOpacityMap[VisibilityType.HIDDEN] = 0.0
-    visibilityOpacityMap[VisibilityType.FADED] = 0.5
+    visibilityOpacityMap[VisibilityType.VISIBLE]    = 1.0
+    visibilityOpacityMap[VisibilityType.HIDDEN]     = 0.0
+    visibilityOpacityMap[VisibilityType.FADED]      = 0.5
 
 
     markedOpacityMap = {}
@@ -50,26 +45,23 @@
         WORD:       'word'
         LETTER:     'letter'
 
-    class EditorCanvasMode extends CanvasMode
+    class EditorCanvasMode
 
-        @STRETCH        = 'stretch'
-        @SCALE          = 'scale'
-        @GROUP_SCALE    = 'group scale'
-        @EDIT           = 'edit'
-        @COLOR          = 'color'
-        @TEXT_EDIT      = 'text edit'
-        @ROTATE         = 'rotate'
-
-        @DEFAULT        = @MOVE
-
+        @MOVE               = 'move'
+        @PLANT_TO_TEXT      = 'plant to text'
+        @STRETCH            = 'stretch'
+        @SCALE              = 'scale'
+        @GROUP_SCALE        = 'group scale'
+        @EDIT               = 'edit'
+        @COLOR              = 'color'
+        @TEXT_EDIT          = 'text edit'
+        @ROTATE             = 'rotate'
 
     module.exports =
 
         ColorMode:          ColorMode
-        EditorCanvasMode:   EditorCanvasMode        # TODO: please remove this duplication
-        EditorMode:         EditorCanvasMode        # TODO: please remove this duplication
-        EditorLayers:       CanvasLayers            # TODO: please remove this duplication
-        CanvasLayers:       CanvasLayers            # TODO: please remove this duplication
+        EditorCanvasMode:   EditorCanvasMode
+        EditorCanvasLayers: EditorCanvasLayers
         MediumType:         MediumType
         VisibilityType:     VisibilityType
         PlacementType:      PlacementType

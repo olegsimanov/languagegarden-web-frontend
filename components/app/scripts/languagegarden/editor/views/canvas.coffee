@@ -34,10 +34,8 @@
     {
         MediumType
         PlacementType
-        CanvasLayers
-        CanvasMode
-        EditorMode
-        EditorLayers
+        EditorCanvasMode
+        EditorCanvasLayers
         ColorMode
     }                                       = require('./../constants')
 
@@ -162,7 +160,7 @@
 
             @backgroundEventsHammer(click, dblclick, drag, dragstart, dragend)
 
-            @putElementToFrontAtLayer(@backgroundObj, CanvasLayers.BACKGROUND)
+            @putElementToFrontAtLayer(@backgroundObj, EditorCanvasLayers.BACKGROUND)
 
         initializeBackgroundObject: =>
 
@@ -206,7 +204,7 @@
             super
 
         getNoOpModeConfig: ->
-            startMode: CanvasMode.NOOP
+            startMode: EditorCanvasMode.NOOP
             modeSpecs: []
 
         getModeConfig: -> @getNoOpModeConfig()
@@ -435,30 +433,30 @@
 
         getPlantEditorModeConfig: ->
 
-            startMode: EditorMode.MOVE
+            startMode: EditorCanvasMode.MOVE
             modeSpecs: [
-                mode: EditorMode.MOVE
+                mode: EditorCanvasMode.MOVE
                 behaviorClass: MoveBehavior
             ,
-                mode: EditorMode.COLOR
+                mode: EditorCanvasMode.COLOR
                 behaviorClass: ColorBehavior
             ,
-                mode: EditorMode.STRETCH
+                mode: EditorCanvasMode.STRETCH
                 behaviorClass: StretchBehavior
             ,
-                mode: EditorMode.SCALE
+                mode: EditorCanvasMode.SCALE
                 behaviorClass: ScaleBehavior
             ,
-                mode: EditorMode.GROUP_SCALE
+                mode: EditorCanvasMode.GROUP_SCALE
                 behaviorClass: GroupScaleBehavior
             ,
-                mode: EditorMode.ROTATE
+                mode: EditorCanvasMode.ROTATE
                 behaviorClass: RotateBehavior
             ,
-                mode: EditorMode.EDIT
+                mode: EditorCanvasMode.EDIT
                 behaviorClass: EditBehavior
             ,
-                mode: EditorMode.TEXT_EDIT
+                mode: EditorCanvasMode.TEXT_EDIT
                 behaviorClass: TextEditBehavior
             ,
             ]
@@ -472,7 +470,7 @@
             addSVGElementClass(@selectionRectObj.node, 'selection-area')
             disableSelection(@selectionRectObj.node)
             @selectionRectObj.hide()
-            @putElementToFrontAtLayer(@selectionRectObj, EditorLayers.SELECTION_RECT)
+            @putElementToFrontAtLayer(@selectionRectObj, EditorCanvasLayers.SELECTION_RECT)
 
         initializeEditorEl: =>
             @toggleModeClass()
@@ -572,23 +570,23 @@
             if numOfSelections > 0
                 @colorPalette.set('colorMode', ColorMode.WORD)
 
-            if @mode == EditorMode.EDIT
+            if @mode == EditorCanvasMode.EDIT
                 return
 
-            if @mode == EditorMode.COLOR
+            if @mode == EditorCanvasMode.COLOR
                 return
 
             mode = @defaultMode
             if numOfSelections == 1
                 if numOfElemSelections == 1
                     if @getSelectedElements()[0].get('text').length == 1
-                        mode = useIfAvailable(EditorMode.SCALE)
+                        mode = useIfAvailable(EditorCanvasMode.SCALE)
                     else
-                        mode = useIfAvailable(EditorMode.STRETCH)
+                        mode = useIfAvailable(EditorCanvasMode.STRETCH)
                 else if numOfMediaSelections == 1
                     switch selectedMediaViews[0]?.model.get('type')
                         when MediumType.IMAGE
-                            mode = useIfAvailable(EditorMode.IMAGE_EDIT)
+                            mode = useIfAvailable(EditorCanvasMode.IMAGE_EDIT)
             @setMode(mode)
             @selectionBBoxChange()
 
@@ -611,7 +609,7 @@
             @startEditing(elemModel)
 
         startEditing: (elemModel) =>
-            @setMode(EditorMode.EDIT, true)
+            @setMode(EditorCanvasMode.EDIT, true)
             @insertView = new EditedElementView
                 paper: @paper
                 editor: this
@@ -622,11 +620,11 @@
 
         startTextEditing: (textView) =>
             textView.shouldEnterEditMode = true
-            @setMode(EditorMode.TEXT_EDIT, true)
+            @setMode(EditorCanvasMode.TEXT_EDIT, true)
 
         startPlantToTextMode: (plantToTextModel) ->
             @activePlantToTextObjectId = plantToTextModel.get('objectId')
-            @setMode(EditorMode.PLANT_TO_TEXT)
+            @setMode(EditorCanvasMode.PLANT_TO_TEXT)
 
         finishPlantToTextMode: -> @setDefaultMode()
 

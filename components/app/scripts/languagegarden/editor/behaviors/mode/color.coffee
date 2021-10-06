@@ -2,7 +2,6 @@
 
     {BaseModeBehavior} = require('./base')
     {ColorBehavior} = require('./../../behaviors/letter/color')
-    {EditorMode} = require('./../../constants')
 
 
     class ColorModeBehavior extends BaseModeBehavior
