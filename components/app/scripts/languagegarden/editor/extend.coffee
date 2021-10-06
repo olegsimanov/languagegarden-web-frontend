@@ -26,8 +26,7 @@
                     if not child.prototype[methodName]?
                         do ->
                             msg = "called missing #{methodName} method!"
-                            child.prototype[methodName] = ->
-                                console.error(msg)
+                            child.prototype[methodName] = -> console.error(msg)
 
 
         child.__super__ = parent.prototype
@@ -38,13 +37,5 @@
         extendHelper(this, protoProps, staticProps)
 
 
-    extendAll = (protoPropsList...) ->
-        child = this
-        for protoProps in protoPropsList
-            child = extendHelper(child, protoProps)
-        child
-
-
     module.exports =
         extend:     extend
-        extendAll:  extendAll

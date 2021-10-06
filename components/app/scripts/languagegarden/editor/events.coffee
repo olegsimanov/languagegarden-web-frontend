@@ -1,9 +1,9 @@
     'use strict'
 
     _                               = require('underscore')
-
     Backbone                        = require('backbone')
-    {extend, extendAll}             = require('./extend')
+
+    {extend}                        = require('./extend')
     {CanMakePropertyFromOptions}    = require('./properties')
 
 
@@ -23,9 +23,7 @@
                     @listenTo(target, evName, handler)
 
     class WithExtendMethods
-
         @extend:    extend
-        @extendAll: extendAll
 
     EventsAwareBaseObject = WithExtendMethods
         .extend(Backbone.Events)

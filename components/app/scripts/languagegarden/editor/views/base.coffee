@@ -4,7 +4,6 @@
     jQuery      = require('jquery')
     Backbone    = require('backbone')
 
-    {extend, extendAll}                 = require('./../extend')
     {CanForwardEvents}                  = require('./../events')
     {
         buildMixinWithProperty
@@ -28,9 +27,6 @@
 
 
     class BaseView extends BaseViewCore
-
-        @extend:    extend
-        @extendAll: extendAll
 
         shouldAppendToContainer: false
 

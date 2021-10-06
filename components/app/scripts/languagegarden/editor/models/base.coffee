@@ -4,14 +4,10 @@
     Backbone                    = require('backbone')
     {SubCollectionPrototype}    = require('./subcollection')
     {VisibilityType}            = require('./../constants')
-    {extend, extendAll}         = require('./../extend')
     {getAttrsOpts}              = require('./../utils')
     {CanForwardEvents}          = require('./../events')
 
     class BaseModel extends Backbone.Model.extend(CanForwardEvents)
-
-        @extend:        extend
-        @extendAll:     extendAll
 
         setParentModel: (model) -> @parentModel = model
         getParentModel:         -> @parentModel
@@ -106,9 +102,6 @@
 
             result
 
-        @extend:    extend
-        @extendAll: extendAll
-
 
     class PlantChildModel extends BaseModel
 
@@ -129,8 +122,8 @@
 
         initialize: (options) ->
             super
-            @findByObjectId = @findByAttribute('objectId')
-            @findIndexByObjectId = @findIndexByAttribute('objectId')
+            @findByObjectId         = @findByAttribute('objectId')
+            @findIndexByObjectId    = @findIndexByAttribute('objectId')
 
         getExistingObjectIds: ->
             if @parentModel.isRewindedAtEnd?

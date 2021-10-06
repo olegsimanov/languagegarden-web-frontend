@@ -3,16 +3,12 @@
     _                   = require('underscore')
 
     {Point}             = require('./../../math/points')
-    {
-        extend,
-        extendAll
-    }                   = require('./../../extend')
+    {extend}            = require('./../../extend')
 
 
     class PlantChildBehavior
 
         @extend:        extend
-        @extendAll:     extendAll
 
         id: 'missing-object-hehavior-id'
 

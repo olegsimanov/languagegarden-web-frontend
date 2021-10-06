@@ -77,87 +77,24 @@
 
     HTMLStylablePrototype =
 
-        addElementCSS: (node, cssCls) -> $(node).addClass(cssCls)
-
-        removeElementCSS: (node, cssCls) -> $(node).removeClass(cssCls)
-
-
-    SelectablePrototype =
-
-        __required_interface_methods__: [
-            'getElementNode',
-            'addElementCSS',
-            'removeElementCSS',
-        ]
-
-        getClickableNode: -> @getElementNode()
-
-        applySelectionStyles: (elemNode, selected, options) ->
-            if selected
-                @addElementCSS(elemNode, 'selected')
-            else
-                @removeElementCSS(elemNode, 'selected')
-
-        select: (selected=true, options) ->
-            elemNode = @getElementNode()
-            oldSelected = @isSelected()
-            if oldSelected == selected
-                return
-            @selected = selected
-            if elemNode?
-                @applySelectionStyles(elemNode, selected, options)
-            if options?.silent
-                return
-            @trigger('selectchange', this)
-
-        isSelected: -> @selected or false
+        addElementCSS: (node, cssCls)       -> $(node).addClass(cssCls)
+        removeElementCSS: (node, cssCls)    -> $(node).removeClass(cssCls)
 
 
-    EventDispatchingPrototype =
 
-        __required_interface_methods__: [
-            'isSelected',
-        ]
-
-        getMediumEventDispatcher: (eventName) ->
-            fullEventName = "medium#{eventName}"
-            (args...) =>
-                selPrefix = if @isSelected() then 'selected' else ''
-                handler = @parentView.getModeBehaviorHandler("#{selPrefix}#{fullEventName}")
-                if handler?
-                    handler(this, args...)
-                    true
-                else
-                    false
-
-
-    EventBindingPrototype =
-
-        __required_interface_methods__: [
-            'getMediumEventDispatcher',
-            'getClickableNode',
-        ]
-
-        hammerEventOptions: {}
-
-
-    BaseEditorDummyMediumView = DummyMediumView.extend(HTMLStylablePrototype).extend(VisibilityPrototype)
+    BaseEditorDummyMediumView = DummyMediumView
+        .extend(HTMLStylablePrototype)
+        .extend(VisibilityPrototype)
 
 
     EditorDummyMediumView = class extends BaseEditorDummyMediumView
 
-        select: (selected=true, options) ->
-
-        isSelected: -> false
-
-        getBBox: => BBox.newEmpty()
-
-        intersects: (bbox) => false
+        select: (selected=true, options)    ->
+        isSelected:                                 -> false
+        getBBox:                                    => BBox.newEmpty()
+        intersects: (bbox)                          => false
 
 
     module.exports =
         HtmlMediumView:             HtmlMediumView
-        SelectablePrototype:        SelectablePrototype
-        EventDispatchingPrototype:  EventDispatchingPrototype
-        EventBindingPrototype:      EventBindingPrototype
         EditorDummyMediumView:      EditorDummyMediumView
