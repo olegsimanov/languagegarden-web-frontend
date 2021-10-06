@@ -7,8 +7,9 @@
         ClickBehaviorBase
         DblClickBehaviorBase
     }           = require('./../plantchild/base')
-    {Point}     = require('./../../../math/points')
-    {BBox}      = require('./../../../math/bboxes')
+
+    {Point}     = require('./../../math/points')
+    {BBox}      = require('./../../math/bboxes')
 
 
 

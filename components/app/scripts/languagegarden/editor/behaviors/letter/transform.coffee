@@ -1,11 +1,13 @@
     'use strict'
 
     _                   = require('underscore')
-    {DragBehavior}      = require('./base')
-    settings            = require('./../../../settings')
-    {Point}             = require('./../../../math/points')
-    {Line}              = require('./../../../math/lines')
 
+    {DragBehavior}      = require('./base')
+
+    {Point}             = require('./../../math/points')
+    {Line}              = require('./../../math/lines')
+
+    settings            = require('./../../../settings')
 
 
     class TransformBehavior extends DragBehavior

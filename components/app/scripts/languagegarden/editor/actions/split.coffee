@@ -1,13 +1,14 @@
     'use strict'
 
     _               = require('underscore')
+
     {Action}        = require('./base')
+    {Point}         = require('./../math/points')
     {PlantElement}  = require('./../models/elements')
     {
         getWordSplits
         getWordSplitIndices
     }               = require('./../views/elementsplit')
-    {Point}         = require('./../../math/points')
 
 
     class SplitWordElement extends Action

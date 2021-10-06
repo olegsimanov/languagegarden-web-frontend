@@ -71,11 +71,9 @@
     ]
 
     module.exports =
-        # Color to use for newly created words
-        newWordColor: '#332A2E'
-        # Used by the word in settings
-        previewPanelWordColor: '#576C0C'
-        initialTools: initialTools
-        blobColors: blobColors
-        colorPalette: colorPalette
+        newWordColor:           '#332A2E'
+        previewPanelWordColor:  '#576C0C'
+        initialTools:           initialTools
+        blobColors:             blobColors
+        colorPalette:           colorPalette
         backgroundColorChoices: backgroundColorChoices

@@ -5,7 +5,7 @@
     $                               = require('jquery')
 
     {PlantChildView}                = require('../base')
-    {BBox}                          = require('./../../../math/bboxes')
+    {BBox}                          = require('./../../math/bboxes')
     {VisibilityType, PlacementType} = require('./../../../editor/constants')
 
     class MediumViewBase extends PlantChildView

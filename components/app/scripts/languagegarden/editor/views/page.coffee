@@ -4,15 +4,16 @@
     $                       = require('jquery')
 
     {RenderableView}        = require('./renderable')
-    {getOffsetRect}         = require('./../domutils')
-    {template}              = require('./../templates')
-    {AffineTransformation}  = require('./../../math/transformations')
+    {getOffsetRect}         = require('./domutils')
+    {template}              = require('./templates')
+
+    {AffineTransformation}  = require('./../math/transformations')
 
     class PageView extends RenderableView
 
-        className: 'page-wrapper'
-        shouldAppendToContainer: true
-        template: template('./common/page/main.ejs')
+        className:                  'page-wrapper'
+        shouldAppendToContainer:    true
+        template:                   template('./common/page/main.ejs')
 
         initialize: (options) ->
             super

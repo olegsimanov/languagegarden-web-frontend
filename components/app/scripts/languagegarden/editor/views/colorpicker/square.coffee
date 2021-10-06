@@ -3,17 +3,18 @@
     _ = require('underscore')
     $ = require('jquery')
 
-    {template} = require('./../../templates')
-    {BBox} = require('./../../../math/bboxes')
-    {Point} = require('./../../../math/points')
-    {EditorCanvasMode} = require('./../../constants')
-    {BaseView} = require('./../base')
-    {RenderableView} = require('./../renderable')
+    {BaseView}                  = require('./../base')
+    {template}                  = require('./../templates')
+    {RenderableView}            = require('./../renderable')
     {
         EditorColorModeButton
         EditorDivToggleButton
     } = require('./../buttons')
-    {SplitColorTool} = require('./../../models/palette')
+    {EditorCanvasMode}          = require('./../../constants')
+    {SplitColorTool}            = require('./../../models/palette')
+
+    {BBox}                      = require('./../../math/bboxes')
+    {Point}                     = require('./../../math/points')
 
 
     PlaceholderView = class extends BaseView

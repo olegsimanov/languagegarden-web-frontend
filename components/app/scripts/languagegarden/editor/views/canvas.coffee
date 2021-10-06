@@ -6,11 +6,17 @@
     $ = require('jquery')
 
     {BaseView}                              = require('./base')
+    {EditorElementView, EditedElementView}  = require('./elements')
+    {ElementView}                           = require('./elements')
+
     {EditorDummyMediumView}                 = require('./media/base')
     {DummyMediumView}                       = require('./media/base')
 
-    {EditorElementView, EditedElementView}  = require('./elements')
-    {ElementView}                           = require('./elements')
+    {
+        disableSelection
+        addSVGElementClass
+    }                                       = require('./domutils')
+
 
     {Settings}                              = require('./../models/settings')
     {PlantElement}                          = require('./../models/elements')
@@ -39,16 +45,12 @@
         ColorMode
     }                                       = require('./../constants')
 
-    {
-        disableSelection
-        addSVGElementClass
-    }                                       = require('./../domutils')
-    {LetterMetrics}                         = require('./../svgmetrics')
+    {LetterMetrics}                         = require('./svg/svgmetrics')
 
     {isDarkColor}                           = require('./../utils')
 
-    {BBox}                                  = require('./../../math/bboxes')
-    {Point}                                 = require('./../../math/points')
+    {BBox}                                  = require('./../math/bboxes')
+    {Point}                                 = require('./../math/points')
 
 
     class CanvasView extends BaseView
@@ -291,9 +293,9 @@
         getElementViewConstructor: (model) -> (options) => new ElementView(options)
 
         getElementViewConstructorOptions: (model) ->
-            model: model
+            model:      model
             parentView: this
-            paper: @paper
+            paper:      @paper
 
         addElementView: (model) ->
             constructor = @getElementViewConstructor(model)

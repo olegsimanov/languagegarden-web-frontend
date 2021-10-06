@@ -1,25 +1,24 @@
     'use strict'
 
+    _                   = require('underscore')
+    $                   = require('jquery')
+
     require('raphael')
-    _ = require('underscore')
-    $ = require('jquery')
     require('jquery.browser')
-    {Point} = require('./../math/points')
+
     {SVGWrappedElement} = require('./svgbase')
     {
         addSVGElementClass
         removeSVGElementClass
-    } = require('./domutils')
+    }                   = require('./../domutils')
+    {Point}             = require('./../../math/points')
 
 
     class Gradient extends SVGWrappedElement
 
-        generateId: -> _.uniqueId('lg-gradient-uniq-')
-
-        getParentNode: -> @getSVGDefsNode()
-
-        applyOnElement: (element) ->
-            element.node.setAttribute('fill', @getAttrRef())
+        generateId:                 -> _.uniqueId('lg-gradient-uniq-')
+        getParentNode:              -> @getSVGDefsNode()
+        applyOnElement: (element)   -> element.node.setAttribute('fill', @getAttrRef())
 
 
     class LinearGradient extends Gradient
@@ -185,5 +184,5 @@
 
 
     module.exports =
-        TSpanMultiColorGradient: ChosenMultiColorGradient
-        MultiColorGradient: ChosenMultiColorGradient
+        TSpanMultiColorGradient:    ChosenMultiColorGradient
+        MultiColorGradient:         ChosenMultiColorGradient

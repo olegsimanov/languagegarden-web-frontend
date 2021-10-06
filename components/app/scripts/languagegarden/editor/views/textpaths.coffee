@@ -2,24 +2,28 @@
 
     require('raphael')
     _ = require('underscore')
-    settings = require('./../../settings')
-    {Point} = require('./../../math/points')
-    {Path} = require('./../../math/bezier')
-    {
-        structuralEquals
-        sum
-        wrapLetterWithZWJ
-    } = require('./../utils')
+
+    {BaseView}                      = require('./base')
     {
         getCurvedPathString
         disableSelection
         addSVGElementClass
         removeSVGElementClass
         toggleSVGElementClass
-    } = require('./../domutils')
-    {BaseView} = require('./base')
-    {TSpanMultiColorGradient} = require('./../svggradient')
-    {EditorCanvasLayers} = require('./../../editor/constants')
+    }                               = require('./domutils')
+    {TSpanMultiColorGradient}       = require('./svg/svggradient')
+    {
+        structuralEquals
+        sum
+        wrapLetterWithZWJ
+    }                               = require('./../utils')
+
+    {Point}                         = require('./../math/points')
+    {Path}                          = require('./../math/bezier')
+
+    settings                        = require('./../../settings')
+
+    {EditorCanvasLayers}            = require('./../../editor/constants')
 
 
 

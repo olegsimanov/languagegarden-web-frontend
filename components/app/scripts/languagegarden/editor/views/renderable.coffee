@@ -3,7 +3,7 @@
     _           = require('underscore')
     $           = require('jquery')
     {BaseView}  = require('./base')
-    {template}  = require('./../domutils')
+    {template}  = require('./domutils')
 
 
     RenderSubviewMixin =

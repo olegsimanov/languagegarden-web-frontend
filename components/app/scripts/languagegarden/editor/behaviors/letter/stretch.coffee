@@ -1,8 +1,10 @@
     'use strict'
 
     _                       = require('underscore')
+
     {TransformBehavior}     = require('./transform')
-    {Point}                 = require('./../../../math/points')
+
+    {Point}                 = require('./../../math/points')
 
 
     class StretchBehavior extends TransformBehavior

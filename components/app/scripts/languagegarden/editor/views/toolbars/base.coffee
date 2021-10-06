@@ -4,7 +4,7 @@
     {DivButton}         = require('./../buttons')
     {RenderableView}    = require('./../renderable')
     {slugify}           = require('./../../utils')
-    {template}          = require('./../../templates')
+    {template}          = require('./../templates')
     {ToolbarBackButton} = require('./../../views/toolbars/navbuttons')
     settings            = require('./../../../settings')
 

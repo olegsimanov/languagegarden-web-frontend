@@ -1,9 +1,11 @@
     'use strict'
 
     _               = require('underscore')
+
     {ltrim, rtrim}  = require('./../utils')
-    {Line}          = require('./../../math/lines')
-    {Point}         = require('./../../math/points')
+
+    {Line}          = require('./../math/lines')
+    {Point}         = require('./../math/points')
 
 
     stringBlankCounts = (str) ->

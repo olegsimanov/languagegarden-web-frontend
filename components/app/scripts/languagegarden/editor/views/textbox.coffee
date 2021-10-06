@@ -14,7 +14,8 @@
         EditorCanvasMode,
         PlacementType
     }                           = require('./../constants')
-    {Point}                     = require('./../../math/points')
+
+    {Point}                     = require('./../math/points')
 
 
     class TextBoxView extends BaseView

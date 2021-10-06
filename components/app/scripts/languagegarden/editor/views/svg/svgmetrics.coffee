@@ -3,13 +3,13 @@
     require('raphael')
     _ = require('underscore')
     $ = require('jquery')
-    {Point} = require('./../math/points')
-    {wrapLetterWithZWJ} = require('./utils')
-    {disableSelection} = require('./domutils')
-    {Path} = require('./../math/bezier')
-    settings = require('./../settings')
-    {EventObject} = require('./events')
 
+    {disableSelection}  = require('./../domutils')
+    {Point}             = require('./../../math/points')
+    {Path}              = require('./../../math/bezier')
+    {wrapLetterWithZWJ} = require('./../../utils')
+    {EventObject}       = require('./../../events')
+    settings            = require('./../../../settings')
 
     createMeasuringPaper = ->
         $measuringDiv = $('<div>')

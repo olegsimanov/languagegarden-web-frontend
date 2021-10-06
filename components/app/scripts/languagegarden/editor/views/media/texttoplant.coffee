@@ -1,13 +1,18 @@
     'use strict'
 
-    Hammer = require('hammerjs')
-    _ = require('underscore')
-    jQuery = require('jquery')
-    $ = require('jquery')
-    {HtmlMediumView} = require('./base')
-    {PlacementType} = require('../../constants')
-    {isWord, isWordOrEmpty, chopIntoWords} = require('./../../utils')
-    {BBox} = require('./../../../math/bboxes')
+    Hammer              = require('hammerjs')
+    _                   = require('underscore')
+    jQuery              = require('jquery')
+    $                   = require('jquery')
+
+    {HtmlMediumView}    = require('./base')
+    {PlacementType}     = require('../../constants')
+    {
+        isWord,
+        isWordOrEmpty,
+        chopIntoWords
+    }                   = require('./../../utils')
+    {BBox}              = require('./../../math/bboxes')
 
 
     class TextToPlantView extends HtmlMediumView

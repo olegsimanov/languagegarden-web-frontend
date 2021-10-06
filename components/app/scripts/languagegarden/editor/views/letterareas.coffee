@@ -1,14 +1,20 @@
     'use strict'
 
     _ = require('underscore')
-    {Point} = require('./../math/points')
-    {Path} = require('./../math/bezier')
-    {getCharRange} = require('./utils')
-    {getPolygonPathString, getQuadrilateralPathString} = require('./domutils')
+
+
+    {
+        getPolygonPathString,
+        getQuadrilateralPathString
+    }                                   = require('./domutils')
+    {getCharRange}                      = require('./../utils')
     {
         LinearTransformation
         AffineTransformation
-    } = require('./../math/transformations')
+    }                                   = require('./../math/transformations')
+    {Point}                             = require('./../math/points')
+    {Path}                              = require('./../math/bezier')
+
 
 
     smallLetters =
@@ -170,11 +176,6 @@
         [pts, pathGenerator] = fun(startPoint, endPoint, orthogonal)
 
     module.exports =
-        getLetterAreaPathString: (args...) ->
-            [pts, pathGenerator] = _letterContext(args...)
-            pathGenerator(pts...)
-
-        getLetterAreaPathPoints: (args...) -> _letterContext(args...)[0]
 
         getLetterAreaPathStringAndPoints: (args...) ->
             [pts, pathGenerator] = _letterContext(args...)
@@ -183,9 +184,9 @@
                 pathPoints: pts
             }
 
-        getBigUpperPath: getTransformedPath(bigFactor)
-        getBigLowerPath: getTransformedPath(-bigFactor)
-        getSmallUpperPath: getTransformedPath(smallFactor)
-        getSmallLowerPath: getTransformedPath(-smallFactor)
+        getBigUpperPath:        getTransformedPath(bigFactor)
+        getBigLowerPath:        getTransformedPath(-bigFactor)
+        getSmallUpperPath:      getTransformedPath(smallFactor)
+        getSmallLowerPath:      getTransformedPath(-smallFactor)
 
 

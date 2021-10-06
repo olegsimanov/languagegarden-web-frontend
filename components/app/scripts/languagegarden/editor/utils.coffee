@@ -306,6 +306,7 @@
 
 
     module.exports =
+
         sum: sum
         avg: avg
         getCharRange: getCharRange

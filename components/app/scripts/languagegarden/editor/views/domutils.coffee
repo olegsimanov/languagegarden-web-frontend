@@ -1,13 +1,15 @@
     'use strict'
 
-    _ = require('underscore')
-    jQuery = require('jquery')
-    $ = require('jquery')
-    settings = require('./../settings')
-    utils = require('./utils')
-    {Point} = require('./../math/points')
-    {BBox} = require('./../math/bboxes')
-    {AffineTransformation} = require('./../math/transformations')
+    _                       = require('underscore')
+    jQuery                  = require('jquery')
+    $                       = require('jquery')
+
+    utils                   = require('./../utils')
+    settings                = require('./../../settings')
+
+    {Point}                 = require('./../math/points')
+    {BBox}                  = require('./../math/bboxes')
+    {AffineTransformation}  = require('./../math/transformations')
 
 
     getOffsetRect = (node) ->
@@ -248,25 +250,26 @@
 
 
     module.exports =
-        getCurvedPathString: getCurvedPathString
-        getPolygonPathString: getPolygonPathString
-        getQuadrilateralPathString: getQuadrilateralPathString
 
-        getCaretPosition: getCaretPosition
-        setCaretPosition: setCaretPosition
+        getCurvedPathString:                getCurvedPathString
+        getPolygonPathString:               getPolygonPathString
+        getQuadrilateralPathString:         getQuadrilateralPathString
 
-        disableSelection: disableSelection
-        retrieveId: retrieveId
-        getSVGElementByNameAndCoords: getSVGElementByNameAndCoords
-        getIntersectingSVGElementsByName: getIntersectingSVGElementsByName
+        getCaretPosition:                   getCaretPosition
+        setCaretPosition:                   setCaretPosition
 
-        addSVGElementClass: addSVGElementClass
-        removeSVGElementClass: removeSVGElementClass
-        toggleSVGElementClass: toggleSVGElementClass
+        disableSelection:                   disableSelection
+        retrieveId:                         retrieveId
+        getSVGElementByNameAndCoords:       getSVGElementByNameAndCoords
+        getIntersectingSVGElementsByName:   getIntersectingSVGElementsByName
 
-        getOffsetRect: getOffsetRect
-        getScaleFactor: getScaleFactor
-        preload: preload
-        selectAllContenteditableContent: selectAllContenteditableContent
-        getSelectedText: getSelectedText
-        getSelectedHtml: getSelectedHtml
+        addSVGElementClass:                 addSVGElementClass
+        removeSVGElementClass:              removeSVGElementClass
+        toggleSVGElementClass:              toggleSVGElementClass
+
+        getOffsetRect:                      getOffsetRect
+        getScaleFactor:                     getScaleFactor
+        preload:                            preload
+        selectAllContenteditableContent:    selectAllContenteditableContent
+        getSelectedText:                    getSelectedText
+        getSelectedHtml:                    getSelectedHtml

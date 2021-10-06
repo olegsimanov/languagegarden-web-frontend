@@ -12,37 +12,35 @@
     {PlantChildView}                = require('./base')
     {TextPath, SyntheticTextPath}   = require('./textpaths')
     {getTrimmedWordParams}          = require('./elementsplit')
-
-    {Point}                         = require('./../../math/points')
-    {Point}                         = require('./../../math/points')
-    {BBox}                          = require('./../../math/bboxes')
-
-    settings                        = require('./../../settings')
-
-    {LetterMetrics}                 = require('./../svgmetrics')
-    {
-        VisibilityType,
-        EditorCanvasLayers
-    }                               = require('./../constants')
-
     {
         addSVGElementClass
         removeSVGElementClass
         setCaretPosition
         getCaretPosition
         disableSelection
-    }                               = require('./../domutils')
+    }                               = require('./domutils')
+    {
+        getLetterAreaPathStringAndPoints
+        getBigUpperPath
+        getBigLowerPath
+    }                               = require('./letterareas')
+    {LetterMetrics}                 = require('./svg/svgmetrics')
+
+    {Point}                         = require('./../math/points')
+    {Point}                         = require('./../math/points')
+    {BBox}                          = require('./../math/bboxes')
+
+    settings                        = require('./../../settings')
+
+    {
+        VisibilityType,
+        EditorCanvasLayers
+    }                               = require('./../constants')
 
     {
         sum
         wrapLetterWithZWJ
     }                               = require('./../utils')
-
-    {
-        getLetterAreaPathStringAndPoints
-        getBigUpperPath
-        getBigLowerPath
-    }                               = require('./../letterareas')
 
 
     class ElementView extends PlantChildView

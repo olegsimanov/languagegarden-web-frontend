@@ -12,7 +12,7 @@
 
     require('../../iefix')
 
-    {LetterMetrics}         = require('./svgmetrics')
+    {LetterMetrics}         = require('./views/svg/svgmetrics')
     editorColors            = require('./colors')
     settings                = require('./../settings')
     {EventObject}           = require('./../editor/events')
@@ -21,10 +21,9 @@
     {Settings}              = require('./models/settings')
     {UnitState, LessonData} = require('./models/plants')
 
-    buttons                 = require('./views/buttons')
     {EditorPageView}        = require('./views/page')
     {EditorCanvasView}      = require('./views/canvas')
-    {EditorTextBoxView}     = require('./views/textboxes')
+    {EditorTextBoxView}     = require('./views/textbox')
     {BuilderToolbar}        = require('./views/toolbars/builder')
 
     class PlantEditorController extends EventObject

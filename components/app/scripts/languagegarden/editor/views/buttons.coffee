@@ -4,14 +4,13 @@
     Hammer                      = require('hammerjs')
 
     {BaseView}                  = require('./base')
+    {disableSelection}          = require('./domutils')
     utils                       = require('./../utils')
-    {disableSelection}          = require('./../domutils')
     {StatefulClassPrototype}    = require('./../stateful')
     {ColorMode}                 = require('./../constants')
     navigationActions           = require('./../actions/navigation')
-    {Point}                     = require('./../../math/points')
+    {Point}                     = require('./../math/points')
     settings                    = require('./../../settings')
-    {Point}                     = require('./../../math/points')
 
 
 

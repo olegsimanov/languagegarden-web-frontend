@@ -1,14 +1,17 @@
     'use strict'
 
-    Raphael = require('raphael')
-    _ = require('underscore')
+    Raphael                     = require('raphael')
+    _                           = require('underscore')
 
-    {Point}                 = require('./../../math/points')
-    {AffineTransformation}  = require('./../../math/transformations')
-    {Path}                  = require('./../../math/bezier')
-    settings                = require('./../../settings')
-    {deepCopy}              = require('./../utils')
-    {PlantChildModel, PlantChildCollection} = require('./base')
+    {
+        PlantChildModel,
+        PlantChildCollection
+    }                           = require('./base')
+    {deepCopy}                  = require('./../utils')
+    {Point}                     = require('./../math/points')
+    {AffineTransformation}      = require('./../math/transformations')
+    {Path}                      = require('./../math/bezier')
+    settings                    = require('./../../settings')
 
 
     ATF = AffineTransformation

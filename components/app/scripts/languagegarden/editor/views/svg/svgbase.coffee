@@ -2,40 +2,34 @@
 
     _ = require('underscore')
     $ = require('jquery')
-    {disableSelection} = require('./domutils')
+    {disableSelection} = require('./../domutils')
 
 
     class SVGWrappedElement
+
         xlinkNS: "http://www.w3.org/1999/xlink"
 
         constructor: (options) ->
-            @paper = options.paper
-            @unselectable = options.unselectable
+            @paper          = options.paper
+            @unselectable   = options.unselectable
             @initialize(options)
             @updateProperties(options)
             @create()
 
-        initialize: (options) ->
-
+        initialize: (options)       ->
         updateProperties: (options) ->
-
-        generateId: -> _.uniqueId('lg-svg-elem-uniq')
+        generateId:                 -> _.uniqueId('lg-svg-elem-uniq')
 
         getId: ->
             if not @id? then @id = @generateId()
             @id
 
-        getAttrRef: -> "url(##{@getId()})"
-
-        getSVGRootNode: -> @paper.canvas
-
-        getSVGDefsNode: -> @getSVGRootNode().querySelector('defs')
-
-        getSVGNamespaceURI: -> @getSVGRootNode().namespaceURI
-
-        getParentNode: ->
-
-        isCreated: -> @node?
+        getAttrRef:                 -> "url(##{@getId()})"
+        getSVGRootNode:             -> @paper.canvas
+        getSVGDefsNode:             -> @getSVGRootNode().querySelector('defs')
+        getSVGNamespaceURI:         -> @getSVGRootNode().namespaceURI
+        getParentNode:              ->
+        isCreated:                  -> @node?
 
         create: ->
             node = @createSVGNode(@getSVGNamespaceURI())
@@ -53,11 +47,9 @@
             $(@node).remove()
             @node = undefined
 
-        insertSVGNode: (node) -> @getParentNode().appendChild(node)
-
-        createSVGNode: (svgNS) ->
-
-        updateSVGNode: (node) ->
+        insertSVGNode: (node)       -> @getParentNode().appendChild(node)
+        createSVGNode: (svgNS)      ->
+        updateSVGNode: (node)       ->
 
 
     module.exports =

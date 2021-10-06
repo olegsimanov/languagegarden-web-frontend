@@ -1,9 +1,11 @@
     'use strict'
 
     _                   = require('underscore')
+
     {DragBehaviorBase}  = require('./base')
-    {Point}             = require('./../../../math/points')
-    {BBox}              = require('./../../../math/bboxes')
+
+    {Point}             = require('./../../math/points')
+    {BBox}              = require('./../../math/bboxes')
 
     class MoveBehaviorBase extends DragBehaviorBase
 

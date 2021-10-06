@@ -1,10 +1,12 @@
     'use strict'
 
     _ = require('underscore')
+
     {DragBehavior}  = require('./base')
-    bezier          = require('./../../../math/bezier')
-    {Line}          = require('./../../../math/lines')
-    {Point}         = require('./../../../math/points')
+
+    bezier          = require('./../../math/bezier')
+    {Line}          = require('./../../math/lines')
+    {Point}         = require('./../../math/points')
 
 
     class BendBehavior extends DragBehavior
