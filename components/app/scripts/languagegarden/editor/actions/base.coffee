@@ -84,6 +84,6 @@
 
 
     module.exports =
-        Action: EditorAction
-        EditorAction: EditorAction
+        Action:             EditorAction
+        EditorAction:       EditorAction
         ToolbarStateAction: ToolbarStateAction
