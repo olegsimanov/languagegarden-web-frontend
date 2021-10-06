@@ -2,7 +2,8 @@
   "name": "languagegarden-components",
   "version": "0.0.1",
   "authors": [
-    "Andrzej Pragacz <andrzej.pragacz@10clouds.com>"
+    "Andrzej Pragacz <andrzej.pragacz@10clouds.com>",
+    "Oleg Simanov <olegsimanov@gmail.com>"
   ],
   "license": "MIT",
   "private": true,
@@ -15,7 +16,7 @@
   ],
   "dependencies": {
 
-    "backbone": "~1.1.2",
+    "backbone": "~1.4.0",
 
     "jquery": "~1.8.0",
     "jquery.browser": "0.0.6",
