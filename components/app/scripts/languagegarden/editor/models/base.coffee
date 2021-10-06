@@ -6,9 +6,9 @@
     {VisibilityType}            = require('./../constants')
     {extend, extendAll}         = require('./../extend')
     {getAttrsOpts}              = require('./../utils')
-    {EventForwardingPrototype}  = require('./../events')
+    {CanForwardEvents}          = require('./../events')
 
-    class BaseModel extends Backbone.Model.extend(EventForwardingPrototype)
+    class BaseModel extends Backbone.Model.extend(CanForwardEvents)
 
         @extend:        extend
         @extendAll:     extendAll

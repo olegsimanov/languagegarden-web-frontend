@@ -1,12 +1,13 @@
     'use strict'
 
-    _                           = require('underscore')
-    Backbone                    = require('backbone')
-    {extend, extendAll}         = require('./extend')
-    {PropertySetupPrototype}    = require('./properties')
+    _                               = require('underscore')
+
+    Backbone                        = require('backbone')
+    {extend, extendAll}             = require('./extend')
+    {CanMakePropertyFromOptions}    = require('./properties')
 
 
-    EventForwardingPrototype =
+    CanForwardEvents =
 
         forwardEventsFrom: (target, eventNames, retainSource=true) ->
             if not _.isArray(eventNames)
@@ -21,22 +22,21 @@
 
                     @listenTo(target, evName, handler)
 
+    class WithExtendMethods
 
-    class CoreEventObject
         @extend:    extend
         @extendAll: extendAll
 
+    EventsAwareBaseObject = WithExtendMethods
+        .extend(Backbone.Events)
+        .extend(CanForwardEvents)
+        .extend(CanMakePropertyFromOptions)
 
-    BaseEventObject = CoreEventObject.extendAll(Backbone.Events, EventForwardingPrototype, PropertySetupPrototype)
+    class EventsAwareClass extends EventsAwareBaseObject
 
-
-    class EventObject extends BaseEventObject
-
-        remove: ->
-            @stopListening()                        # this is Backbone.Events method
-            @removed = true
+        remove: -> @stopListening()                        # this is Backbone.Events method
 
 
     module.exports =
-        EventObject:                EventObject
-        EventForwardingPrototype:   EventForwardingPrototype
+        EventsAwareClass:   EventsAwareClass
+        CanForwardEvents:   CanForwardEvents

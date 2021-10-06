@@ -1,9 +1,9 @@
     'use strict'
 
-    {capitalize}    = require('./../utils')
-    {EventObject}   = require('./../events')
+    {capitalize}        = require('./../utils')
+    {EventsAwareClass}  = require('./../events')
 
-    class Action extends EventObject
+    class Action extends EventsAwareClass
 
         id: 'action-id-undefined'
 

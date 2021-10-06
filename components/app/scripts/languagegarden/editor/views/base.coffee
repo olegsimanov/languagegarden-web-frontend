@@ -1,28 +1,30 @@
     'use strict'
 
-    _ = require('underscore')
-    jQuery = require('jquery')
-    Backbone = require('backbone')
+    _           = require('underscore')
+    jQuery      = require('jquery')
+    Backbone    = require('backbone')
+
+    {extend, extendAll}                 = require('./../extend')
+    {CanForwardEvents}                  = require('./../events')
+    {
+        buildMixinWithProperty
+        CanMakePropertyFromOptions
+    }                                   = require('./../properties')
+    {capitalize}                        = require('./../utils')
 
     {
         visibilityOpacityMap
         markedOpacityMap
     }                                   = require('./../../editor/constants')
-    {extend, extendAll}                 = require('./../extend')
-    {EventForwardingPrototype}          = require('./../events')
-    {
-        buildPropertySupportPrototype
-        PropertySetupPrototype
-    }                                   = require('./../properties')
-    {capitalize}                        = require('./../utils')
+
 
 
     BaseViewCore = Backbone.View
-        .extend(EventForwardingPrototype)
-        .extend(PropertySetupPrototype)
-        .extend(buildPropertySupportPrototype('parentView'))
-        .extend(buildPropertySupportPrototype('model'))
-        .extend(buildPropertySupportPrototype('controller'))
+        .extend(CanForwardEvents)
+        .extend(CanMakePropertyFromOptions)
+        .extend(buildMixinWithProperty('parentView'))
+        .extend(buildMixinWithProperty('model'))
+        .extend(buildMixinWithProperty('controller'))
 
 
     class BaseView extends BaseViewCore
@@ -64,6 +66,13 @@
                 binderName = "on#{capitalize(propName)}Bind"
                 @[binderName](options)
 
+        setOption: (options, name, defaultVal, isRequired=false, optName, normalizer) ->
+            optName ?= name
+            normalizer ?= _.identity
+            @[name] = normalizer(options[optName]) if options[optName]?
+            @[name] ?= defaultVal if defaultVal?
+            if isRequired and not @[name]?
+                console.error("Missing required attribute: #{name}")
 
         setOptions: (options, specs, requiredAttributes=[]) =>
             if _.isBoolean(requiredAttributes)
@@ -81,13 +90,6 @@
 
                 @setOption(options, name, defaultVal, isRequired(name))
 
-        setOption: (options, name, defaultVal, isRequired=false, optName, normalizer) ->
-            optName ?= name
-            normalizer ?= _.identity
-            @[name] = normalizer(options[optName]) if options[optName]?
-            @[name] ?= defaultVal if defaultVal?
-            if isRequired and not @[name]?
-                console.error("Missing required attribute: #{name}")
 
         getContainerEl: -> _.result(@, 'containerEl') or (_.result(@, 'containerView') or _.result(@, 'parentView'))?.el
 

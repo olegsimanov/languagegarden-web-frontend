@@ -15,7 +15,7 @@
     {LetterMetrics}         = require('./views/svg/svgmetrics')
     editorColors            = require('./colors')
     settings                = require('./../settings')
-    {EventObject}           = require('./../editor/events')
+    {EventsAwareClass}      = require('./../editor/events')
 
     {EditorPalette}         = require('./models/palette')
     {Settings}              = require('./models/settings')
@@ -26,7 +26,7 @@
     {EditorTextBoxView}     = require('./views/textbox')
     {BuilderToolbar}        = require('./views/toolbars/builder')
 
-    class PlantEditorController extends EventObject
+    class PlantEditorController extends EventsAwareClass
 
         constructor: (containerElement) ->
 

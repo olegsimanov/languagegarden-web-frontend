@@ -4,12 +4,12 @@
     _ = require('underscore')
     $ = require('jquery')
 
-    {disableSelection}  = require('./../domutils')
-    {Point}             = require('./../../math/points')
-    {Path}              = require('./../../math/bezier')
-    {wrapLetterWithZWJ} = require('./../../utils')
-    {EventObject}       = require('./../../events')
-    settings            = require('./../../../settings')
+    {disableSelection}      = require('./../domutils')
+    {Point}                 = require('./../../math/points')
+    {Path}                  = require('./../../math/bezier')
+    {wrapLetterWithZWJ}     = require('./../../utils')
+    {EventsAwareClass}      = require('./../../events')
+    settings                = require('./../../../settings')
 
     createMeasuringPaper = ->
         $measuringDiv = $('<div>')
@@ -34,7 +34,7 @@
         $parent.remove()
 
 
-    class LetterMetrics extends EventObject
+    class LetterMetrics extends EventsAwareClass
 
         constructor: (options={}) ->
             @paper = options.paper

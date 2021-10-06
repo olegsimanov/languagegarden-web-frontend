@@ -66,13 +66,13 @@
             @setPropertyFromOptions(options, 'dataModel', required: true)
 
             canvasDimensions = @getCanvasSetupDimensions()
-            @paper = Raphael(@$el.get(0), canvasDimensions[0], canvasDimensions[1])
+            @paper          = Raphael(@$el.get(0), canvasDimensions[0], canvasDimensions[1])
 
             @updateTextDirectionFromModel()
             @$el
                 .css
-                    'width': canvasDimensions[0]
-                    'height': canvasDimensions[1]
+                    'width':    canvasDimensions[0]
+                    'height':   canvasDimensions[1]
                 .attr('unselectable', 'on')
 
             @$canvasEl      = $(@paper.canvas)

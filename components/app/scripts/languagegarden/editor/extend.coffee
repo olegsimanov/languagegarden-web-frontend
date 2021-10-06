@@ -46,5 +46,5 @@
 
 
     module.exports =
-        extend: extend
-        extendAll: extendAll
+        extend:     extend
+        extendAll:  extendAll
