@@ -5,9 +5,8 @@
     {slugify}       = require('./../../utils')
 
 
-    navEventBaseName = 'toolbarnav'
-    getNavEventName = (navTarget) ->
-        "#{navEventBaseName}:#{ slugify(navTarget) }"
+    navEventBaseName    = 'toolbarnav'
+    getNavEventName     = (navTarget) -> "#{navEventBaseName}:#{ slugify(navTarget) }"
 
     ToolbarNavButtonPrototype =
 
@@ -40,14 +39,13 @@
             @initializeNavButton(options)
             super
 
-        onClick: (e) => @navButtonOnClick()
-        isEnabled: -> true
+        onClick: (e)    => @navButtonOnClick()
+        isEnabled:      -> true
 
 
     class ToolbarBackButton extends ToolbarNavButton
 
         navTarget: 'back'
-
         getNavButtonClass: -> "#{super} icon icon_back"
 
 

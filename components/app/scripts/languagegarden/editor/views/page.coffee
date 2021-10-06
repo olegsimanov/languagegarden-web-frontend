@@ -138,7 +138,7 @@
         initialize: (options) ->
             super
             @canvasView = options.canvasView
-            @setupEventForwarding(@canvasView, 'navigate')
+            @forwardEventsFrom(@canvasView, 'navigate')
 
         remove: ->
             @stopListening(@canvasView)

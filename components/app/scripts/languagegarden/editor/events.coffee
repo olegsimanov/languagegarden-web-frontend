@@ -8,7 +8,7 @@
 
     EventForwardingPrototype =
 
-        setupEventForwarding: (target, eventNames, retainSource=true) ->
+        forwardEventsFrom: (target, eventNames, retainSource=true) ->
             if not _.isArray(eventNames)
                 eventNames = [eventNames]
             for eventName in eventNames

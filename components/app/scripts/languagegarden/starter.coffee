@@ -3,7 +3,7 @@ require('../polyfills/console')
 
 load = () ->
 
-    controller = new PlantEditorController
+    controller = new PlantEditorController(document.body)
     controller.start()
 
     return

@@ -22,63 +22,52 @@
     {UnitState, LessonData} = require('./models/plants')
 
     buttons                 = require('./views/buttons')
+    {EditorPageView}        = require('./views/page')
     {EditorCanvasView}      = require('./views/canvas')
     {EditorTextBoxView}     = require('./views/textboxes')
-    {EditorPageView}        = require('./views/page')
     {BuilderToolbar}        = require('./views/toolbars/builder')
-    {ToolbarEnum}           = require('./views/toolbars/constants')
 
     class PlantEditorController extends EventObject
 
-        modelClass:         UnitState
-        dataModelClass:     LessonData
-        ToolbarEnum:        ToolbarEnum
-        buttonClasses:      []
-        canvasViewClass:    EditorCanvasView
-        textBoxViewClass:   EditorTextBoxView
-        toolbarViewClass:   BuilderToolbar
-
-        constructor: (options = {}) ->
+        constructor: (containerElement) ->
 
             @draggingInfo       = {}
 
-            @dataModel          = options.dataModel
-            @dataModel          ?= new @dataModelClass()
-            @model              = new @modelClass()
+            @dataModel          = new LessonData()
+            @model              = new UnitState()
+            @letterMetrics      = new LetterMetrics()
 
-            @letterMetrics = new LetterMetrics()
+            @canvasView         = new EditorCanvasView
+                                        controller:     @
+                                        model:          @model
+                                        dataModel:      @dataModel
+                                        settings:       Settings.getSettings('plant-view')
+                                        colorPalette:   new EditorPalette
+                                            toolInfos: editorColors.initialTools
+                                            newWordColor: editorColors.newWordColor
+                                        letterMetrics: @letterMetrics
 
-            @canvasView = new @canvasViewClass
-                controller: this
-                model: @model
-                dataModel: @dataModel
-                settings: Settings.getSettings('plant-view')
-                colorPalette: new EditorPalette
-                    toolInfos: editorColors.initialTools
-                    newWordColor: editorColors.newWordColor
-                letterMetrics: @letterMetrics
+            @textBoxView        = new EditorTextBoxView
+                                        controller:     @
+                                        model:          @model
+                                        dataModel:      @dataModel
+                                        settings:       Settings.getSettings('plant-view')
+                                        letterMetrics:  @letterMetrics
 
-            @textBoxView = new @textBoxViewClass
-                controller: this
-                model: @model
-                dataModel: @dataModel
-                settings: Settings.getSettings('plant-view')
-                letterMetrics: @letterMetrics
+            @toolbarView        = new BuilderToolbar
+                                        controller: @
 
-            @toolbarView = new BuilderToolbar
-                controller: @
+            @pageView           = new EditorPageView
+                                        controller: this
+                                        canvasView: @canvasView
+                                        subviews:
+                                            '.canvas-container':        [@canvasView]
+                                            '.text-to-plant-container': @textBoxView
+                                            '.toolbar-container':       @toolbarView
+                                        containerEl: containerElement
 
-            @view = new EditorPageView
-                controller: this
-                canvasView: @canvasView
-                subviews:
-                    '.toolbar-container':       @toolbarView
-                    '.canvas-container':        [@canvasView]
-                    '.text-to-plant-container': @textBoxView
-                containerEl: options.containerElement or document.body
-
-            @canvasView.setParentView(@view)
-            @textBoxView.setParentView(@view)
+            @canvasView.setParentView(@pageView)
+            @textBoxView.setParentView(@pageView)
 
             @listenTo(@canvasView, 'change:dragging',   @onCanvasDraggingChange)
             @listenTo(@canvasView, 'change:bgDragging', @onCanvasBgDraggingChange)
@@ -90,14 +79,14 @@
             @model          = null
             @dataModel      = null
             @canvasView     = null
-            @view           = null
+            @pageView       = null
             @letterMetrics  = null
 
             @off()
 
             super
 
-        renderViews: -> @view.render()
+        renderViews: -> @pageView.render()
 
         start: () ->
             @trigger('start:success', this)

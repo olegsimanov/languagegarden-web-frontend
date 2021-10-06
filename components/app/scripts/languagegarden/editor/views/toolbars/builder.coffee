@@ -14,7 +14,7 @@
         SaveAndGoToNavigator
         DiscardAndGoToNavigator
     }                           = require('./../../actions/navigation')
-    {EditorCanvasMode}                = require('./../../constants')
+    {EditorCanvasMode}          = require('./../../constants')
     settings                    = require('./../../../settings')
 
     class PaletteToolbarNavButton extends ToolbarNavButton

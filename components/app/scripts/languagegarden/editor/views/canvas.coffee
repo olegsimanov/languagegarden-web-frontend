@@ -95,7 +95,7 @@
 
         onParentViewBind: ->
             eventNames = ("change:pageContainer#{suf}" for suf in ['Transform', 'Scale', 'ShiftX', 'ShiftY'])
-            @setupEventForwarding(@parentView, eventNames)
+            @forwardEventsFrom(@parentView, eventNames)
 
         settingsKey: -> 'plant-view'
 
