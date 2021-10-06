@@ -5,9 +5,9 @@
     {BaseView}                  = require('./base')
     {DummyMediumView}           = require('./media/base')
     {
-        EditorTextToPlantView
-        TextToPlantView
-    }                           = require('./media/texttoplant')
+        EditorTextToCanvasView
+        TextToCanvasView
+    }                           = require('./media/texttocanvas')
 
     {
         MediumType,
@@ -56,8 +56,8 @@
                 null
             else
                 switch model.get('type')
-                    when MediumType.TEXT_TO_PLANT
-                        TextToPlantView
+                    when MediumType.TEXT_TO_CANVAS
+                        TextToCanvasView
                     else
                         null
 
@@ -117,7 +117,7 @@
         onMediumInPlantToTextModeChanged:               -> @updateNotesMode()
         onModelTextDirectionChange:                     -> @updateTextDirection()
 
-        addPlantElement: (options) =>
+        addCanvasElement: (options) =>
             options = _.clone(options)
 
             if not options.fontSize?
@@ -164,8 +164,8 @@
 
         getMediumViewClass: (model) ->
             switch model.get('type')
-                when MediumType.TEXT_TO_PLANT
-                    EditorTextToPlantView
+                when MediumType.TEXT_TO_CANVAS
+                    EditorTextToCanvasView
                 else
                     super
 

@@ -15,14 +15,15 @@
     {BBox}              = require('./../../math/bboxes')
 
 
-    class TextToPlantView extends HtmlMediumView
-        className: 'text-to-plant-box'
-        spanHTML: '<span class="element">'
-        pHTML: '<p class="line">'
-        spanSelector: 'span.element'
-        pSelector: 'p.line'
-        spanDraggedOutClass: 'dragged-out'
-        spanMarkedClass: 'marked'
+    class TextToCanvasView extends HtmlMediumView
+
+        className:              'text-to-canvas-box'
+        spanHTML:               '<span class="element">'
+        pHTML:                  '<p class="line">'
+        spanSelector:           'span.element'
+        pSelector:              'p.line'
+        spanDraggedOutClass:    'dragged-out'
+        spanMarkedClass:        'marked'
 
         getPlacementType: -> PlacementType.UNDERSOIL
 
@@ -349,7 +350,7 @@
                 text = ''
             color = @getWordColor()
             fontSize = @getWordFontSize()
-            $helper = $('<div class="text-to-plant-helper">')
+            $helper = $('<div class="text-to-canvas-helper">')
                 .text(text)
                 .css
                     'font-size': fontSize
@@ -404,7 +405,7 @@
             [x, y] = @getCanvasDragCoords(e)
             $helper = dragInfo.jQueryHelper
             if dragInfo.text.length > 0 and @areDragCoordsAllowed(x, y)
-                @parentView.addPlantElement
+                @parentView.addCanvasElement
                     text: dragInfo.text
                     startPoint: [x, y]
                 $(dragInfo.wordSpanInfo.node).addClass(@spanDraggedOutClass)
@@ -421,7 +422,7 @@
             @updateFromModel()
             this
 
-    EditorTextToPlantView = class extends TextToPlantView
+    EditorTextToCanvasView = class extends TextToCanvasView
 
         initialize: (options) ->
             super
@@ -432,7 +433,7 @@
         select: ->
 
 
-    MarkableTextToPlantView = class extends TextToPlantView
+    MarkableTextToCanvasView = class extends TextToCanvasView
 
         isSelected: -> false
 
@@ -450,5 +451,5 @@
 
 
     module.exports =
-        MarkableTextToPlantView: MarkableTextToPlantView
-        EditorTextToPlantView: EditorTextToPlantView
+        MarkableTextToCanvasView:    MarkableTextToCanvasView
+        EditorTextToCanvasView:      EditorTextToCanvasView

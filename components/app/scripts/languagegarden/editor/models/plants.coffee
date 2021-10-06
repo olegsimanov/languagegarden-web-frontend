@@ -35,9 +35,9 @@
 
         setDefaultAttributes: ->
             @setDefaultValue('bgColor', '#FFFFFF')
-            if not (MediumType.TEXT_TO_PLANT in @media.pluck('type'))
+            if not (MediumType.TEXT_TO_CANVAS in @media.pluck('type'))
                 @media.add
-                    type: MediumType.TEXT_TO_PLANT
+                    type: MediumType.TEXT_TO_CANVAS
                     textElements: []
 
         get: (attr) ->

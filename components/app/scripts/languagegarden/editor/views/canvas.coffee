@@ -270,7 +270,7 @@
         setDragging: (dragging)         -> @setField('dragging', dragging)
         setBgDragging: (bgDragging)     -> @setField('bgDragging', bgDragging)
 
-        addPlantElement: (options) ->
+        addCanvasElement: (options) ->
             options = _.clone(options)
 
             if not options.fontSize?

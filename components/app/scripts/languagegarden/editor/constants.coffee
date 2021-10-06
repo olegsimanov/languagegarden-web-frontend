@@ -5,7 +5,7 @@
     class MediumType
 
         @TEXT                   = 'text'
-        @TEXT_TO_PLANT          = 'text-to-plant'
+        @TEXT_TO_CANVAS         = 'text-to-canvas'
 
     class VisibilityType
 
@@ -48,7 +48,6 @@
     class EditorCanvasMode
 
         @MOVE               = 'move'
-        @PLANT_TO_TEXT      = 'plant to text'
         @STRETCH            = 'stretch'
         @SCALE              = 'scale'
         @GROUP_SCALE        = 'group scale'

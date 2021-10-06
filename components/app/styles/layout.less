@@ -120,9 +120,9 @@ body {
 
 
 /* -------------------------------------------------------
-    Text 2 Plant
+    Text 2 Canvas
    -------------------------------------------------------*/
-.text-to-plant-container, .instructions-box {
+.text-to-canvas-container, .instructions-box {
     font-size: 40px;
     line-height: 50px;
     background: #ffffff;
@@ -131,24 +131,24 @@ body {
 }
 
 
-.text-to-plant-container {
-    &.plant-to-text-mode,
-    &.in-plant-to-text-mode {
-        .text-to-plant-box, .instructions-box {
+.text-to-canvas-container {
+    &.canvas-to-text-mode,
+    &.in-canvas-to-text-mode {
+        .text-to-canvas-box, .instructions-box {
             display: none;
         }
     }
 
     &.instructions-mode {
-        .text-to-plant-box, .plant-to-text-box {
+        .text-to-canvas-box, .canvas-to-text-box {
             display: none;
         }
     }
 }
 
 
-.text-to-plant-box,
-.plant-to-text-box,
+.text-to-canvas-box,
+.canvas-to-text-box,
 .instructions-box {
     overflow: auto;
     padding: 0 10px 5px;
@@ -167,7 +167,7 @@ body {
 }
 
 
-.text-to-plant-box {
+.text-to-canvas-box {
     .line {
       .element {
         &:last-child:after {
@@ -196,11 +196,11 @@ textarea.instructions-box {
     resize: none;
 }
 
-.text-to-plant-helper {
+.text-to-canvas-helper {
     font-family: @plantFontFamily;
     position: absolute;
     line-height: normal;
 }
-.text-to-plant-helper.out-of-bounds {
+.text-to-canvas-helper.out-of-bounds {
     opacity: 0.5;
 }
