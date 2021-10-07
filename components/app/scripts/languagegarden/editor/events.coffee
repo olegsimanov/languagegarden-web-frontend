@@ -22,8 +22,8 @@
 
                     @listenTo(target, evName, handler)
 
-    class WithExtendMethods
-        @extend:    extend
+    class WithExtendMethods                                 # we need this intermediary class with 'extend' method because
+        @extend:    extend                                  # Backbone.Events class doesn't have 'extend' method which will be used below
 
     EventsAwareBaseObject = WithExtendMethods
         .extend(Backbone.Events)
