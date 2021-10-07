@@ -18,17 +18,17 @@
 
 
     smallLetters =
-        bigLeftTop: ['b', 'h', 'k']
-        bigRightTop: ['d']
-        bigTop: ['t', 'l', 'i']
-        big: ['f', 'j']
-        bigBottom: ['g', 'y']
-        bigLeftBottom: ['p']
+        bigLeftTop:     ['b', 'h', 'k']
+        bigRightTop:    ['d']
+        bigTop:         ['t', 'l', 'i']
+        big:            ['f', 'j']
+        bigBottom:      ['g', 'y']
+        bigLeftBottom:  ['p']
         bigRightBottom: ['q']
 
-    smallFactor = 0.5
-    bigFactor = 0.82
-    sideFactor = 0.45
+    smallFactor     = 0.5
+    bigFactor       = 0.82
+    sideFactor      = 0.45
 
 
     getBig = (startPoint, endPoint, orthogonal) ->
@@ -158,14 +158,11 @@
 
     getTransformedPath = (factor) ->
         (path, firstOrthogonal, lastOrthogonal) ->
-            firstShift = firstOrthogonal.mul(factor)
-            lastShift = lastOrthogonal.mul(factor)
-            startToEnd = path.getEndPoint().sub(path.getStartPoint())
-            transformedStartToEnd = firstShift.neg()
-            .addToSelf(startToEnd)
-            .addToSelf(lastShift)
-            lt = LinearTransformation.homothetyFromIO(startToEnd,
-                                                      transformedStartToEnd)
+            firstShift  = firstOrthogonal.mul(factor)
+            lastShift   = lastOrthogonal.mul(factor)
+            startToEnd  = path.getEndPoint().sub(path.getStartPoint())
+            transformedStartToEnd = firstShift.neg().addToSelf(startToEnd).addToSelf(lastShift)
+            lt  = LinearTransformation.homothetyFromIO(startToEnd, transformedStartToEnd)
             at = AffineTransformation.fromShiftedTransform(lt, firstShift)
             tfApp = Point.getTransformApplicator(at)
             path.copy().applyToPoints(tfApp)

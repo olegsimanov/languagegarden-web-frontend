@@ -12,21 +12,24 @@
     settings                = require('./../../../settings')
 
     createMeasuringPaper = ->
+
         $measuringDiv = $('<div>')
-        .addClass('metrics-measuring-div')
-        .css
-            'left': 0
-            'top': 0
-            'right': 0
-            'bottom': 0
-            'position': 'absolute'
-            'overflow': 'hidden'
-            'z-index': -1000
-        .appendTo(document.body)
+            .addClass('metrics-measuring-div')
+            .css
+                'left': 0
+                'top': 0
+                'right': 0
+                'bottom': 0
+                'position': 'absolute'
+                'overflow': 'hidden'
+                'z-index': -1000
+            .appendTo(document.body)
+
         Raphael($measuringDiv.get(0), '100%', '100%')
 
 
     removeMeasuringPaper = (paper) ->
+
         if not paper?
             return
         paper.clear()
@@ -42,8 +45,7 @@
             if not @paper
                 @paper = createMeasuringPaper()
                 @paperAutoCreated = true
-            # Creating helper element to signal the browser that we use
-            # the webfont.
+            # Creating helper element to signal the browser that we use the webfont.
             @_getLength('A', 20)
             @setCacheFlag(true)
             @setFastMode(false)
@@ -80,8 +82,7 @@
             obj.transform(transform.toTransformString()) if transform?
             obj
 
-        removeTextHelperObj: (obj) ->
-            obj.remove()
+        removeTextHelperObj: (obj) -> obj.remove()
 
         invalidateCache: (options) ->
             @cache =
@@ -161,10 +162,8 @@
                 l += @getLength(wrappedLetter, size)
             l
 
-        _getHeight: (letter, size) ->
-            size * settings.fontSizeToLetterHeightMultiplier
-
-        getHeight: (letter, size) -> @_getHeight(letter, size)
+        getHeight: (letter, size)   -> @_getHeight(letter, size)
+        _getHeight: (letter, size)  -> size * settings.fontSizeToLetterHeightMultiplier
 
         checkCacheConsistency: ->
             letterKeys = _.keys(@cache.letterLength)
