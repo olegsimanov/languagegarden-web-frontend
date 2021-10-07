@@ -22,7 +22,7 @@
         @HIDDEN                 = 'hidden'
 
 
-    class EditorCanvasLayers
+    class CanvasLayers
 
         @BACKGROUND             = 'background'
         @SELECTION_RECT         = 'selectionRect'
@@ -60,7 +60,7 @@
 
         ColorMode:          ColorMode
         CanvasMode:         CanvasMode
-        EditorCanvasLayers: EditorCanvasLayers
+        CanvasLayers:       CanvasLayers
         MediumType:         MediumType
         VisibilityType:     VisibilityType
         PlacementType:      PlacementType

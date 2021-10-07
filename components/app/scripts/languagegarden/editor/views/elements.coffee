@@ -34,7 +34,7 @@
 
     {
         VisibilityType,
-        EditorCanvasLayers
+        CanvasLayers
     }                               = require('./../constants')
 
     {
@@ -289,8 +289,7 @@
         putLetterAreaToFront: (letterArea) ->
             if not letterArea?
                 return
-            @parentView.putElementToFrontAtLayer(letterArea,
-                EditorCanvasLayers.LETTER_AREAS)
+            @parentView.putElementToFrontAtLayer(letterArea, CanvasLayers.LETTER_AREAS)
 
         toFront: ->
             if not @parentView
@@ -607,7 +606,7 @@
 
         isDebugMode:    -> @parentView.debug
         isDraggedNow:   -> @parentView.dragging
-        isEditedNow:    -> @parentView.mode == EditorCanvasLayers.EDIT
+        isEditedNow:    -> @parentView.mode == CanvasLayers.EDIT
 
         addLetterAreasClass: (cssClass) ->
             if not @letterAreas?
@@ -667,7 +666,7 @@
 
         forceRepaint: =>
             clipRect = super(arguments...)
-            @parentView.putElementToFrontAtLayer(clipRect, EditorCanvasLayers.LETTERS)
+            @parentView.putElementToFrontAtLayer(clipRect, CanvasLayers.LETTERS)
 
         isSelected: => @selected
 
@@ -683,13 +682,13 @@
             super(options)
             @selected = false
             @dragged = false
-            @listenTo(@model, 'change:letter:style', @render)
-            @listenTo(@model, 'change:text', => @textDirty = true)
-            @listenTo(@model, 'view:select', @select)
-            @listenTo(@model, 'change:visibilityType', @updateVisibility)
-            @listenTo(@model, 'change:marked', @updateVisibility)
-            @listenTo(@parentView, 'selectchange', @onSelectChange)
-            @listenTo(@colorPalette.tools, 'all', @onPaletteEdited)
+            @listenTo(@model,               'change:letter:style',      @render)
+            @listenTo(@model,               'change:text',              => @textDirty = true)
+            @listenTo(@model,               'view:select',              @select)
+            @listenTo(@model,               'change:visibilityType',    @updateVisibility)
+            @listenTo(@model,               'change:marked',            @updateVisibility)
+            @listenTo(@parentView,          'selectchange',             @onSelectChange)
+            @listenTo(@colorPalette.tools,  'all',                      @onPaletteEdited)
 
         remove: ->
             @stopListening(@colorPalette.tools)

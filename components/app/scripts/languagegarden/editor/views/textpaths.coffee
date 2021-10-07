@@ -23,7 +23,7 @@
 
     settings                        = require('./../../settings')
 
-    {EditorCanvasLayers}            = require('./../../editor/constants')
+    {CanvasLayers}                  = require('./../../editor/constants')
 
 
 
@@ -474,7 +474,7 @@
                 return
             if not @tpObj?
                 return
-            @parentView.putElementToFrontAtLayer(@tpObj, EditorCanvasLayers.LETTERS)
+            @parentView.putElementToFrontAtLayer(@tpObj, CanvasLayers.LETTERS)
 
         updateLetters: () ->
             @tpObj.updateText(@getText())
@@ -623,7 +623,7 @@
             for letterObj in @getLetterObjs()
                 @parentView.putElementToFrontAtLayer(
                     letterObj,
-                    EditorCanvasLayers.LETTERS
+                    CanvasLayers.LETTERS
                 )
             return this
 

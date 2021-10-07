@@ -41,7 +41,7 @@
         MediumType
         PlacementType
         CanvasMode
-        EditorCanvasLayers
+        CanvasLayers
         ColorMode
     }                                       = require('./../constants')
 
@@ -162,7 +162,7 @@
 
             @backgroundEventsHammer(click, dblclick, drag, dragstart, dragend)
 
-            @putElementToFrontAtLayer(@backgroundObj, EditorCanvasLayers.BACKGROUND)
+            @putElementToFrontAtLayer(@backgroundObj, CanvasLayers.BACKGROUND)
 
         initializeBackgroundObject: =>
 
@@ -472,7 +472,7 @@
             addSVGElementClass(@selectionRectObj.node, 'selection-area')
             disableSelection(@selectionRectObj.node)
             @selectionRectObj.hide()
-            @putElementToFrontAtLayer(@selectionRectObj, EditorCanvasLayers.SELECTION_RECT)
+            @putElementToFrontAtLayer(@selectionRectObj, CanvasLayers.SELECTION_RECT)
 
         initializeEditorEl: =>
             @toggleModeClass()
