@@ -40,7 +40,7 @@
     {
         MediumType
         PlacementType
-        EditorCanvasMode
+        CanvasMode
         EditorCanvasLayers
         ColorMode
     }                                       = require('./../constants')
@@ -206,7 +206,7 @@
             super
 
         getNoOpModeConfig: ->
-            startMode: EditorCanvasMode.NOOP
+            startMode: CanvasMode.NOOP
             modeSpecs: []
 
         getModeConfig: -> @getNoOpModeConfig()
@@ -435,30 +435,30 @@
 
         getPlantEditorModeConfig: ->
 
-            startMode: EditorCanvasMode.MOVE
+            startMode: CanvasMode.MOVE
             modeSpecs: [
-                mode: EditorCanvasMode.MOVE
+                mode: CanvasMode.MOVE
                 behaviorClass: MoveBehavior
             ,
-                mode: EditorCanvasMode.COLOR
+                mode: CanvasMode.COLOR
                 behaviorClass: ColorBehavior
             ,
-                mode: EditorCanvasMode.STRETCH
+                mode: CanvasMode.STRETCH
                 behaviorClass: StretchBehavior
             ,
-                mode: EditorCanvasMode.SCALE
+                mode: CanvasMode.SCALE
                 behaviorClass: ScaleBehavior
             ,
-                mode: EditorCanvasMode.GROUP_SCALE
+                mode: CanvasMode.GROUP_SCALE
                 behaviorClass: GroupScaleBehavior
             ,
-                mode: EditorCanvasMode.ROTATE
+                mode: CanvasMode.ROTATE
                 behaviorClass: RotateBehavior
             ,
-                mode: EditorCanvasMode.EDIT
+                mode: CanvasMode.EDIT
                 behaviorClass: EditBehavior
             ,
-                mode: EditorCanvasMode.TEXT_EDIT
+                mode: CanvasMode.TEXT_EDIT
                 behaviorClass: TextEditBehavior
             ,
             ]
@@ -572,23 +572,23 @@
             if numOfSelections > 0
                 @colorPalette.set('colorMode', ColorMode.WORD)
 
-            if @mode == EditorCanvasMode.EDIT
+            if @mode == CanvasMode.EDIT
                 return
 
-            if @mode == EditorCanvasMode.COLOR
+            if @mode == CanvasMode.COLOR
                 return
 
             mode = @defaultMode
             if numOfSelections == 1
                 if numOfElemSelections == 1
                     if @getSelectedElements()[0].get('text').length == 1
-                        mode = useIfAvailable(EditorCanvasMode.SCALE)
+                        mode = useIfAvailable(CanvasMode.SCALE)
                     else
-                        mode = useIfAvailable(EditorCanvasMode.STRETCH)
+                        mode = useIfAvailable(CanvasMode.STRETCH)
                 else if numOfMediaSelections == 1
                     switch selectedMediaViews[0]?.model.get('type')
                         when MediumType.IMAGE
-                            mode = useIfAvailable(EditorCanvasMode.IMAGE_EDIT)
+                            mode = useIfAvailable(CanvasMode.IMAGE_EDIT)
             @setMode(mode)
             @selectionBBoxChange()
 
@@ -611,7 +611,7 @@
             @startEditing(elemModel)
 
         startEditing: (elemModel) =>
-            @setMode(EditorCanvasMode.EDIT, true)
+            @setMode(CanvasMode.EDIT, true)
             @insertView = new EditedElementView
                 paper: @paper
                 editor: this
@@ -622,13 +622,7 @@
 
         startTextEditing: (textView) =>
             textView.shouldEnterEditMode = true
-            @setMode(EditorCanvasMode.TEXT_EDIT, true)
-
-        startPlantToTextMode: (plantToTextModel) ->
-            @activePlantToTextObjectId = plantToTextModel.get('objectId')
-            @setMode(EditorCanvasMode.PLANT_TO_TEXT)
-
-        finishPlantToTextMode: -> @setDefaultMode()
+            @setMode(CanvasMode.TEXT_EDIT, true)
 
         getActivePlantToTextView: ->
             if not @activePlantToTextObjectId?

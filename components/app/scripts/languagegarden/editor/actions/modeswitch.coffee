@@ -2,7 +2,7 @@
 
     _                   = require('underscore')
     {Action}            = require('./base')
-    {EditorCanvasMode}  = require('./../constants')
+    {CanvasMode}        = require('./../constants')
 
 
     class ModeSwitchAction extends Action
@@ -46,50 +46,39 @@
             @canvasView.setMode(@mode)
             true
 
-        isToggled: => @isInMode()
-
-        isAvailable: => @canApplyToSelection()
-
-        canApplyToSelection: =>
+        isToggled:              => @isInMode()
+        isAvailable:            => @canApplyToSelection()
+        canApplyToSelection:    =>
 
         onModeChange: ->
             @triggerAvailableChange()
             @triggerToggledChange()
 
-        onSelectionChange: ->
-            @triggerAvailableChange()
+        onSelectionChange: -> @triggerAvailableChange()
 
 
     class SwitchToRotate extends ModeSwitchActionSingleMode
-        mode: EditorCanvasMode.ROTATE
-
-        canApplyToSelection: =>
-            @singleOneLetterWordSelected() or @multipleWordsNoMediaSelected()
+        mode: CanvasMode.ROTATE
+        canApplyToSelection: => @singleOneLetterWordSelected() or @multipleWordsNoMediaSelected()
 
 
     class SwitchToStretch extends ModeSwitchActionSingleMode
-        mode: EditorCanvasMode.STRETCH
-
+        mode: CanvasMode.STRETCH
         canApplyToSelection: => @singleMultiLetterWordSelected()
 
 
     class SwitchToScale extends ModeSwitchActionSingleMode
-        mode: EditorCanvasMode.SCALE
-
-        canApplyToSelection: =>
-            not @mediaSelected() and @canvasView.getSelectedElements().length == 1
+        mode: CanvasMode.SCALE
+        canApplyToSelection: => not @mediaSelected() and @canvasView.getSelectedElements().length == 1
 
 
     class SwitchToGroupScale extends ModeSwitchActionSingleMode
-        mode: EditorCanvasMode.GROUP_SCALE
-
-        canApplyToSelection: =>
-            not @mediaSelected() and @canvasView.getSelectedElements().length > 1
+        mode: CanvasMode.GROUP_SCALE
+        canApplyToSelection: => not @mediaSelected() and @canvasView.getSelectedElements().length > 1
 
 
     class SwitchToMove extends ModeSwitchActionSingleMode
-        mode: EditorCanvasMode.MOVE
-
+        mode: CanvasMode.MOVE
         canApplyToSelection: => @multipleWordsNoMediaSelected()
 
 

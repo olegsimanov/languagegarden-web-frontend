@@ -10,7 +10,7 @@
         EditorColorModeButton
         EditorDivToggleButton
     } = require('./../buttons')
-    {EditorCanvasMode}          = require('./../../constants')
+    {CanvasMode}                = require('./../../constants')
     {SplitColorTool}            = require('./../../models/palette')
 
     {BBox}                      = require('./../../math/bboxes')
@@ -164,7 +164,7 @@
         canEdit: => @paletteModel?.get('selectedTool')?.type == 'splitcolor'
 
         shouldShowEditButton: =>
-            @canEdit() and @getEditor().mode == EditorCanvasMode.COLOR
+            @canEdit() and @getEditor().mode == CanvasMode.COLOR
 
         toggleVisibility: (show, $el=@$el) ->
             show = @hidden if not show?
@@ -219,7 +219,7 @@
             super
 
             @model.set('selected', true)
-            @editor.setMode(EditorCanvasMode.COLOR)
+            @editor.setMode(CanvasMode.COLOR)
 
 
     RemoveColorView = class extends PaletteColorView

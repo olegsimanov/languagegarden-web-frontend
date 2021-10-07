@@ -30,14 +30,14 @@
         @LETTER_AREAS           = 'letterAreas'
 
 
-    visibilityOpacityMap = {}
+    visibilityOpacityMap                            = {}
     visibilityOpacityMap[VisibilityType.VISIBLE]    = 1.0
     visibilityOpacityMap[VisibilityType.HIDDEN]     = 0.0
     visibilityOpacityMap[VisibilityType.FADED]      = 0.5
 
 
-    markedOpacityMap = {}
-    markedOpacityMap[true] = 1.0
+    markedOpacityMap        = {}
+    markedOpacityMap[true]  = 1.0
     markedOpacityMap[false] = 0.25
 
     ColorMode =
@@ -45,7 +45,7 @@
         WORD:       'word'
         LETTER:     'letter'
 
-    class EditorCanvasMode
+    class CanvasMode
 
         @MOVE               = 'move'
         @STRETCH            = 'stretch'
@@ -59,7 +59,7 @@
     module.exports =
 
         ColorMode:          ColorMode
-        EditorCanvasMode:   EditorCanvasMode
+        CanvasMode:         CanvasMode
         EditorCanvasLayers: EditorCanvasLayers
         MediumType:         MediumType
         VisibilityType:     VisibilityType

@@ -14,7 +14,7 @@
         SaveAndGoToNavigator
         DiscardAndGoToNavigator
     }                           = require('./../../actions/navigation')
-    {EditorCanvasMode}          = require('./../../constants')
+    {CanvasMode}                = require('./../../constants')
     settings                    = require('./../../../settings')
 
     class PaletteToolbarNavButton extends ToolbarNavButton
@@ -75,8 +75,8 @@
         ]
 
         onActiveChanged: ->
-            canvasView = @controller.canvasView
-            mode = if @active then EditorCanvasMode.COLOR else canvasView.getDefaultMode()
+            canvasView  = @controller.canvasView
+            mode        = if @active then CanvasMode.COLOR else canvasView.getDefaultMode()
             canvasView.setMode(mode)
 
 

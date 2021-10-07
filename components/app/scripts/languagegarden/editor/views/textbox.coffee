@@ -11,7 +11,7 @@
 
     {
         MediumType,
-        EditorCanvasMode,
+        CanvasMode,
         PlacementType
     }                           = require('./../constants')
 
@@ -160,7 +160,7 @@
 
         initialize: () ->
             super
-            @mode = EditorCanvasMode.MOVE
+            @mode = CanvasMode.MOVE
 
         getMediumViewClass: (model) ->
             switch model.get('type')
@@ -183,14 +183,6 @@
             @toggleModeClass(@mode, true)
 
         setDefaultMode: ->
-
-        startPlantToTextMode: (plantToTextModel) ->
-            @activePlantToTextObjectId = plantToTextModel.get('objectId')
-            @setMode(EditorCanvasMode.PLANT_TO_TEXT)
-
-        finishPlantToTextMode: ->
-            delete @activePlantToTextObjectId
-            @setDefaultMode()
 
         getActivePlantToTextView: ->
             if not @activePlantToTextObjectId?
