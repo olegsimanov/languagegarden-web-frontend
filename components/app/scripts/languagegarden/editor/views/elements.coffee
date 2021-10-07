@@ -101,35 +101,26 @@
                 helper()
                 super
 
-        onClear: ->
-            @textDirty = true
-
-        onTextDirectionChange: ->
-            @reCreateTextPath()
-
-        onMetricsCacheInvalidate: ->
-            @reCreateTextPath()
-
-        getStartPoint:  -> @model.get('startPoint')
-        getEndPoint:    -> @model.get('endPoint')
-
-        getControlPoints: -> @model.get('controlPoints')
-        getPoints: -> @model.getPoints()
-
-        getPath: -> @model.path
-        getText: -> @model.get('text')
-        getLetters: -> @model.get('text').split('')
-        getNextLetter: -> @model.get('nextLetter') or null
-        getPreviousLetter: -> @model.get('previousLetter') or null
-        getFontSize: -> Math.round(@model.get('fontSize'))
-        getTransformMatrix: -> @model.get('transformMatrix')
-        getCanvasScale: -> @parentView?.getCanvasScale() or 1.0
-        getTextDirection: -> @parentView?.getTextDirection?() or 'ltr'
-        isTextRTL: -> @getTextDirection() == 'rtl'
-        isDebugMode: -> false
-        isDraggedNow: -> false
-        isEditedNow: -> false
-
+        onClear:                    -> @textDirty = true
+        onTextDirectionChange:      -> @reCreateTextPath()
+        onMetricsCacheInvalidate:   -> @reCreateTextPath()
+        getStartPoint:              -> @model.get('startPoint')
+        getEndPoint:                -> @model.get('endPoint')
+        getControlPoints:           -> @model.get('controlPoints')
+        getPoints:                  -> @model.getPoints()
+        getPath:                    -> @model.path
+        getText:                    -> @model.get('text')
+        getLetters:                 -> @model.get('text').split('')
+        getNextLetter:              -> @model.get('nextLetter') or null
+        getPreviousLetter:          -> @model.get('previousLetter') or null
+        getFontSize:                -> Math.round(@model.get('fontSize'))
+        getTransformMatrix:         -> @model.get('transformMatrix')
+        getCanvasScale:             -> @parentView?.getCanvasScale() or 1.0
+        getTextDirection:           -> @parentView?.getTextDirection?() or 'ltr'
+        isTextRTL:                  -> @getTextDirection() == 'rtl'
+        isDebugMode:                -> false
+        isDraggedNow:               -> false
+        isEditedNow:                -> false
         pathToScreenCoordinates: (x, y) -> Point.applyMatrixToXY(x, y, @model.get('transformMatrix'))
 
         screenToPathCoordinates: (x, y) ->
@@ -185,21 +176,17 @@
                 lengths.push(@letterMetrics.getLength(ml, fontSize))
             lengths
 
-        getLettersLengths: -> @getGenericLettersLengths(@getLetters())
-
+        getLettersLengths:          -> @getGenericLettersLengths(@getLetters())
         getGenericTextLettersLength: (letters, fontSize) -> sum(@getGenericLettersLengths(letters, fontSize))
-
-        getSpaceLength: -> @textPath?.getSpaceLength() or 0
+        getSpaceLength:             -> @textPath?.getSpaceLength() or 0
 
         getMetricsLetter: (letter, options) ->
             options ?= {}
             options.isTextRTL = @isTextRTL()
             wrapLetterWithZWJ(letter, options)
 
-        getMaxLetterHeight: -> @getFontSize() * settings.fontSizeToLetterHeightMultiplier
-
-        getLetterStartPathPositions: -> @textPath?.getLetterStartPathPositions() or []
-
+        getMaxLetterHeight:             -> @getFontSize() * settings.fontSizeToLetterHeightMultiplier
+        getLetterStartPathPositions:    -> @textPath?.getLetterStartPathPositions() or []
         getLetterPathPosition: (letterIndex, letterLengthFactor) -> @textPath?.getLetterPathPosition(letterIndex, letterLengthFactor) or 0
         getLetterStartPathPosition: (letterIndex) -> @getLetterPathPosition(letterIndex, 0.0)
         getLetterMiddlePathPosition: (letterIndex) -> @getLetterPathPosition(letterIndex, 0.5)
@@ -276,15 +263,11 @@
                         break
             info
 
-        intersects: (bbox) -> @getIntersectionInfo(bbox).intersects
-
-        applyTransformMatrix: (matrix) -> @textPath?.applyTransformMatrix(matrix)
-
-        disableSelection: -> @textPath?.disableSelection()
-
+        intersects: (bbox)              -> @getIntersectionInfo(bbox).intersects
+        applyTransformMatrix: (matrix)  -> @textPath?.applyTransformMatrix(matrix)
+        disableSelection:               -> @textPath?.disableSelection()
         putElementToFrontAtLayer: (svgElem, layerType) -> @parentView.putElementToFrontAtLayer(svgElem, layerType)
-
-        putTextPathToFront: -> @textPath?.toFront()
+        putTextPathToFront:             -> @textPath?.toFront()
 
         putLetterAreaToFront: (letterArea) ->
             if not letterArea?
@@ -341,8 +324,7 @@
                 @_letterAreaInfos = @_getLetterAreaInfos()
             @_letterAreaInfos
 
-        createLetterAreas: ->
-            @updateLetterAreas()
+        createLetterAreas: -> @updateLetterAreas()
 
         removeLetterAreas: ->
             if not @letterAreas? then return
@@ -408,8 +390,7 @@
             _.all @getLetterAreaInfos(), (laInfo) ->
                 containerBBox.containsPoints(laInfo.pathPoints)
 
-        getLetterAreaPoints: ->
-            _.flatten(_.pluck(@getLetterAreaInfos(), 'pathPoints'))
+        getLetterAreaPoints: -> _.flatten(_.pluck(@getLetterAreaInfos(), 'pathPoints'))
 
         setIsOutOfBounds: (value) ->
             if @isOutOfBounds != value
@@ -531,8 +512,7 @@
                 letterArea, click, dblclick, drag, dragstart, dragend
             )
 
-        unbindLetterArea: (letterArea) ->
-            #TODO: unbind
+        unbindLetterArea: (letterArea) -> #TODO: unbind
 
         render: =>
             text = @getText() or ''
@@ -586,8 +566,7 @@
                 height: height + heightMargin * 2
             @_clipRect
 
-        fadeOut: (delay=250) =>
-            @tpObj?.animate({opacity: 0}, 250)
+        fadeOut: (delay=250) => @tpObj?.animate({opacity: 0}, 250)
 
         setCoreOpacity: (opacity) ->
             if not @textPath?
@@ -695,9 +674,8 @@
             delete @colorPalette
             super
 
-        onSelectChange: -> @forceRepaint() if not @isSelected()
-
-        onPaletteEdited: -> @updateTextPath()
+        onSelectChange:     -> @forceRepaint() if not @isSelected()
+        onPaletteEdited:    -> @updateTextPath()
 
         addLetterAreasClass: (cssClass) =>
             for letterArea in @letterAreas
@@ -1001,6 +979,5 @@
 
 
     module.exports =
-        ElementView: ElementView
-        EditorElementView: EditorElementView
-        EditedElementView: EditedElementView
+        EditorElementView:  EditorElementView
+        EditedElementView:  EditedElementView
