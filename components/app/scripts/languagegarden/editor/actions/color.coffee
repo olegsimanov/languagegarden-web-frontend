@@ -1,7 +1,7 @@
     'use strict'
 
-    _ = require('underscore')
-    {Action} = require('./base')
+    _           = require('underscore')
+    {Action}    = require('./base')
 
 
     class WordActionBase extends Action
@@ -25,8 +25,8 @@
             @perform(model, letter_index)
             @onPerformEnd()
 
-        letterPerform: => console.log('WordActionBase letter perform')
-        wordPerform: => console.log('WordActionBase word perform')
+        letterPerform:  => console.log('WordActionBase letter perform')
+        wordPerform:    => console.log('WordActionBase word perform')
 
     class ColorBaseAction extends WordActionBase
 
@@ -63,6 +63,6 @@
             true
 
     module.exports =
-        ColorAction: ColorAction
-        RemoveColorAction: RemoveColorAction
-        SplitColorAction: SplitColorAction
+        ColorAction:        ColorAction
+        RemoveColorAction:  RemoveColorAction
+        SplitColorAction:   SplitColorAction

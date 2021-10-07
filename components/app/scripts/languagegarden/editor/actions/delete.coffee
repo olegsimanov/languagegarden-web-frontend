@@ -4,8 +4,9 @@
 
 
     class DeleteAction extends Action
-        id: 'delete'
-        fadeOutDelay: 250
+
+        id:             'delete'
+        fadeOutDelay:   250
 
         initialize: (options) ->
             super
@@ -29,9 +30,7 @@
                 @model.removeMedium(view.model)
             true
 
-        isAvailable: ->
-            (@canvasView.getSelectedElements().length > 0 or
-             @canvasView.getSelectedMedia().length > 0)
+        isAvailable: -> (@canvasView.getSelectedElements().length > 0 or @canvasView.getSelectedMedia().length > 0)
 
 
     module.exports =
