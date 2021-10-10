@@ -12,6 +12,7 @@
 
     require('../../iefix')
 
+    {EventsAwareClass}      = require('./events')
     editorColors            = require('./colors')
 
     {EditorPalette}         = require('./models/palette')
@@ -19,13 +20,12 @@
     {UnitState, LessonData} = require('./models/plants')
 
     {EditorPageView}        = require('./views/page')
-    {EditorCanvasView}      = require('./views/canvas')
+    {CanvasView}            = require('./views/canvas')
     {EditorTextBoxView}     = require('./views/textbox')
     {BuilderToolbar}        = require('./views/toolbars/builder')
     {LetterMetrics}         = require('./views/svg/svgmetrics')
 
     settings                = require('./../settings')
-    {EventsAwareClass}      = require('./../editor/events')
 
     class PlantEditorController extends EventsAwareClass
 
@@ -35,7 +35,7 @@
             @model              = new UnitState()
             @letterMetrics      = new LetterMetrics()
 
-            @canvasView         = new EditorCanvasView
+            @canvasView         = new CanvasView
                                         controller:     @
                                         model:          @model
                                         dataModel:      @dataModel

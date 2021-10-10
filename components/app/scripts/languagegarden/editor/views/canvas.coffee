@@ -1,22 +1,24 @@
     'use strict'
 
-    Hammer = require('hammerjs')
     require('raphael')
-    _ = require('underscore')
-    $ = require('jquery')
+
+    Hammer                                  = require('hammerjs')
+    _                                       = require('underscore')
+    $                                       = require('jquery')
 
     {BaseView}                              = require('./base')
-    {EditorElementView, EditedElementView}  = require('./elements')
-    {ElementView}                           = require('./elements')
+    {
+        EditorElementView,
+        EditedElementView}                  = require('./elements')
 
     {EditorDummyMediumView}                 = require('./media/base')
-    {DummyMediumView}                       = require('./media/base')
 
     {
         disableSelection
         addSVGElementClass
     }                                       = require('./domutils')
 
+    {LetterMetrics}                         = require('./svg/svgmetrics')
 
     {Settings}                              = require('./../models/settings')
     {PlantElement}                          = require('./../models/elements')
@@ -45,8 +47,6 @@
         ColorMode
     }                                       = require('./../constants')
 
-    {LetterMetrics}                         = require('./svg/svgmetrics')
-
     {isDarkColor}                           = require('./../utils')
 
     {BBox}                                  = require('./../math/bboxes')
@@ -55,18 +55,20 @@
 
     class CanvasView extends BaseView
 
-        className: 'canvas'
+        className: "canvas editor"                          # used by the Backbone.View._ensure function; ensures that the View has a DOM element to render into.
 
         initialize: (options) ->
+
             super
             @elementViews   = {}
             @mediaViews     = {}
+            @insertView     = null
             @colorPalette   = options.colorPalette
 
             @setPropertyFromOptions(options, 'dataModel', required: true)
 
-            canvasDimensions = @getCanvasSetupDimensions()
-            @paper          = Raphael(@$el.get(0), canvasDimensions[0], canvasDimensions[1])
+            canvasDimensions    = @getCanvasSetupDimensions()
+            @paper              = Raphael(@$el.get(0), canvasDimensions[0], canvasDimensions[1])
 
             @updateTextDirectionFromModel()
             @$el
@@ -76,30 +78,45 @@
                 .attr('unselectable', 'on')
 
             @$canvasEl      = $(@paper.canvas)
-            @settings       = options.settings or Settings.getSettings(@settingsKey())
+            @settings       = options.settings or Settings.getSettings("editor-plant-view")
             @letterMetrics  = options.letterMetrics or new LetterMetrics()
 
-            @listenTo(@model.elements, 'add',           @onElementAdd)
-            @listenTo(@model.elements, 'remove',        @onElementRemove)
-            @listenTo(@model.elements, 'reset',         @onElementsReset)
+            @dragged        = false
+            @dragging       = false
+            @bgDragging     = false
 
-            @listenTo(@model.media, 'add',              @onMediumAdd)
-            @listenTo(@model.media, 'remove',           @onMediumRemove)
-            @listenTo(@model.media, 'reset',            @onMediaReset)
+
+            @listenTo(@model.elements,  'add',          @onElementAdd)
+            @listenTo(@model.elements,  'remove',       @onElementRemove)
+            @listenTo(@model.elements,  'reset',        @onElementsReset)
+
+            @listenTo(@model.media,     'add',          @onMediumAdd)
+            @listenTo(@model.media,     'remove',       @onMediumRemove)
+            @listenTo(@model.media,     'reset',        @onMediaReset)
 
             @listenTo(@model, 'change:bgColor',         @onBgColorChange)
             @listenTo(@model, 'change:textDirection',   @updateTextDirectionFromModel)
+
+            @listenTo(this,     'selectchange',         @onSelectChange)
+            @listenTo(this,     'change:dragging',      (s, v) => @toggleDraggingClass(v))
+            @listenTo(this,     'change:bgDragging',    (s, v) => @toggleBgDraggingClass(v))
+            @listenTo(this,     'change:mode',          @onModeChange)
 
             @initializeModes()
             @initializeLayers()
             @initializeBackgroundObject()
             @initializeBackgroundEvents()
+            @initializeSelectionRect()
+            @initializeEditorEl()
 
-        onParentViewBind: ->
-            eventNames = ("change:pageContainer#{suf}" for suf in ['Transform', 'Scale', 'ShiftX', 'ShiftY'])
-            @forwardEventsFrom(@parentView, eventNames)
+        initializeModes: ->
 
-        settingsKey: -> 'plant-view'
+            cfg             = @getModeConfig()
+            @modeBehaviors  = {}
+            @mode           = cfg.startMode
+            @defaultMode    = cfg.defaultMode or cfg.startMode
+            for modeSpec in cfg.modeSpecs
+                @addModeBehavior(modeSpec.mode, modeSpec.behaviorClass)
 
         initializeLayers: ->
 
@@ -121,20 +138,22 @@
             @layerGuards.selectionTooltip   = createLayerGuard('selection-tooltip')
             @layerGuards.menu               = createLayerGuard('menu')
 
-        backgroundEventsHammer: (click, dblclick, drag, dragstart, dragend) ->
+        initializeBackgroundObject: =>
 
-            hammerClick             = (e) => click(e, e.center.x, e.center.y)
-            hammerDblClick          = (e) => dblclick(e, e.center.x, e.center.y)
-            hammerDrag              = (e) => drag(e, e.deltaX, e.deltaY, e.center.x, e.center.y)
-            hammerDragstart         = (e) => dragstart(e, e.center.x, e.center.y)
+            @backgroundObj = @paper.rect(0, 0, 1, 1)
+            disableSelection(@backgroundObj.node)
+            addSVGElementClass(@backgroundObj.node, 'background-area')
 
-            Hammer(@backgroundObj.node)
-                .on('tap',          hammerClick)
-                .on('doubletap',    hammerDblClick)
-                .on('hold',         hammerDblClick)
-                .on('pan',          hammerDrag)
-                .on('panstart',     hammerDragstart)
-                .on('panend',       dragend)
+            @backgroundObj
+                .attr
+                    width:  @$canvasEl.attr("width")
+                    height: @$canvasEl.attr("height")
+                .toBack()
+            @backgroundObj.attr
+                fill: 'rgba(0,0,0,0)'
+                stroke: '#000'
+                'stroke-opacity': 0
+                'stroke-width': 0
 
         initializeBackgroundEvents: ->
 
@@ -160,311 +179,8 @@
                 @setDragging(false)
                 @getModeBehaviorHandler('bgdragend')(e)
 
-            @backgroundEventsHammer(click, dblclick, drag, dragstart, dragend)
-
+            @initializeBackgroundEventsHammer(click, dblclick, drag, dragstart, dragend)
             @putElementToFrontAtLayer(@backgroundObj, CanvasLayers.BACKGROUND)
-
-        initializeBackgroundObject: =>
-
-            @backgroundObj = @paper.rect(0, 0, 1, 1)
-            disableSelection(@backgroundObj.node)
-            addSVGElementClass(@backgroundObj.node, 'background-area')
-
-            @backgroundObj
-                .attr
-                    width:  @$canvasEl.attr("width")
-                    height: @$canvasEl.attr("height")
-                .toBack()
-            @backgroundObj.attr
-                fill: 'rgba(0,0,0,0)'
-                stroke: '#000'
-                'stroke-opacity': 0
-                'stroke-width': 0
-
-        initializeModes: ->
-
-            cfg = @getModeConfig()
-            @modeBehaviors = {}
-            @mode = cfg.startMode
-            @defaultMode = cfg.defaultMode or cfg.startMode
-            for modeSpec in cfg.modeSpecs
-                @addModeBehavior(modeSpec.mode, modeSpec.behaviorClass)
-
-        remove: =>
-
-            @removeAllElementViews()
-            @removeAllMediaViews()
-            @backgroundObj.remove()
-            @letterMetrics.remove()
-            @letterMetrics = null
-            @paper.clear()
-            @$el.empty()
-            $(window).off('load', @onLoad)
-            if @model?
-                @stopListening(@model.elements)
-                @stopListening(@model.media)
-            super
-
-        getNoOpModeConfig: ->
-            startMode: CanvasMode.NOOP
-            modeSpecs: []
-
-        getModeConfig: -> @getNoOpModeConfig()
-
-        addModeBehavior: (mode, behaviorClass) =>
-            @modeBehaviors[mode] = new behaviorClass
-                controller: @controller
-                parentView: this
-
-        getModeBehaviorHandler: (eventName, mode=@mode) => @modeBehaviors[mode]?.handlers[eventName]
-
-        isModeAvailable: (mode)     -> @modeBehaviors[mode]?
-        getDefaultMode:             -> @defaultMode
-        setDefaultMode:             -> @setMode(@defaultMode)
-
-        toggleModeClass: (mode=@mode, flag=true) ->
-
-        setMode: (mode, reload=false) =>
-            if not @isModeAvailable(mode)
-                return
-            oldMode = @mode
-            if not reload and oldMode == mode
-                resetHandler = @getModeBehaviorHandler('modereset', mode)
-                resetHandler(mode) if resetHandler?
-                return
-            leaveHandler = @getModeBehaviorHandler('modeleave', oldMode)
-            enterHandler = @getModeBehaviorHandler('modeenter', mode)
-            leaveHandler(mode) if leaveHandler?
-            @toggleModeClass(@mode, false)
-            @mode = mode
-            @toggleModeClass(@mode, true)
-            enterHandler(oldMode) if enterHandler?
-            @mode = oldMode
-            @setField('mode', mode)
-
-
-
-        updateBgColor:                              -> @$canvasEl.css('backgroundColor', @model.get('bgColor'))
-
-        putElementToFrontAtLayer: (element, layer) ->
-            layerGuard = @layerGuards[layer]
-            element.insertBefore(layerGuard)
-
-        getChildrenContainerElement:                -> @$el.get(0)
-        getCanvasBBox: (absolute)                   => BBox.fromHtmlDOM(@$el, absolute)
-        getCanvasSetupDimensions:                   -> [@dataModel.get('canvasWidth'), @dataModel.get('canvasHeight')]
-        getCanvasScale:                             -> @parentView.getPageScale()
-
-        transformToCanvasCoords: (x, y)             -> @parentView.transformToCanvasCoords(x, y)
-        transformToCanvasCoordOffsets: (dx, dy)     -> @parentView.transformToCanvasCoordOffsets(dx, dy)
-        transformToCanvasBBox: (bbox)               -> @parentView.transformToCanvasBBox(bbox)
-        transformCanvasToContainerCoords: (x, y)    -> @parentView.transformCanvasToContainerCoords(x, y)
-
-        setField: (name, value, options) =>
-            oldValue = this[name]
-            this[name] = value
-            if oldValue != value
-                @trigger("change", this)
-                @trigger("change:#{name}", this, value, oldValue)
-
-        setDragging: (dragging)         -> @setField('dragging', dragging)
-        setBgDragging: (bgDragging)     -> @setField('bgDragging', bgDragging)
-
-        addCanvasElement: (options) ->
-            options = _.clone(options)
-
-            if not options.fontSize?
-                options.fontSize = @settings.get('fontSize')
-
-            if not options.endPoint?
-                len = @letterMetrics.getTextLength(
-                    options.text, options.fontSize)
-                options.endPoint = Point.fromValue(options.startPoint)
-                    .add(new Point(len, 0))
-
-            if not options.controlPoints?
-                options.controlPoints = [
-                    Point.getPointBetween(
-                        Point.fromValue(options.startPoint),
-                        Point.fromValue(options.endPoint))
-                ]
-            @model.addElement(options)
-
-        getElementViewConstructor: (model) -> (options) => new ElementView(options)
-
-        getElementViewConstructorOptions: (model) ->
-            model:      model
-            parentView: this
-            paper:      @paper
-
-        addElementView: (model) ->
-            constructor = @getElementViewConstructor(model)
-            options = @getElementViewConstructorOptions(model)
-            view = constructor(options)
-            @elementViews["#{model.cid}"] = view
-            @listenTo(view, 'selectchange', => @trigger('selectchange', view))
-            view.render()
-
-        removeElementView: (model) ->
-            view = @elementViews["#{model.cid}"]
-            @stopListening(view)
-            view.remove()
-            delete @elementViews["#{model.cid}"]
-
-        removeAllElementViews: ->
-            for cid, view of @elementViews
-                @stopListening(view)
-                view.remove()
-            @elementViews = {}
-
-        reloadAllElementViews: ->
-            @removeAllElementViews()
-            @model.elements.each (model) => @addElementView(model)
-
-        getMediumViewClass: (model) ->
-            if model.get('placementType') == PlacementType.HIDDEN
-                null
-            else
-                null
-
-        getMediumViewConstructor: (model) ->
-            viewCls = @getMediumViewClass(model) or DummyMediumView
-            (options) -> new viewCls(options)
-
-        getMediumViewConstructorOptions: (model) ->
-            model: model
-            parentView: this
-            paper: @paper
-            containerEl: @el
-
-        addMediumView: (model) ->
-            constructor = @getMediumViewConstructor(model)
-            options = @getMediumViewConstructorOptions(model)
-            view = constructor(options)
-            @mediaViews["#{model.cid}"] = view
-            @listenTo(view, 'selectchange', => @trigger('selectchange', view))
-            @listenTo(view, 'playbackchange', @onMediumViewPlaybackChange)
-            view.render()
-
-        removeMediumView: (model) ->
-            view = @mediaViews["#{model.cid}"]
-            @stopListening(view)
-            view.remove()
-            delete @mediaViews["#{model.cid}"]
-
-        removeAllMediaViews: ->
-            for cid, view of @mediaViews
-                @stopListening(view)
-                view.remove()
-            @mediaViews = {}
-
-        reloadAllMediaViews: ->
-            @removeAllMediaViews()
-            @model.media.each (model) => @addMediumView(model)
-
-        onElementAdd: (model, collection, options)      -> @addElementView(model)
-        onElementRemove: (model, collection, options)   -> @removeElementView(model)
-        onElementsReset: (collection, options)          -> @reloadAllElementViews()
-        onMediumAdd: (model, collection, options)       -> @addMediumView(model)
-        onMediumRemove: (model, collection, options)    -> @removeMediumView(model)
-        onMediaReset: (collection, options)             -> @reloadAllMediaViews()
-        onBgColorChange:                                -> @updateBgColor()
-        areViewsSynced: (viewsDict, collection)         -> _.isEqual(_.keys(viewsDict), _.pluck(collection.models, 'cid'))
-        getElementViews:                                => view for name, view of @elementViews
-
-        getMediaViews: (mediaTypes) =>
-            views = (view for name, view of @mediaViews)
-            if mediaTypes?
-                mediaTypes = [mediaTypes] if _.isString(mediaTypes)
-                views = _.filter views, (v) ->
-                    v?.model?.get('type') in mediaTypes
-            views
-
-        syncElementViews: ->
-            if @areViewsSynced(@elementViews, @model.elements)
-                for own name, view of @elementViews
-                    view.render()
-            else
-                @reloadAllElementViews()
-
-        syncMediaViews: ->
-            if @areViewsSynced(@mediaViews, @model.media)
-                for own name, view of @mediaViews
-                    view.render()
-            else
-                @reloadAllMediaViews()
-
-        render: =>
-            @updateBgColor()
-            @syncElementViews()
-            @syncMediaViews()
-            this
-
-        getTextDirection:       -> @dataModel.get('textDirection') or 'ltr'
-        isTextRTL:              -> @getTextDirection() == 'rtl'
-
-        updateTextDirectionFromModel: ->
-
-            canvasEl = @paper.canvas
-
-            if @isTextRTL()
-                canvasEl.setAttribute('direction', 'rtl')
-                canvasEl.setAttribute('unicode-bidi', 'bidi-override')
-                canvasEl.setAttribute('writing-mode', 'rl')
-
-
-    class EditorCanvasView extends CanvasView
-
-        className: "#{CanvasView::className} editor"
-
-        initialize: (options) ->
-            super
-            @insertView = null
-
-            @dragged = false
-            @dragging = false
-            @bgDragging = false
-
-            @listenTo(this, 'selectchange',         @onSelectChange)
-            @listenTo(this, 'change:dragging',      (s, v) => @toggleDraggingClass(v))
-            @listenTo(this, 'change:bgDragging',    (s, v) => @toggleBgDraggingClass(v))
-            @listenTo(this, 'change:mode',          @onModeChange)
-
-            @initializeSelectionRect()
-            @initializeEditorEl()
-
-        getPlantEditorModeConfig: ->
-
-            startMode: CanvasMode.MOVE
-            modeSpecs: [
-                mode: CanvasMode.MOVE
-                behaviorClass: MoveBehavior
-            ,
-                mode: CanvasMode.COLOR
-                behaviorClass: ColorBehavior
-            ,
-                mode: CanvasMode.STRETCH
-                behaviorClass: StretchBehavior
-            ,
-                mode: CanvasMode.SCALE
-                behaviorClass: ScaleBehavior
-            ,
-                mode: CanvasMode.GROUP_SCALE
-                behaviorClass: GroupScaleBehavior
-            ,
-                mode: CanvasMode.ROTATE
-                behaviorClass: RotateBehavior
-            ,
-                mode: CanvasMode.EDIT
-                behaviorClass: EditBehavior
-            ,
-                mode: CanvasMode.TEXT_EDIT
-                behaviorClass: TextEditBehavior
-            ,
-            ]
-
-        getModeConfig:  -> @getPlantEditorModeConfig()
-        settingsKey:    -> "editor-#{super}"
 
         initializeSelectionRect: =>
             # initial Raphael objects
@@ -479,79 +195,46 @@
             @toggleDraggingClass(false)
             @toggleBgDraggingClass(false)
 
-        remove: =>
-            @selectionRectObj.remove()
-            @stopListening(this)
-            @stopListening(@model)
-            super
 
-        getPaletteToolAction: (toolModel) =>
-            toolModel ?= @colorPalette.get('selectedTool')
-            switch toolModel.type
-                when 'color' then actionCls = ColorAction
-                when 'splitcolor' then actionCls = SplitColorAction
-                when 'removecolor' then actionCls = RemoveColorAction
+        initializeBackgroundEventsHammer: (click, dblclick, drag, dragstart, dragend) ->
 
-            if actionCls?
-                new actionCls
-                    controller: @controller
-                    toolModel: toolModel
+            hammerClick             = (e) => click(e, e.center.x, e.center.y)
+            hammerDblClick          = (e) => dblclick(e, e.center.x, e.center.y)
+            hammerDrag              = (e) => drag(e, e.deltaX, e.deltaY, e.center.x, e.center.y)
+            hammerDragstart         = (e) => dragstart(e, e.center.x, e.center.y)
 
-        getCaretColor: (color) =>
-            color ?= @model.get('bgColor')
-            if isDarkColor(color) then '#000000' else '#FFFFFF'
+            Hammer(@backgroundObj.node)
+                .on('tap',          hammerClick)
+                .on('doubletap',    hammerDblClick)
+                .on('hold',         hammerDblClick)
+                .on('pan',          hammerDrag)
+                .on('panstart',     hammerDragstart)
+                .on('panend',       dragend)
 
-        toggleModeClass: (mode=@mode, flag=true) => @$el.toggleClass("#{mode.replace(/\s/g,'-')}-mode", flag)
-        toggleDraggingClass: (flag=true) => @$el.toggleClass("in-dragging", flag)
-        toggleBgDraggingClass: (flag=true) => @$el.toggleClass("in-bg-dragging", flag)
-        setDragging: (dragging) => @setField('dragging', dragging)
-        setBgDragging: (bgDragging) => @setField('bgDragging', bgDragging)
+        ##########################################################################################################
+        #                                        api:reaction to events
+        ##########################################################################################################
 
-        getElementViewConstructor: (model) -> (options) -> new EditorElementView(options)
-        getElementViewConstructorOptions: (model) ->
-            model: model
-            parentView: this
-            editor: this
-            paper: @paper
 
-        removeElementView: (model) ->
-            view = @elementViews["#{model.cid}"]
-            wasSelected = view.isSelected()
-            super(model)
-            if wasSelected then @selectChange()
+        onElementAdd: (model, collection, options)      -> @addElementView(model)
+        onElementRemove: (model, collection, options)   -> @removeElementView(model)
+        onElementsReset: (collection, options)          -> @reloadAllElementViews()
 
-        getMediumViewClass: (model) ->
-            if model.get('placementType') == PlacementType.HIDDEN
-                null
-            else
-                super
-        getMediumViewConstructor: (model) ->
-            viewCls = @getMediumViewClass(model) or EditorDummyMediumView
-            (options) -> new viewCls(options)
+        onMediumAdd: (model, collection, options)       -> @addMediumView(model)
+        onMediumRemove: (model, collection, options)    -> @removeMediumView(model)
+        onMediaReset: (collection, options)             -> @reloadAllMediaViews()
 
-        getMediumViewConstructorOptions: (model) ->
-            options = super
-            options.editor = this
-            options
-
-        removeMediumView: (model) ->
-            view = @mediaViews["#{model.cid}"]
-            wasSelected = view.isSelected()
-            super(model)
-            if wasSelected then @selectChange()
-
-        onModeChange: =>
-
-        restoreDefaultMode: =>
-            @deselectAll()
-            @setDefaultMode()
+        onBgColorChange:                                -> @updateBgColor()
+        onParentViewBind:                               -> @forwardEventsFrom(@parentView, ("change:pageContainer#{suf}" for suf in ['Transform', 'Scale', 'ShiftX', 'ShiftY']))
+        onModeChange:                                   =>
 
         onSelectChange: =>
-            $el = $(@el)
-            numOfElemSelections = @getSelectedElements().length
-            selectedMediaViews = @getSelectedMediaViews()
-            numOfMediaSelections = selectedMediaViews.length
-            numOfSelections = @getSelectedViews().length
+
+            $el                     = $(@el)
+            numOfElemSelections     = @getSelectedElements().length
+            selectedMediaViews      = @getSelectedMediaViews()
+            numOfMediaSelections    = selectedMediaViews.length
+            numOfSelections         = @getSelectedViews().length
 
             useIfAvailable = (mode) =>
                 if @isModeAvailable(mode)
@@ -592,50 +275,218 @@
             @setMode(mode)
             @selectionBBoxChange()
 
-        onMediumViewPlaybackChange: (player, view) =>
-            if view? and view.editor == this and view.isSelected()
-                @trigger('selectionplaybackchange', player, view)
 
-        startInserting: (p) =>
-            insertModel = new PlantElement
-                startPoint: p
-                text: ''
-                fontSize: @settings.get('fontSize')
-            @editElementModelPosition = null
-            @startEditing(insertModel)
 
-        startUpdating: (elemModel) =>
-            @model.stopTrackingChanges()
-            @editElementModelPosition = @model.elements.indexOf(elemModel)
-            @model.removeElement(elemModel)
-            @startEditing(elemModel)
+        ##########################################################################################################
+        #                                           api:mode
+        ##########################################################################################################
 
-        startEditing: (elemModel) =>
-            @setMode(CanvasMode.EDIT, true)
-            @insertView = new EditedElementView
-                paper: @paper
-                editor: this
-                model: elemModel
-            @insertView.render()
+        getModeConfig:  ->
 
-        finishEditing: (options) => @setDefaultMode()
+            startMode: CanvasMode.MOVE
+            modeSpecs: [
+                mode:           CanvasMode.MOVE
+                behaviorClass:  MoveBehavior
+            ,
+                mode:           CanvasMode.COLOR
+                behaviorClass:  ColorBehavior
+            ,
+                mode:           CanvasMode.STRETCH
+                behaviorClass:  StretchBehavior
+            ,
+                mode:           CanvasMode.SCALE
+                behaviorClass:  ScaleBehavior
+            ,
+                mode:           CanvasMode.GROUP_SCALE
+                behaviorClass:  GroupScaleBehavior
+            ,
+                mode:           CanvasMode.ROTATE
+                behaviorClass:  RotateBehavior
+            ,
+                mode:           CanvasMode.EDIT
+                behaviorClass:  EditBehavior
+            ,
+                mode:           CanvasMode.TEXT_EDIT
+                behaviorClass:  TextEditBehavior
+            ,
+            ]
 
-        startTextEditing: (textView) =>
-            textView.shouldEnterEditMode = true
-            @setMode(CanvasMode.TEXT_EDIT, true)
+        addModeBehavior: (mode, behaviorClass) =>
+            @modeBehaviors[mode] = new behaviorClass
+                controller: @controller
+                parentView: this
 
-        getActivePlantToTextView: ->
-            if not @activePlantToTextObjectId?
-                return null
-            mediaViews = @getMediaViews()
-            for view in mediaViews
-                if view.model.get('objectId') == @activePlantToTextObjectId
-                    return view
-            return null
+        getModeBehaviorHandler: (eventName, mode=@mode)     => @modeBehaviors[mode]?.handlers[eventName]
 
-        getSelectableViews: => @getElementViews().concat(@getMediaViews())
+        toggleModeClass: (mode=@mode, flag= true)  => @$el.toggleClass("#{mode.replace(/\s/g,'-')}-mode", flag)
 
-        selectChange:       => @trigger('selectchange')
+        isModeAvailable: (mode)                             -> @modeBehaviors[mode]?
+        getDefaultMode:                                     -> @defaultMode
+        setDefaultMode:                                     -> @setMode(@defaultMode)
+        restoreDefaultMode: =>
+            @deselectAll()
+            @setDefaultMode()
+
+
+        setMode: (mode, reload=false) =>
+            if not @isModeAvailable(mode)
+                return
+            oldMode = @mode
+            if not reload and oldMode == mode
+                resetHandler = @getModeBehaviorHandler('modereset', mode)
+                resetHandler(mode) if resetHandler?
+                return
+            leaveHandler = @getModeBehaviorHandler('modeleave', oldMode)
+            enterHandler = @getModeBehaviorHandler('modeenter', mode)
+            leaveHandler(mode) if leaveHandler?
+            @toggleModeClass(@mode, false)
+            @mode = mode
+            @toggleModeClass(@mode, true)
+            enterHandler(oldMode) if enterHandler?
+            @mode = oldMode
+            @setField('mode', mode)
+
+        ##########################################################################################################
+        #                                           api:element views
+        ##########################################################################################################
+
+        getElementViewConstructor: (model) -> (options) -> new EditorElementView(options)
+        getElementViewConstructorOptions: (model) ->
+            model:      model
+            parentView: this
+            paper:      @paper
+            editor:     this
+
+        getElementViews:                    => view for name, view of @elementViews
+        getSelectedElementViews:            => view for name, view of @elementViews when view.isSelected()
+        getElementViewByModelCid: (cid)     => _.find @elementViews, (v) -> v?.model?.cid == cid
+
+        addElementView: (model) ->
+            constructor                     = @getElementViewConstructor(model)
+            options                         = @getElementViewConstructorOptions(model)
+            view                            = constructor(options)
+            @elementViews["#{model.cid}"]   = view
+            @listenTo(view, 'selectchange', => @trigger('selectchange', view))
+            view.render()
+
+        removeElementView: (model) ->
+            view = @elementViews["#{model.cid}"]
+            wasSelected = view.isSelected()
+
+            @stopListening(view)
+            view.remove()
+            delete @elementViews["#{model.cid}"]
+
+            if wasSelected then @selectChange()
+
+        removeAllElementViews: ->
+            for cid, view of @elementViews
+                @stopListening(view)
+                view.remove()
+            @elementViews = {}
+
+        reloadAllElementViews: ->
+            @removeAllElementViews()
+            @model.elements.each (model) => @addElementView(model)
+
+
+        ##########################################################################################################
+        #                                           api:media views
+        ##########################################################################################################
+
+        getMediumViewClass: (model) ->
+            if model.get('placementType') == PlacementType.HIDDEN
+                null
+            else
+                null
+
+        getMediumViewConstructor: (model) ->
+            viewCls = @getMediumViewClass(model) or EditorDummyMediumView
+            (options) -> new viewCls(options)
+
+        getMediumViewConstructorOptions: (model) ->
+            model:          model
+            parentView:     this
+            paper:          @paper
+            containerEl:    @el
+            editor:         this
+
+        getMediaViews: (mediaTypes) =>
+            views = (view for name, view of @mediaViews)
+            if mediaTypes?
+                mediaTypes = [mediaTypes] if _.isString(mediaTypes)
+                views = _.filter views, (v) ->
+                    v?.model?.get('type') in mediaTypes
+            views
+
+        getSelectedMedia:                   => view.model for name, view of @mediaViews when view.isSelected()
+        getSelectedMediaViews:              => view for name, view of @mediaViews when view.isSelected()
+
+        addMediumView: (model) ->
+            constructor = @getMediumViewConstructor(model)
+            options     = @getMediumViewConstructorOptions(model)
+            view = constructor(options)
+            @mediaViews["#{model.cid}"] = view
+            @listenTo(view, 'selectchange', => @trigger('selectchange', view))
+            view.render()
+
+        removeMediumView: (model) ->
+            view = @mediaViews["#{model.cid}"]
+            wasSelected = view.isSelected()
+
+            @stopListening(view)
+            view.remove()
+            delete @mediaViews["#{model.cid}"]
+
+            if wasSelected then @selectChange()
+
+        removeAllMediaViews: ->
+            for cid, view of @mediaViews
+                @stopListening(view)
+                view.remove()
+            @mediaViews = {}
+
+        reloadAllMediaViews: ->
+            @removeAllMediaViews()
+            @model.media.each (model) => @addMediumView(model)
+
+        ##########################################################################################################
+        #                                           api:render
+        ##########################################################################################################
+
+        render: =>
+            @updateBgColor()
+            @syncElementViews()
+            @syncMediaViews()
+            this
+
+        updateBgColor:  -> @$canvasEl.css('backgroundColor', @model.get('bgColor'))
+
+        syncElementViews: ->
+            if @areViewsSynced(@elementViews, @model.elements)
+                for own name, view of @elementViews
+                    view.render()
+            else
+                @reloadAllElementViews()
+
+        syncMediaViews: ->
+            if @areViewsSynced(@mediaViews, @model.media)
+                for own name, view of @mediaViews
+                    view.render()
+            else
+                @reloadAllMediaViews()
+
+        areViewsSynced: (viewsDict, collection)         -> _.isEqual(_.keys(viewsDict), _.pluck(collection.models, 'cid'))
+
+
+        ##########################################################################################################
+        #                                           api:selection
+        ##########################################################################################################
+
+        getSelectedElements:                => view.model for name, view of @elementViews when view.isSelected()
+
+        getSelectableViews:                 => @getElementViews().concat(@getMediaViews())
+        getSelectedViews:                   => @getSelectedElementViews().concat(@getSelectedMediaViews())
 
         deselectAll: (options) =>
             anySelected = false
@@ -672,20 +523,152 @@
             if selectionChanged
                 @trigger('selectchange')
 
-        getElementViewByModelCid: (cid)     => _.find @elementViews, (v) -> v?.model?.cid == cid
-        getElementByCid: (cid)              => @getElementViewByModelCid(cid)?.model
-
-        getSelectedElements:                => view.model for name, view of @elementViews when view.isSelected()
-        getSelectedElementViews:            => view for name, view of @elementViews when view.isSelected()
-        getSelectedMedia:                   => view.model for name, view of @mediaViews when view.isSelected()
-        getSelectedMediaViews:              => view for name, view of @mediaViews when view.isSelected()
-        getSelectedViews:                   => @getSelectedElementViews().concat(@getSelectedMediaViews())
-
-        selectionBBoxChange:                => @trigger('change:selectionBBox')
         getSelectionBBox: =>
             bboxes = (view.getBBox() for view in @getSelectedViews())
             bboxes.push(@insertView.getBBox()) if @insertView?.isSelected()
             BBox.fromBBoxList(bboxes)
+
+        selectionBBoxChange:                => @trigger('change:selectionBBox')
+
+        ##########################################################################################################
+        #                                      api:text direction (do we need it now?)
+        ##########################################################################################################
+
+
+        getTextDirection:               -> @dataModel.get('textDirection') or 'ltr'
+        isTextRTL:                      -> @getTextDirection() == 'rtl'
+        updateTextDirectionFromModel:   ->
+
+            canvasEl = @paper.canvas
+
+            if @isTextRTL()
+                canvasEl.setAttribute('direction', 'rtl')
+                canvasEl.setAttribute('unicode-bidi', 'bidi-override')
+                canvasEl.setAttribute('writing-mode', 'rl')
+
+
+        ##########################################################################################################
+        #                                           api:editing
+        ##########################################################################################################
+
+
+        startInserting: (p) =>
+            insertModel = new PlantElement
+                startPoint: p
+                text:       ''
+                fontSize:   @settings.get('fontSize')
+            @editElementModelPosition = null
+            @startEditing(insertModel)
+
+        startUpdating: (elemModel) =>
+            @model.stopTrackingChanges()
+            @editElementModelPosition = @model.elements.indexOf(elemModel)
+            @model.removeElement(elemModel)
+            @startEditing(elemModel)
+
+        startEditing: (elemModel) =>
+            @setMode(CanvasMode.EDIT, true)
+            @insertView = new EditedElementView
+                paper:  @paper
+                editor: this
+                model:  elemModel
+            @insertView.render()
+
+        startTextEditing: (textView) =>
+            textView.shouldEnterEditMode = true
+            @setMode(CanvasMode.TEXT_EDIT, true)
+
+        finishEditing: (options) => @setDefaultMode()
+
+        ##########################################################################################################
+        #                                           api:dragging
+        ##########################################################################################################
+
+
+        toggleDraggingClass:    (flag=true)     => @$el.toggleClass("in-dragging", flag)
+        toggleBgDraggingClass:  (flag=true)     => @$el.toggleClass("in-bg-dragging", flag)
+        setDragging:            (dragging)              => @setField('dragging', dragging)
+        setBgDragging:          (bgDragging)            => @setField('bgDragging', bgDragging)
+
+        ##########################################################################################################
+        #                                           api:color
+        ##########################################################################################################
+
+        getPaletteToolAction: (toolModel) =>
+            toolModel ?= @colorPalette.get('selectedTool')
+            switch toolModel.type
+                when 'color' then actionCls = ColorAction
+                when 'splitcolor' then actionCls = SplitColorAction
+                when 'removecolor' then actionCls = RemoveColorAction
+
+            if actionCls?
+                new actionCls
+                    controller: @controller
+                    toolModel: toolModel
+
+        getCaretColor: (color) =>
+            color ?= @model.get('bgColor')
+            if isDarkColor(color) then '#000000' else '#FFFFFF'
+
+
+        ##########################################################################################################
+        #                                       api:helper methods
+        ##########################################################################################################
+
+        selectChange:       => @trigger('selectchange')
+
+        setField: (name, value, options) =>
+            oldValue = this[name]
+            this[name] = value
+            if oldValue != value
+                @trigger("change", this)
+                @trigger("change:#{name}", this, value, oldValue)
+
+
+
+        ##########################################################################################################
+        #                                           api:other
+        ##########################################################################################################
+
+
+        getChildrenContainerElement:                -> @$el.get(0)
+        getCanvasBBox: (absolute)                   => BBox.fromHtmlDOM(@$el, absolute)
+        getCanvasSetupDimensions:                   -> [@dataModel.get('canvasWidth'), @dataModel.get('canvasHeight')]
+        getCanvasScale:                             -> @parentView.getPageScale()
+
+
+        transformToCanvasCoords: (x, y)             -> @parentView.transformToCanvasCoords(x, y)
+        transformToCanvasCoordOffsets: (dx, dy)     -> @parentView.transformToCanvasCoordOffsets(dx, dy)
+        transformToCanvasBBox: (bbox)               -> @parentView.transformToCanvasBBox(bbox)
+        transformCanvasToContainerCoords: (x, y)    -> @parentView.transformCanvasToContainerCoords(x, y)
+
+
+
+        putElementToFrontAtLayer: (element, layer) ->
+            layerGuard = @layerGuards[layer]
+            element.insertBefore(layerGuard)
+
+        addCanvasElement: (options) ->
+            options = _.clone(options)
+
+            if not options.fontSize?
+                options.fontSize = @settings.get('fontSize')
+
+            if not options.endPoint?
+                len = @letterMetrics.getTextLength(
+                    options.text, options.fontSize)
+                options.endPoint = Point.fromValue(options.startPoint)
+                    .add(new Point(len, 0))
+
+            if not options.controlPoints?
+                options.controlPoints = [
+                    Point.getPointBetween(
+                        Point.fromValue(options.startPoint),
+                        Point.fromValue(options.endPoint))
+                ]
+            @model.addElement(options)
+
+
 
         updateDirtyLetterAreas: =>
             for view in @getElementViews()
@@ -693,5 +676,28 @@
                     view.updateLetterAreas()
 
 
+
+        remove: =>
+
+            @selectionRectObj.remove()
+            @stopListening(this)
+            @stopListening(@model)
+
+            @removeAllElementViews()
+            @removeAllMediaViews()
+            @backgroundObj.remove()
+            @letterMetrics.remove()
+            @letterMetrics = null
+            @paper.clear()
+            @$el.empty()
+            $(window).off('load', @onLoad)
+            if @model?
+                @stopListening(@model.elements)
+                @stopListening(@model.media)
+            super
+
+
+
+
     module.exports =
-        EditorCanvasView: EditorCanvasView
+        CanvasView: CanvasView

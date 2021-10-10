@@ -184,14 +184,5 @@
 
         setDefaultMode: ->
 
-        getActivePlantToTextView: ->
-            if not @activePlantToTextObjectId?
-                return null
-            mediaViews = @getMediaViews()
-            for view in mediaViews
-                if view.model.get('objectId') == @activePlantToTextObjectId
-                    return view
-            return null
-
     module.exports =
         EditorTextBoxView: EditorTextBoxView

@@ -14,8 +14,8 @@
     settings                        = require('./../../settings')
     config                          = require('./../../config')
 
-    DEFAULT_CANVAS_WIDTH = 1000
-    DEFAULT_CANVAS_HEIGHT = 460
+    DEFAULT_CANVAS_WIDTH    = 1000
+    DEFAULT_CANVAS_HEIGHT   = 460
 
     class UnitState extends BaseModelWithSubCollections
 
@@ -62,14 +62,13 @@
 
 
     class UnitData extends BaseModelWithSubCollections
+
         subCollectionConfig: [
-            name: 'initialState'
+            name:       'initialState'
             modelClass: UnitState
         ]
 
-        forwardedEventNames: [
-            'childchange',
-        ].concat(BaseModelWithSubCollections::forwardedEventNames)
+        forwardedEventNames: ['childchange',].concat(BaseModelWithSubCollections::forwardedEventNames)
 
         forwardedAttrsMap:
             'id': 'id'
@@ -142,6 +141,7 @@
             modelCopy
 
     class LessonData extends UnitData
+
         urlRoot: -> config.getUrlRoot(settings.apiResourceNames.lessons)
         forwardedAttrsMap: _.extend({}, UnitData::forwardedAttrsMap,
             'categories': 'categories'

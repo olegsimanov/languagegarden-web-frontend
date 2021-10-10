@@ -35,8 +35,7 @@
         constructor: (options) ->
             bindablePropertyNames = @getBindablePropertyNames()
             for propName in bindablePropertyNames
-                @setProperty(propName, options[propName],
-                             constructor: true, silent: true)
+                @setProperty(propName, options[propName], constructor: true, silent: true)
             super
             for propName in bindablePropertyNames
                 @onPropertyInitialBind(propName)
