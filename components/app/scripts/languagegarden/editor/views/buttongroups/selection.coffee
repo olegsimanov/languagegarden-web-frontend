@@ -2,11 +2,8 @@
 
     _ = require('underscore')
 
-    {ButtonGroup}               = require('./../../../editor/views/buttongroups/base')
-    {
-        SplitSentenceElement,
-        SplitWordElement
-    }                           = require('./../../actions/split')
+    {ButtonGroupView}           = require('./../../../editor/views/buttongroups/base')
+    {SplitWordElement}          = require('./../../actions/split')
     {DeleteAction}              = require('./../../actions/delete')
     {
         SwitchToRotate
@@ -19,9 +16,9 @@
     StartUpdatingText           = require('./../../actions/edittext').StartUpdating
 
 
-    class SelectionButtonGroup extends ButtonGroup
+    class SelectionButtonGroupView extends ButtonGroupView
 
-        className: "#{ButtonGroup::className} buttons-group_selection"
+        className: "#{ButtonGroupView::className} buttons-group_selection"
 
         actionSpec: [
             id:             'switch-to-rotate'
@@ -72,4 +69,4 @@
 
 
     module.exports =
-        SelectionButtonGroup: SelectionButtonGroup
+        SelectionButtonGroupView: SelectionButtonGroupView

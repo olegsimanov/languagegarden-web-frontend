@@ -7,8 +7,8 @@
     {template}                  = require('./../templates')
     {RenderableView}            = require('./../renderable')
     {
-        EditorColorModeButton
-        EditorDivToggleButton
+        EditorColorModeButtonView
+        EditorToggleButtonView
     } = require('./../buttons')
     {CanvasMode}                = require('./../../constants')
     {SplitColorTool}            = require('./../../models/palette')
@@ -23,23 +23,22 @@
         render: => @
 
 
-    SplitColorPaletteEditButton = class extends EditorDivToggleButton
+    SplitColorPaletteEditButtonView = class extends EditorToggleButtonView
 
-        className: "split-color-mode-button
-            #{EditorDivToggleButton::className}"
+        className: "split-color-mode-button #{EditorToggleButtonView::className}"
 
-        NOT_EDITING = 'not-editing'
-        EDITING_EMPTY = 'editing-empty'
-        EDITING = 'editing'
+        NOT_EDITING     = 'not-editing'
+        EDITING_EMPTY   = 'editing-empty'
+        EDITING         = 'editing'
 
         IN_EDIT_STATES: [EDITING_EMPTY, EDITING]
 
-        NOT_EDITING: NOT_EDITING
-        EDITING: EDITING
-        EDITING_EMPTY: EDITING_EMPTY
+        NOT_EDITING:        NOT_EDITING
+        EDITING:            EDITING
+        EDITING_EMPTY:      EDITING_EMPTY
 
-        states: [NOT_EDITING, EDITING_EMPTY, EDITING]
-        defaultState: NOT_EDITING
+        states:             [NOT_EDITING, EDITING_EMPTY, EDITING]
+        defaultState:       NOT_EDITING
 
         getIconCss: ->
             switch @currentState
@@ -115,7 +114,7 @@
             # on successful edit it will replace tools of the active splitcolor
             @tempModel = new SplitColorTool()
             @listenTo(@tempModel, 'change', @onTempModelChange)
-            @splitColorPicker = new SplitColorEditor
+            @splitColorPicker = new SplitColorEditorView
                 editor: @getEditor()
                 tempModel: @tempModel
                 originalModel: @paletteModel.get('selectedTool')
@@ -176,15 +175,12 @@
         events:
             'click': 'onClick'
 
-        className: "button color-palette__color-btn"
-        template: template('./editor/colorpicker/color.ejs')
+        className:  "button color-palette__color-btn"
+        template:   template('./editor/colorpicker/color.ejs')
 
-        initialize: ->
-            @listenToColorChange()
-
-        onClick: => @trigger('click', @, @model)
-
-        listenToColorChange: -> @listenTo(@model, 'change:color', @render)
+        initialize:             -> @listenToColorChange()
+        onClick:                => @trigger('click', @, @model)
+        listenToColorChange:    -> @listenTo(@model, 'change:color', @render)
 
 
     ###Single color picker palette box base class.###
@@ -255,11 +251,11 @@
         className: "#{PaletteColorView::className}
             split-editor-color-preview_done"
 
-    SquarePickerBase = class extends RenderableView
+    SquarePickerBaseView = class extends RenderableView
 
-        colorClass: null
-        splitColorClass: null
-        removeColorClass: RemoveColorView
+        colorClass:         null
+        splitColorClass:    null
+        removeColorClass:   RemoveColorView
 
         initialize: (options) =>
             super
@@ -329,7 +325,7 @@
             @subviews = @getSubViews()
 
 
-    SquarePicker = class extends SquarePickerBase
+    SquarePickerView = class extends SquarePickerBaseView
 
         template: template('./editor/colorpicker/main.ejs')
 
@@ -344,7 +340,7 @@
             @listenTo @editor, 'selectchange', @onSelectChange
 
         getColorModeButton: =>
-            @colorModeButton ?= new EditorColorModeButton
+            @colorModeButton ?= new EditorColorModeButtonView
                 parentView: @
                 customClassName: "icon icon_frame"
                 model: @model
@@ -353,7 +349,7 @@
 
         getEditButton: =>
             if not @editButton?
-                @editButton = new SplitColorPaletteEditButton
+                @editButton = new SplitColorPaletteEditButtonView
                     $splitEditorContainer: => @$('.split-color-palette-container')
                     pickerView: @
                     editor: @editor
@@ -374,11 +370,11 @@
         toggleColorViews: (show) =>
             @$('.color-palette-container').toggle(show)
 
-    SplitColorEditor = class extends SquarePickerBase
+    SplitColorEditorView = class extends SquarePickerBaseView
 
-        className: 'buttons-group split-color-editor'
-        colorClass: SplitEditorColorView
-        splitColorClass: SplitEditorSplitColorView
+        className:          'buttons-group split-color-editor'
+        colorClass:         SplitEditorColorView
+        splitColorClass:    SplitEditorSplitColorView
 
         initialize: (options) =>
             @originalModel = options.originalModel
@@ -411,4 +407,4 @@
 
 
     module.exports =
-        SquarePicker: SquarePicker
+        SquarePickerView: SquarePickerView

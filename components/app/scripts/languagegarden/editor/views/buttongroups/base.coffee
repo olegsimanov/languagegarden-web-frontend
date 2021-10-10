@@ -1,25 +1,23 @@
     'use strict'
 
-    _ = require('underscore')
-    settings = require('./../../../settings')
-    {BaseView} = require('./../base')
-    {TooltipButton} = require('./../buttons')
+    _                   = require('underscore')
+
+    settings            = require('./../../../settings')
+    {BaseView}          = require('./../base')
+    {TooltipButtonView} = require('./../buttons')
 
 
-    class ButtonGroup extends BaseView
-        buttonViewClass: TooltipButton
-        className: 'buttons-group'
-        actionSpec: []
-        shouldAppendToContainer: true
+    class ButtonGroupView extends BaseView
+
+        buttonViewClass:            TooltipButtonView
+        className:                  'buttons-group'
+        actionSpec:                 []
+        shouldAppendToContainer:    true
 
         initialize: (options) ->
             super
-            @setPropertyFromOptions(options, 'canvasView',
-                                    default: @controller?.canvasView,
-                                    required: true)
-            @setPropertyFromOptions(options, 'model',
-                                    default: @controller?.model
-                                    required: true)
+            @setPropertyFromOptions(options, 'canvasView',{ default: @controller?.canvasView }, required: true)
+            @setPropertyFromOptions(options, 'model', { default: @controller?.model }, required: true)
             @buttonInfos = (@createButtonInfo(spec) for spec in @actionSpec)
             for buttonInfo in @buttonInfos
                 @listenTo(buttonInfo.action, 'change:available', @invalidate)
@@ -88,4 +86,4 @@
 
 
     module.exports =
-        ButtonGroup: ButtonGroup
+        ButtonGroupView: ButtonGroupView

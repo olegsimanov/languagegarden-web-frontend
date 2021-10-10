@@ -14,7 +14,8 @@
 
 
 
-    class DivButton extends BaseView
+    class ButtonView extends BaseView
+
         tagName:            'div'
         className:          'button'
         toggledClassName:   'active'
@@ -129,12 +130,74 @@
         show: => @toggleVisibility(true)
 
 
-    class TooltipButton extends DivButton
+    class TooltipButtonView extends ButtonView
 
         fadeEffects: false
         shouldAppendToContainer: false
 
         onClick: -> @action.fullPerform()
+
+    class EditorButtonView extends ButtonView
+
+        initialize: (options) ->
+            # pass model from options.controller so BaseView can use set it
+            if options?
+                options.model ?= options?.controller?.model
+            # TODO: this limits any inheriting view to append directly to the
+            # editor or break the getEditor reference.
+            options.parentView = options.editor if options?.editor?
+            super(options)
+            # the this.editor field is deprecated. please use this.getEditor()
+            # instead.
+            @editor = @parentView
+
+        getEditor: -> @parentView
+
+
+    class MenuActionButtonView extends EditorButtonView
+
+        modelListenEventName: 'editablechange'
+
+        initialize: (options) =>
+            super
+            @disabled = not @isEnabled()
+            @hidden = @isHidden()
+            if options.modelListenEventName?
+                @modelListenEventName = options.modelListenEventName
+            @listenTo(@parentView.model, @modelListenEventName, @onChange)
+
+        remove: ->
+            @stopListening(@parentView.model)
+            super
+
+        getActionOptions: (options) ->
+            controller: options.controller
+            parentView: @parentView
+
+        isEnabled: -> @action.isAvailable()
+        isToggled: -> @action.isToggled()
+        isHidden:   -> false
+
+        onChange: =>
+            @disabled = not @isEnabled()
+            @hidden = @isHidden()
+            @$el.toggleClass('toggled', @isToggled())
+            @render()
+
+        onClick: (event) =>
+            if not @isEnabled()
+                return true
+            event.preventDefault()
+            @action.fullPerform()
+
+    class DoneButtonView extends MenuActionButtonView
+        actionClass:        navigationActions.SaveAndGoToNavigator
+        customClassName:    'icon icon_check'
+
+
+    ##########################################################################################################
+    #                                        stateful buttons
+    ##########################################################################################################
 
 
     StateButtonViewPrototype =
@@ -148,13 +211,13 @@
             for st in @states
                 @toggleClass(@getStateCssClass(st), st == currentState)
 
-    DivStateButtonBase = DivButton
+    StateButtonBaseView = ButtonView
         .extend(StatefulClassPrototype)
         .extend(StateButtonViewPrototype)
 
-    class DivStateButton extends DivStateButtonBase
+    class StateButtonView extends StateButtonBaseView
 
-        className: "#{DivButton::className} state-button"
+        className: "#{ButtonView::className} state-button"
 
         initialize: (options) ->
             super
@@ -176,42 +239,12 @@
             @render()
 
 
-    class DivToggleButton extends DivStateButton
+    class ToggleButtonView extends StateButtonView
 
-        onClick: (e) ->
-            @setState(@getNextState())
-
-
-    class PunctuationButton extends TooltipButton
-
-        className: "#{TooltipButton::className} punctuation-button"
-
-        initialize: (options) ->
-            super
-            @templateString = "
-                <div class='icon icon_punctuation icon_punctuation_thin'>
-                    #{options.action.character}
-                </div>"
+        onClick: (e) -> @setState(@getNextState())
 
 
-    class EditorDivButton extends DivButton
-
-        initialize: (options) ->
-            # pass model from options.controller so BaseView can use set it
-            if options?
-                options.model ?= options?.controller?.model
-            # TODO: this limits any inheriting view to append directly to the
-            # editor or break the getEditor reference.
-            options.parentView = options.editor if options?.editor?
-            super(options)
-            # the this.editor field is deprecated. please use this.getEditor()
-            # instead.
-            @editor = @parentView
-
-        getEditor: -> @parentView
-
-
-    class EditorDivToggleButton extends DivToggleButton
+    class EditorToggleButtonView extends ToggleButtonView
 
         initialize: (options) ->
             options.parentView = options.editor if options?.editor?
@@ -219,53 +252,11 @@
 
         getEditor: -> @parentView
 
+    class EditorColorModeButtonView extends EditorToggleButtonView
 
-    class MenuButton extends EditorDivButton
-
-
-    class MenuActionButton extends MenuButton
-        modelListenEventName: 'editablechange'
-
-        initialize: (options) =>
-            super
-            @disabled = not @isEnabled()
-            @hidden = @isHidden()
-            if options.modelListenEventName?
-                @modelListenEventName = options.modelListenEventName
-            @listenTo(@parentView.model, @modelListenEventName, @onChange)
-
-        remove: ->
-            @stopListening(@parentView.model)
-            super
-
-        getActionOptions: (options) ->
-            controller: options.controller
-            parentView: @parentView
-
-        isEnabled: -> @action.isAvailable()
-
-        isToggled: -> @action.isToggled()
-
-        isHidden: -> false
-
-        onChange: =>
-            @disabled = not @isEnabled()
-            @hidden = @isHidden()
-            @$el.toggleClass('toggled', @isToggled())
-            @render()
-
-        onClick: (event) =>
-            if not @isEnabled()
-                return true
-            event.preventDefault()
-            @action.fullPerform()
-
-    class EditorColorModeButton extends EditorDivToggleButton
-
-        className: "color-mode-button #{EditorDivToggleButton::className}"
-
-        states: [ColorMode.WORD, ColorMode.LETTER]
-        defaultState: ColorMode.DEFAULT
+        className:      "color-mode-button #{EditorToggleButtonView::className}"
+        states:         [ColorMode.WORD, ColorMode.LETTER]
+        defaultState:   ColorMode.DEFAULT
 
         initialize: (options) =>
             super
@@ -289,16 +280,9 @@
             super
             @model.set('colorMode', @currentState)
 
-    class DoneButton extends MenuActionButton
-        actionClass: navigationActions.SaveAndGoToNavigator
-        customClassName: 'icon icon_check'
-
     module.exports =
-        ImageButton: EditorDivButton
-        TooltipButton: TooltipButton
-        MenuActionButton: MenuActionButton
-        DoneButton: DoneButton
-        DivButton: EditorDivButton
-        EditorDivButton: EditorDivButton
-        EditorDivToggleButton: EditorDivToggleButton
-        EditorColorModeButton: EditorColorModeButton
+        ButtonView:                 EditorButtonView
+        DoneButtonView:             DoneButtonView
+        TooltipButtonView:          TooltipButtonView
+        EditorToggleButtonView:     EditorToggleButtonView
+        EditorColorModeButtonView:  EditorColorModeButtonView

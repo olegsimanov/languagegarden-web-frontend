@@ -1,19 +1,19 @@
     'use strict'
 
     _ = require('underscore')
-    {DivButton}         = require('./../buttons')
-    {RenderableView}    = require('./../renderable')
-    {slugify}           = require('./../../utils')
-    {template}          = require('./../templates')
-    {ToolbarBackButton} = require('./../../views/toolbars/navbuttons')
-    settings            = require('./../../../settings')
+    {ButtonView}            = require('./../buttons')
+    {RenderableView}        = require('./../renderable')
+    {slugify}               = require('./../../utils')
+    {template}              = require('./../templates')
+    {BackButtonView}        = require('./../../views/toolbars/navbuttons')
+    settings                = require('./../../../settings')
 
 
-    BaseToolbar = class extends RenderableView
+    BaseToolbarView = class extends RenderableView
 
-        toolbarViewAnchors: {}
-        toolbarName: 'toolbar-name-missing'
-        fallbackActionViewClass: DivButton
+        toolbarViewAnchors:         {}
+        toolbarName:                'toolbar-name-missing'
+        fallbackActionViewClass:    ButtonView
 
         getToolbarViewAnchors: -> @toolbarViewAnchors
 
@@ -49,6 +49,7 @@
                 viewClass = class AutogenMenuActionButton extends @fallbackActionViewClass
                     actionClass: viewData.actionClass
             if not viewClass?
+                console.log(JSON.stringify(viewData))
                 throw "Missing toolbar element configuration!"
             viewClass
 
@@ -136,7 +137,7 @@
 
         onActiveChanged: ->
 
-    class EditorToolbar extends BaseToolbar
+    class EditorToolbarView extends BaseToolbarView
 
         template: template('./common/toolbars/navigator.ejs')
 
@@ -151,20 +152,20 @@
             super
 
 
-    class EditorSubToolbar extends EditorToolbar
+    class EditorSubToolbarView extends EditorToolbarView
 
         template: template('./common/toolbars/container.ejs')
 
         backNav: [
-            {viewClass: ToolbarBackButton, viewType: 'navbutton'}
+            {viewClass: BackButtonView, viewType: 'navbutton'}
         ]
 
         toolbarViewAnchors:
-            '.toolbar__section_left': 'backNav'
-            '.toolbar__section_mid': 'contentMenu'
-            '.toolbar__section_right': 'rightSide'
+            '.toolbar__section_left':   'backNav'
+            '.toolbar__section_mid':    'contentMenu'
+            '.toolbar__section_right':  'rightSide'
 
 
     module.exports =
-        EditorToolbar:      EditorToolbar
-        EditorSubToolbar:   EditorSubToolbar
+        EditorToolbarView:      EditorToolbarView
+        EditorSubToolbarView:   EditorSubToolbarView

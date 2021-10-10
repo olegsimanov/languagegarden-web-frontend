@@ -2,14 +2,14 @@
 
     _ = require('underscore')
     {
-        EditorToolbar,
-        EditorSubToolbar
+        EditorToolbarView,
+        EditorSubToolbarView
     }                           = require('./base')
-    {SquarePicker}              = require('./../colorpicker/square')
-    {SelectionButtonGroup}      = require('./../buttongroups/selection')
+    {SquarePickerView}          = require('./../colorpicker/square')
+    {SelectionButtonGroupView}  = require('./../buttongroups/selection')
     {ToolbarEnum}               = require('./../../views/toolbars/constants')
-    {StatefulToolbar}           = require('./../../views/toolbars/stateful')
-    {ToolbarNavButton}          = require('./../../views/toolbars/navbuttons')
+    {StatefulToolbarView}       = require('./../../views/toolbars/stateful')
+    {NavButtonView}             = require('./../../views/toolbars/navbuttons')
     {
         SaveAndGoToNavigator
         DiscardAndGoToNavigator
@@ -17,7 +17,7 @@
     {CanvasMode}                = require('./../../constants')
     settings                    = require('./../../../settings')
 
-    class PaletteToolbarNavButton extends ToolbarNavButton
+    class PaletteNavButtonView extends NavButtonView
 
         getNavButtonClass: -> "#{super} icon icon_palette"
 
@@ -39,40 +39,35 @@
             super
 
 
-    class TooltipToolbar extends EditorToolbar
+    class TooltipToolbarView extends EditorToolbarView
 
         toolbarName: ToolbarEnum.BUILDER
 
         plantNavMenu: [
-            actionClass: DiscardAndGoToNavigator
-            viewType: 'button'
-            context:
-                customClassName: 'icon icon_back'
+            actionClass:    DiscardAndGoToNavigator
+            viewType:       'button'
+            context:        {customClassName: 'icon icon_back'}
         ]
         contentMenu: [
-            {viewClass: SelectionButtonGroup, viewType: 'buttongroup'}
+            {viewClass: SelectionButtonGroupView, viewType: 'buttongroup'}
         ]
         controlButtonsMenu: [
             {
-                viewType: 'navbutton'
-                viewClass: PaletteToolbarNavButton
-                context:
-                    navTarget: ToolbarEnum.COLOR
+                viewType:   'navbutton'
+                viewClass:  PaletteNavButtonView
+                context:    {navTarget: ToolbarEnum.COLOR}
             }
         ,
-            actionClass: SaveAndGoToNavigator
-            viewType: 'button'
-            context:
-                customClassName: 'icon icon_check'
+            actionClass:    SaveAndGoToNavigator
+            viewType:       'button'
+            context:        {customClassName: 'icon icon_check'}
         ]
 
-    class ColorToolbar extends EditorSubToolbar
+    class ColorToolbarView extends EditorSubToolbarView
 
         toolbarName: ToolbarEnum.COLOR
 
-        rightSide: [
-            {viewClass: SquarePicker, viewType: 'palette'}
-        ]
+        rightSide: [{viewClass: SquarePickerView, viewType: 'palette'}]
 
         onActiveChanged: ->
             canvasView  = @controller.canvasView
@@ -80,13 +75,13 @@
             canvasView.setMode(mode)
 
 
-    class BuilderToolbar extends StatefulToolbar
+    class BuilderToolbarView extends StatefulToolbarView
 
-        defaultState: TooltipToolbar::toolbarName
+        defaultState: TooltipToolbarView::toolbarName
 
         toolbarClasses: [
-            TooltipToolbar
-            ColorToolbar
+            TooltipToolbarView
+            ColorToolbarView
         ]
 
         stateFromTargetName: (targetName) =>
@@ -97,6 +92,6 @@
 
 
     module.exports =
-        BuilderToolbar: BuilderToolbar
-        TooltipToolbar: TooltipToolbar
-        ColorToolbar:   ColorToolbar
+        BuilderToolbarView:     BuilderToolbarView
+        TooltipToolbarView:     TooltipToolbarView
+        ColorToolbarView:       ColorToolbarView

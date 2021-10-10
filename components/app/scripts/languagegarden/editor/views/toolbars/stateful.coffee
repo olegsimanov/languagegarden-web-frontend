@@ -8,11 +8,11 @@
     StatefulRenderableView = RenderableView.extend(StatefulClassPrototype)
 
     ###Toolbar that renders different toolbar depending on its state.###
-    class StatefulToolbarBase extends StatefulRenderableView
+    class StatefulToolbarBaseView extends StatefulRenderableView
 
         # Map of label to children class {stateName: toolbarClass}
-        toolbars: undefined
-        getToolbars: => @toolbars
+        toolbars:       undefined
+        getToolbars:    => @toolbars
 
         initialize: (options) =>
             super
@@ -43,12 +43,9 @@
             @stopListening(@)
             super
 
-        stateFromTargetName: (targetName) => targetName
-
-        onToolbarNavEvent: (sender, targetName) ->
-            @setState(@stateFromTargetName(targetName))
-
-        onStateChange: (sender, state) => @setActiveView(state)
+        stateFromTargetName: (targetName)       => targetName
+        onToolbarNavEvent: (sender, targetName) -> @setState(@stateFromTargetName(targetName))
+        onStateChange: (sender, state)          => @setActiveView(state)
 
         setActiveView: (state=@currentState) =>
             for own toolbarName, toolbarView of @toolbarViews
@@ -57,7 +54,7 @@
             @toolbarViews[state].setActive(true)
 
 
-    class StatefulToolbar extends StatefulToolbarBase
+    class StatefulToolbarView extends StatefulToolbarBaseView
 
         defaultState:   null
         toolbarClasses: null
@@ -72,4 +69,4 @@
 
 
     module.exports =
-        StatefulToolbar:    StatefulToolbar
+        StatefulToolbarView:    StatefulToolbarView

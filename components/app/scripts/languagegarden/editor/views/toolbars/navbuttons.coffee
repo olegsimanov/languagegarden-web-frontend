@@ -1,14 +1,14 @@
     'use strict'
 
-    _               = require('underscore')
-    {DivButton}     = require('./../buttons')
-    {slugify}       = require('./../../utils')
+    _                   = require('underscore')
+    {ButtonView}        = require('./../buttons')
+    {slugify}           = require('./../../utils')
 
 
     navEventBaseName    = 'toolbarnav'
     getNavEventName     = (navTarget) -> "#{navEventBaseName}:#{ slugify(navTarget) }"
 
-    ToolbarNavButtonPrototype =
+    NavButtonPrototype =
 
         __required_interface_methods__: [
             'isEnabled',
@@ -33,7 +33,7 @@
             @triggerToolbarNavEvent()
 
 
-    class ToolbarNavButton extends DivButton.extend(ToolbarNavButtonPrototype)
+    class NavButtonView extends ButtonView.extend(NavButtonPrototype)
 
         initialize: (options) ->
             @initializeNavButton(options)
@@ -43,14 +43,14 @@
         isEnabled:      -> true
 
 
-    class ToolbarBackButton extends ToolbarNavButton
+    class BackButtonView extends NavButtonView
 
-        navTarget: 'back'
-        getNavButtonClass: -> "#{super} icon icon_back"
+        navTarget:              'back'
+        getNavButtonClass:      -> "#{super} icon icon_back"
 
 
     module.exports =
         getNavEventName:            getNavEventName
-        ToolbarNavButton:           ToolbarNavButton
-        ToolbarBackButton:          ToolbarBackButton
-        ToolbarNavButtonPrototype:  ToolbarNavButtonPrototype
+        NavButtonView:              NavButtonView
+        BackButtonView:             BackButtonView
+        NavButtonPrototype:         NavButtonPrototype

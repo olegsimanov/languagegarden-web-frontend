@@ -22,7 +22,7 @@
     {EditorPageView}        = require('./views/page')
     {CanvasView}            = require('./views/canvas')
     {EditorTextBoxView}     = require('./views/textbox')
-    {BuilderToolbar}        = require('./views/toolbars/builder')
+    {BuilderToolbarView}    = require('./views/toolbars/builder')
     {LetterMetrics}         = require('./views/svg/svgmetrics')
 
     settings                = require('./../settings')
@@ -52,7 +52,7 @@
                                         settings:       Settings.getSettings('plant-view')
                                         letterMetrics:  @letterMetrics
 
-            @toolbarView        = new BuilderToolbar
+            @toolbarView        = new BuilderToolbarView
                                         controller: @
 
             @pageView           = new EditorPageView
