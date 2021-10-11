@@ -394,11 +394,7 @@
         #                                           api:media views
         ##########################################################################################################
 
-        getMediumViewClass: (model) ->
-            if model.get('placementType') == PlacementType.HIDDEN
-                null
-            else
-                null
+        getMediumViewClass: (model) -> null
 
         getMediumViewConstructor: (model) ->
             viewCls = @getMediumViewClass(model) or EditorDummyMediumView

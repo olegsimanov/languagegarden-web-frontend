@@ -48,13 +48,13 @@
             else
                 super
 
-        stopTrackingChanges:    -> @trigger('trackchanges', this, false)
         startTrackingChanges:   -> @trigger('trackchanges', this, true)
+        stopTrackingChanges:    -> @trigger('trackchanges', this, false)
 
         addElement: (model, options)    -> @elements.add(model, options)
         removeElement: (model, options) -> @elements.remove(model, options)
 
-        removeMedium: (model, options) -> @media.remove(model, options)
+        removeMedium: (model, options)  -> @media.remove(model, options)
 
         onSubCollectionChange: (sender, ctx) ->
             super
@@ -71,10 +71,11 @@
         forwardedEventNames: ['childchange',].concat(BaseModelWithSubCollections::forwardedEventNames)
 
         forwardedAttrsMap:
-            'id': 'id'
-            'description': 'description'
-            'color_palette': 'colorPalette'
-            'active': 'public'
+            'id':               'id'
+            'description':      'description'
+            'color_palette':    'colorPalette'
+            'active':           'public'
+
         plantDataAttrName: 'data'
 
         initialize: (options) ->
@@ -82,14 +83,14 @@
             @setDefaultAttributes()
 
         setDefaultAttributes: ->
-            @setDefaultValue('description', '')
-            @setDefaultValue('language', 'English')
-            @setDefaultValue('colorPalette', 'default')
-            @setDefaultValue('public', true)
-            @setDefaultValue('version', '0.7')
-            @setDefaultValue('canvasWidth', DEFAULT_CANVAS_WIDTH)
-            @setDefaultValue('canvasHeight', DEFAULT_CANVAS_HEIGHT)
-            @setDefaultValue('textDirection', 'ltr')
+            @setDefaultValue('description',     '')
+            @setDefaultValue('language',        'English')
+            @setDefaultValue('colorPalette',    'default')
+            @setDefaultValue('public',          true)
+            @setDefaultValue('version',         '0.7')
+            @setDefaultValue('canvasWidth',     DEFAULT_CANVAS_WIDTH)
+            @setDefaultValue('canvasHeight',    DEFAULT_CANVAS_HEIGHT)
+            @setDefaultValue('textDirection',   'ltr')
 
         get: (attr) ->
             if attr in @getSubCollectionNames()
@@ -143,15 +144,13 @@
     class LessonData extends UnitData
 
         urlRoot: -> config.getUrlRoot(settings.apiResourceNames.lessons)
-        forwardedAttrsMap: _.extend({}, UnitData::forwardedAttrsMap,
-            'categories': 'categories'
-            'levels': 'levels'
-        )
+
+        forwardedAttrsMap: _.extend({}, UnitData::forwardedAttrsMap, {'categories':'categories', 'levels':'levels'})
 
         setDefaultAttributes: ->
             super
-            @setDefaultValue('categories', [])
-            @setDefaultValue('levels', [])
+            @setDefaultValue('categories',  [])
+            @setDefaultValue('levels',      [])
 
     module.exports =
         UnitState:      UnitState

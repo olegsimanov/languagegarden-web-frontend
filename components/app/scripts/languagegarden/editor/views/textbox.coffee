@@ -39,8 +39,6 @@
 
         setDefaultMode: ->
 
-
-
         onParentViewBind: ->
             eventNames = ("change:pageContainer#{suf}" for suf in ['Transform', 'Scale', 'ShiftX', 'ShiftY'])
             @forwardEventsFrom(@parentView, eventNames)
@@ -64,8 +62,6 @@
                 views = _.filter views, (v) ->
                     v?.model?.get('type') in mediaTypes
             views
-
-        getMediumViewClass: (model) ->
 
         getMediumViewClass: (model) ->
             if model.get('placementType') == PlacementType.HIDDEN

@@ -1,9 +1,9 @@
 require('../polyfills/console')
-{PlantEditorController} = require('./editor/controllers')
+{PlantController} = require('./editor/controllers')
 
 load = () ->
 
-    controller = new PlantEditorController(document.body)
+    controller = new PlantController(document.body)
     controller.start()
 
     return

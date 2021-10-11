@@ -27,7 +27,7 @@
 
     settings                = require('./../settings')
 
-    class PlantEditorController extends EventsAwareClass
+    class PlantController extends EventsAwareClass
 
         constructor: (enclosingHtmlEl) ->
 
@@ -70,4 +70,4 @@
         start: ()       -> @pageView.render()
 
     module.exports =
-        PlantEditorController:          PlantEditorController
+        PlantController:    PlantController
