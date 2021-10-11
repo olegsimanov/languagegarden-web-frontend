@@ -37,8 +37,8 @@
             @setDefaultValue('bgColor', '#FFFFFF')
             if not (MediumType.TEXT_TO_CANVAS in @media.pluck('type'))
                 @media.add
-                    type: MediumType.TEXT_TO_CANVAS
-                    textElements: []
+                    type:           MediumType.TEXT_TO_CANVAS
+                    textElements:   []
 
         get: (attr) ->
             if attr in @getSubCollectionNames()
@@ -48,8 +48,8 @@
             else
                 super
 
-        startTrackingChanges:   -> @trigger('trackchanges', this, true)
-        stopTrackingChanges:    -> @trigger('trackchanges', this, false)
+        startTrackingChanges:           -> @trigger('trackchanges', this, true)
+        stopTrackingChanges:            -> @trigger('trackchanges', this, false)
 
         addElement: (model, options)    -> @elements.add(model, options)
         removeElement: (model, options) -> @elements.remove(model, options)

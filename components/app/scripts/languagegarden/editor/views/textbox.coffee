@@ -47,10 +47,10 @@
             super
             @mediaViews = {}
             @reloadAllMediaViews()
-            @listenTo(@model, 'change:textDirection', @onModelTextDirectionChange)
-            @listenTo(@model.media, 'add', @onMediumAdd)
-            @listenTo(@model.media, 'remove', @onMediumRemove)
-            @listenTo(@model.media, 'reset', @onMediaReset)
+            @listenTo(@model, 'change:textDirection',           @onModelTextDirectionChange)
+            @listenTo(@model.media, 'add',                      @onMediumAdd)
+            @listenTo(@model.media, 'remove',                   @onMediumRemove)
+            @listenTo(@model.media, 'reset',                    @onMediaReset)
             @listenTo(@model.media, 'change:inPlantToTextMode', @onMediumInPlantToTextModeChanged)
 
         areViewsSynced: (viewsDict, collection) -> _.isEqual(_.keys(viewsDict or {}), _.pluck(collection.models, 'cid'))
