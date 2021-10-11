@@ -4,10 +4,7 @@
 
     {BaseView}                  = require('./base')
     {DummyMediumView}           = require('./media/base')
-    {
-        EditorTextToCanvasView
-        TextToCanvasView
-    }                           = require('./media/texttocanvas')
+    {TextToCanvasView}          = require('./media/texttocanvas')
 
     {
         MediumType,
@@ -26,6 +23,23 @@
             @setOption(options, 'letterMetrics', null, true)
             @setOption(options, 'settings', null)
             @rendered = false
+            @mode = CanvasMode.MOVE
+
+        selectionBBoxChange: ->
+
+        toggleModeClass: (mode=@mode, flag=true) -> @$el.toggleClass("#{mode.replace(/\s/g,'-')}-mode", flag)
+
+        setMode: (mode) ->
+            oldMode = @mode
+            if oldMode == mode
+                return
+            @toggleModeClass(@mode, false)
+            @mode = mode
+            @toggleModeClass(@mode, true)
+
+        setDefaultMode: ->
+
+
 
         onParentViewBind: ->
             eventNames = ("change:pageContainer#{suf}" for suf in ['Transform', 'Scale', 'ShiftX', 'ShiftY'])
@@ -52,14 +66,15 @@
             views
 
         getMediumViewClass: (model) ->
+
+        getMediumViewClass: (model) ->
             if model.get('placementType') == PlacementType.HIDDEN
                 null
-            else
-                switch model.get('type')
-                    when MediumType.TEXT_TO_CANVAS
-                        TextToCanvasView
-                    else
-                        null
+            switch model.get('type')
+                when MediumType.TEXT_TO_CANVAS
+                    TextToCanvasView
+                else
+                    null
 
         getMediumViewConstructor: (model) ->
             viewCls = @getMediumViewClass(model) or DummyMediumView
@@ -140,34 +155,5 @@
             @rendered = true
             this
 
-
-
-    class EditorTextBoxView extends TextBoxView
-
-        initialize: () ->
-            super
-            @mode = CanvasMode.MOVE
-
-        getMediumViewClass: (model) ->
-            switch model.get('type')
-                when MediumType.TEXT_TO_CANVAS
-                    EditorTextToCanvasView
-                else
-                    super
-
-        selectionBBoxChange: ->
-
-        toggleModeClass: (mode=@mode, flag=true) -> @$el.toggleClass("#{mode.replace(/\s/g,'-')}-mode", flag)
-
-        setMode: (mode) ->
-            oldMode = @mode
-            if oldMode == mode
-                return
-            @toggleModeClass(@mode, false)
-            @mode = mode
-            @toggleModeClass(@mode, true)
-
-        setDefaultMode: ->
-
     module.exports =
-        EditorTextBoxView: EditorTextBoxView
+        TextBoxView: TextBoxView

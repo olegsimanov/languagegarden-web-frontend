@@ -21,7 +21,7 @@
 
     {PageView}              = require('./views/page')
     {CanvasView}            = require('./views/canvas')
-    {EditorTextBoxView}     = require('./views/textbox')
+    {TextBoxView}           = require('./views/textbox')
     {BuilderToolbarView}    = require('./views/toolbars/builder')
     {LetterMetrics}         = require('./views/svg/svgmetrics')
 
@@ -45,7 +45,7 @@
                                             newWordColor:   editorColors.newWordColor
                                         letterMetrics: @letterMetrics
 
-            @textBoxView        = new EditorTextBoxView
+            @textBoxView        = new TextBoxView
                                         controller:     @
                                         model:          @model
                                         dataModel:      @dataModel

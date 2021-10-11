@@ -25,11 +25,15 @@
         spanDraggedOutClass:    'dragged-out'
         spanMarkedClass:        'marked'
 
-        getPlacementType: -> PlacementType.UNDERSOIL
-
         initialize: (options) ->
             super
-            @setEditableMode(false)
+            @setEditableMode(true)
+
+        isSelected: -> false
+
+        select: ->
+
+        getPlacementType: -> PlacementType.UNDERSOIL
 
         setEditableMode: (enabled=true) ->
             eventHandlerDict =
@@ -422,34 +426,5 @@
             @updateFromModel()
             this
 
-    EditorTextToCanvasView = class extends TextToCanvasView
-
-        initialize: (options) ->
-            super
-            @setEditableMode(true)
-
-        isSelected: -> false
-
-        select: ->
-
-
-    MarkableTextToCanvasView = class extends TextToCanvasView
-
-        isSelected: -> false
-
-        select: ->
-
-        updateFromModel: ->
-            @$(@spanSelector).off('click', @onElementClick)
-            super
-            @$(@spanSelector).on('click', @onElementClick)
-
-        onElementClick: (event) =>
-            $elem = $(event.target)
-            $elem.toggleClass('marked')
-            @setModelContent()
-
-
     module.exports =
-        MarkableTextToCanvasView:    MarkableTextToCanvasView
-        EditorTextToCanvasView:      EditorTextToCanvasView
+        TextToCanvasView:      TextToCanvasView
