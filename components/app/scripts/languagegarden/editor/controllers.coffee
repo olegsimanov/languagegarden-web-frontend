@@ -19,7 +19,7 @@
     {Settings}              = require('./models/settings')
     {UnitState, LessonData} = require('./models/plants')
 
-    {EditorPageView}        = require('./views/page')
+    {PageView}              = require('./views/page')
     {CanvasView}            = require('./views/canvas')
     {EditorTextBoxView}     = require('./views/textbox')
     {BuilderToolbarView}    = require('./views/toolbars/builder')
@@ -29,7 +29,7 @@
 
     class PlantEditorController extends EventsAwareClass
 
-        constructor: (containerElement) ->
+        constructor: (enclosingHtmlEl) ->
 
             @dataModel          = new LessonData()
             @model              = new UnitState()
@@ -55,14 +55,14 @@
             @toolbarView        = new BuilderToolbarView
                                         controller: @
 
-            @pageView           = new EditorPageView
+            @pageView           = new PageView
                                         controller: this
                                         canvasView: @canvasView
                                         subviews:
                                             '.canvas-container':            [@canvasView]
                                             '.text-to-canvas-container':    @textBoxView
                                             '.toolbar-container':           @toolbarView
-                                        containerEl: containerElement
+                                        containerEl: enclosingHtmlEl
 
             @canvasView.setParentView(@pageView)
             @textBoxView.setParentView(@pageView)

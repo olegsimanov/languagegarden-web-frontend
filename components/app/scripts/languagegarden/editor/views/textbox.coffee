@@ -97,24 +97,11 @@
             if not @areViewsSynced(@mediaViews, @model.media)
                 @reloadAllMediaViews()
 
-        hasInstructionsNote: ->
-            for medium in @model.media.models
-                if medium.get('type') == MediumType.INSTRUCTIONS_NOTE
-                    return true
-            false
-
-        updateNotesMode: ->
-            instructionsMode = @hasInstructionsNote()
-            @$el.toggleClass('instructions-mode', instructionsMode)
-
-        updateTextDirection: ->
-            @$el.toggleClass('plant-to-text-box__rtl',
-                @dataModel.get('textDirection') == 'rtl')
+        updateTextDirection: -> @$el.toggleClass('plant-to-text-box__rtl', @dataModel.get('textDirection') == 'rtl')
 
         onMediumAdd: (model, collection, options)       -> @addMediumView(model)
         onMediumRemove: (model, collection, options)    -> @removeMediumView(model)
         onMediaReset: (collection, options)             -> @reloadAllMediaViews()
-        onMediumInPlantToTextModeChanged:               -> @updateNotesMode()
         onModelTextDirectionChange:                     -> @updateTextDirection()
 
         addCanvasElement: (options) =>
@@ -147,7 +134,6 @@
         render: ->
             super
             @syncMediaViews()
-            @updateNotesMode()
             @updateTextDirection()
             for own name, view of @mediaViews
                 view.render()
@@ -171,8 +157,7 @@
 
         selectionBBoxChange: ->
 
-        toggleModeClass: (mode=@mode, flag=true) ->
-            @$el.toggleClass("#{mode.replace(/\s/g,'-')}-mode", flag)
+        toggleModeClass: (mode=@mode, flag=true) -> @$el.toggleClass("#{mode.replace(/\s/g,'-')}-mode", flag)
 
         setMode: (mode) ->
             oldMode = @mode

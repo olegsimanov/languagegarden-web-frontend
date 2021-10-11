@@ -18,8 +18,12 @@
         initialize: (options) ->
             super
             $(window).on('resize', @updateContainerTransform)
+            @canvasView = options.canvasView
+            @forwardEventsFrom(@canvasView, 'navigate')
 
         remove: ->
+            @stopListening(@canvasView)
+            delete @canvasView
             $(window).off('resize', @updateContainerTransform)
             @removeAllSubviews()
             super
@@ -134,18 +138,5 @@
             @transformPageToContainerCoords(x + @canvasContainerShiftX,
                 y + @canvasContainerShiftY)
 
-    EditorPageView = class extends PageView
-
-        initialize: (options) ->
-            super
-            @canvasView = options.canvasView
-            @forwardEventsFrom(@canvasView, 'navigate')
-
-        remove: ->
-            @stopListening(@canvasView)
-            delete @canvasView
-            super
-
-
     module.exports =
-        EditorPageView: EditorPageView
+        PageView: PageView
