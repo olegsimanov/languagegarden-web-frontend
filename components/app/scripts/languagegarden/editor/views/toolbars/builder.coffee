@@ -11,8 +11,8 @@
     {StatefulToolbarView}       = require('./../../views/toolbars/stateful')
     {NavButtonView}             = require('./../../views/toolbars/navbuttons')
     {
-        SaveAndGoToNavigator
-        DiscardAndGoToNavigator
+        SaveAndGoToNavigatorAction
+        DiscardAndGoToNavigatorAction
     }                           = require('./../../actions/navigation')
     {CanvasMode}                = require('./../../constants')
     settings                    = require('./../../../settings')
@@ -44,23 +44,24 @@
         toolbarName: ToolbarEnum.BUILDER
 
         plantNavMenu: [
-            actionClass:    DiscardAndGoToNavigator
+            actionClass:    DiscardAndGoToNavigatorAction
             viewType:       'button'
             context:        {customClassName: 'icon icon_back'}
         ]
         contentMenu: [
-            {viewClass: SelectionButtonGroupView, viewType: 'buttongroup'}
+            viewClass: SelectionButtonGroupView,
+            viewType: 'buttongroup'
         ]
         controlButtonsMenu: [
-            {
-                viewType:   'navbutton'
-                viewClass:  PaletteNavButtonView
-                context:    {navTarget: ToolbarEnum.COLOR}
-            }
+
+            viewClass:      PaletteNavButtonView
+            viewType:       'navbutton'
+            context:        {navTarget: ToolbarEnum.COLOR}
         ,
-            actionClass:    SaveAndGoToNavigator
+            actionClass:    SaveAndGoToNavigatorAction
             viewType:       'button'
             context:        {customClassName: 'icon icon_check'}
+
         ]
 
     class ColorToolbarView extends EditorSubToolbarView

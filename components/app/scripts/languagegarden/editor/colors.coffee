@@ -16,13 +16,6 @@
         {colorTools: ['Verb', 'Adjective', 'Adverb']}
     ]
 
-    blobColors = [
-        {color: '3CC2F7', label: 'Subject'}
-        {color: 'FBA6BD', label: 'Predicate'}
-        {color: 'FFBD1C', label: 'Adverbial'}
-        {color: 'DED4A3', label: 'Clause'}
-    ]
-
     colorPalette = [
         "#524640"
         "#FF9A43"
@@ -44,36 +37,7 @@
         "#180721"
     ]
 
-    backgroundColorChoices = [
-        # light colors
-        '#FFFFFF'
-        '#BEDBFF'
-        '#A8CBDE'
-        '#E8D892'
-        '#FFF386'
-        '#E8A222'
-        '#E8C04E'
-        '#FC6936'
-        '#F13A0E'
-        '#2071D7'
-
-        # dark colors
-        '#000000'
-        '#1B1C11'
-        '#231717'
-        '#262433'
-        '#253652'
-        '#3E4B52'
-        '#6E8591'
-        '#984D25'
-        '#6F586C'
-        '#0A438A'
-    ]
-
     module.exports =
         newWordColor:           '#332A2E'
-        previewPanelWordColor:  '#576C0C'
         initialTools:           initialTools
-        blobColors:             blobColors
         colorPalette:           colorPalette
-        backgroundColorChoices: backgroundColorChoices

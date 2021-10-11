@@ -3,7 +3,7 @@
     _                   = require('underscore')
     {Action}            = require('./base')
 
-    class GoToControllerBase extends Action
+    class GoToControllerBaseAction extends Action
 
         navigationType:     null
         trackingChanges:    false
@@ -16,16 +16,16 @@
             plantId:    @controller.dataModel.id
 
 
-    class DiscardAndGoToNavigator   extends GoToControllerBase
+    class DiscardAndGoToNavigatorAction   extends GoToControllerBaseAction
         navigationType: 'nav-plant'
         id:             'discard-and-go-to-navigator'
 
-    class SaveAndGoToNavigator      extends GoToControllerBase
+    class SaveAndGoToNavigatorAction     extends GoToControllerBaseAction
         navigationType: 'nav-plant'
         id:             'save-and-go-to-navigator'
         isAvailable:    -> false
 
 
     module.exports =
-        DiscardAndGoToNavigator:    DiscardAndGoToNavigator
-        SaveAndGoToNavigator:       SaveAndGoToNavigator
+        DiscardAndGoToNavigatorAction:    DiscardAndGoToNavigatorAction
+        SaveAndGoToNavigatorAction:       SaveAndGoToNavigatorAction

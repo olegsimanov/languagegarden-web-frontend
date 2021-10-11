@@ -16,7 +16,7 @@
             @constructor = child
             return this
         Surrogate.prototype = parent.prototype
-        child.prototype = new Surrogate()
+        child.prototype     = new Surrogate()
 
         if protoProps
             _.extend(child.prototype, protoProps)
@@ -33,8 +33,7 @@
         child
 
 
-    extend = (protoProps, staticProps) ->
-        extendHelper(this, protoProps, staticProps)
+    extend = (protoProps, staticProps) -> extendHelper(this, protoProps, staticProps)
 
 
     module.exports =
