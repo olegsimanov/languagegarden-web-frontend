@@ -1,7 +1,7 @@
     'use strict'
 
-    {BBox} = require('./../../../math/bboxes')
-    {TSpanMultiColorGradient} = require('./../../../common/svggradient')
+    {BBox}                      = require('./../../../math/bboxes')
+    {TSpanMultiColorGradient}   = require('./../../../common/svggradient')
 
 
     applyGradientOverElement = (element, tool, editor, paper) ->
@@ -33,16 +33,16 @@
 
     contributeToPie = (pie, tool, editor) ->
         switch tool.type
-            when 'color' then applySimpleColor(pie, tool)
-            when 'splitcolor' then applyGradientColor(pie, tool, editor)
+            when 'color'        then applySimpleColor(pie, tool)
+            when 'splitcolor'   then applyGradientColor(pie, tool, editor)
 
     contributeToPreview = (preview, tool, editor) ->
         switch tool.type
-            when 'color' then applySimpleColor(preview, tool)
-            when 'splitcolor' then applyGradientColor(preview, tool, editor)
+            when 'color'        then applySimpleColor(preview, tool)
+            when 'splitcolor'   then applyGradientColor(preview, tool, editor)
 
 
     module.exports =
-        applyGradientColor: applyGradientColor
-        contributeToPie: contributeToPie
-        contributeToPreview: contributeToPreview
+        applyGradientColor:         applyGradientColor
+        contributeToPie:            contributeToPie
+        contributeToPreview:        contributeToPreview

@@ -9,7 +9,7 @@
     {
         EditorColorModeButtonView
         EditorToggleButtonView
-    } = require('./../buttons')
+    }                           = require('./../buttons')
     {CanvasMode}                = require('./../../constants')
     {SplitColorTool}            = require('./../../models/palette')
 
@@ -19,8 +19,8 @@
 
     PlaceholderView = class extends BaseView
 
-        className: 'split-color-picker-placeholder'
-        render: => @
+        className:  'split-color-picker-placeholder'
+        render:     => @
 
 
     SplitColorPaletteEditButtonView = class extends EditorToggleButtonView
