@@ -5,9 +5,6 @@
     {slugify}           = require('./../../utils')
 
 
-    navEventBaseName    = 'toolbarnav'
-    getNavEventName     = (navTarget) -> "#{navEventBaseName}:#{ slugify(navTarget) }"
-
     NavButtonPrototype =
 
         __required_interface_methods__: [
@@ -20,7 +17,7 @@
         triggerToolbarNavEvent:                          -> @trigger(@eventName, @, @navTarget)
 
         getNavButtonClass: (navTarget=@navTarget)   -> "toolbar-button-#{ slugify(@navTarget) }"
-        getNavEventName: (navTarget=@navTarget)     -> getNavEventName(navTarget)
+        getNavEventName: (navTarget=@navTarget)     -> "toolbarnav:#{ slugify(navTarget) }"
 
         initializeNavButton: (options) ->
             @setOptions(options, ['navTarget'], true)
@@ -50,7 +47,6 @@
 
 
     module.exports =
-        getNavEventName:            getNavEventName
         NavButtonView:              NavButtonView
         BackButtonView:             BackButtonView
         NavButtonPrototype:         NavButtonPrototype
