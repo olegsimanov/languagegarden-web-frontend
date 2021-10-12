@@ -7,7 +7,6 @@
     }                           = require('./base')
     {SquarePickerView}          = require('./../colorpicker/square')
     {SelectionButtonGroupView}  = require('./../buttongroups/selection')
-    {ToolbarEnum}               = require('./../../views/toolbars/constants')
     {StatefulToolbarView}       = require('./../../views/toolbars/stateful')
     {NavButtonView}             = require('./../../views/toolbars/navbuttons')
     {
@@ -16,6 +15,11 @@
     }                           = require('./../../actions/navigation')
     {CanvasMode}                = require('./../../constants')
     settings                    = require('./../../../settings')
+
+    ToolbarEnum =
+        NAVIGATION:     'navigation'
+        BUILDER:        'builder'
+        COLOR:          'color'
 
     class PaletteNavButtonView extends NavButtonView
 
