@@ -1,15 +1,11 @@
     'use strict'
 
     _                   = require('underscore')
-    {ButtonView}        = require('./../buttons')
+    {ButtonView}        = require('./buttons')
     {slugify}           = require('./../../utils')
 
 
     NavButtonPrototype =
-
-        __required_interface_methods__: [
-            'isEnabled',
-        ]
 
         navTarget: null
         eventName: null

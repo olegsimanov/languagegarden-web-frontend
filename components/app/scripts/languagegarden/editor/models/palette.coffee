@@ -16,9 +16,9 @@
 
     class ColorTool extends Tool
 
-        name: 'Color'
-        editable: true
-        type: 'color'
+        name:       'Color'
+        editable:   true
+        type:       'color'
 
         initialize: (options) =>
             super

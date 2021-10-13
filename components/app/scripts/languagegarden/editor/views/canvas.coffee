@@ -11,12 +11,12 @@
         EditorElementView,
         EditedElementView}                  = require('./elements')
 
-    {EditorDummyMediumView}                 = require('./media/base')
+    {EditorDummyMediumView}                 = require('./texttocanvas')
 
     {
         disableSelection
         addSVGElementClass
-    }                                       = require('./domutils')
+    }                                       = require('./utils/dom')
 
     {LetterMetrics}                         = require('./svg/svgmetrics')
 

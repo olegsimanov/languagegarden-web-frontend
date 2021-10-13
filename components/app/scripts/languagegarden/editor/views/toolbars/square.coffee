@@ -3,13 +3,13 @@
     _ = require('underscore')
     $ = require('jquery')
 
-    {BaseView}                  = require('./../base')
-    {template}                  = require('./../templates')
-    {RenderableView}            = require('./../renderable')
     {
         EditorColorModeButtonView
         EditorToggleButtonView
-    }                           = require('./../buttons')
+    }                           = require('./buttons')
+    {BaseView}                  = require('./../base')
+    {template}                  = require('./../templates')
+    {RenderableView}            = require('./../renderable')
     {CanvasMode}                = require('./../../constants')
     {SplitColorTool}            = require('./../../models/palette')
 

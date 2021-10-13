@@ -1,10 +1,10 @@
     'use strict'
 
     _ = require('underscore')
-    {ButtonView}            = require('./../buttons')
+    {ButtonView}            = require('./buttons')
     {RenderableView}        = require('./../renderable')
-    {slugify}               = require('./../../utils')
     {template}              = require('./../templates')
+    {slugify}               = require('./../../utils')
     {BackButtonView}        = require('./../../views/toolbars/navbuttons')
     settings                = require('./../../../settings')
 

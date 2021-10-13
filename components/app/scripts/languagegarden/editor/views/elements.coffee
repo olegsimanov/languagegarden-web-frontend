@@ -11,19 +11,19 @@
 
     {PlantChildView}                = require('./base')
     {TextPath, SyntheticTextPath}   = require('./textpaths')
-    {getTrimmedWordParams}          = require('./elementsplit')
+    {
+        getLetterAreaPathStringAndPoints
+        getBigUpperPath
+        getBigLowerPath
+    }                               = require('./utils/letterareas')
+    {getTrimmedWordParams}          = require('./utils/elementsplit')
     {
         addSVGElementClass
         removeSVGElementClass
         setCaretPosition
         getCaretPosition
         disableSelection
-    }                               = require('./domutils')
-    {
-        getLetterAreaPathStringAndPoints
-        getBigUpperPath
-        getBigLowerPath
-    }                               = require('./letterareas')
+    }                               = require('./utils/dom')
     {LetterMetrics}                 = require('./svg/svgmetrics')
 
     {Point}                         = require('./../math/points')

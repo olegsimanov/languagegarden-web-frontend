@@ -3,14 +3,14 @@
     _                           = require('underscore')
     Hammer                      = require('hammerjs')
 
-    {BaseView}                  = require('./base')
-    {disableSelection}          = require('./domutils')
-    utils                       = require('./../utils')
-    {StatefulClassPrototype}    = require('./../stateful')
-    {ColorMode}                 = require('./../constants')
-    navigationActions           = require('./../actions/navigation')
-    {Point}                     = require('./../math/points')
-    settings                    = require('./../../settings')
+    {BaseView}                  = require('./../base')
+    {disableSelection}          = require('./../utils/dom')
+    {StatefulClassPrototype}    = require('./../../stateful')
+    utils                       = require('./../../utils')
+    {ColorMode}                 = require('./../../constants')
+    {Point}                     = require('./../../math/points')
+    navigationActions           = require('./../../actions/navigation')
+    settings                    = require('./../../../settings')
 
 
 
@@ -190,21 +190,12 @@
             event.preventDefault()
             @action.fullPerform()
 
-    class DoneButtonView extends MenuActionButtonView
-        actionClass:        navigationActions.SaveAndGoToNavigator
-        customClassName:    'icon icon_check'
-
-
     ##########################################################################################################
     #                                        stateful buttons
     ##########################################################################################################
 
 
     StateButtonViewPrototype =
-
-        __required_interface_methods__: [
-            'toggleClass',
-        ]
 
         getStateCssClass: (state) -> "button-state-#{utils.slugify(state)}"
         updateStateCss: (currentState=@currentState) ->
@@ -282,7 +273,6 @@
 
     module.exports =
         ButtonView:                 EditorButtonView
-        DoneButtonView:             DoneButtonView
         TooltipButtonView:          TooltipButtonView
         EditorToggleButtonView:     EditorToggleButtonView
         EditorColorModeButtonView:  EditorColorModeButtonView

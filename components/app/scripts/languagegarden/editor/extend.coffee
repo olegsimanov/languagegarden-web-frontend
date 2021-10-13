@@ -21,14 +21,6 @@
         if protoProps
             _.extend(child.prototype, protoProps)
 
-            if _.has(protoProps, '__required_interface_methods__')
-                for methodName in protoProps.__required_interface_methods__
-                    if not child.prototype[methodName]?
-                        do ->
-                            msg = "called missing #{methodName} method!"
-                            child.prototype[methodName] = -> console.error(msg)
-
-
         child.__super__ = parent.prototype
         child
 

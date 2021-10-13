@@ -4,7 +4,7 @@
     $                       = require('jquery')
 
     {RenderableView}        = require('./renderable')
-    {getOffsetRect}         = require('./domutils')
+    {getOffsetRect}         = require('./utils/dom')
     {template}              = require('./templates')
 
     {AffineTransformation}  = require('./../math/transformations')

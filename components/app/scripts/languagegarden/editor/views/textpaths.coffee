@@ -10,7 +10,7 @@
         addSVGElementClass
         removeSVGElementClass
         toggleSVGElementClass
-    }                               = require('./domutils')
+    }                               = require('./utils/dom')
     {TSpanMultiColorGradient}       = require('./svg/svggradient')
     {
         structuralEquals
@@ -23,7 +23,7 @@
 
     settings                        = require('./../../settings')
 
-    {CanvasLayers}                  = require('./../../editor/constants')
+    {CanvasLayers}                  = require('../constants')
 
 
 

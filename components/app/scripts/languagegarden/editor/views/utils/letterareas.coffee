@@ -6,14 +6,14 @@
     {
         getPolygonPathString,
         getQuadrilateralPathString
-    }                                   = require('./domutils')
-    {getCharRange}                      = require('./../utils')
+    }                                   = require('../utils/dom')
+    {getCharRange}                      = require('../../utils')
     {
         LinearTransformation
         AffineTransformation
-    }                                   = require('./../math/transformations')
-    {Point}                             = require('./../math/points')
-    {Path}                              = require('./../math/bezier')
+    }                                   = require('../../math/transformations')
+    {Point}                             = require('../../math/points')
+    {Path}                              = require('../../math/bezier')
 
 
 

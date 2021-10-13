@@ -10,7 +10,7 @@
     {
         addSVGElementClass
         removeSVGElementClass
-    }                   = require('./../domutils')
+    }                   = require('./../utils/dom')
     {Point}             = require('./../../math/points')
 
 

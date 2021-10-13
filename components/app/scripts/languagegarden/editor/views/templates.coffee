@@ -28,8 +28,7 @@
     templateContext = require.context('./../../../../templates/', true, /^.*\.ejs$/);
 
 
-    template = (name) ->
-        templateWrapper(templateContext(name))
+    template = (name) -> templateWrapper(templateContext(name))
 
 
     module.exports =

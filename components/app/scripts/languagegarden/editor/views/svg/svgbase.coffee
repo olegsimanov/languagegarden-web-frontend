@@ -2,7 +2,7 @@
 
     _ = require('underscore')
     $ = require('jquery')
-    {disableSelection} = require('./../domutils')
+    {disableSelection} = require('./../utils/dom')
 
 
     class SVGWrappedElement

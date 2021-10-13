@@ -4,12 +4,12 @@
     jQuery                  = require('jquery')
     $                       = require('jquery')
 
-    utils                   = require('./../utils')
-    settings                = require('./../../settings')
+    utils                   = require('./../../utils')
+    settings                = require('../../../settings')
 
-    {Point}                 = require('./../math/points')
-    {BBox}                  = require('./../math/bboxes')
-    {AffineTransformation}  = require('./../math/transformations')
+    {Point}                 = require('../../math/points')
+    {BBox}                  = require('../../math/bboxes')
+    {AffineTransformation}  = require('../../math/transformations')
 
 
     getOffsetRect = (node) ->

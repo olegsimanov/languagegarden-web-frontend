@@ -4,7 +4,7 @@
     _ = require('underscore')
     $ = require('jquery')
 
-    {disableSelection}      = require('./../domutils')
+    {disableSelection}      = require('./../utils/dom')
     {Point}                 = require('./../../math/points')
     {Path}                  = require('./../../math/bezier')
     {wrapLetterWithZWJ}     = require('./../../utils')

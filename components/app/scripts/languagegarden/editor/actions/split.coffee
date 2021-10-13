@@ -8,7 +8,7 @@
     {
         getWordSplits
         getWordSplitIndices
-    }               = require('./../views/elementsplit')
+    }               = require('./../views/utils/elementsplit')
 
 
     class SplitWordElement extends Action

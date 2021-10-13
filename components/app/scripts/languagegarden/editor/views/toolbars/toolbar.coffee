@@ -5,8 +5,8 @@
         EditorToolbarView,
         EditorSubToolbarView
     }                           = require('./base')
-    {SquarePickerView}          = require('./../colorpicker/square')
-    {SelectionButtonGroupView}  = require('./../buttongroups/selection')
+    {SelectionButtonGroupView}  = require('./selection')
+    {SquarePickerView}          = require('./square')
     {StatefulToolbarView}       = require('./../../views/toolbars/stateful')
     {NavButtonView}             = require('./../../views/toolbars/navbuttons')
     {
@@ -52,10 +52,12 @@
             viewType:       'button'
             context:        {customClassName: 'icon icon_back'}
         ]
+
         contentMenu: [
-            viewClass: SelectionButtonGroupView,
-            viewType: 'buttongroup'
+            viewClass:      SelectionButtonGroupView,
+            viewType:       'buttongroup'
         ]
+
         controlButtonsMenu: [
 
             viewClass:      PaletteNavButtonView
@@ -80,7 +82,7 @@
             canvasView.setMode(mode)
 
 
-    class BuilderToolbarView extends StatefulToolbarView
+    class ToolbarView extends StatefulToolbarView
 
         defaultState: TooltipToolbarView::toolbarName
 
@@ -97,6 +99,4 @@
 
 
     module.exports =
-        BuilderToolbarView:     BuilderToolbarView
-        TooltipToolbarView:     TooltipToolbarView
-        ColorToolbarView:       ColorToolbarView
+        ToolbarView:            ToolbarView
