@@ -4,7 +4,7 @@
 
     {TransformBehavior}     = require('./transform')
 
-    {Point}                 = require('./../../math/points')
+    {Point}                 = require('./../math/points')
 
 
     class SingleLetterRotateBehavior extends TransformBehavior

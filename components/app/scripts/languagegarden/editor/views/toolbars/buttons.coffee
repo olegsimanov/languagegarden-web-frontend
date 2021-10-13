@@ -3,9 +3,9 @@
     _                           = require('underscore')
     Hammer                      = require('hammerjs')
 
+    {StatefulClassPrototype}    = require('./stateful')
     {BaseView}                  = require('./../base')
     {disableSelection}          = require('./../utils/dom')
-    {StatefulClassPrototype}    = require('./../../stateful')
     utils                       = require('./../../utils')
     {ColorMode}                 = require('./../../constants')
     {Point}                     = require('./../../math/points')

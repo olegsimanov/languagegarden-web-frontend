@@ -29,19 +29,18 @@
         SplitColorAction
     }                                       = require('./../actions/color')
 
-    {MoveBehavior}                          = require('./../behaviors/mode/move')
-    {ColorBehavior}                         = require('./../behaviors/mode/color')
-    {StretchBehavior}                       = require('./../behaviors/mode/stretch')
-    {ScaleBehavior}                         = require('./../behaviors/mode/scale')
-    {GroupScaleBehavior}                    = require('./../behaviors/mode/groupscale')
-    {EditBehavior}                          = require('./../behaviors/mode/edit')
-    {TextEditBehavior}                      = require('./../behaviors/mode/textedit')
-    {RotateBehavior}                        = require('./../behaviors/mode/rotate')
+    MoveBehavior                            = require('./../behaviors/modes').MoveBehavior
+    ColorBehavior                           = require('./../behaviors/modes').ColorBehavior
+    StretchBehavior                         = require('./../behaviors/modes').StretchBehavior
+    ScaleBehavior                           = require('./../behaviors/modes').ScaleBehavior
+    GroupScaleBehavior                      = require('./../behaviors/modes').GroupScaleBehavior
+    EditBehavior                            = require('./../behaviors/modes').EditBehavior
+    TextEditBehavior                        = require('./../behaviors/modes').TextEditBehavior
+    RotateBehavior                          = require('./../behaviors/modes').RotateBehavior
 
 
     {
         MediumType
-        PlacementType
         CanvasMode
         CanvasLayers
         ColorMode
@@ -394,20 +393,20 @@
         #                                           api:media views
         ##########################################################################################################
 
-        getMediumViewClass: (model) -> null
+        getMediumViewClass: (model)                 -> null
 
-        getMediumViewConstructor: (model) ->
+        getMediumViewConstructor: (model)           ->
             viewCls = @getMediumViewClass(model) or EditorDummyMediumView
             (options) -> new viewCls(options)
 
-        getMediumViewConstructorOptions: (model) ->
+        getMediumViewConstructorOptions: (model)    ->
             model:          model
             parentView:     this
             paper:          @paper
             containerEl:    @el
             editor:         this
 
-        getMediaViews: (mediaTypes) =>
+        getMediaViews: (mediaTypes)                 =>
             views = (view for name, view of @mediaViews)
             if mediaTypes?
                 mediaTypes = [mediaTypes] if _.isString(mediaTypes)
@@ -421,13 +420,13 @@
         addMediumView: (model) ->
             constructor = @getMediumViewConstructor(model)
             options     = @getMediumViewConstructorOptions(model)
-            view = constructor(options)
+            view        = constructor(options)
             @mediaViews["#{model.cid}"] = view
             @listenTo(view, 'selectchange', => @trigger('selectchange', view))
             view.render()
 
         removeMediumView: (model) ->
-            view = @mediaViews["#{model.cid}"]
+            view        = @mediaViews["#{model.cid}"]
             wasSelected = view.isSelected()
 
             @stopListening(view)
