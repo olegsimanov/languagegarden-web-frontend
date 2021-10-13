@@ -2,9 +2,9 @@
 
     _ = require('underscore')
 
-    {Point}     = require('./../math/points')
-    {BBox}      = require('./../math/bboxes')
-    {extend}    = require('./../extend')
+    {Point}     = require('./../../math/points')
+    {BBox}      = require('./../../math/bboxes')
+    {extend}    = require('./../../extend')
 
 
     class PlantChildBehavior

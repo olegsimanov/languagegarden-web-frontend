@@ -9,8 +9,8 @@
         DragBehaviorBase
     }                   = require('./base')
 
-    {Point}             = require('./../math/points')
-    {BBox}              = require('./../math/bboxes')
+    {Point}             = require('./../../math/points')
+    {BBox}              = require('./../../math/bboxes')
 
     class MoveBehavior extends DragBehaviorBase.extend(LetterBehaviorPrototype).extend(LetterDragBehaviorPrototype)
 

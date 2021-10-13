@@ -4,10 +4,10 @@
 
     {DragBehavior}      = require('./base')
 
-    {Point}             = require('./../math/points')
-    {Line}              = require('./../math/lines')
+    {Point}             = require('./../../math/points')
+    {Line}              = require('./../../math/lines')
 
-    settings            = require('./../../settings')
+    settings            = require('./../../../settings')
 
 
     class TransformBehavior extends DragBehavior

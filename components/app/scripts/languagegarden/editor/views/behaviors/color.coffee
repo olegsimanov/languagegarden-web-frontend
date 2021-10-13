@@ -1,7 +1,7 @@
     'use strict'
 
     {ClickBehavior} = require('./base')
-    {ColorMode}     = require('./../constants')
+    {ColorMode}     = require('./../../constants')
 
 
     class ColorBehavior extends ClickBehavior

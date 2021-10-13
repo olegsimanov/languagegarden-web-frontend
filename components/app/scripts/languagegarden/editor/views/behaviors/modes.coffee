@@ -11,9 +11,9 @@
     LetterBendBehavior                  = require('./bend').BendBehavior
     LetterStretchBehavior               = require('./stretch').StretchBehavior
 
-    {MediumType}                        = require('./../constants')
-    {Point}                             = require('./../math/points')
-    {BBox}                              = require('./../math/bboxes')
+    {MediumType}                        = require('./../../constants')
+    {Point}                             = require('./../../math/points')
+    {BBox}                              = require('./../../math/bboxes')
 
 
     class BaseModeBehavior

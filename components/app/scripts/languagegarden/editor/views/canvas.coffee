@@ -29,14 +29,14 @@
         SplitColorAction
     }                                       = require('./../actions/color')
 
-    MoveBehavior                            = require('./../behaviors/modes').MoveBehavior
-    ColorBehavior                           = require('./../behaviors/modes').ColorBehavior
-    StretchBehavior                         = require('./../behaviors/modes').StretchBehavior
-    ScaleBehavior                           = require('./../behaviors/modes').ScaleBehavior
-    GroupScaleBehavior                      = require('./../behaviors/modes').GroupScaleBehavior
-    EditBehavior                            = require('./../behaviors/modes').EditBehavior
-    TextEditBehavior                        = require('./../behaviors/modes').TextEditBehavior
-    RotateBehavior                          = require('./../behaviors/modes').RotateBehavior
+    MoveBehavior                            = require('./behaviors/modes').MoveBehavior
+    ColorBehavior                           = require('./behaviors/modes').ColorBehavior
+    StretchBehavior                         = require('./behaviors/modes').StretchBehavior
+    ScaleBehavior                           = require('./behaviors/modes').ScaleBehavior
+    GroupScaleBehavior                      = require('./behaviors/modes').GroupScaleBehavior
+    EditBehavior                            = require('./behaviors/modes').EditBehavior
+    TextEditBehavior                        = require('./behaviors/modes').TextEditBehavior
+    RotateBehavior                          = require('./behaviors/modes').RotateBehavior
 
 
     {
