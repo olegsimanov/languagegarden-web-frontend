@@ -11,7 +11,7 @@
 
     class BendBehavior extends DragBehavior
 
-        id: 'bend'
+        id:                     'bend'
         shouldCheckOutOfBounds: true
 
         onDragStart: (view, event, x, y, options) =>
