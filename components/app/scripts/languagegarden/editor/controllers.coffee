@@ -22,7 +22,7 @@
     {PageView}              = require('./views/page')
     {CanvasView}            = require('./views/canvas')
     {TextBoxView}           = require('./views/textbox')
-    {ToolbarView}           = require('./views/toolbars/toolbar')
+    {ToolbarView}           = require('./views/toolbar')
     {LetterMetrics}         = require('./views/svg/svgmetrics')
 
     settings                = require('./../settings')

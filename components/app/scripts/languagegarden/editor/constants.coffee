@@ -56,8 +56,15 @@
         @TEXT_EDIT          = 'text edit'
         @ROTATE             = 'rotate'
 
+    ToolbarEnum =
+        NAVIGATION:     'navigation'
+        BUILDER:        'builder'
+        COLOR:          'color'
+
+
     module.exports =
 
+        ToolbarEnum:        ToolbarEnum
         ColorMode:          ColorMode
         CanvasMode:         CanvasMode
         CanvasLayers:       CanvasLayers
