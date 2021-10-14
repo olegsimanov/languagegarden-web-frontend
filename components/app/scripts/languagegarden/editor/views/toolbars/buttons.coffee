@@ -9,7 +9,6 @@
     utils                       = require('./../../utils')
     {ColorMode}                 = require('./../../constants')
     {Point}                     = require('./../../math/points')
-    navigationActions           = require('./../../actions/navigation')
     settings                    = require('./../../../settings')
 
 
