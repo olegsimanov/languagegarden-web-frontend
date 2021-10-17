@@ -5,7 +5,7 @@
     {SubCollectionPrototype}    = require('./subcollection')
     {VisibilityType}            = require('./../constants')
     {getAttrsOpts}              = require('./../utils')
-    {ICanForwardEvents}          = require('./../events')
+    {ICanForwardEvents}         = require('./../events')
 
     class BaseModel extends Backbone.Model.extend(ICanForwardEvents)
 
