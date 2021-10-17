@@ -15,7 +15,7 @@
         initializeListeners:    ->
 
         triggerAvailableChange: -> @trigger('change:available', this, @isAvailable())
-        triggerToggledChange:   -> @trigger('change:toggled', this, @isToggled())
+        triggerToggledChange:   -> @trigger('change:toggled',   this, @isToggled())
 
         perform: ->
 
