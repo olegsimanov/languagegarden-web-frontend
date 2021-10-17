@@ -163,7 +163,7 @@
         toolbarName:                'toolbar-name-missing'
         fallbackActionViewClass:    ButtonView
 
-        getToolbarViewAnchors: -> @toolbarViewAnchors
+        getToolbarViewAnchors:      -> @toolbarViewAnchors
 
         initialize: (options) ->
             @active = true
@@ -244,14 +244,6 @@
                         editor:                     @controller.canvasView
                         model:                      @controller.canvasView.editorPalette
                         shouldAppendToContainer:    false
-                when 'settingsButton'
-                    args =
-                        controller:                 @controller
-                        editor:                     @controller.canvasView
-                        modalView:                  @settingsView
-                when 'label'
-                    args =
-                        controller:                 @controller
                 else
                     console.error("Uknown view type: #{viewData.viewType}")
 
@@ -284,21 +276,6 @@
         updateVisibility: -> @$('.toolbar').toggleClass('toolbar_active', @active)
 
         onActiveChanged: ->
-
-
-    class EditorToolbarView extends BaseToolbarView
-
-        template: template('./common/toolbars/navigator.ejs')
-
-        toolbarViewAnchors:
-            '.station-navigator':           'plantNavMenu'
-            '.toolbar__section_mid':        'contentMenu'
-            '.toolbar__section_right':      'controlButtonsMenu'
-
-        desktopInit: ->
-
-        remove: ->
-            super
 
     NavButtonPrototype =
 
@@ -335,6 +312,20 @@
         navTarget:              'back'
         getNavButtonClass:      -> "#{super} icon icon_back"
 
+    class EditorToolbarView extends BaseToolbarView
+
+        template: template('./common/toolbars/navigator.ejs')
+
+        toolbarViewAnchors:
+            '.station-navigator':           'plantNavMenu'
+            '.toolbar__section_mid':        'contentMenu'
+            '.toolbar__section_right':      'controlButtonsMenu'
+
+        desktopInit: ->
+
+        remove: ->
+            super
+
     class EditorSubToolbarView extends EditorToolbarView
 
         template: template('./common/toolbars/container.ejs')
@@ -348,6 +339,8 @@
             '.toolbar__section_left':   'backNav'
             '.toolbar__section_mid':    'contentMenu'
             '.toolbar__section_right':  'rightSide'
+
+
 
 
     class TooltipButtonView extends ButtonView
