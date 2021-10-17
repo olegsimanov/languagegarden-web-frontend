@@ -11,7 +11,7 @@
         EditorElementView,
         EditedElementView}                  = require('./elements')
 
-    {EditorDummyMediumView}                 = require('./texttocanvas')
+    {EditorDummyMediumView}                 = require('./media')
 
     {
         disableSelection
