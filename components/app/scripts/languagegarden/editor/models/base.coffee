@@ -5,9 +5,9 @@
     {SubCollectionPrototype}    = require('./subcollection')
     {VisibilityType}            = require('./../constants')
     {getAttrsOpts}              = require('./../utils')
-    {CanForwardEvents}          = require('./../events')
+    {ICanForwardEvents}          = require('./../events')
 
-    class BaseModel extends Backbone.Model.extend(CanForwardEvents)
+    class BaseModel extends Backbone.Model.extend(ICanForwardEvents)
 
         setParentModel: (model) -> @parentModel = model
         getParentModel:         -> @parentModel

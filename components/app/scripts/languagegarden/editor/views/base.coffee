@@ -1,14 +1,11 @@
     'use strict'
 
-    _           = require('underscore')
-    jQuery      = require('jquery')
-    Backbone    = require('backbone')
+    _                                   = require('underscore')
+    jQuery                              = require('jquery')
+    Backbone                            = require('backbone')
 
-    {CanForwardEvents}                  = require('./../events')
-    {
-        buildMixinWithProperty
-        CanMakePropertyFromOptions
-    }                                   = require('./../properties')
+    {ICanForwardEvents}                 = require('./../events')
+    {ICanMakePropertyFromOptions}       = require('./../properties')
     {capitalize}                        = require('./../utils')
 
     {
@@ -16,11 +13,41 @@
         markedOpacityMap
     }                                   = require('./../../editor/constants')
 
+    {capitalize}                        = require('../utils')
 
+    buildMixinWithProperty = (propName) ->
+
+        bindHandlerName     = "on#{capitalize(propName)}Bind"
+        unbindHandlerName   = "on#{capitalize(propName)}Unbind"
+
+        setterName          = "set#{capitalize(propName)}"
+
+        proto               = {}
+        proto[setterName]   = (value, options={}) ->
+
+            silent  = options.silent or false
+            force   = options.force or false
+
+            if value == @[propName] and not force
+                return this
+
+            if @[propName]? and not silent
+                @[unbindHandlerName](options)
+
+            @[propName] = value
+
+            if @[propName]? and not silent
+                @[bindHandlerName](options)
+
+            this
+
+        proto[bindHandlerName]      = ->
+        proto[unbindHandlerName]    = -> @stopListening(@[propName])
+        proto
 
     BaseViewCore = Backbone.View
-        .extend(CanForwardEvents)
-        .extend(CanMakePropertyFromOptions)
+        .extend(ICanForwardEvents)
+        .extend(ICanMakePropertyFromOptions)
         .extend(buildMixinWithProperty('parentView'))
         .extend(buildMixinWithProperty('model'))
         .extend(buildMixinWithProperty('controller'))
@@ -28,9 +55,9 @@
 
     class BaseView extends BaseViewCore
 
-        shouldAppendToContainer: false
+        shouldAppendToContainer:    false
 
-        propertyConfig: [ { name: 'controller' }, { name: 'model' }, { name: 'parentView'} ]
+        getBindablePropertyNames:   -> [ 'controller', 'model', 'parentView' ]
 
         constructor: (options) ->
             bindablePropertyNames = @getBindablePropertyNames()
@@ -50,8 +77,6 @@
                 @setProperty(propName, null)
             super
 
-        getBindablePropertyNames: -> _.pluck(@propertyConfig, 'name')
-
         setProperty: (propName, value, options) ->
             setterName = "set#{capitalize(propName)}"
             @[setterName](value, options)
@@ -60,6 +85,8 @@
             if @[propName]?
                 binderName = "on#{capitalize(propName)}Bind"
                 @[binderName](options)
+
+
 
         setOption: (options, name, defaultVal, isRequired=false, optName, normalizer) ->
             optName ?= name
@@ -86,41 +113,44 @@
                 @setOption(options, name, defaultVal, isRequired(name))
 
 
-        getContainerEl: -> _.result(@, 'containerEl') or (_.result(@, 'containerView') or _.result(@, 'parentView'))?.el
+
+
+        getContainerEl:             -> _.result(@, 'containerEl') or (_.result(@, 'containerView') or _.result(@, 'parentView'))?.el
 
         appendToContainerIfNeeded: ->
             if _.result(this, 'shouldAppendToContainer')
                 @$el.appendTo(@getContainerEl())
 
-        onParentViewUnbind: ->
-            super
+        onParentViewUnbind:         -> super
 
-        renderCore: ->
+        renderCore:                 ->
 
-        render: ->
-            @renderCore()
-            @appendToContainerIfNeeded()
-            this
+        render:                     ->
+                                        @renderCore()
+                                        @appendToContainerIfNeeded()
+                                        this
 
-        invalidate: -> @render()
+        invalidate:                 -> @render()
+
 
 
     class PlantChildView extends BaseView
 
-        setCoreOpacity: (opacity) ->
+        setCoreOpacity: (opacity)   ->
 
-        getModelOpacity: ->
-            marked = @model.get('marked')
-            if marked in [true, false]
-                opacity = markedOpacityMap[marked]
-            else
-                opacity = visibilityOpacityMap[@model.get('visibilityType')]
-            opacity ?= 1.0
-            opacity
+        getModelOpacity:            ->
 
-        getOpacity:         ->  @getModelOpacity()
+                                        marked = @model.get('marked')
+                                        if marked in [true, false]
+                                            opacity = markedOpacityMap[marked]
+                                        else
+                                            opacity = visibilityOpacityMap[@model.get('visibilityType')]
+                                        opacity ?= 1.0
+                                        opacity
 
-        updateVisibility:   -> @setCoreOpacity(@getOpacity())
+        getOpacity:                 ->  @getModelOpacity()
+
+        updateVisibility:           -> @setCoreOpacity(@getOpacity())
 
 
     module.exports =

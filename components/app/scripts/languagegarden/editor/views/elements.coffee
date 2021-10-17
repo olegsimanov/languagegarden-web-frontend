@@ -185,12 +185,12 @@
             options.isTextRTL = @isTextRTL()
             wrapLetterWithZWJ(letter, options)
 
-        getMaxLetterHeight:             -> @getFontSize() * settings.fontSizeToLetterHeightMultiplier
-        getLetterStartPathPositions:    -> @textPath?.getLetterStartPathPositions() or []
-        getLetterPathPosition: (letterIndex, letterLengthFactor) -> @textPath?.getLetterPathPosition(letterIndex, letterLengthFactor) or 0
-        getLetterStartPathPosition: (letterIndex) -> @getLetterPathPosition(letterIndex, 0.0)
-        getLetterMiddlePathPosition: (letterIndex) -> @getLetterPathPosition(letterIndex, 0.5)
-        getLetterEndPathPosition: (letterIndex) -> @getLetterPathPosition(letterIndex, 1)
+        getMaxLetterHeight:                                         -> @getFontSize() * settings.fontSizeToLetterHeightMultiplier
+        getLetterStartPathPositions:                                -> @textPath?.getLetterStartPathPositions() or []
+        getLetterPathPosition: (letterIndex, letterLengthFactor)    -> @textPath?.getLetterPathPosition(letterIndex, letterLengthFactor) or 0
+        getLetterStartPathPosition: (letterIndex)                   -> @getLetterPathPosition(letterIndex, 0.0)
+        getLetterMiddlePathPosition: (letterIndex)                  -> @getLetterPathPosition(letterIndex, 0.5)
+        getLetterEndPathPosition: (letterIndex)                     -> @getLetterPathPosition(letterIndex, 1)
 
         invalidateBoundaryInfo: ->
             @_bbox = null
@@ -263,11 +263,11 @@
                         break
             info
 
-        intersects: (bbox)              -> @getIntersectionInfo(bbox).intersects
-        applyTransformMatrix: (matrix)  -> @textPath?.applyTransformMatrix(matrix)
-        disableSelection:               -> @textPath?.disableSelection()
-        putElementToFrontAtLayer: (svgElem, layerType) -> @parentView.putElementToFrontAtLayer(svgElem, layerType)
-        putTextPathToFront:             -> @textPath?.toFront()
+        intersects: (bbox)                              -> @getIntersectionInfo(bbox).intersects
+        applyTransformMatrix: (matrix)                  -> @textPath?.applyTransformMatrix(matrix)
+        disableSelection:                               -> @textPath?.disableSelection()
+        putElementToFrontAtLayer: (svgElem, layerType)  -> @parentView.putElementToFrontAtLayer(svgElem, layerType)
+        putTextPathToFront:                             -> @textPath?.toFront()
 
         putLetterAreaToFront: (letterArea) ->
             if not letterArea?
@@ -473,10 +473,10 @@
 
         letterAreaEventsHammer: (area, click, dblclick, drag, dragstart, dragend) =>
 
-            hammerDrag = (e) -> drag(e, e.deltaX, e.deltaY, e.center.x, e.center.y)
-            hammerDragstart = (e) => dragstart(e, e.center.x, e.center.y)
-            hammer = Hammer(area.node)
-            pan = new Hammer.Pan(threshold: 10)
+            hammerDrag          = (e) -> drag(e, e.deltaX, e.deltaY, e.center.x, e.center.y)
+            hammerDragstart     = (e) => dragstart(e, e.center.x, e.center.y)
+            hammer              = Hammer(area.node)
+            pan                 = new Hammer.Pan(threshold: 10)
             hammer.add(pan)
             hammer
                 .on('tap', click)
@@ -486,31 +486,31 @@
                 .on('panend', dragend)
 
         bindLetterArea: (letterArea, letterIndex) ->
-            isBoundary = letterIndex in [0, @getText().length - 1]
-            clickDispatcher = @getLetterEventDispatcher('click', isBoundary)
-            dblClickDispatcher = @getLetterEventDispatcher('dblclick', isBoundary)
-            dragDispatcher = @getLetterEventDispatcher('drag', isBoundary)
+            isBoundary          = letterIndex in [0, @getText().length - 1]
+            clickDispatcher     = @getLetterEventDispatcher('click', isBoundary)
+            dblClickDispatcher  = @getLetterEventDispatcher('dblclick', isBoundary)
+            dragDispatcher      = @getLetterEventDispatcher('drag', isBoundary)
             dragStartDispatcher = @getLetterEventDispatcher('dragstart', isBoundary)
-            dragEndDispatcher = @getLetterEventDispatcher('dragend', isBoundary)
+            dragEndDispatcher   = @getLetterEventDispatcher('dragend', isBoundary)
 
-            click = (e) => clickDispatcher(e, letterIndex: letterIndex)
+            click               = (e) => clickDispatcher(e, letterIndex: letterIndex)
 
-            dblclick = (e) => dblClickDispatcher(e, letterIndex: letterIndex)
+            dblclick            = (e) => dblClickDispatcher(e, letterIndex: letterIndex)
 
-            drag = (e, dx, dy, x, y) =>
-                [x, y] = @parentView.transformToCanvasCoords(x, y)
-                [dx, dy] = @parentView.transformToCanvasCoordOffsets(dx, dy)
-                dragDispatcher(e, x, y, dx, dy, letterIndex: letterIndex)
+            drag                = (e, dx, dy, x, y) =>
 
-            dragstart = (e, x, y) =>
-                [x, y] = @parentView.transformToCanvasCoords(x, y)
-                dragStartDispatcher(e, x, y, letterIndex: letterIndex)
+                                    [x, y] = @parentView.transformToCanvasCoords(x, y)
+                                    [dx, dy] = @parentView.transformToCanvasCoordOffsets(dx, dy)
+                                    dragDispatcher(e, x, y, dx, dy, letterIndex: letterIndex)
 
-            dragend = (e) => dragEndDispatcher(e, letterIndex: letterIndex)
+            dragstart           = (e, x, y) =>
 
-            @letterAreaEventsHammer(
-                letterArea, click, dblclick, drag, dragstart, dragend
-            )
+                                    [x, y] = @parentView.transformToCanvasCoords(x, y)
+                                    dragStartDispatcher(e, x, y, letterIndex: letterIndex)
+
+            dragend             = (e) => dragEndDispatcher(e, letterIndex: letterIndex)
+
+            @letterAreaEventsHammer(letterArea, click, dblclick, drag, dragstart, dragend)
 
         unbindLetterArea: (letterArea) -> #TODO: unbind
 

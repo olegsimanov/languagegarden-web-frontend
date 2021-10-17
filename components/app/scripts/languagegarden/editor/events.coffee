@@ -4,10 +4,10 @@
     Backbone                        = require('backbone')
 
     {extend}                        = require('./extend')
-    {CanMakePropertyFromOptions}    = require('./properties')
+    {ICanMakePropertyFromOptions}    = require('./properties')
 
 
-    CanForwardEvents =
+    ICanForwardEvents =
 
         forwardEventsFrom: (target, eventNames, retainSource=true) ->
             if not _.isArray(eventNames)
@@ -22,13 +22,13 @@
 
                     @listenTo(target, evName, handler)
 
-    class WithExtendMethods                                 # we need this intermediary class with 'extend' method because
+    class ICanExtend                                 # we need this intermediary class with 'extend' method because
         @extend:    extend                                  # Backbone.Events class doesn't have 'extend' method which will be used below
 
-    EventsAwareBaseObject = WithExtendMethods
+    EventsAwareBaseObject = ICanExtend
         .extend(Backbone.Events)
-        .extend(CanForwardEvents)
-        .extend(CanMakePropertyFromOptions)
+        .extend(ICanForwardEvents)
+        .extend(ICanMakePropertyFromOptions)
 
     class EventsAwareClass extends EventsAwareBaseObject
 
@@ -36,5 +36,5 @@
 
 
     module.exports =
-        EventsAwareClass:   EventsAwareClass
-        CanForwardEvents:   CanForwardEvents
+        EventsAwareClass:       EventsAwareClass
+        ICanForwardEvents:      ICanForwardEvents
