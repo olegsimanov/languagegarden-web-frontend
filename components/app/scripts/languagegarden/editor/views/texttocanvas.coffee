@@ -27,41 +27,6 @@
     class DummyMediumView extends MediumViewBase
 
 
-    class HtmlMediumView extends MediumViewBase
-
-        width: 200
-        height: 100
-        className: 'html-media-float'
-        shouldAppendToContainer: true
-
-        initialize: (options) =>
-            super
-            @containerEl = options.containerEl
-            @width ?= options.width if options.width
-            @height ?= options.height if options.height
-            @listenTo(@model, 'change:centerPoint', @onPositionChange)
-
-        remove: =>
-            delete @containerEl
-            super
-
-        onPositionChange: -> @setPosition()
-
-        setPosition: (x, y) =>
-            [x, y] = @model.get('centerPoint').toArray() if not (x? and y?)
-            @$el.css
-                left: x
-                top: y
-            [x, y]
-
-        getBBox: =>
-            clientBBox = BBox.fromClientRect(@el.getBoundingClientRect())
-            @parentView.transformToCanvasBBox(clientBBox)
-
-        intersects: (bbox) => @getBBox().intersects(bbox)
-
-
-
     VisibilityPrototype =
 
         updateVisibility: ->
@@ -100,19 +65,48 @@
         intersects: (bbox)                          => false
 
 
-    class TextToCanvasView extends HtmlMediumView
+    class TextToCanvasView extends MediumViewBase
 
-        className:              'text-to-canvas-box'
-        spanHTML:               '<span class="element">'
-        pHTML:                  '<p class="line">'
-        spanSelector:           'span.element'
-        pSelector:              'p.line'
-        spanDraggedOutClass:    'dragged-out'
-        spanMarkedClass:        'marked'
+
+        width: 200
+        height: 100
+        shouldAppendToContainer:    true
+
+        className:                  'text-to-canvas-box'
+        spanHTML:                   '<span class="element">'
+        pHTML:                      '<p class="line">'
+        spanSelector:               'span.element'
+        pSelector:                  'p.line'
+        spanDraggedOutClass:        'dragged-out'
+        spanMarkedClass:            'marked'
+
 
         initialize: (options) ->
             super
+            @containerEl = options.containerEl
+            @width ?= options.width if options.width
+            @height ?= options.height if options.height
+            @listenTo(@model, 'change:centerPoint', @onPositionChange)
             @setEditableMode(true)
+
+        remove: =>
+            delete @containerEl
+            super
+
+        onPositionChange: -> @setPosition()
+
+        setPosition: (x, y) =>
+            [x, y] = @model.get('centerPoint').toArray() if not (x? and y?)
+            @$el.css
+                left: x
+                top: y
+            [x, y]
+
+        getBBox: =>
+            clientBBox = BBox.fromClientRect(@el.getBoundingClientRect())
+            @parentView.transformToCanvasBBox(clientBBox)
+
+        intersects: (bbox) => @getBBox().intersects(bbox)
 
         isSelected: -> false
 
