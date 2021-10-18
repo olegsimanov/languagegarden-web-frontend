@@ -156,10 +156,81 @@
 
         show: => @toggleVisibility(true)
 
+    class TooltipButtonView extends ButtonView
 
-    BaseToolbarView = class extends RenderableView
+        fadeEffects:                false
+        shouldAppendToContainer:    false
 
-        toolbarViewAnchors:         {}
+        onClick: -> @action.fullPerform()
+
+
+    class NavButtonView extends ButtonView
+
+        navTarget: null
+        eventName: null
+
+        initialize: (options) ->
+            @initializeNavButton(options)
+            super
+
+        initializeNavButton: (options) ->
+            @setOptions(options, ['navTarget'], true)
+            @setOptions(options, [['eventName', @getNavEventName()]], true)
+            @customClassName = @getNavButtonClass()
+
+        getNavButtonClass: (navTarget=@navTarget)   -> "toolbar-button-#{ utils.slugify(@navTarget) }"
+        getNavEventName: (navTarget=@navTarget)     -> "toolbarnav:#{ utils.slugify(navTarget) }"
+
+        onClick: (e)    => @navButtonOnClick()
+        isEnabled:      -> true
+
+        navButtonOnClick: ->
+            if not @isEnabled()
+                return true
+            @triggerToolbarNavEvent()
+
+        triggerToolbarNavEvent:                          -> @trigger(@eventName, @, @navTarget)
+
+
+    class BackButtonView extends NavButtonView
+
+        navTarget:              'back'
+        getNavButtonClass:      -> "#{super} icon icon_back"
+
+
+    class PaletteNavButtonView extends NavButtonView
+
+        getNavButtonClass: -> "#{super} icon icon_palette"
+
+        initialize: (options) ->
+            super
+            @setOptions(options, ['controller'], true)
+            @listenTo(@controller.canvasView, 'selectchange', @onSelectChange)
+            @hidden = @shouldHide()
+
+        onSelectChange: ->
+            @hidden = @shouldHide()
+            @render()
+
+        shouldHide: -> @controller.canvasView.getSelectedElements().length == 0
+
+        remove: ->
+            @stopListening(@controller.canvasView)
+            delete @controller
+            super
+
+
+
+
+    class EditorToolbarView extends RenderableView
+
+        template:                   template('./common/toolbars/navigator.ejs')
+
+        toolbarViewAnchors:
+            '.station-navigator':           'plantNavMenu'
+            '.toolbar__section_mid':        'contentMenu'
+            '.toolbar__section_right':      'controlButtonsMenu'
+
         toolbarName:                'toolbar-name-missing'
         fallbackActionViewClass:    ButtonView
 
@@ -277,55 +348,6 @@
 
         onActiveChanged: ->
 
-    NavButtonPrototype =
-
-        navTarget: null
-        eventName: null
-
-        triggerToolbarNavEvent:                          -> @trigger(@eventName, @, @navTarget)
-
-        getNavButtonClass: (navTarget=@navTarget)   -> "toolbar-button-#{ utils.slugify(@navTarget) }"
-        getNavEventName: (navTarget=@navTarget)     -> "toolbarnav:#{ utils.slugify(navTarget) }"
-
-        initializeNavButton: (options) ->
-            @setOptions(options, ['navTarget'], true)
-            @setOptions(options, [['eventName', @getNavEventName()]], true)
-            @customClassName = @getNavButtonClass()
-
-        navButtonOnClick: ->
-            if not @isEnabled()
-                return true
-            @triggerToolbarNavEvent()
-
-
-    class NavButtonView extends ButtonView.extend(NavButtonPrototype)
-
-        initialize: (options) ->
-            @initializeNavButton(options)
-            super
-
-        onClick: (e)    => @navButtonOnClick()
-        isEnabled:      -> true
-
-    class BackButtonView extends NavButtonView
-
-        navTarget:              'back'
-        getNavButtonClass:      -> "#{super} icon icon_back"
-
-    class EditorToolbarView extends BaseToolbarView
-
-        template: template('./common/toolbars/navigator.ejs')
-
-        toolbarViewAnchors:
-            '.station-navigator':           'plantNavMenu'
-            '.toolbar__section_mid':        'contentMenu'
-            '.toolbar__section_right':      'controlButtonsMenu'
-
-        desktopInit: ->
-
-        remove: ->
-            super
-
     class EditorSubToolbarView extends EditorToolbarView
 
         template: template('./common/toolbars/container.ejs')
@@ -343,20 +365,59 @@
 
 
 
-    class TooltipButtonView extends ButtonView
-
-        fadeEffects: false
-        shouldAppendToContainer: false
-
-        onClick: -> @action.fullPerform()
-
-
-    class ButtonGroupView extends BaseView
+    class SelectionButtonGroupView extends BaseView
 
         buttonViewClass:            TooltipButtonView
-        className:                  'buttons-group'
-        actionSpec:                 []
+        className:                  "buttons-group buttons-group_selection"
         shouldAppendToContainer:    true
+
+        actionSpec:                 [
+                                        id:             'switch-to-rotate'
+                                        actionClass:    SwitchToRotate
+                                        className:      'tooltip-switch-to-rotate icon icon_refresh'
+                                        help:           'Switch to rotate'
+                                    ,
+                                        id:             'switch-to-scale'
+                                        actionClass:    SwitchToScale
+                                        className:      'tooltip-switch-to-scale icon icon_scale'
+                                        help:           'Switch to scale'
+                                    ,
+                                        id:             'switch-to-group-scale'
+                                        actionClass:    SwitchToGroupScale
+                                        className:      'tooltip-switch-to-scale icon icon_scale'
+                                        help:           'Switch to scale'
+                                    ,
+                                        id:             'switch-to-move'
+                                        actionClass:    SwitchToMove
+                                        className:      'tooltip-switch-to-move icon icon_move'
+                                        help:           'Switch to move'
+                                    ,
+                                        id:             'switch-to-stretch'
+                                        actionClass:    SwitchToStretch
+                                        className:      'tooltip-switch-to-stretch icon icon_stretch'
+                                        help:           'Switch to stretch'
+                                    ,
+                                        id:             'wordsplit'
+                                        actionClass:    SplitWordElement
+                                        className:      'tooltip-word-split icon icon_scissors'
+                                        help:           'Split word at cursor'
+                                    ,
+                                        id:             'edit'
+                                        actionClass:    StartUpdating
+                                        className:      'tooltip-edit icon icon_pencil'
+                                        help:           'Edit'
+                                    ,
+                                        id:             'edittext'
+                                        actionClass:    StartUpdatingText
+                                        className:      'tooltip-edit'
+                                        help:           'Edit'
+                                    ,
+                                        id:             'delete'
+                                        actionClass:    DeleteAction
+                                        className:      'tooltip-bin icon icon_trash'
+                                        help:           'Delete selected'
+                                    ]
+
 
         initialize: (options) ->
             super
@@ -429,78 +490,6 @@
             this
 
 
-    class SelectionButtonGroupView extends ButtonGroupView
-
-        className: "#{ButtonGroupView::className} buttons-group_selection"
-
-        actionSpec: [
-            id:             'switch-to-rotate'
-            actionClass:    SwitchToRotate
-            className:      'tooltip-switch-to-rotate icon icon_refresh'
-            help:           'Switch to rotate'
-        ,
-            id:             'switch-to-scale'
-            actionClass:    SwitchToScale
-            className:      'tooltip-switch-to-scale icon icon_scale'
-            help:           'Switch to scale'
-        ,
-            id:             'switch-to-group-scale'
-            actionClass:    SwitchToGroupScale
-            className:      'tooltip-switch-to-scale icon icon_scale'
-            help:           'Switch to scale'
-        ,
-            id:             'switch-to-move'
-            actionClass:    SwitchToMove
-            className:      'tooltip-switch-to-move icon icon_move'
-            help:           'Switch to move'
-        ,
-            id:             'switch-to-stretch'
-            actionClass:    SwitchToStretch
-            className:      'tooltip-switch-to-stretch icon icon_stretch'
-            help:           'Switch to stretch'
-        ,
-            id:             'wordsplit'
-            actionClass:    SplitWordElement
-            className:      'tooltip-word-split icon icon_scissors'
-            help:           'Split word at cursor'
-        ,
-            id:             'edit'
-            actionClass:    StartUpdating
-            className:      'tooltip-edit icon icon_pencil'
-            help:           'Edit'
-        ,
-            id:             'edittext'
-            actionClass:    StartUpdatingText
-            className:      'tooltip-edit'
-            help:           'Edit'
-        ,
-            id:             'delete'
-            actionClass:    DeleteAction
-            className:      'tooltip-bin icon icon_trash'
-            help:           'Delete selected'
-        ]
-
-    class PaletteNavButtonView extends NavButtonView
-
-        getNavButtonClass: -> "#{super} icon icon_palette"
-
-        initialize: (options) ->
-            super
-            @setOptions(options, ['controller'], true)
-            @listenTo(@controller.canvasView, 'selectchange', @onSelectChange)
-            @hidden = @shouldHide()
-
-        onSelectChange: ->
-            @hidden = @shouldHide()
-            @render()
-
-        shouldHide: -> @controller.canvasView.getSelectedElements().length == 0
-
-        remove: ->
-            @stopListening(@controller.canvasView)
-            delete @controller
-            super
-
     class TooltipToolbarView extends EditorToolbarView
 
         toolbarName: ToolbarEnum.BUILDER
@@ -528,7 +517,7 @@
 
         ]
 
-    PlaceholderView = class extends BaseView
+    class PlaceholderView extends BaseView
 
         className:  'split-color-picker-placeholder'
         render:     => @
@@ -614,7 +603,7 @@
         getEditor: -> @parentView
 
 
-    SplitColorPaletteEditButtonView = class extends EditorToggleButtonView
+    class SplitColorPaletteEditButtonView extends EditorToggleButtonView
 
         className: "split-color-mode-button #{EditorToggleButtonView::className}"
 
@@ -657,7 +646,7 @@
             )
 
         onSelectedToolChange: (sender, newTool) ->
-# when selected tool changes editability can change
+            # when selected tool changes editability can change
             @updateVisibility()
             @onPickerClosed(false)
 
@@ -701,8 +690,8 @@
                 @paletteModel.get('selectedTool').reset(@tempModel.colorTools)
 
         startEditing: =>
-# this view is passe the tool to change based on user interaction
-# on successful edit it will replace tools of the active splitcolor
+            # this view is passe the tool to change based on user interaction
+            # on successful edit it will replace tools of the active splitcolor
             @tempModel = new SplitColorTool()
             @listenTo(@tempModel, 'change', @onTempModelChange)
             @splitColorPicker = new SplitColorEditorView
@@ -761,7 +750,7 @@
             $el.css('visibility', if show then 'visible' else 'hidden')
 
 
-    PaletteColorViewBase = class extends RenderableView
+    class PaletteColorViewBase extends RenderableView
 
         events:
             'click': 'onClick'
@@ -775,7 +764,7 @@
 
 
     ###Single color picker palette box base class.###
-    PaletteColorView = class extends PaletteColorViewBase
+    class PaletteColorView extends PaletteColorViewBase
 
         initialize: (options) =>
             super
@@ -809,7 +798,7 @@
             @editor.setMode(CanvasMode.COLOR)
 
 
-    RemoveColorView = class extends PaletteColorView
+    class RemoveColorView extends PaletteColorView
 
         template: template('./editor/colorpicker/remove-color.ejs')
 
@@ -826,23 +815,22 @@
                 modelColors: @model.getColors(),
             }, ctx
 
-    PaletteSplitColorView = class extends PaletteColorView.extend(SplitColorPrototype)
+    class PaletteSplitColorView extends PaletteColorView.extend(SplitColorPrototype)
 
         className: "#{PaletteColorView::className} color-palette-split-color"
 
 
-    SplitEditorColorView = class extends PaletteColorViewBase
+    class SplitEditorColorView extends PaletteColorViewBase
 
         className: "#{PaletteColorViewBase::className} split-color"
 
 
 
-    SplitEditorSplitColorView = class extends PaletteColorViewBase.extend(SplitColorPrototype)
+    class SplitEditorSplitColorView extends PaletteColorViewBase.extend(SplitColorPrototype)
 
-        className: "#{PaletteColorView::className}
-            split-editor-color-preview_done"
+        className: "#{PaletteColorView::className} split-editor-color-preview_done"
 
-    SquarePickerBaseView = class extends RenderableView
+    class SquarePickerBaseView extends RenderableView
 
         colorClass:         null
         splitColorClass:    null
@@ -916,7 +904,7 @@
             @subviews = @getSubViews()
 
 
-    SplitColorEditorView = class extends SquarePickerBaseView
+    class SplitColorEditorView extends SquarePickerBaseView
 
         className:          'buttons-group split-color-editor'
         colorClass:         SplitEditorColorView
@@ -951,7 +939,7 @@
         onChildSubviewClicked: (sender, model) => @trigger('click', @, model)
 
 
-    SquarePickerView = class extends SquarePickerBaseView
+    class SquarePickerView extends SquarePickerBaseView
 
         template: template('./editor/colorpicker/main.ejs')
 
@@ -961,9 +949,9 @@
 
         initialize: (options) =>
             super
-            @listenTo @model.tools, 'add', @reset
-            @listenTo @model.tools, 'remove', @reset
-            @listenTo @editor, 'selectchange', @onSelectChange
+            @listenTo @model.tools,         'add',          @reset
+            @listenTo @model.tools,         'remove',       @reset
+            @listenTo @editor,              'selectchange', @onSelectChange
 
         getColorModeButton: =>
             @colorModeButton ?= new EditorColorModeButtonView
@@ -999,20 +987,30 @@
 
     StatefulRenderableView = RenderableView.extend(StatefulClassPrototype)
 
-    ###Toolbar that renders different toolbar depending on its state.###
     class StatefulToolbarBaseView extends StatefulRenderableView
+
+        defaultState:   null
+        toolbarClasses: null
 
         # Map of label to children class {stateName: toolbarClass}
         toolbars:       undefined
         getToolbars:    => @toolbars
 
         initialize: (options) =>
+
+            @toolbars = _.object(_.map(
+                @toolbarClasses, (tbc) -> [tbc::toolbarName, tbc]
+            ))
+            @states = _.keys(@toolbars)
+
             super
             @setOptions(options, ['toolbars'], true)
             @setupStates(options)
             @toolbarViews = @createToolbarViews(options)
             @listenTo(@, 'change:state', @onStateChange)
             @setActiveView(@currentState)
+
+            @subviews = {'': _.values(@toolbarViews)}
 
         createToolbarViews: (options) =>
             toolbarViews = {}
@@ -1024,10 +1022,7 @@
                     @listenTo(tv, eventName, @onToolbarNavEvent)
             toolbarViews
 
-        getToolbarOptions: (options) =>
-            _.extend({
-                controller: @controller
-            }, options.toolbarOptions or {})
+        getToolbarOptions: (options) => _.extend({controller: @controller}, options.toolbarOptions or {})
 
         remove: =>
             delete @controller
@@ -1044,74 +1039,6 @@
                 if toolbarName != state
                     toolbarView.setActive(false)
             @toolbarViews[state].setActive(true)
-
-
-    class StatefulToolbarView extends StatefulToolbarBaseView
-
-        defaultState:   null
-        toolbarClasses: null
-
-        initialize: (options) =>
-            @toolbars = _.object(_.map(
-                @toolbarClasses, (tbc) -> [tbc::toolbarName, tbc]
-            ))
-            @states = _.keys(@toolbars)
-            super
-            @subviews = {'': _.values(@toolbarViews)}
-
-
-    class EditorButtonView extends ButtonView
-
-        initialize: (options) ->
-            # pass model from options.controller so BaseView can use set it
-            if options?
-                options.model ?= options?.controller?.model
-            # TODO: this limits any inheriting view to append directly to the
-            # editor or break the getEditor reference.
-            options.parentView = options.editor if options?.editor?
-            super(options)
-            # the this.editor field is deprecated. please use this.getEditor()
-            # instead.
-            @editor = @parentView
-
-        getEditor: -> @parentView
-
-
-    class MenuActionButtonView extends EditorButtonView
-
-        modelListenEventName: 'editablechange'
-
-        initialize: (options) =>
-            super
-            @disabled = not @isEnabled()
-            @hidden = @isHidden()
-            if options.modelListenEventName?
-                @modelListenEventName = options.modelListenEventName
-            @listenTo(@parentView.model, @modelListenEventName, @onChange)
-
-        remove: ->
-            @stopListening(@parentView.model)
-            super
-
-        getActionOptions: (options) ->
-            controller: options.controller
-            parentView: @parentView
-
-        isEnabled: -> @action.isAvailable()
-        isToggled: -> @action.isToggled()
-        isHidden:   -> false
-
-        onChange: =>
-            @disabled = not @isEnabled()
-            @hidden = @isHidden()
-            @$el.toggleClass('toggled', @isToggled())
-            @render()
-
-        onClick: (event) =>
-            if not @isEnabled()
-                return true
-            event.preventDefault()
-            @action.fullPerform()
 
 
     class EditorColorModeButtonView extends EditorToggleButtonView
@@ -1159,7 +1086,7 @@
             mode        = if @active then CanvasMode.COLOR else canvasView.getDefaultMode()
             canvasView.setMode(mode)
 
-    class ToolbarView extends StatefulToolbarView
+    class ToolbarView extends StatefulToolbarBaseView
 
         defaultState: TooltipToolbarView::toolbarName
 
