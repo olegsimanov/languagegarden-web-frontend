@@ -13,8 +13,6 @@
         markedOpacityMap
     }                                   = require('./../../editor/constants')
 
-    {capitalize}                        = require('../utils')
-
     buildMixinWithProperty = (propName) ->
 
         bindHandlerName     = "on#{capitalize(propName)}Bind"
@@ -57,7 +55,12 @@
 
         shouldAppendToContainer:    false
 
-        getBindablePropertyNames:   -> [ 'controller', 'model', 'parentView' ]
+
+
+
+
+
+        getBindablePropertyNames:   -> [ 'parentView', 'model', 'controller'  ]
 
         constructor: (options) ->
             bindablePropertyNames = @getBindablePropertyNames()
