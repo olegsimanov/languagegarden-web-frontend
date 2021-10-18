@@ -12,8 +12,8 @@
     class PageView extends RenderableView
 
         className:                  'page-wrapper'
-        shouldAppendToContainer:    true
         template:                   template('./common/page/main.ejs')
+        shouldAppendToContainer:    true
 
         initialize: (options) ->
             super
