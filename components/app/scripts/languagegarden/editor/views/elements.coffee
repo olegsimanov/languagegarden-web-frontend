@@ -10,7 +10,7 @@
 
 
     {PlantChildView}                = require('./base')
-    {TextPath, SyntheticTextPath}   = require('./textpaths')
+    {SyntheticTextPath}   = require('./textpaths')
     {
         getLetterAreaPathStringAndPoints
         getBigUpperPath
@@ -60,20 +60,20 @@
             @letterFill         = options.letterFill
             @useLetterAreas     = true
             @isOutOfBounds      = false
-            @listenTo(@, 'change:isOutOfBounds', @onIsOutOfBoundsChange)
-            @listenTo(@letterMetrics, 'cache:invalidate', @onMetricsCacheInvalidate)
+            @listenTo(@,                'change:isOutOfBounds',     @onIsOutOfBoundsChange)
+            @listenTo(@letterMetrics,   'cache:invalidate',         @onMetricsCacheInvalidate)
 
         onModelBind: ->
             super
-            @listenTo(@model, 'clear', @onClear)
-            @listenTo(@model, 'change:path', @invalidateBoundaryInfo)
-            @listenTo(@model, 'change:fontSize', @invalidateBoundaryInfo)
-            @listenTo(@model, 'change:transformMatrix', @invalidateBoundaryInfo)
+            @listenTo(@model,           'clear',                    @onClear)
+            @listenTo(@model,           'change:path',              @invalidateBoundaryInfo)
+            @listenTo(@model,           'change:fontSize',          @invalidateBoundaryInfo)
+            @listenTo(@model,           'change:transformMatrix',   @invalidateBoundaryInfo)
 
         onParentViewBind: ->
             super
-            @listenTo(@parentView, 'change:pageContainerScale', @onCanvasScaleChange)
-            @listenTo(@parentView.dataModel, 'change:textDirection', @onTextDirectionChange)
+            @listenTo(@parentView,              'change:pageContainerScale',    @onCanvasScaleChange)
+            @listenTo(@parentView.dataModel,    'change:textDirection',         @onTextDirectionChange)
 
         onParentViewUnbind: ->
             @stopListening(@parentView.model)
@@ -135,18 +135,9 @@
 
             for l in @model.getLetterAttribute(letterIndex, 'labels') or []
                 if _.isString(l)
-                    fill.push([
-                        @letterFill or @colorPalette?.getColorForLabel(l) or
-                            @colorPalette?.get('newWordColor')
-                    , 1])
+                    fill.push([@letterFill or @colorPalette?.getColorForLabel(l) or @colorPalette?.get('newWordColor'), 1])
                 else
-                    fill.push([
-                        @letterFill or
-                            l.color or
-                            @colorPalette?.getColorForLabel(l.name) or
-                            @colorPalette?.get('newWordColor')
-                    , if l.size? then l.size else 1])
-
+                    fill.push([@letterFill or l.color or @colorPalette?.getColorForLabel(l.name) or @colorPalette?.get('newWordColor'), if l.size? then l.size else 1])
 
             if fill.length == 0
                 fill = [[@letterFill or @colorPalette?.get('newWordColor'), 1]]
@@ -401,11 +392,7 @@
             @textPath.toggleCSSClass('out-of-bounds', @isOutOfBounds, true)
             @updateTextPath()
 
-        getTextPathClass: ->
-            if @isTextRTL() or ($.browser.mozilla and $.browser.versionNumber > 26)
-                SyntheticTextPath
-            else
-                TextPath
+        getTextPathClass: -> SyntheticTextPath
 
         createTextPath: ->
             cls = @getTextPathClass()
