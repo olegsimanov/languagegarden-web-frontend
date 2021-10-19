@@ -6,8 +6,10 @@
     {disableSelection}          = require('./utils/dom')
 
     {BaseView}                  = require('./base')
-    {RenderableView}            = require('./renderable')
-    {template}                  = require('./templates')
+    {
+        TemplateView
+        createTemplateWrapper
+    }                           = require('./template')
 
     {Point}                     = require('./../math/points')
     {BBox}                      = require('./../math/bboxes')
@@ -222,9 +224,9 @@
 
 
 
-    class EditorToolbarView extends RenderableView
+    class EditorToolbarView extends TemplateView
 
-        template:                   template('./common/toolbars/navigator.ejs')
+        template:                   createTemplateWrapper('./common/toolbars/navigator.ejs')
 
         toolbarViewAnchors:
             '.station-navigator':           'plantNavMenu'
@@ -350,7 +352,7 @@
 
     class EditorSubToolbarView extends EditorToolbarView
 
-        template: template('./common/toolbars/container.ejs')
+        template: createTemplateWrapper('./common/toolbars/container.ejs')
 
         backNav: [
             viewType: 'navbutton'
@@ -750,13 +752,13 @@
             $el.css('visibility', if show then 'visible' else 'hidden')
 
 
-    class PaletteColorViewBase extends RenderableView
+    class PaletteColorViewBase extends TemplateView
 
         events:
             'click': 'onClick'
 
         className:  "button color-palette__color-btn"
-        template:   template('./editor/colorpicker/color.ejs')
+        template:   createTemplateWrapper('./editor/colorpicker/color.ejs')
 
         initialize:             -> @listenToColorChange()
         onClick:                => @trigger('click', @, @model)
@@ -800,20 +802,16 @@
 
     class RemoveColorView extends PaletteColorView
 
-        template: template('./editor/colorpicker/remove-color.ejs')
+        template:               createTemplateWrapper('./editor/colorpicker/remove-color.ejs')
 
 
     ###Configures split color view rendering.###
     SplitColorPrototype =
 
-        template: template('./editor/colorpicker/split-color.ejs')
+        template:               createTemplateWrapper('./editor/colorpicker/split-color.ejs')
 
-        listenToColorChange: -> @listenTo(@model, 'change', @render)
-
-        getRenderContext: (ctx={}) ->
-            _.extend {
-                modelColors: @model.getColors(),
-            }, ctx
+        listenToColorChange:                    -> @listenTo(@model, 'change', @render)
+        getRenderContext:       (ctx={})    -> _.extend({modelColors: @model.getColors()}, ctx)
 
     class PaletteSplitColorView extends PaletteColorView.extend(SplitColorPrototype)
 
@@ -830,7 +828,7 @@
 
         className: "#{PaletteColorView::className} split-editor-color-preview_done"
 
-    class SquarePickerBaseView extends RenderableView
+    class SquarePickerBaseView extends TemplateView
 
         colorClass:         null
         splitColorClass:    null
@@ -941,7 +939,7 @@
 
     class SquarePickerView extends SquarePickerBaseView
 
-        template: template('./editor/colorpicker/main.ejs')
+        template:           createTemplateWrapper('./editor/colorpicker/main.ejs')
 
         className:          'color-picker'
         colorClass:         PaletteColorView
@@ -985,9 +983,7 @@
             @$('.color-palette-container').toggle(show)
 
 
-    StatefulRenderableView = RenderableView.extend(StatefulClassPrototype)
-
-    class StatefulToolbarBaseView extends StatefulRenderableView
+    class StatefulToolbarBaseView extends TemplateView.extend(StatefulClassPrototype)
 
         defaultState:   null
         toolbarClasses: null

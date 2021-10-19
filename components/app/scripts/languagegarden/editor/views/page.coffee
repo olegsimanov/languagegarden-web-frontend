@@ -3,16 +3,18 @@
     _                       = require('underscore')
     $                       = require('jquery')
 
-    {RenderableView}        = require('./renderable')
     {getOffsetRect}         = require('./utils/dom')
-    {template}              = require('./templates')
+    {
+        TemplateView
+        createTemplateWrapper
+    }                       = require('./template')
 
     {AffineTransformation}  = require('./../math/transformations')
 
-    class PageView extends RenderableView
+    class PageView extends TemplateView
 
         className:                  'page-wrapper'
-        template:                   template('./common/page/main.ejs')
+        template:                   createTemplateWrapper('./common/page/main.ejs')
         shouldAppendToContainer:    true
 
         initialize: (options) ->

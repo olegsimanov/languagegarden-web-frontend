@@ -55,11 +55,6 @@
 
         shouldAppendToContainer:    false
 
-
-
-
-
-
         getBindablePropertyNames:   -> [ 'parentView', 'model', 'controller'  ]
 
         constructor: (options) ->
