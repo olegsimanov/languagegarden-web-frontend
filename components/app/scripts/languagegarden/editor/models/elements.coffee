@@ -6,7 +6,7 @@
     {
         PlantChildModel,
         PlantChildCollection
-    }                           = require('./base')
+    }                           = require('./model')
     {deepCopy}                  = require('./../utils')
     {Point}                     = require('./../math/points')
     {AffineTransformation}      = require('./../math/transformations')
@@ -177,34 +177,6 @@
 
             result
 
-        getFastAttributeSetter: (attr) ->
-            if attr in ['startPoint', 'endPoint', 'controlPoints']
-                (value) =>
-                    @attributes[attr] = value
-                    @changed[attr] = value
-                    @path[attr] = value
-                    @path.invalidateCache()
-            else
-                super
-
-        getFastAttributeLevel1Setter: (attr, level1) ->
-            if attr in ['startPoint', 'endPoint', 'controlPoints']
-                (value) =>
-                    @attributes[attr][level1] = value
-                    @changed[attr] = @attributes[attr]
-                    @path.invalidateCache()
-            else
-                super
-
-        getFastAttributeLevel2Setter: (attr, level1, level2) ->
-            if attr in ['startPoint', 'endPoint', 'controlPoints']
-                (value) =>
-                    @attributes[attr][level1][level2] = value
-                    @changed[attr] = @attributes[attr]
-                    @path.invalidateCache()
-            else
-                super
-
         toJSON: =>
             data = super()
 
@@ -232,14 +204,6 @@
                 data[name] = deepCopy(data[name])
 
             data
-
-        convertPointToPathCoordinates: (screenPoint) ->
-            transform = Point.getTransform(@get('transformMatrix').invert())
-            transform(screenPoint)
-
-        convertPointToScreenCoordinates: (pathPoint) ->
-            transform = Point.getTransform(@get('transformMatrix'))
-            transform(pathPoint)
 
         getPoints: ->
             [@get('startPoint')]

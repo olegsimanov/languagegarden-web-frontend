@@ -11,7 +11,9 @@
 
     class TemplateObject
 
-        constructor: (@templateFunction) ->
+        @templateFunction: null
+
+        constructor: (templateFunction) -> @templateFunction = templateFunction
 
         render: (ctx={}) =>
             ctx = _.extend {
@@ -34,6 +36,7 @@
         containerEl:            null
         renderedTemplateResult: null
         renderChangedHTML:      false
+        rendered:               false
 
         initialize: (options) ->
             super
@@ -41,16 +44,15 @@
             @setOption(options, 'containerEl')
             @setOption(options, 'template')
             @setOption(options, 'subviews')
-            @rendered = false
 
         invalidate: ->
             if @rendered
                 @render()
             this
 
-        isRendered: -> @rendered
+        isRendered:                             -> @rendered
 
-        getRenderContext: (ctx={}) -> ctx = _.extend({view: @}, ctx)
+        getRenderContext: (ctx={})          -> ctx = _.extend({view: @}, ctx)
 
         render: (ctx={}) ->
             @renderCore()

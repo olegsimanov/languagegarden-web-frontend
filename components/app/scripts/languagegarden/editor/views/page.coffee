@@ -25,7 +25,6 @@
             super
             $(window).on('resize', @updateContainerTransform)
             @canvasView = options.canvasView
-            @forwardEventsFrom(@canvasView, 'navigate')
 
         ########################################################################################################
         #                                      public API                                                     #
@@ -43,17 +42,14 @@
             [x, y] = @transformToPageCoords(x, y)
             [x - @canvasContainerShiftX, y - @canvasContainerShiftY]
 
-        transformToCanvasCoordOffsets: (dx, dy) ->
-            @transformToPageCoordOffsets(dx, dy)
+        transformToCanvasCoordOffsets: (dx, dy) -> @transformToPageCoordOffsets(dx, dy)
 
         transformToCanvasBBox: (bbox) ->
             @transformToPageBBox(bbox).translate
                 x: -@canvasContainerShiftX
                 y: -@canvasContainerShiftY
 
-        transformCanvasToContainerCoords: (x, y) ->
-            @transformPageToContainerCoords(x + @canvasContainerShiftX,
-                y + @canvasContainerShiftY)
+        transformCanvasToContainerCoords: (x, y) -> @transformPageToContainerCoords(x + @canvasContainerShiftX, y + @canvasContainerShiftY)
 
 
         ########################################################################################################
@@ -62,8 +58,7 @@
 
         updateContainerTransform: =>
             if not @isRendered()
-                # the view was not yet rendered, so this.$pageContainer is not available.
-                return
+                return                                      # the view was not yet rendered, so this.$pageContainer is not available.
             @recalculateContainerTransform()
 
             if (@containerScale == 1.0 and @containerShiftX == 0 and @containerShiftY == 0)
@@ -80,30 +75,34 @@
             })
 
         recalculateContainerTransform: =>
-            ATF = AffineTransformation
-            @canvasContainerShiftX = 10
-            @canvasContainerShiftY = 10
-            containerWidth = @$pageContainer.width()
-            containerHeight = @$pageContainer.height()
+            @canvasContainerShiftX      = 10
+            @canvasContainerShiftY      = 10
+            containerWidth              = @$pageContainer.width()
+            containerHeight             = @$pageContainer.height()
+
             for cssPropName in ['padding-left', 'padding-right']
                 containerWidth += parseInt(@$pageContainer.css(cssPropName), 10)
             for cssPropName in ['padding-top', 'padding-bottom']
                 containerHeight += parseInt(@$pageContainer.css(cssPropName), 10)
+
             [elWidth, elHeight] = @getElementDimensions()
             scale = _.min([elWidth / containerWidth, elHeight / containerHeight])
-            tf = ATF.newIdentity()
-            tf = ATF.mul(tf, ATF.fromTranslationVector(
+
+            ATF = AffineTransformation
+            tf  = ATF.newIdentity()
+            tf  = ATF.mul(tf, ATF.fromTranslationVector(
                 x: - containerWidth / 2
                 y: - containerHeight / 2
             ))
-            tf = ATF.mul(tf, ATF.fromScale(scale))
-            tf = ATF.mul(tf, ATF.fromTranslationVector(
+            tf  = ATF.mul(tf, ATF.fromScale(scale))
+            tf  = ATF.mul(tf, ATF.fromTranslationVector(
                 x: elWidth / (2 * scale)
                 y: elHeight / (2 * scale)
             ))
             @containerTransformString = tf.toCSSTransform()
 
             @containerScale = scale
+
             # this is different than .e and .f entries of @containerTransform
             if elWidth / elHeight < containerWidth / containerHeight
                 @containerShiftX = 0

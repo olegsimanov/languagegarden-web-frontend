@@ -1,14 +1,15 @@
     'use strict'
 
     _ = require('underscore')
+
     {
         PlantChildModel,
         PlantChildCollection
-    }                   = require('./base')
-    {deepCopy}          = require('./../utils')
-    {MediumType}        = require('./../constants')
+    }                           = require('./model')
+    {deepCopy}                  = require('./../utils')
+    {MediumType}                = require('./../constants')
 
-    {Point}             = require('./../math/points')
+    {Point}                     = require('./../math/points')
 
 
     class PlantMedium extends PlantChildModel

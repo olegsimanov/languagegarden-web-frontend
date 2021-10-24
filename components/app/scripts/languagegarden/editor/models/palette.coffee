@@ -1,8 +1,9 @@
     'use strict'
 
     _ = require('underscore')
-    {ColorMode} = require('./../constants')
-    {BaseModel, BaseCollection} = require('./base')
+    {ColorMode}             = require('./../constants')
+    {BaseModel}             = require('./base')
+    {BaseCollection}        = require('./collection')
 
 
     class Tool extends BaseModel
