@@ -1,6 +1,7 @@
 /*  Unselectable Element
  */
 .no-selection () {
+
     &::-moz-selection {
         background: transparent;
     }
@@ -13,8 +14,10 @@
          -moz-user-select: none !important;
           -ms-user-select: none !important;
               user-select: none !important;
+
 }
 .has-selection {
+
     &::-moz-selection {
         background: @selectionColor;
     }
@@ -27,15 +30,18 @@
          -moz-user-select: text !important;
           -ms-user-select: text !important;
               user-select: text !important;
+
 }
+
+
 .block-overlay {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1000;
+  content:    '';
+  position:   absolute;
+  left:       0;
+  top:        0;
+  width:      100%;
+  height:     100%;
+  z-index:    1000;
 }
 
 /*  Cursors
