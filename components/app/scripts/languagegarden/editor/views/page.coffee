@@ -11,6 +11,10 @@
 
     {AffineTransformation}  = require('./../math/transformations')
 
+
+
+
+
     class PageView extends TemplateView
 
         className:                  'page-wrapper'
@@ -23,12 +27,9 @@
             @canvasView = options.canvasView
             @forwardEventsFrom(@canvasView, 'navigate')
 
-        remove: ->
-            @stopListening(@canvasView)
-            delete @canvasView
-            $(window).off('resize', @updateContainerTransform)
-            @removeAllSubviews()
-            super
+        ########################################################################################################
+        #                                      public API                                                     #
+        ########################################################################################################
 
         render: ->
             @renderCore()
@@ -36,17 +37,49 @@
             @appendToContainerIfNeeded()
             @updateContainerTransform()
 
-        getElementDimensions: ->
-            if (@$el.parent().length == 0 and
-                    @$el.css('width') == '100%' and
-                    @$el.css('height') == '100%' and
-                    (containerEl = @getContainerEl())?)
-                $containerEl = $(containerEl)
-                [$containerEl.width(), $containerEl.height()]
-            else
-                [@$el.width(), @$el.height()]
+        getPageScale: -> @containerScale
 
-        recalculateContainerTransform: ->
+        transformToCanvasCoords: (x, y) ->
+            [x, y] = @transformToPageCoords(x, y)
+            [x - @canvasContainerShiftX, y - @canvasContainerShiftY]
+
+        transformToCanvasCoordOffsets: (dx, dy) ->
+            @transformToPageCoordOffsets(dx, dy)
+
+        transformToCanvasBBox: (bbox) ->
+            @transformToPageBBox(bbox).translate
+                x: -@canvasContainerShiftX
+                y: -@canvasContainerShiftY
+
+        transformCanvasToContainerCoords: (x, y) ->
+            @transformPageToContainerCoords(x + @canvasContainerShiftX,
+                y + @canvasContainerShiftY)
+
+
+        ########################################################################################################
+        #                                      private API helper methods                                      #
+        ########################################################################################################
+
+        updateContainerTransform: =>
+            if not @isRendered()
+                # the view was not yet rendered, so this.$pageContainer is not available.
+                return
+            @recalculateContainerTransform()
+
+            if (@containerScale == 1.0 and @containerShiftX == 0 and @containerShiftY == 0)
+                transformStr = 'none'
+            else
+                transformStr = @containerTransformString
+
+            @$pageContainer.css({
+                '-moz-transform':       transformStr,
+                '-webkit-transform':    transformStr,
+                '-o-transform':         transformStr,
+                '-ms-transform':        transformStr,
+                'transform':            transformStr
+            })
+
+        recalculateContainerTransform: =>
             ATF = AffineTransformation
             @canvasContainerShiftX = 10
             @canvasContainerShiftY = 10
@@ -79,23 +112,14 @@
                 @containerShiftX = (elWidth - containerWidth * scale) / 2
                 @containerShiftY = 0
 
-        updateContainerTransform: =>
-            if not @isRendered()
-                # the view was not yet rendered, so this.$pageContainer is not available.
-                return
-            @recalculateContainerTransform()
-            if (@containerScale == 1.0 and @containerShiftX == 0 and @containerShiftY == 0)
-                transformStr = 'none'
+        getElementDimensions: =>
+            if (@$el.parent().length == 0 and @$el.css('width') == '100%' and @$el.css('height') == '100%' and (containerEl = @getContainerEl())?)
+                $containerEl = $(containerEl)
+                [$containerEl.width(), $containerEl.height()]
             else
-                transformStr = @containerTransformString
-            @$pageContainer.css
-                '-moz-transform': transformStr
-                '-webkit-transform': transformStr
-                '-o-transform': transformStr
-                '-ms-transform': transformStr
-                'transform': transformStr
+                [@$el.width(), @$el.height()]
 
-        getPageScale: -> @containerScale
+
 
         transformToPageCoords: (x, y) ->
             r = getOffsetRect(@el)
@@ -123,22 +147,6 @@
             scale = @containerScale
             [x * scale + @containerShiftX, y * scale + @containerShiftY]
 
-
-        transformToCanvasCoords: (x, y) ->
-            [x, y] = @transformToPageCoords(x, y)
-            [x - @canvasContainerShiftX, y - @canvasContainerShiftY]
-
-        transformToCanvasCoordOffsets: (dx, dy) ->
-            @transformToPageCoordOffsets(dx, dy)
-
-        transformToCanvasBBox: (bbox) ->
-            @transformToPageBBox(bbox).translate
-                x: -@canvasContainerShiftX
-                y: -@canvasContainerShiftY
-
-        transformCanvasToContainerCoords: (x, y) ->
-            @transformPageToContainerCoords(x + @canvasContainerShiftX,
-                y + @canvasContainerShiftY)
 
     module.exports =
         PageView: PageView
