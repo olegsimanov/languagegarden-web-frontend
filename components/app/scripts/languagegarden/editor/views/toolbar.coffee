@@ -176,8 +176,8 @@
             super
 
         initializeNavButton: (options) ->
-            @setOptions(options, ['navTarget'], true)
-            @setOptions(options, [['eventName', @getNavEventName()]], true)
+            @setOption(options, 'navTarget', undefined, true)
+            @setOption(options, 'eventName', @getNavEventName(), true)
             @customClassName = @getNavButtonClass()
 
         getNavButtonClass: (navTarget=@navTarget)   -> "toolbar-button-#{ utils.slugify(@navTarget) }"
@@ -206,7 +206,7 @@
 
         initialize: (options) ->
             super
-            @setOptions(options, ['controller'], true)
+            @setOption(options, 'controller', undefined, true)
             @listenTo(@controller.canvasView, 'selectchange', @onSelectChange)
             @hidden = @shouldHide()
 
@@ -639,7 +639,8 @@
 
         initialize: (options) =>
             super
-            @setOptions(options, ['$splitEditorContainer', 'pickerView'], true)
+            @setOption(options, '$splitEditorContainer', undefined, true)
+            @setOption(options, 'pickerView', undefined, true)
             @paletteModel = options.model
             @isEditingSetup = false
             @listenTo(
@@ -836,8 +837,8 @@
 
         initialize: (options) =>
             super
-            @setOptions(options, ['editor'], true)
-            @setOptions(options, ['model'])
+            @setOption(options, 'editor', undefined, true)
+            @setOption(options, 'model')
             @model ?= @editor.colorPalette
             @updateSubviews()
             @listenTo(@editor, 'selectchange',  @onSelectChange)
@@ -1000,7 +1001,7 @@
             @states = _.keys(@toolbars)
 
             super
-            @setOptions(options, ['toolbars'], true)
+            @setOption(options, 'toolbars', undefined, true)
             @setupStates(options)
             @toolbarViews = @createToolbarViews(options)
             @listenTo(@, 'change:state', @onStateChange)

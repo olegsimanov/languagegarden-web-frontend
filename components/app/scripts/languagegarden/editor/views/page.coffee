@@ -20,11 +20,12 @@
         className:                  'page-wrapper'
         template:                   createTemplateWrapper('./common/page/main.ejs')
         shouldAppendToContainer:    true
+        canvasView:                 undefined
 
         initialize: (options) ->
-            super
-            $(window).on('resize', @updateContainerTransform)
+            super(options)
             @canvasView = options.canvasView
+            $(window).on('resize', @updateContainerTransform)
 
         ########################################################################################################
         #                                      public API                                                     #
@@ -32,7 +33,7 @@
 
         render: ->
             @renderCore()
-            @$pageContainer = @$('.page-container')
+            @$pageContainer = @$('.page-container')                 # if you place this before 'renderCore' the rendering will break (try it out!)
             @appendToContainerIfNeeded()
             @updateContainerTransform()
 

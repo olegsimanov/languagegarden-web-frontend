@@ -54,7 +54,7 @@
 
         getRenderContext: (ctx={})          -> ctx = _.extend({view: @}, ctx)
 
-        render: (ctx={}) ->
+        render: () ->
             @renderCore()
             @appendToContainerIfNeeded()
             this

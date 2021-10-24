@@ -87,29 +87,12 @@
 
 
         setOption: (options, name, defaultVal, isRequired=false, optName, normalizer) ->
-            optName ?= name
-            normalizer ?= _.identity
-            @[name] = normalizer(options[optName]) if options[optName]?
-            @[name] ?= defaultVal if defaultVal?
+            optName     ?= name
+            normalizer  ?= _.identity
+            @[name]     = normalizer(options[optName]) if options[optName]?
+            @[name]     ?= defaultVal if defaultVal?
             if isRequired and not @[name]?
                 console.error("Missing required attribute: #{name}")
-
-        setOptions: (options, specs, requiredAttributes=[]) =>
-            if _.isBoolean(requiredAttributes)
-                isRequired = -> true
-            else if _.isArray(requiredAttributes)
-                isRequired = (name) -> name in requiredAttributes
-            else
-                isRequired = -> false
-
-            for name in specs
-                if _.isArray(name)
-                    [name, defaultVal] = name
-                else if _.isString(name)
-                    defaultVal = undefined
-
-                @setOption(options, name, defaultVal, isRequired(name))
-
 
 
 

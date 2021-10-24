@@ -45,23 +45,16 @@
 
         initialize: (options) ->
             super
-            @setPropertyFromOptions(options, 'canvasView',
-                default: @controller.canvasView
-                required: true)
-            @setPropertyFromOptions(options, 'textBoxView',
-                default: @controller.textBoxView
-                required: true)
-            @setPropertyFromOptions(options, 'model',
-                default: @controller.model
-                required: true)
-            @setPropertyFromOptions(options, 'dataModel',
-                default: @controller.dataModel
-                required: true)
+            @setPropertyFromOptions(options, 'canvasView',  { default: @controller.canvasView,  required: true} )
+            @setPropertyFromOptions(options, 'textBoxView', { default: @controller.textBoxView, required: true} )
+            @setPropertyFromOptions(options, 'model',       { default: @controller.model,       required: true} )
+            @setPropertyFromOptions(options, 'dataModel',   { default: @controller.dataModel,   required: true} )
             # for deprecated usage
             @parentView = @canvasView
 
 
     class EditorAction extends UnitAction
+
         trackingChanges: true
 
         onPerformStart: ->
@@ -76,6 +69,7 @@
 
 
     class ToolbarStateAction extends EditorAction
+
         state: null
 
         perform: -> @controller.setToolbarState(@state)

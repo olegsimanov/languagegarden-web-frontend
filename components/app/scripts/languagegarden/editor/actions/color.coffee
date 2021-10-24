@@ -4,7 +4,7 @@
     {Action}    = require('./base')
 
 
-    class WordActionBase extends Action
+    class ColorBaseAction extends Action
 
         initialize: (options) ->
             super
@@ -24,11 +24,6 @@
             @onPerformStart()
             @perform(model, letter_index)
             @onPerformEnd()
-
-        letterPerform:  => console.log('WordActionBase letter perform')
-        wordPerform:    => console.log('WordActionBase word perform')
-
-    class ColorBaseAction extends WordActionBase
 
         wordPerform: (models) =>
             [@letterPerform(model, null) for model in models]
