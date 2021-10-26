@@ -227,7 +227,7 @@
         onParentViewBind:                               -> @forwardEventsFrom(@parentView, ("change:pageContainer#{suf}" for suf in ['Transform', 'Scale', 'ShiftX', 'ShiftY']))
         onModeChange:                                   =>
 
-        onSelectChange: =>
+        onSelectChange:                                 =>
 
             $el                     = $(@el)
             numOfElemSelections     = @getSelectedElements().length
@@ -235,11 +235,11 @@
             numOfMediaSelections    = selectedMediaViews.length
             numOfSelections         = @getSelectedViews().length
 
-            useIfAvailable = (mode) =>
-                if @isModeAvailable(mode)
-                    return mode
-                else
-                    return @defaultMode
+            useIfAvailable =        (mode) =>
+                                        if @isModeAvailable(mode)
+                                            return mode
+                                        else
+                                            return @defaultMode
 
             if numOfSelections > 0
                 $el.addClass('selections-present')
@@ -592,14 +592,14 @@
         getPaletteToolAction: (toolModel) =>
             toolModel ?= @colorPalette.get('selectedTool')
             switch toolModel.type
-                when 'color' then actionCls = ColorAction
-                when 'splitcolor' then actionCls = SplitColorAction
-                when 'removecolor' then actionCls = RemoveColorAction
+                when 'color'        then actionCls = ColorAction
+                when 'splitcolor'   then actionCls = SplitColorAction
+                when 'removecolor'  then actionCls = RemoveColorAction
 
             if actionCls?
                 new actionCls
                     controller: @controller
-                    toolModel: toolModel
+                    toolModel:  toolModel
 
         getCaretColor: (color) =>
             color ?= @model.get('bgColor')
