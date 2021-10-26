@@ -52,7 +52,7 @@
 
         isRendered:                             -> @rendered
 
-        getRenderContext: (ctx={})          -> ctx = _.extend({view: @}, ctx)
+        getRenderContext: (ctx={})          -> ctx = _.extend( { view: @ }, ctx )
 
         render: () ->
             @renderCore()
@@ -71,7 +71,7 @@
             if not @template?
                 return
 
-            ctx         = @getRenderContext(ctx)
+            ctx         = @getRenderContext()
             result      = @template.render(ctx)
 
             if (@renderChangedHTML and not @subviews and result == @renderedTemplateResult)

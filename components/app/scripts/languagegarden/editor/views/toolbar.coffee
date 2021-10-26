@@ -48,9 +48,11 @@
         tagName:            'div'
         className:          'button'
         toggledClassName:   'active'
+
         fadeEffects:        false
         disabled:           false
         hidden:             false
+
         help:               null
 
         initialize: (options) ->
@@ -73,6 +75,7 @@
             disableSelection(@el)
 
         initializeProperties: (options) ->
+
             @setOption(options, 'parentEl', @parentView?.el)
             @setOption(options, 'position', null, false, null, Point.fromValue)
             @setOption(options, 'width')
@@ -88,15 +91,17 @@
             @setOption(options, 'action')
             @setOption(options, 'actionClass')
 
-        initializeAction: (options) ->
-            @action ?= new @actionClass(@getActionOptions(options))
-            @customClassName ?= "button #{ @action.id }-button"
-            @help ?= @action.getHelpText()
-            @onClick ?= (event) =>
-                if not @action.isAvailable()
-                    return true
-                event.preventDefault()
-                @action.fullPerform()
+        initializeAction: (options)     ->
+
+            @action             ?= new @actionClass(@getActionOptions(options))
+            @customClassName    ?= "button #{ @action.id }-button"
+            @help               ?= @action.getHelpText()
+            @onClick            ?= (event) =>
+                                    if not @action.isAvailable()
+                                        return true
+                                    event.preventDefault()
+                                    @action.fullPerform()
+
             @listenTo(@action, 'change:available', @render)
             @listenTo(@action, 'change:toggled', @render)
 
@@ -240,19 +245,8 @@
 
         initialize: (options) ->
             @active = true
-
             super
-
-            if settings.isMobile
-                @mobileInit()
-            else
-                @desktopInit()
-
             @initSubviews()
-
-        mobileInit: ->
-
-        desktopInit: ->
 
         initSubviews: ->
             @subviews ?= {}

@@ -104,12 +104,12 @@
 
         onParentViewUnbind:         -> super
 
-        renderCore:                 ->
-
         render:                     ->
                                         @renderCore()
                                         @appendToContainerIfNeeded()
                                         this
+
+        renderCore:                 ->
 
         invalidate:                 -> @render()
 
