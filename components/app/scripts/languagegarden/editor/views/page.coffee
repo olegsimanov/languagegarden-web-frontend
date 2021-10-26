@@ -20,11 +20,9 @@
         className:                  'page-wrapper'
         template:                   createTemplateWrapper('./common/page/main.ejs')
         shouldAppendToContainer:    true
-        canvasView:                 undefined
 
         initialize: (options) ->
             super(options)
-            @canvasView = options.canvasView
             $(window).on('resize', @updateContainerTransform)
 
         ########################################################################################################

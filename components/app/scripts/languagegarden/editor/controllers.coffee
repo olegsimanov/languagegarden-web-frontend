@@ -52,12 +52,10 @@
                                         settings:       Settings.getSettings('plant-view')
                                         letterMetrics:  @letterMetrics
 
-            @toolbarView        = new ToolbarView
-                                        controller: @
+            @toolbarView        = new ToolbarView( { controller: @ } )
 
             @pageView           = new PageView
                                         controller: this
-                                        canvasView: @canvasView
                                         subviews:
                                             '.canvas-container':            [@canvasView]
                                             '.text-to-canvas-container':    @textBoxView
