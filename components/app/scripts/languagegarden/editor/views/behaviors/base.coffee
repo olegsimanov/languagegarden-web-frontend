@@ -7,24 +7,25 @@
     {extend}    = require('./../../extend')
 
 
-    class PlantChildBehavior
+    class MouseBehaviorBase
 
         @extend:        extend
 
         id: 'missing-object-hehavior-id'
 
         constructor: (options) ->
-            @parentView = options.parentView
-            @controller = options.controller
-            @model = @parentView.model
+
+            @parentView     = options.parentView
+            @controller     = options.controller
+            @model          = @parentView.model
             @parentBehavior = options.parentBehavior
+
             @initialize(options)
 
         initialize: =>
             @handlers ?= {}
             @initializeHandlers() if @initializeHandlers?
 
-    class MouseBehaviorBase extends PlantChildBehavior
 
         mouseHandlerBase: (view, event) ->
             event.preventDefault()
