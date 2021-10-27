@@ -357,10 +357,8 @@
                         'stroke-width': borderWidth
                         'stroke': borderColor
                     addSVGElementClass(la.node, 'letter-area')
-                    la.node.setAttribute('data-object-id',
-                        @model.get('objectId'))
-                    la.node.setAttribute('data-letter-index',
-                        @letterAreas.length)
+                    la.node.setAttribute('data-object-id', @model.get('objectId'))
+                    la.node.setAttribute('data-letter-index', @letterAreas.length)
                     @bindLetterArea(la, @letterAreas.length)
                     @putLetterAreaToFront(la)
                     @letterAreas.push(la)

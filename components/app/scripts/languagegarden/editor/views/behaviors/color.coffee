@@ -9,6 +9,7 @@
         id: 'color'
 
         onClick: (view, event, {letterIndex}) =>
+
             action = @parentView.getPaletteToolAction()
 
             if @parentView.colorPalette.get('colorMode') == ColorMode.LETTER
