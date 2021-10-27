@@ -57,7 +57,7 @@
             @pageView           = new PageView
                                         controller: this
                                         subviews:
-                                            '.canvas-container':            [@canvasView]
+                                            '.canvas-container':            [@canvasView]           # this array is required because this format is used by the toolbarView as well
                                             '.text-to-canvas-container':    @textBoxView
                                             '.toolbar-container':           @toolbarView
                                         containerEl: enclosingHtmlEl
