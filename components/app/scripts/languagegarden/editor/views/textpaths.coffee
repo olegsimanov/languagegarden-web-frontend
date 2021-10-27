@@ -61,184 +61,192 @@
 
         getLetterObj: (index)   -> @getLetterObjs()[index]
 
-        getLetterNodes: -> (letterObj.node for letterObj in @getLetterObjs() when letterObj?.node?)
+        getLetterNodes:         -> (letterObj.node for letterObj in @getLetterObjs() when letterObj?.node?)
 
-        disableSelection: ->
-            for node in @getLetterNodes()
-                disableSelection(node)
-            return this
+        disableSelection:       ->
+                                    for node in @getLetterNodes()
+                                        disableSelection(node)
+                                    return this
 
         addCSSClass: (className) ->
-            for node in @getLetterNodes()
-                addSVGElementClass(node, className)
-            return this
+                                    for node in @getLetterNodes()
+                                        addSVGElementClass(node, className)
+                                    return this
 
         removeCSSClass: (className) ->
-            for node in @getLetterNodes()
-                removeSVGElementClass(node, className)
-            return this
+                                    for node in @getLetterNodes()
+                                        removeSVGElementClass(node, className)
+                                    return this
 
         toggleCSSClass: (className, flag, letters=false) ->
-            for node in @getLetterNodes()
-                toggleSVGElementClass(node, className, flag)
-            return this
 
-        updateOpacity: ->
-            opacity = @opacity
-            for letterObj in @getLetterObjs()
-                letterObj.attr('opacity', opacity)
-            return this
+                                    for node in @getLetterNodes()
+                                        toggleSVGElementClass(node, className, flag)
+                                    return this
 
-        updateTransformMatrix: ->
-            if not @textObjs?
-                return this
-            for letterObj in @getLetterObjs()
-                letterObj.attr
-                    transform: @transformMatrix.toTransformString()
-            return this
+        updateOpacity:              ->
 
-        updateSpan: ->
-            middlePathPositions = @getLetterMiddlePathPositions()
-            points = @path.getPointsAtLengths(middlePathPositions)
-            orthogonals = @path.getOrthogonalsAtLengths(middlePathPositions)
-            upAngleRad = @upAngleRad
-            radToDegFactor = @radToDegFactor
+                                    opacity = @opacity
+                                    for letterObj in @getLetterObjs()
+                                        letterObj.attr('opacity', opacity)
+                                    return this
 
-            for i in [0...@letters.length]
-                p = points[i]
-                letterObj = @textObjs[i]
-                angleRad = Math.atan2(orthogonals[i].x, orthogonals[i].y)
-                deviationAngleDeg = (upAngleRad - angleRad) * radToDegFactor
-                mat = Raphael.matrix()
-                mat.rotate(deviationAngleDeg, p.x, p.y)
-                @lettersTransforms[i] = mat
-                letterObj.attr(p)
-                letterObj.attr('transform', mat.toTransformString())
+        updateTransformMatrix:      ->
 
-            return this
+                                    if not @textObjs?
+                                        return this
+                                    for letterObj in @getLetterObjs()
+                                        letterObj.attr
+                                            transform: @transformMatrix.toTransformString()
+                                    return this
+
+        updateSpan:                 ->
+
+                                    middlePathPositions = @getLetterMiddlePathPositions()
+                                    points = @path.getPointsAtLengths(middlePathPositions)
+                                    orthogonals = @path.getOrthogonalsAtLengths(middlePathPositions)
+                                    upAngleRad = @upAngleRad
+                                    radToDegFactor = @radToDegFactor
+
+                                    for i in [0...@letters.length]
+                                        p = points[i]
+                                        letterObj = @textObjs[i]
+                                        angleRad = Math.atan2(orthogonals[i].x, orthogonals[i].y)
+                                        deviationAngleDeg = (upAngleRad - angleRad) * radToDegFactor
+                                        mat = Raphael.matrix()
+                                        mat.rotate(deviationAngleDeg, p.x, p.y)
+                                        @lettersTransforms[i] = mat
+                                        letterObj.attr(p)
+                                        letterObj.attr('transform', mat.toTransformString())
+
+                                    return this
 
         applyTransformMatrix: (matrix) ->
-            if not matrix?
-                return this
-            for i in [0...@letters.length]
-                letterObj = @textObjs[i]
-                letterTransform = @lettersTransforms[i]
-                letterMat = Raphael.matrix()
-                letterMat.add(matrix)
-                letterMat.add(letterTransform)
-                letterObj.transform(letterMat.toTransformString())
-            return this
+
+                                    if not matrix?
+                                        return this
+                                    for i in [0...@letters.length]
+                                        letterObj = @textObjs[i]
+                                        letterTransform = @lettersTransforms[i]
+                                        letterMat = Raphael.matrix()
+                                        letterMat.add(matrix)
+                                        letterMat.add(letterTransform)
+                                        letterObj.transform(letterMat.toTransformString())
+                                    return this
 
 
-        updateFontSize: ->
-            fontSize = @getFontSize()
-            for letterObj in @getLetterObjs()
-                letterObj.attr('font-size', fontSize)
-            return this
+        updateFontSize:             ->
 
-            # updaters below are more high level and check if @tpObj is defined
+                                    fontSize = @getFontSize()
+                                    for letterObj in @getLetterObjs()
+                                        letterObj.attr('font-size', fontSize)
+                                    return this
 
-        updatePath: ->
-            # positioning is handled by updateSpan
-            return this
+                                    # updaters below are more high level and check if @tpObj is defined
 
-        toFront: ->
-            if not @textObjs?
-                return
-            if not @parentView?
-                return
-            for letterObj in @getLetterObjs()
-                @parentView.putElementToFrontAtLayer(
-                    letterObj,
-                    CanvasLayers.LETTERS
-                )
-            return this
+        updatePath:                 -> return this  # positioning is handled by updateSpan
 
-        updateLetters: ->
+        toFront:                    ->
 
-            @textObjs ?= []
-            @lettersTransforms ?= []
-            letters = @letters
-            lettersLen = letters.length
-            delta = lettersLen - @textObjs.length
-            if delta > 0
-                @textObjs = @textObjs.concat((null for i in [0...delta]))
-                @lettersTransforms = @lettersTransforms.concat((Raphael.matrix() for i in [0...delta]))
-            else if delta < 0
-                letterObjsToRemove = @textObjs[lettersLen..]
-                @textObjs = @textObjs[0...lettersLen]
-                @lettersTransforms[0...lettersLen]
-                for letterObj in letterObjsToRemove
-                    letterObj?.remove()
+                                    if not @textObjs?
+                                        return
+                                    if not @parentView?
+                                        return
+                                    for letterObj in @getLetterObjs()
+                                        @parentView.putElementToFrontAtLayer(
+                                            letterObj,
+                                            CanvasLayers.LETTERS
+                                        )
+                                    return this
 
-            opts = {}
+        updateLetters:              ->
 
-            for i in [0...lettersLen]
-                if i == 0
-                    opts.previousLetter = @previousLetter
-                else
-                    opts.previousLetter = letters[i - 1]
-                if i == lettersLen - 1
-                    opts.nextLetter = @nextLetter
-                else
-                    opts.nextLetter = letters[i + 1]
-                wrappedLetter = @getWrappedLetter(letters[i], opts)
-                if @textObjs[i]?
-                    @textObjs[i].attr('text', wrappedLetter)
-                else
-                    textObj = @textObjs[i] = @paper.text(0, 0, wrappedLetter)
-                    # Raphael.js by default adds the Arial font. WTF Raphael?
-                    textObj.node.removeAttribute('font')
-                    textObj.node.style['font-family'] = ''
+                                    @textObjs ?= []
+                                    @lettersTransforms ?= []
+                                    letters = @letters
+                                    lettersLen = letters.length
+                                    delta = lettersLen - @textObjs.length
+                                    if delta > 0
+                                        @textObjs = @textObjs.concat((null for i in [0...delta]))
+                                        @lettersTransforms = @lettersTransforms.concat((Raphael.matrix() for i in [0...delta]))
+                                    else if delta < 0
+                                        letterObjsToRemove = @textObjs[lettersLen..]
+                                        @textObjs = @textObjs[0...lettersLen]
+                                        @lettersTransforms[0...lettersLen]
+                                        for letterObj in letterObjsToRemove
+                                            letterObj?.remove()
 
-            for node in @getLetterNodes()
-                node.setAttribute('data-object-id', @objectId)
-            @disableSelection()
+                                    opts = {}
 
-        updateEachTime: ->
-            # HACK:
-            # because Raphael wrongly calculates the
-            # dy for inner tspan, we need to update it each time
-            # WTF...
-            for node in @getLetterNodes()
-                tspan = node?.childNodes[0]
-                tspan.setAttribute('dy', @getTextYOffset(true))
-            return this
+                                    for i in [0...lettersLen]
+                                        if i == 0
+                                            opts.previousLetter = @previousLetter
+                                        else
+                                            opts.previousLetter = letters[i - 1]
+                                        if i == lettersLen - 1
+                                            opts.nextLetter = @nextLetter
+                                        else
+                                            opts.nextLetter = letters[i + 1]
+                                        wrappedLetter = @getWrappedLetter(letters[i], opts)
+                                        if @textObjs[i]?
+                                            @textObjs[i].attr('text', wrappedLetter)
+                                        else
+                                            textObj = @textObjs[i] = @paper.text(0, 0, wrappedLetter)
+                                            # Raphael.js by default adds the Arial font. WTF Raphael?
+                                            textObj.node.removeAttribute('font')
+                                            textObj.node.style['font-family'] = ''
 
+                                    for node in @getLetterNodes()
+                                        node.setAttribute('data-object-id', @objectId)
+                                    @disableSelection()
 
-        create: ->
+        updateEachTime:             ->
 
-            @updateLetters()
-            @updateTransformMatrix()
-            @updateFontSize()
-            @updateSpan()
-            @updateStyle()
-            @updateGradients()
-            @updateOpacity()
-            @updateEachTime()
-
-        remove: ->
-
-            for letterObj in @getLetterObjs()
-                letterObj.remove()
-            @textObjs = null
-            @removeLetterGradients()
-            super
+                                    # HACK:
+                                    # because Raphael wrongly calculates the
+                                    # dy for inner tspan, we need to update it each time
+                                    # WTF...
+                                    for node in @getLetterNodes()
+                                        tspan = node?.childNodes[0]
+                                        tspan.setAttribute('dy', @getTextYOffset(true))
+                                    return this
 
 
-        removeLetterGradients: ->
-            if @letterGradients?
-                for gradient in @letterGradients
-                    gradient?.remove()
-            @letterGradients = null
+        create:                     ->
 
-        getFontSize:                    -> @fontSize
-        getMaxLetterHeight:             -> @fontSize * settings.fontSizeToLetterHeightMultiplier
+                                    @updateLetters()
+                                    @updateTransformMatrix()
+                                    @updateFontSize()
+                                    @updateSpan()
+                                    @updateStyle()
+                                    @updateGradients()
+                                    @updateOpacity()
+                                    @updateEachTime()
+
+        remove:                     ->
+
+                                    for letterObj in @getLetterObjs()
+                                        letterObj.remove()
+                                    @textObjs = null
+                                    @removeLetterGradients()
+                                    super
+
+
+        removeLetterGradients:      ->
+
+                                    if @letterGradients?
+                                        for gradient in @letterGradients
+                                            gradient?.remove()
+                                    @letterGradients = null
+
+        getFontSize:                -> @fontSize
+        getMaxLetterHeight:         -> @fontSize * settings.fontSizeToLetterHeightMultiplier
 
         getTextYOffset: (invalidate=false) ->
-            if invalidate or not @textYOffset?
-                @textYOffset = @getMaxLetterHeight() / 5
-            @textYOffset
+
+                                    if invalidate or not @textYOffset?
+                                        @textYOffset = @getMaxLetterHeight() / 5
+                                    @textYOffset
 
         getPath:                        -> @path
         getTransformMatrix:             -> @transformMatrix

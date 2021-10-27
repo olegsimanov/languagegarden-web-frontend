@@ -70,21 +70,21 @@
             for propName in @getBindablePropertyNames()
                 @setProperty(propName, options[propName], initialize: true, silent: true)
 
-        remove: ->
-            for propName in @getBindablePropertyNames()
-                @setProperty(propName, null)
-            super
-
-        setProperty: (propName, value, options) ->
-            setterName = "set#{capitalize(propName)}"
-            @[setterName](value, options)
-
         onPropertyInitialBind: (propName, options) ->
             if @[propName]?
                 binderName = "on#{capitalize(propName)}Bind"
                 @[binderName](options)
 
+        setProperty: (propName, value, options) ->
+            setterName = "set#{capitalize(propName)}"
+            @[setterName](value, options)
 
+
+
+        remove: ->
+            for propName in @getBindablePropertyNames()
+                @setProperty(propName, null)
+            super
 
         setOption: (options, name, defaultVal, isRequired=false, optName, normalizer) ->
             optName     ?= name
@@ -95,12 +95,11 @@
                 console.error("Missing required attribute: #{name}")
 
 
-
         getContainerEl:             -> _.result(@, 'containerEl') or (_.result(@, 'containerView') or _.result(@, 'parentView'))?.el
 
-        appendToContainerIfNeeded: ->
-            if _.result(this, 'shouldAppendToContainer')
-                @$el.appendTo(@getContainerEl())
+        appendToContainerIfNeeded:  ->
+                                        if _.result(this, 'shouldAppendToContainer')
+                                            @$el.appendTo(@getContainerEl())
 
         onParentViewUnbind:         -> super
 
@@ -115,9 +114,7 @@
 
 
 
-    class PlantChildView extends BaseView
-
-        setCoreOpacity: (opacity)   ->
+    class OpacityAwareView extends BaseView
 
         getModelOpacity:            ->
 
@@ -129,11 +126,13 @@
                                         opacity ?= 1.0
                                         opacity
 
-        getOpacity:                 ->  @getModelOpacity()
+        getOpacity:                 -> @getModelOpacity()
 
         updateVisibility:           -> @setCoreOpacity(@getOpacity())
 
+        setCoreOpacity: (opacity)   ->
+
 
     module.exports =
-        BaseView:           BaseView
-        PlantChildView:     PlantChildView
+        BaseView:               BaseView
+        OpacityAwareView:     OpacityAwareView

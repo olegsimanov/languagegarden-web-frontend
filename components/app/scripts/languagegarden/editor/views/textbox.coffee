@@ -3,8 +3,10 @@
     _                           = require('underscore')
 
     {BaseView}                  = require('./base')
-    {DummyMediumView}           = require('./media')
-    {TextToCanvasView}          = require('./texttocanvas')
+    {
+        DummyMediumView,
+        TextToCanvasView
+    }                           = require('./media')
 
     {
         MediumType,

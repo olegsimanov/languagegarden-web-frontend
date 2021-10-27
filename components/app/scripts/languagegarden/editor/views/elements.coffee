@@ -9,8 +9,8 @@
     $                               = require('jquery')
 
 
-    {PlantChildView}                = require('./base')
-    {SyntheticTextPath}   = require('./textpaths')
+    {OpacityAwareView}              = require('./base')
+    {SyntheticTextPath}             = require('./textpaths')
     {
         getLetterAreaPathStringAndPoints
         getBigUpperPath
@@ -43,7 +43,7 @@
     }                               = require('./../utils')
 
 
-    class ElementView extends PlantChildView
+    class ElementView extends OpacityAwareView
 
         initialize: (options) =>
             super(options)
