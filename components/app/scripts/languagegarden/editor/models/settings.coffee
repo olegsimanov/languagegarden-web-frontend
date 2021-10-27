@@ -9,9 +9,6 @@
         defaults:
             fontSize: settings.defaultFontSize
 
-        constructor: ->
-            super
-
         @getSettings = (name) => new Settings(id: name)
 
 
