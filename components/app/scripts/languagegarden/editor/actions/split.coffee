@@ -1,14 +1,14 @@
     'use strict'
 
-    _               = require('underscore')
+    _                       = require('underscore')
 
-    {Action}        = require('./base')
-    {Point}         = require('./../math/points')
-    {PlantElement}  = require('./../models/elements')
+    {Action}                = require('./base')
+    {Point}                 = require('./../math/points')
+    {PlantElementModel}     = require('./../models/elements')
     {
         getWordSplits
         getWordSplitIndices
-    }               = require('./../views/utils/elementsplit')
+    }                       = require('./../views/utils/elementsplit')
 
 
     class SplitWordElement extends Action
@@ -57,7 +57,7 @@
                     startPoint: startPoint
                     controlPoints: controlPoints
                     endPoint: endPoint
-                word = new PlantElement(options)
+                word = new PlantElementModel(options)
 
                 if @lettersRangesAreAdjacent(previousSplit, split)
                     previousWord.set('nextLetter', text[split.lettersRange[0]])
@@ -90,10 +90,11 @@
                 word
 
         getSubWordsParams: (view, startli, endli) ->
-            text: view.model.get('text')[startli..endli]
-            transformMatrix: view.model.get('transformMatrix')
-            fontSize: view.model.get('fontSize')
-            lettersAttributes: view.model.get('lettersAttributes')[startli..endli]
+
+            text:               view.model.get('text')[startli..endli]
+            transformMatrix:    view.model.get('transformMatrix')
+            fontSize:           view.model.get('fontSize')
+            lettersAttributes:  view.model.get('lettersAttributes')[startli..endli]
 
         lettersRangesAreAdjacent: (previousSplit, split) ->
             if not previousSplit?

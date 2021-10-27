@@ -1,11 +1,11 @@
     'use strict'
 
-    _ = require('underscore')
-    $ = require('jquery')
+    _                               = require('underscore')
+    $                               = require('jquery')
 
-    {PlantElements}                 = require('./elements')
-    {PlantMedia}                    = require('./media')
+    {PlantElementsCollection}       = require('./elements')
     {BaseModelWithSubCollections}   = require('./base')
+    {BaseCollection}                = require('./collection')
 
     {pathJoin}                      = require('./../utils')
     {MediumType}                    = require('./../constants')
@@ -14,17 +14,17 @@
     settings                        = require('./../../settings')
     config                          = require('./../../config')
 
-    DEFAULT_CANVAS_WIDTH    = 1000
-    DEFAULT_CANVAS_HEIGHT   = 460
+    DEFAULT_CANVAS_WIDTH            = 1000
+    DEFAULT_CANVAS_HEIGHT           = 460
 
     class UnitState extends BaseModelWithSubCollections
 
         subCollectionConfig: [
-            name: 'elements'
-            collectionClass: PlantElements
+            name:               'elements'
+            collectionClass:    PlantElementsCollection
         ,
-            name: 'media'
-            collectionClass: PlantMedia
+            name:               'media'
+            collectionClass:    BaseCollection
         ]
 
         forwardedEventNames: ['childchange',].concat(BaseModelWithSubCollections::forwardedEventNames)
@@ -64,8 +64,8 @@
     class UnitData extends BaseModelWithSubCollections
 
         subCollectionConfig: [
-            name:       'initialState'
-            modelClass: UnitState
+            name:           'initialState'
+            modelClass:     UnitState
         ]
 
         forwardedEventNames: ['childchange',].concat(BaseModelWithSubCollections::forwardedEventNames)
@@ -132,26 +132,11 @@
             url = pathJoin(urlPrefix, '/')
             url
 
-        sync: (method, model, options) ->
-            console.log("UnitData.sync() called")
-            options.success({})
-
         deepClone: (constructor) ->
             constructor ?= @constructor
             modelCopy = new constructor(@toJSON())
             modelCopy
 
-    class LessonData extends UnitData
-
-        urlRoot: -> config.getUrlRoot(settings.apiResourceNames.lessons)
-
-        forwardedAttrsMap: _.extend({}, UnitData::forwardedAttrsMap, {'categories':'categories', 'levels':'levels'})
-
-        setDefaultAttributes: ->
-            super
-            @setDefaultValue('categories',  [])
-            @setDefaultValue('levels',      [])
-
     module.exports =
         UnitState:      UnitState
-        LessonData:     LessonData
+        UnitData:       UnitData

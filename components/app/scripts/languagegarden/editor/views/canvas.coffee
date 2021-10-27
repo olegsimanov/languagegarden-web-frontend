@@ -21,7 +21,7 @@
     {LetterMetrics}                         = require('./svg/svgmetrics')
 
     {Settings}                              = require('./../models/settings')
-    {PlantElement}                          = require('./../models/elements')
+    {PlantElementModel}                     = require('./../models/elements')
 
     {
         ColorAction
@@ -548,7 +548,7 @@
 
 
         startInserting: (p) =>
-            insertModel = new PlantElement
+            insertModel = new PlantElementModel
                 startPoint: p
                 text:       ''
                 fontSize:   @settings.get('fontSize')

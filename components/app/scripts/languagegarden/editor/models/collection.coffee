@@ -2,7 +2,6 @@
 
     _                           = require('underscore')
     Backbone                    = require('backbone')
-    {VisibilityType}            = require('./../constants')
 
     class BaseCollection extends Backbone.Collection
 

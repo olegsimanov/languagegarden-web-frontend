@@ -2,22 +2,19 @@
 
     _ = require('underscore')
 
-    {
-        PlantChildModel,
-        PlantChildCollection
-    }                           = require('./model')
-    {deepCopy}                  = require('./../utils')
-    {MediumType}                = require('./../constants')
-
-    {Point}                     = require('./../math/points')
+    {BaseModel}         = require('./base')
+    {BaseCollection}    = require('./collection')
+    {VisibilityType}    = require('./../constants')
+    {deepCopy}          = require('./../utils')
+    {Point}             = require('./../math/points')
 
 
-    class PlantMedium extends PlantChildModel
+    class PlantMediumModel extends BaseModel
 
         initialize: (options) ->
-            if not PlantMedium.factoryRunningFlag
-                throw "please use the fromJSON factory class method"
             super
+            if not @has('visibilityType')
+                @set('visibilityType', VisibilityType.DEFAULT)
             @setDefaultValue('centerPoint', new Point(0,0))
             @setDefaultValue('scaleVector', new Point(1,1))
             @setDefaultValue('maxDeviationVector', null)
@@ -53,21 +50,10 @@
 
             data
 
-        @fromJSON: (attrs, options) =>
-            @factoryRunningFlag = true
-            if attrs?.type == MediumType.PLANT_TO_TEXT_NOTE
-                model = new PlantToTextBox(attrs, options)
-            else if attrs?.type == MediumType.IMAGE
-                model = new UnitImage(attrs, options)
-            else
-                model = new this(attrs, options)
-            @factoryRunningFlag = false
-            model
-
-    class PlantMedia extends PlantChildCollection
-        modelFactory:   PlantMedium.fromJSON
-        objectIdPrefix: 'medium'
+        clear: (options) ->
+            result = super
+            @trigger('clear', this)
+            result
 
     module.exports =
-        PlantMedium:    PlantMedium
-        PlantMedia:     PlantMedia
+        PlantMediumModel:           PlantMediumModel

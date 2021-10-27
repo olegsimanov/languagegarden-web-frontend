@@ -1,10 +1,10 @@
     'use strict'
 
-    settings = require('./../../settings')
-    {BaseModel} = require('./base')
+    Backbone    = require('backbone')
+    settings    = require('./../../settings')
 
 
-    class Settings extends BaseModel
+    class Settings extends Backbone.Model
 
         defaults:
             fontSize: settings.defaultFontSize

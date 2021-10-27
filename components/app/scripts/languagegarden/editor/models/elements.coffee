@@ -3,10 +3,9 @@
     Raphael                     = require('raphael')
     _                           = require('underscore')
 
-    {
-        PlantChildModel,
-        PlantChildCollection
-    }                           = require('./model')
+    {BaseModel}                 = require('./base')
+    {BaseCollection}            = require('./collection')
+    {VisibilityType}            = require('./../constants')
     {deepCopy}                  = require('./../utils')
     {Point}                     = require('./../math/points')
     {AffineTransformation}      = require('./../math/transformations')
@@ -16,7 +15,7 @@
 
     ATF = AffineTransformation
 
-    class PlantElement extends PlantChildModel
+    class PlantElementModel extends BaseModel
 
         letterStyleAttributes: ['labels']
 
@@ -26,6 +25,9 @@
 
         initialize: (options) ->
             super
+            if not @has('visibilityType')
+                @set('visibilityType', VisibilityType.DEFAULT)
+
             setDefaultValue = (name, value) =>
                 @set(name, value) if not @get(name)?
             setDefaultValue('startPoint', new Point(0,0))
@@ -320,12 +322,16 @@
             attrs["#{attrPrefix}Point"] = stretchPoint
             @set(attrs)
 
+        clear: (options) ->
+            result = super
+            @trigger('clear', this)
+            result
 
-    class PlantElements extends PlantChildCollection
-        model: PlantElement
-        objectIdPrefix: 'element'
+
+    class PlantElementsCollection extends BaseCollection
+        model: PlantElementModel                                                # Backbone docs: Override this property to specify the model class that the collection contains
 
 
     module.exports =
-        PlantElement:   PlantElement
-        PlantElements:  PlantElements
+        PlantElementModel:          PlantElementModel
+        PlantElementsCollection:    PlantElementsCollection

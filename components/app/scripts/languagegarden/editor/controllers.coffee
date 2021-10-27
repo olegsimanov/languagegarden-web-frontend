@@ -17,7 +17,7 @@
 
     {EditorPalette}         = require('./models/palette')
     {Settings}              = require('./models/settings')
-    {UnitState, LessonData} = require('./models/plants')
+    {UnitState, UnitData}   = require('./models/plants')
 
     {PageView}              = require('./views/page')
     {CanvasView}            = require('./views/canvas')
@@ -31,7 +31,7 @@
 
         constructor: (enclosingHtmlEl) ->
 
-            @dataModel          = new LessonData()
+            @dataModel          = new UnitData()
             @model              = new UnitState()
             @letterMetrics      = new LetterMetrics()
 

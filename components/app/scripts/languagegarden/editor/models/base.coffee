@@ -2,19 +2,17 @@
 
     _                           = require('underscore')
     Backbone                    = require('backbone')
-    {VisibilityType}            = require('./../constants')
     {getAttrsOpts}              = require('./../utils')
     {ICanForwardEvents}         = require('./../events')
-
-
-
 
 
     class BaseModel extends Backbone.Model.extend(ICanForwardEvents)
 
         setParentModel: (model)             -> @parentModel = model
         getParentModel:                     -> @parentModel
+
         setDefaultValue: (attrName, value)  -> @set(attrName, value) if not @has(attrName)
+
         deepClone:                          -> new @constructor(@toJSON())
 
 
@@ -27,6 +25,7 @@
         @forwardedEventNames:   ['addall', 'removeall', 'reset', 'change']
 
         getSubCollections:      -> @_subCollections
+        getSubCollectionNames:  -> @_subCollectionNames
 
         constructor: ->
             @createSubCollections()
@@ -35,10 +34,9 @@
         createSubCollections: ->
             for subColCfg in @subCollectionConfig
                 if not @[subColCfg.name]?
-                    constructor = (subColCfg.collectionConstructor or
-                        subColCfg.modelConstructor)
+                    constructor = (subColCfg.collectionConstructor or subColCfg.modelConstructor)
                     if not constructor
-                        cls = subColCfg.collectionClass or subColCfg.modelClass
+                        cls         = subColCfg.collectionClass or subColCfg.modelClass
                         constructor = (data, options) -> new cls(data, options)
                     subCollection = constructor()
                     subCollection.setParentModel(this)
@@ -70,6 +68,8 @@
             # TODO: add change event?
             return
 
+
+
         remove: -> @removeSubCollections()
 
         removeSubCollections: ->
@@ -83,8 +83,6 @@
 
 
         toJSON: => @subCollectionsToJSON(super)
-
-        getSubCollectionNames:  -> @_subCollectionNames
 
         subCollectionsToJSON: (data={}) ->
             for subCollectionName in @getSubCollectionNames()

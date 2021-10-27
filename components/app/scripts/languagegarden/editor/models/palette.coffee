@@ -1,12 +1,12 @@
     'use strict'
 
     _ = require('underscore')
+    Backbone                    = require('backbone')
     {ColorMode}             = require('./../constants')
-    {BaseModel}             = require('./base')
     {BaseCollection}        = require('./collection')
 
 
-    class Tool extends BaseModel
+    class Tool extends Backbone.Model
 
         editable: false
 
@@ -17,8 +17,9 @@
 
     class ColorTool extends Tool
 
-        name:       'Color'
         editable:   true
+
+        name:       'Color'
         type:       'color'
 
         initialize: (options) =>
@@ -63,13 +64,11 @@
             @trigger('change:color', @, colorTool)
             @trigger('change', @)
 
-        ###Adds a color tool as the last one.###
         pushTool: (colorTool) =>
             @colorTools.push(colorTool)
             @trigger('color:add', colorTool)
             @trigger('change')
 
-        ###Removes all occurrences of a color from this tool.###
         removeTool: (colorTool) =>
             oldLen = @colorTools.length
             @colorTools = _.without(@colorTools, colorTool)
@@ -78,7 +77,6 @@
                 @trigger('color:remove', colorTool)
                 @trigger('change')
 
-        ###Removes last added item from this color tool.###
         popTool: =>
             last = _.last(@colorTools)
             if not last?
@@ -145,7 +143,7 @@
                     true
             index
 
-    class Palette extends BaseModel
+    class Palette extends Backbone.Model
 
         toolCollectionClass: ToolCollection
 
