@@ -31,9 +31,11 @@
 
     class TemplateView extends BaseView
 
-        template:               null
         containerView:          null
         containerEl:            null
+        template:               null
+        subviews:               null
+
         renderedTemplateResult: null
         renderChangedHTML:      false
         rendered:               false
