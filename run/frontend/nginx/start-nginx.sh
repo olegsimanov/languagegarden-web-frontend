@@ -9,4 +9,5 @@ docker run --rm \
 -v "${SCRIPT_DIR}"/nginx.conf:/etc/nginx/nginx.conf:ro  \
 -v "${SCRIPT_DIR}"/../../../components/build/:/var/www/html/static/ \
 -v "${SCRIPT_DIR}"/../editor.html/:/var/www/html/editor.html/ \
+-v "${SCRIPT_DIR}"/../test1.html/:/var/www/html/test1.html/ \
 --name languagegarden-frontend-modified -p 5442:80 scr.saal.ai/nginx:1.17.1
