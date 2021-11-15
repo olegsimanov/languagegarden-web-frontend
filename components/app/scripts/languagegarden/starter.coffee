@@ -1,5 +1,5 @@
 require('../polyfills/console')
-{PlantController} = require('./editor/controllers')
+{PlantController} = require('./editor/controller')
 {CanvasView} = require('./editor/views/canvas')
 
 load = () ->
