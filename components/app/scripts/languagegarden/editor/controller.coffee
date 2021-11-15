@@ -3,8 +3,6 @@
     _ = require('underscore')
     $ = require('jquery')
 
-    require('../../polyfills/request-animation-frame')
-
     require('../../../styles/layout.less')
     require('../../../font/languagegarden-regular-webfont.css')
     require('../../../font/eskorte-arabic-regular-webfont.css')

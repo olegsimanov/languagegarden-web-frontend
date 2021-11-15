@@ -1,4 +1,3 @@
-require('../polyfills/console')
 {PlantController} = require('./editor/controller')
 {CanvasView} = require('./editor/views/canvas')
 

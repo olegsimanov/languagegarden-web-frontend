@@ -925,8 +925,7 @@
         getPlaceholderView: => @placeholderView ?= new PlaceholderView({})
 
         ###Replace the original color mode button with a placeholder.###
-        getSubViews: =>
-            '': [@getPlaceholderView()].concat(@getPaletteViews())
+        getSubViews: => '': [@getPlaceholderView()].concat(@getPaletteViews())
 
         ###Forward child clicks.###
         onChildSubviewClicked: (sender, model) => @trigger('click', @, model)
