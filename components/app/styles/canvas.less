@@ -2,66 +2,66 @@
     Canvas
    -------------------------------------------------------*/
 .canvas-container {
-    overflow: hidden;
-    color: #000;
+    overflow:           hidden;
+    color:              #000;
 }
 
 /*  Helper for editing text on canvas
  */
 input.language-canvas-editbox {
-  font-size:1px;
-  border: none;
-  color: rgba(0,0,0,0);
-  opacity: 0.0;
-  background: none;
-  position: absolute;
-  outline: none;
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  overflow: hidden;
-  width: 1px;
-  height: 1px;
+  font-size:            1px;
+  border:               none;
+  color:                rgba(0,0,0,0);
+  opacity:              0.0;
+  background:           none;
+  position:             absolute;
+  outline:              none;
+  -moz-appearance:      none;
+  -webkit-appearance:   none;
+  overflow:             hidden;
+  width:                1px;
+  height:               1px;
 
   &__rtl {
-      direction: rtl;
-      unicode-bidi: bidi-override;
+      direction:        rtl;
+      unicode-bidi:     bidi-override;
   }
 
   &::-moz-selection {
       /* Mozilla based browsers */
       background-color: none;
-      color: rgba(0,0,0,0);
+      color:            rgba(0,0,0,0);
   }
 
   &::selection {
       /* Works in Safari */
       background-color: none;
-      color: rgba(0,0,0,0);
+      color:            rgba(0,0,0,0);
   }
 
   &::-webkit-selection {
       /* Works in Chrome */
       background-color: none;
-      color: rgba(0,0,0,0);
+      color:            rgba(0,0,0,0);
   }
 }
 
 .canvas, .metrics-measuring-div {
-  font-family: @plantFontFamily;
+  font-family:          @plantFontFamily;
 }
 
 .canvas {
 
   .element tspan {
-    cursor: default;
+    cursor:             default;
   }
 
   .note-medium-content {
-    display: block;
-    text-align: left;
-    min-width: 160px;
-    outline: none; /* Global outline none? */
-    border: 1px solid #d8d8d8;
+    display:            block;
+    text-align:         left;
+    min-width:          160px;
+    outline:            none; /* Global outline none? */
+    border:             1px solid #d8d8d8;
 
     .gradient(#fff, #fff, #efefef);
     .border-radius(5px);
@@ -74,21 +74,21 @@ input.language-canvas-editbox {
     p {
         &:hover,
         &:focus {
-          outline: none;
+          outline:              none;
         }
-        display:block;
-        white-space: nowrap;
-        @horizontalPadding: 10px;
-        @leftBorderImageWidth: 31px;
-        margin: 0px;
-        line-height: 29px;
-        height: 29px;
-        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAACCAYAAACg5gd8AAAAJ0lEQVR42mNggABeImheEtTipKdMmSL7dV77TBBmoDf4//+/IMxyAHxeEGrO+dV0AAAAAElFTkSuQmCC) repeat-y left center;
-        padding:0 @horizontalPadding 0 @leftBorderImageWidth+@horizontalPadding;
-        border-bottom: 1px solid #e7e7e4;
-        border-bottom: 1px solid rgba(173, 173, 173, .2);
+        display:                block;
+        white-space:            nowrap;
+        @horizontalPadding:     10px;
+        @leftBorderImageWidth:  31px;
+        margin:                 0px;
+        line-height:            29px;
+        height:                 29px;
+        background:             url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAACCAYAAACg5gd8AAAAJ0lEQVR42mNggABeImheEtTipKdMmSL7dV77TBBmoDf4//+/IMxyAHxeEGrO+dV0AAAAAElFTkSuQmCC) repeat-y left center;
+        padding:                0 @horizontalPadding 0 @leftBorderImageWidth+@horizontalPadding;
+        border-bottom:          1px solid #e7e7e4;
+        border-bottom:          1px solid rgba(173, 173, 173, .2);
         &:last-of-type {
-          border-bottom:none;
+          border-bottom:        none;
         }
     }
 
@@ -100,9 +100,9 @@ input.language-canvas-editbox {
       }
       min-height: @noteHeight;
       p {
-        height: @noteHeight;
-        line-height: @noteHeight;
-        font-size: 18px;
+        height:       @noteHeight;
+        line-height:  @noteHeight;
+        font-size:    18px;
       }
     }
 
@@ -110,14 +110,13 @@ input.language-canvas-editbox {
       @noteHeight: 43px;
       &[contenteditable=false] p,
       &:not([contenteditable]) p{
-          // this ugly blocks fixes IE when dragging
-          height: @noteHeight !important;
+          height: @noteHeight !important;       // this ugly blocks fixes IE when dragging
       }
       min-height: @noteHeight;
       p {
-        height: @noteHeight;
-        line-height: @noteHeight;
-        font-size: 28px;
+        height:       @noteHeight;
+        line-height:  @noteHeight;
+        font-size:    28px;
       }
     }
 
@@ -129,9 +128,9 @@ input.language-canvas-editbox {
       }
       min-height: @noteHeight;
       p {
-        height: @noteHeight;
-        line-height: @noteHeight;
-        font-size: 50px;
+        height:       @noteHeight;
+        line-height:  @noteHeight;
+        font-size:    50px;
       }
     }
 
@@ -143,9 +142,9 @@ input.language-canvas-editbox {
       }
       min-height: @noteHeight;
       p {
-        height: @noteHeight;
-        line-height: @noteHeight;
-        font-size: 80px;
+        height:       @noteHeight;
+        line-height:  @noteHeight;
+        font-size:    80px;
       }
     }
 

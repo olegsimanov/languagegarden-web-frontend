@@ -8,9 +8,6 @@
     require('../../../styles/layout.less')
     require('../../../font/languagegarden-regular-webfont.css')
     require('../../../font/eskorte-arabic-regular-webfont.css')
-    require('../../../styles/iefix.less')
-
-    require('../../iefix')
 
     {EventsAwareClass}      = require('./events')
     editorColors            = require('./colors')

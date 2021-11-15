@@ -1,5 +1,5 @@
 @import "reset.less";
-@import "prefixer.less";
+@import "prefixer.less";            /* https://lessprefixer.com, https://github.com/JoelSutherland/LESS-Prefixer */
 @import "variables.less";
 @import "mixins.less";
 
@@ -171,8 +171,7 @@ body {
     .line {
       .element {
         &:last-child:after {
-          /* this hack is used for empty lines to work in chrome */
-          content:'\a0';
+          content:'\a0';          /* this hack is used for empty lines to work in chrome */
         }
         &.dragged-out {
           opacity: 0.5;
