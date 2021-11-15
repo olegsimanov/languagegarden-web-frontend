@@ -35,12 +35,12 @@ body {
     .no-selection();
 }
 .page-container {
-    width:    1004px;
-    height:   652px;
-    padding:  10px;
     position: absolute;
     left:     0;
     top:      0;
+    width:    1004px;
+    height:   652px;
+    padding:  10px;
     display:  table;
 }
 .page-container,
@@ -50,21 +50,21 @@ body {
     line-height: 1.28;
 }
 .page-container-inner {
-    position: relative;
-    padding: 0;
-    display: table-cell;
-    height: 100%;
+    position:       relative;
+    padding:        0;
+    display:        table-cell;
+    height:         100%;
 }
 .sidebar-container {
-    display: table-cell;
+    display:        table-cell;
     vertical-align: top;
-    width: 120px;
+    width:          120px;
 }
 .plant-container {
     .border-radius(3px);
-    position: relative;
-    overflow: hidden;
-    height: 462px + 105px;
+    position:       relative;
+    overflow:       hidden;
+    height:         462px + 105px;
 }
 
 /* -------------------------------------------------------
@@ -74,48 +74,48 @@ body {
 .demo-summary-container,
 .list-container {
     .border-radius(3px);
-    position: relative;
-    overflow: hidden;
+    position:         relative;
+    overflow:         hidden;
     background-color: #fff;
-    height: 652px;
+    height:           652px;
 }
 .list-container .list{
   .plant-element,
   .plant-element .lead
   {
-    margin-bottom: 0px;
+    margin-bottom:    0px;
   }
 }
 
 .demo-welcome-container,
 .demo-summary-container {
-    color: #000;
+    color:            #000;
 }
 
 /* -------------------------------------------------------
     Plant Name
    -------------------------------------------------------*/
 .plant-name-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    z-index: 8;
+    position:         absolute;
+    top:              0;
+    left:             0;
+    width:            100%;
+    text-align:       center;
+    z-index:          8;
 }
 .plant-name {
     .border-radius(0 0 3px 3px);
-    display: inline-block;
-    overflow: hidden;
-    padding: 0 14px;
-    min-width: 100px;
-    max-width: 80%;
-    height: 28px;
-    background: rgba(0, 0, 0, 0.5);
-    text-transform: uppercase;
-    white-space: nowrap;
-    font-size: 16px;
-    line-height: 28px;
+    display:          inline-block;
+    overflow:         hidden;
+    padding:          0 14px;
+    min-width:        100px;
+    max-width:        80%;
+    height:           28px;
+    background:       rgba(0, 0, 0, 0.5);
+    text-transform:   uppercase;
+    white-space:      nowrap;
+    font-size:        16px;
+    line-height:      28px;
 }
 
 
@@ -123,11 +123,11 @@ body {
     Text 2 Canvas
    -------------------------------------------------------*/
 .text-to-canvas-container, .instructions-box {
-    font-size: 40px;
-    line-height: 50px;
-    background: #ffffff;
-    height: 105px;
-    margin: 5px 0 0 0;
+    font-size:        40px;
+    line-height:      50px;
+    background:       #ffffff;
+    height:           105px;
+    margin:           5px 0 0 0;
 }
 
 
@@ -150,18 +150,18 @@ body {
 .text-to-canvas-box,
 .canvas-to-text-box,
 .instructions-box {
-    overflow: auto;
-    padding: 0 10px 5px;
-    height: 100px;
-    width: 864px;
+    overflow:     auto;
+    padding:      0 10px 5px;
+    height:       100px;
+    width:        864px;
 
     &__hidden {
-        color: none;
+        color:      none;
         background: #fff;
     }
 
     &__rtl {
-        direction: rtl;
+        direction:    rtl;
         unicode-bidi: bidi-override;
     }
 }
@@ -187,19 +187,19 @@ body {
     color: #747474;
 }
 textarea.instructions-box {
-    margin: 0;
-    border-radius: 0;
-    border-width: 0;
-    border-image: none !important;
-    box-shadow: none;
-    resize: none;
+    margin:           0;
+    border-radius:    0;
+    border-width:     0;
+    border-image:     none !important;
+    box-shadow:       none;
+    resize:           none;
 }
 
 .text-to-canvas-helper {
-    font-family: @plantFontFamily;
-    position: absolute;
-    line-height: normal;
+    font-family:      @plantFontFamily;
+    position:         absolute;
+    line-height:      normal;
 }
 .text-to-canvas-helper.out-of-bounds {
-    opacity: 0.5;
+    opacity:          0.5;
 }
