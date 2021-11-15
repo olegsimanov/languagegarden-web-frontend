@@ -753,7 +753,7 @@
             'click': 'onClick'
 
         className:  "button color-palette__color-btn"
-        template:   createTemplateWrapper('./editor/colorpicker/color.ejs')
+        template:   createTemplateWrapper('./common/toolbars/colorpicker/color.ejs')
 
         initialize:             -> @listenToColorChange()
         onClick:                => @trigger('click', @, @model)
@@ -797,13 +797,13 @@
 
     class RemoveColorView extends PaletteColorView
 
-        template:               createTemplateWrapper('./editor/colorpicker/remove-color.ejs')
+        template:               createTemplateWrapper('./common/toolbars/colorpicker/remove-color.ejs')
 
 
     ###Configures split color view rendering.###
     SplitColorPrototype =
 
-        template:               createTemplateWrapper('./editor/colorpicker/split-color.ejs')
+        template:               createTemplateWrapper('./common/toolbars/colorpicker/split-color.ejs')
 
         listenToColorChange:                    -> @listenTo(@model, 'change', @render)
         getRenderContext:       (ctx={})    -> _.extend({modelColors: @model.getColors()}, ctx)
@@ -934,7 +934,7 @@
 
     class SquarePickerView extends SquarePickerBaseView
 
-        template:           createTemplateWrapper('./editor/colorpicker/main.ejs')
+        template:           createTemplateWrapper('./common/toolbars/colorpicker/main.ejs')
 
         className:          'color-picker'
         colorClass:         PaletteColorView
