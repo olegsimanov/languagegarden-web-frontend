@@ -1,7 +1,6 @@
     'use strict'
 
     _                       = require('underscore')
-    jQuery                  = require('jquery')
     $                       = require('jquery')
 
     utils                   = require('./../../utils')
