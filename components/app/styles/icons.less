@@ -1,4 +1,5 @@
-/*  Build Icon Rule
+/*
+ * Build Icon Rule
  */
 .icon(@file_name, @width, @height) {
     width:              ~'@{width}px' !important;
@@ -7,15 +8,16 @@
 }
 
 
-/* -------------------------------------------------------
-    Icons
-   -------------------------------------------------------*/
+/*
+ * Icons
+ */
 .icon {
     background-repeat: no-repeat;
     .background-size(contain);
 }
 
-/*  Active Icon [Green Checkbox]
+/*
+ * Active Icon [Green Checkbox]
  */
 .icon.active, .active > .icon {
     position: relative;
@@ -29,7 +31,8 @@
     }
 }
 
-/*  Icons
+/*
+ * Icons
  */
 .icon_back              {.icon('icon_back.png',         49, 38.75)}
 .icon_check             {.icon('icon_check.png',        50.5, 45)}

@@ -1,6 +1,6 @@
 @import "reset.less";
 @import "prefixer.less";            /* https://lessprefixer.com, https://github.com/JoelSutherland/LESS-Prefixer */
-@import "variables.less";
+@import "variables.less";           /* font and selection color */
 @import "mixins.less";
 
 // General
@@ -17,15 +17,17 @@
     Layout
    -------------------------------------------------------*/
 html,
+
 body {
+
     height: 100%;
     margin: 0;
-}
-body {
     background: #ECEBEB;
     .background-size(cover);
+
 }
-.page-wrapper {
+
+.page-wrapper {                                   /* PageView */
     position: absolute;
     left:     0;
     top:      0;
@@ -55,11 +57,7 @@ body {
     display:        table-cell;
     height:         100%;
 }
-.sidebar-container {
-    display:        table-cell;
-    vertical-align: top;
-    width:          120px;
-}
+
 .plant-container {
     .border-radius(3px);
     position:       relative;
@@ -68,61 +66,9 @@ body {
 }
 
 /* -------------------------------------------------------
-    Plants List
-   -------------------------------------------------------*/
-.demo-welcome-container,
-.demo-summary-container,
-.list-container {
-    .border-radius(3px);
-    position:         relative;
-    overflow:         hidden;
-    background-color: #fff;
-    height:           652px;
-}
-.list-container .list{
-  .plant-element,
-  .plant-element .lead
-  {
-    margin-bottom:    0px;
-  }
-}
-
-.demo-welcome-container,
-.demo-summary-container {
-    color:            #000;
-}
-
-/* -------------------------------------------------------
-    Plant Name
-   -------------------------------------------------------*/
-.plant-name-container {
-    position:         absolute;
-    top:              0;
-    left:             0;
-    width:            100%;
-    text-align:       center;
-    z-index:          8;
-}
-.plant-name {
-    .border-radius(0 0 3px 3px);
-    display:          inline-block;
-    overflow:         hidden;
-    padding:          0 14px;
-    min-width:        100px;
-    max-width:        80%;
-    height:           28px;
-    background:       rgba(0, 0, 0, 0.5);
-    text-transform:   uppercase;
-    white-space:      nowrap;
-    font-size:        16px;
-    line-height:      28px;
-}
-
-
-/* -------------------------------------------------------
     Text 2 Canvas
    -------------------------------------------------------*/
-.text-to-canvas-container, .instructions-box {
+.text-to-canvas-container {
     font-size:        40px;
     line-height:      50px;
     background:       #ffffff;
@@ -134,22 +80,21 @@ body {
 .text-to-canvas-container {
     &.canvas-to-text-mode,
     &.in-canvas-to-text-mode {
-        .text-to-canvas-box, .instructions-box {
+        .text-to-canvas-box {
             display: none;
         }
     }
 
     &.instructions-mode {
-        .text-to-canvas-box, .canvas-to-text-box {
+        .text-to-canvas-box {
             display: none;
         }
     }
 }
 
 
-.text-to-canvas-box,
-.canvas-to-text-box,
-.instructions-box {
+.text-to-canvas-box {
+
     overflow:     auto;
     padding:      0 10px 5px;
     height:       100px;
@@ -164,10 +109,7 @@ body {
         direction:    rtl;
         unicode-bidi: bidi-override;
     }
-}
 
-
-.text-to-canvas-box {
     .line {
       .element {
         &:last-child:after {
@@ -181,18 +123,8 @@ body {
         }
       }
     }
-}
 
-.instructions-box  {
-    color: #747474;
-}
-textarea.instructions-box {
-    margin:           0;
-    border-radius:    0;
-    border-width:     0;
-    border-image:     none !important;
-    box-shadow:       none;
-    resize:           none;
+
 }
 
 .text-to-canvas-helper {
