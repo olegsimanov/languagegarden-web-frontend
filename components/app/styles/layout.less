@@ -20,8 +20,8 @@ html,
 
 body {
 
-    height: 100%;
-    margin: 0;
+    height:     100%;
+    margin:     0;
     background: #ECEBEB;
     .background-size(cover);
 
@@ -36,7 +36,8 @@ body {
     overflow: hidden;
     .no-selection();
 }
-.page-container {
+
+.page-container {                                 /* pageContainer variable inside PageView */
     position: absolute;
     left:     0;
     top:      0;
@@ -74,22 +75,20 @@ body {
     background:       #ffffff;
     height:           105px;
     margin:           5px 0 0 0;
-}
 
-
-.text-to-canvas-container {
     &.canvas-to-text-mode,
     &.in-canvas-to-text-mode {
-        .text-to-canvas-box {
-            display: none;
-        }
+      .text-to-canvas-box {
+        display: none;
+      }
     }
 
     &.instructions-mode {
-        .text-to-canvas-box {
-            display: none;
-        }
+      .text-to-canvas-box {
+        display: none;
+      }
     }
+
 }
 
 
