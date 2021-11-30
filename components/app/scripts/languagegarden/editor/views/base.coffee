@@ -135,4 +135,4 @@
 
     module.exports =
         BaseView:               BaseView
-        OpacityAwareView:     OpacityAwareView
+        OpacityAwareView:       OpacityAwareView
