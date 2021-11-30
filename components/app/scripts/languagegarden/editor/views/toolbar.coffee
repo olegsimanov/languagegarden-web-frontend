@@ -12,7 +12,6 @@
     }                           = require('./template')
 
     {Point}                     = require('./../math/points')
-    {BBox}                      = require('./../math/bboxes')
     utils                       = require('./../utils')
 
 
@@ -91,75 +90,74 @@
 
         initializeAction: (options)     ->
 
-            @action             ?= new @actionClass(@getActionOptions(options))
-            @customClassName    ?= "button #{ @action.id }-button"
-            @help               ?= @action.getHelpText()
-            @onClick            ?= (event) =>
-                                    if not @action.isAvailable()
-                                        return true
-                                    event.preventDefault()
-                                    @action.fullPerform()
+                                    @action             ?= new @actionClass(@getActionOptions(options))
+                                    @customClassName    ?= "button #{ @action.id }-button"
+                                    @help               ?= @action.getHelpText()
+                                    @onClick            ?= (event) =>
+                                                            if not @action.isAvailable()
+                                                                return true
+                                                            event.preventDefault()
+                                                            @action.fullPerform()
 
-            @listenTo(@action, 'change:available', @render)
-            @listenTo(@action, 'change:toggled', @render)
+                                    @listenTo(@action, 'change:available', @render)
+                                    @listenTo(@action, 'change:toggled', @render)
 
-        getActionOptions: ->
-            controller: @controller
+        getActionOptions:       -> { controller: @controller }
 
-        remove: =>
-            delete @onClick
-            super
+        remove:                 =>
+                                    delete @onClick
+                                    super
 
-        isToggled: -> @action?.isToggled() or false
+        isToggled:              -> @action?.isToggled() or false
 
-        isEnabled: ->
-            enabled = @action?.isAvailable()
-            enabled ?= not @disabled
-            enabled
+        isEnabled:              ->
+                                    enabled = @action?.isAvailable()
+                                    enabled ?= not @disabled
+                                    enabled
 
-        isDisabled: -> not @isEnabled()
+        isDisabled:             -> not @isEnabled()
 
-        render: =>
-            @delegateEvents()
-            if @customClassName?
-                @$el.addClass(@customClassName)
+        render:                 =>
+                                    @delegateEvents()
+                                    if @customClassName?
+                                        @$el.addClass(@customClassName)
 
-            @$el.html(_.result(@, 'templateString')) if @templateString?
-            @toggleVisibility(not @hidden)
-            @$el.toggleClass('disabled', @isDisabled())
-            @$el.css(@getElCss())
-            @$el.toggleClass(@toggledClassName, @isToggled())
-            @appendToContainerIfNeeded()
-            this
+                                    @$el.html(_.result(@, 'templateString')) if @templateString?
+                                    @toggleVisibility(not @hidden)
+                                    @$el.toggleClass('disabled', @isDisabled())
+                                    @$el.css(@getElCss())
+                                    @$el.toggleClass(@toggledClassName, @isToggled())
+                                    @appendToContainerIfNeeded()
+                                    this
 
-        getElCss: =>
-            elCss = {}
-            elCss.left = @position.x if @position?
-            elCss.top = @position.y if @position?
-            elCss.width = @width if @width?
-            elCss.height = @height if @height?
-            elCss
+        getElCss:               =>
+                                    elCss = {}
+                                    elCss.left = @position.x if @position?
+                                    elCss.top = @position.y if @position?
+                                    elCss.width = @width if @width?
+                                    elCss.height = @height if @height?
+                                    elCss
 
         toggleVisibility: (show) =>
-            if show?
-                @hidden = not show
-            else
-                @hidden = not @hidden
+                                    if show?
+                                        @hidden = not show
+                                    else
+                                        @hidden = not @hidden
 
-            if @hidden
-                if @fadeEffects
-                    @$el.fadeOut('fast')
-                else
-                    @$el.addClass('hide')
-            else
-                if @fadeEffects
-                    @$el.fadeIn('fast')
-                else
-                    @$el.removeClass('hide')
+                                    if @hidden
+                                        if @fadeEffects
+                                            @$el.fadeOut('fast')
+                                        else
+                                            @$el.addClass('hide')
+                                    else
+                                        if @fadeEffects
+                                            @$el.fadeIn('fast')
+                                        else
+                                            @$el.removeClass('hide')
 
-        hide: => @toggleVisibility(false)
+        hide:                       => @toggleVisibility(false)
 
-        show: => @toggleVisibility(true)
+        show:                       => @toggleVisibility(true)
 
 
     class NavButtonView extends ButtonView
@@ -167,27 +165,29 @@
         navTarget: null
         eventName: null
 
-        initialize: (options) ->
-            @initializeNavButton(options)
-            super
+        initialize: (options)           ->
 
-        initializeNavButton: (options) ->
-            @setOption(options, 'navTarget', undefined, true)
-            @setOption(options, 'eventName', @getNavEventName(), true)
-            @customClassName = @getNavButtonClass()
+                                        @initializeNavButton(options)
+                                        super
+
+        initializeNavButton: (options)  ->
+
+                                        @setOption(options, 'navTarget', undefined, true)
+                                        @setOption(options, 'eventName', @getNavEventName(), true)
+                                        @customClassName = @getNavButtonClass()
 
         getNavButtonClass: (navTarget=@navTarget)   -> "toolbar-button-#{ utils.slugify(@navTarget) }"
         getNavEventName: (navTarget=@navTarget)     -> "toolbarnav:#{ utils.slugify(navTarget) }"
 
-        onClick: (e)    => @navButtonOnClick()
-        isEnabled:      -> true
+        onClick: (e)                    => @navButtonOnClick()
+        isEnabled:                      -> true
 
-        navButtonOnClick: ->
-            if not @isEnabled()
-                return true
-            @triggerToolbarNavEvent()
+        navButtonOnClick:               ->
+                                        if not @isEnabled()
+                                            return true
+                                        @triggerToolbarNavEvent()
 
-        triggerToolbarNavEvent:                          -> @trigger(@eventName, @, @navTarget)
+        triggerToolbarNavEvent:         -> @trigger(@eventName, @, @navTarget)
 
 
     class BackButtonView extends NavButtonView
