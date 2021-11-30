@@ -332,21 +332,6 @@
 
         onActiveChanged: ->
 
-    class EditorSubToolbarView extends EditorToolbarView
-
-        template: createTemplateWrapper('./common/toolbars/container.ejs')
-
-        backNav: [
-            viewType: 'navbutton'
-            viewClass: BackButtonView,
-        ]
-
-        toolbarViewAnchors:
-            '.toolbar__section_left':   'backNav'
-            '.toolbar__section_mid':    'contentMenu'
-            '.toolbar__section_right':  'rightSide'
-
-
 
     class TooltipButtonView extends ButtonView
 
@@ -752,7 +737,7 @@
 
 
 
-    class ColorToolbarView extends EditorSubToolbarView
+    class ColorToolbarView extends EditorToolbarView
 
         toolbarName: ToolbarEnum.COLOR
 
@@ -761,10 +746,25 @@
             viewType: 'palette'
         ]
 
+        template: createTemplateWrapper('./common/toolbars/container.ejs')
+
+        backNav: [
+            viewType: 'navbutton'
+            viewClass: BackButtonView,
+        ]
+
+        toolbarViewAnchors:
+            '.toolbar__section_left':   'backNav'
+            '.toolbar__section_mid':    'contentMenu'
+            '.toolbar__section_right':  'rightSide'
+
+
         onActiveChanged: ->
             canvasView  = @controller.canvasView
             mode        = if @active then CanvasMode.COLOR else canvasView.getDefaultMode()
             canvasView.setMode(mode)
+
+
 
     class ToolbarView extends TemplateView.extend(StatefulClassPrototype)
 
