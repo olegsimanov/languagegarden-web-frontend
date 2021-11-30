@@ -626,6 +626,34 @@
         getRenderContext:       (ctx={})    -> _.extend({modelColors: @model.getColors()}, ctx)
 
 
+    class EditorColorModeButtonView extends EditorToggleButtonView
+
+        className:      "color-mode-button #{EditorToggleButtonView::className}"
+        states:         [ColorMode.WORD, ColorMode.LETTER]
+        defaultState:   ColorMode.DEFAULT
+
+        initialize: (options) =>
+            super
+            @model = options.model
+            @editor = options.editor
+            @setState(@model.get('colorMode'))
+            @listenTo(@model, 'change:colorMode', @onColorModeChange)
+
+        onColorModeChange: (sender, value) => @setState(value)
+
+        remove: =>
+            @stopListening(@model)
+            delete @model
+            delete @editor
+            super
+
+        render: =>
+            super
+
+        onClick: =>
+            super
+            @model.set('colorMode', @currentState)
+
 
     class SquarePickerView extends TemplateView
 
@@ -722,21 +750,38 @@
 
         onSelectChange: =>
 
-    class StatefulToolbarBaseView extends TemplateView.extend(StatefulClassPrototype)
 
-        defaultState:   null
-        toolbarClasses: null
 
-        # Map of label to children class {stateName: toolbarClass}
+    class ColorToolbarView extends EditorSubToolbarView
+
+        toolbarName: ToolbarEnum.COLOR
+
+        rightSide: [
+            viewClass: SquarePickerView,
+            viewType: 'palette'
+        ]
+
+        onActiveChanged: ->
+            canvasView  = @controller.canvasView
+            mode        = if @active then CanvasMode.COLOR else canvasView.getDefaultMode()
+            canvasView.setMode(mode)
+
+    class ToolbarView extends TemplateView.extend(StatefulClassPrototype)
+
+        defaultState: TooltipToolbarView::toolbarName
+
+        toolbarClasses: [
+            TooltipToolbarView
+            ColorToolbarView
+        ]
+
         toolbars:       undefined
         getToolbars:    => @toolbars
 
         initialize: (options) =>
 
-            @toolbars = _.object(_.map(
-                @toolbarClasses, (tbc) -> [tbc::toolbarName, tbc]
-            ))
-            @states = _.keys(@toolbars)
+            @toolbars   = _.object(_.map(@toolbarClasses, (tbc) -> [tbc::toolbarName, tbc]))
+            @states     = _.keys(@toolbars)
 
             super
             @setOption(options, 'toolbars', undefined, true)
@@ -765,7 +810,6 @@
             @stopListening(@)
             super
 
-        stateFromTargetName: (targetName)       => targetName
         onToolbarNavEvent: (sender, targetName) -> @setState(@stateFromTargetName(targetName))
         onStateChange: (sender, state)          => @setActiveView(state)
 
@@ -774,61 +818,6 @@
                 if toolbarName != state
                     toolbarView.setActive(false)
             @toolbarViews[state].setActive(true)
-
-
-    class EditorColorModeButtonView extends EditorToggleButtonView
-
-        className:      "color-mode-button #{EditorToggleButtonView::className}"
-        states:         [ColorMode.WORD, ColorMode.LETTER]
-        defaultState:   ColorMode.DEFAULT
-
-        initialize: (options) =>
-            super
-            @model = options.model
-            @editor = options.editor
-            @setState(@model.get('colorMode'))
-            @listenTo(@model, 'change:colorMode', @onColorModeChange)
-
-        onColorModeChange: (sender, value) => @setState(value)
-
-        remove: =>
-            @stopListening(@model)
-            delete @model
-            delete @editor
-            super
-
-        render: =>
-            super
-
-        onClick: =>
-            super
-            @model.set('colorMode', @currentState)
-
-
-
-
-    class ColorToolbarView extends EditorSubToolbarView
-
-        toolbarName: ToolbarEnum.COLOR
-
-        rightSide: [
-            viewClass: SquarePickerView,
-            viewType: 'palette'
-        ]
-
-        onActiveChanged: ->
-            canvasView  = @controller.canvasView
-            mode        = if @active then CanvasMode.COLOR else canvasView.getDefaultMode()
-            canvasView.setMode(mode)
-
-    class ToolbarView extends StatefulToolbarBaseView
-
-        defaultState: TooltipToolbarView::toolbarName
-
-        toolbarClasses: [
-            TooltipToolbarView
-            ColorToolbarView
-        ]
 
         stateFromTargetName: (targetName) =>
             if targetName == 'back'
