@@ -731,8 +731,6 @@
             @removeSubview('editButton')
             super
 
-        toggleColorViews: (show) => @$('.color-palette-container').toggle(show)
-
         onSelectChange: =>
 
 
